@@ -21,6 +21,8 @@ Hiçbir faz henüz başlamadı. Güncel plan ve görev listeleri [ROADMAP.md](RO
 
 Teknik taslak: [docs/TEKNIK_PROJE_v0.1.md](docs/TEKNIK_PROJE_v0.1.md) (9 Kasım 2026, tartışma taslağı).
 
+Proje devamı (10 Kasım 2026 tartışma notları, ilk demo hedefi): [docs/PROJE_DEVAMI.md](docs/PROJE_DEVAMI.md).
+
 ## Depo yapısı
 
 | Klasör | İçerik | Durum |

@@ -28,11 +28,11 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'REPLACE_WITH_FIREBASE_WEB_API_KEY',
-    appId: '1:000000000000:android:0000000000000000000000',
-    messagingSenderId: '000000000000',
-    projectId: 'REPLACE_PROJECT_ID',
-    storageBucket: 'REPLACE_PROJECT_ID.appspot.com',
+    apiKey: 'AIzaSyDYXyvuiAY2VBGlTzkM8iXcNHIRGtXLbWs',
+    appId: '1:1040345550813:android:60ca4a7cd628aec8aff034',
+    messagingSenderId: '1040345550813',
+    projectId: 'mini-asistan-139c0',
+    storageBucket: 'mini-asistan-139c0.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(

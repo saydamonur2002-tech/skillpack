@@ -1,0 +1,7 @@
+kurallar:
+  - id: R1
+    eger: "agirlik_kg > 25"
+    rampa: agir
+  - id: R2
+    eger: "hedef == \"IST\""
+    rampa: 3

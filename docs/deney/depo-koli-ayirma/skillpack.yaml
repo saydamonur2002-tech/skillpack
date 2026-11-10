@@ -1,0 +1,11 @@
+skillpack: "0.1-taslak"
+name: depo-koli-ayirma
+version: "1.2.0"
+publisher: { display: "Usta A. (takma ad)", org_role: bireysel }
+capabilities:
+  tools: ["mcp:wms/stok_oku:read", "mcp:wms/siparis_oku:read"]
+  network: none
+  cloud_egress: { allowed: false }
+human_in_loop: { mode: suggest }
+privacy: { raw_customer_data: false, examples: synthetic }
+license: { spdx: "Apache-2.0" }

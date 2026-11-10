@@ -4,7 +4,7 @@ description: >
   Karar lokal JSON kural motorunda; açıklama Firebase AI Logic (Gemini) üzerinden.
   API anahtarı uygulamada yok; App Check zorunlu. Hot-patch yalnız imzalı JSON veri indirir.
 publish_to: "none"
-version: 0.2.0+3
+version: 0.2.1+4
 
 environment:
   sdk: ^3.9.2

@@ -17,34 +17,35 @@ class DeviceLiveCards extends StatelessWidget {
       spacing: 8,
       runSpacing: 8,
       children: [
-        _tile('Pil', snapshot.batteryPercent == null ? '—' : '%${snapshot.batteryPercent}'),
-        _tile('Şarj', pluggedLabel(snapshot.pluggedType)),
-        _tile('Pil sıcaklığı', temp == null ? '—' : '${temp.toStringAsFixed(1)} °C'),
-        _tile('Güç tasarrufu', snapshot.isPowerSaveMode ? 'Açık' : 'Kapalı'),
-        _tile('Boş depolama', free == null ? '—' : formatByteSize(free)),
+        _tile(context, 'Pil', snapshot.batteryPercent == null ? '—' : '%${snapshot.batteryPercent}'),
+        _tile(context, 'Şarj', pluggedLabel(snapshot.pluggedType)),
+        _tile(context, 'Pil sıcaklığı', temp == null ? '—' : '${temp.toStringAsFixed(1)} °C'),
+        _tile(context, 'Güç tasarrufu', snapshot.isPowerSaveMode ? 'Açık' : 'Kapalı'),
+        _tile(context, 'Boş depolama', free == null ? '—' : formatByteSize(free)),
       ],
     );
   }
 
-  Widget _tile(String label, String value) {
+  Widget _tile(BuildContext context, String label, String value) {
+    final scheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
-        color: const Color(0x33203028),
-        borderRadius: BorderRadius.circular(10),
+        color: scheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
-            style: const TextStyle(color: Color(0xFF8FA39A), fontSize: 11),
+            style: TextStyle(color: scheme.onSurfaceVariant, fontSize: 11),
           ),
           const SizedBox(height: 2),
           Text(
             value,
-            style: const TextStyle(
-              color: Color(0xFFE7F0EC),
+            style: TextStyle(
+              color: scheme.onSurface,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -67,31 +68,32 @@ class SystemHealthPanel extends StatelessWidget {
       supported: snapshot.thermalSupported,
       status: snapshot.thermalStatus,
     );
+    final scheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
+        color: scheme.surfaceContainerLow,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFF3A4A44)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Sistem sağlığı',
             style: TextStyle(
-              color: Color(0xFFD5E8DE),
+              color: scheme.onSurface,
               fontWeight: FontWeight.w600,
             ),
           ),
           const SizedBox(height: 6),
           Text(
             'Isı durumu: $thermal',
-            style: const TextStyle(color: Color(0xFFB5C4BE)),
+            style: TextStyle(color: scheme.onSurfaceVariant),
           ),
           const SizedBox(height: 4),
           Text(
             memory == null ? 'Bellek: ölçülemedi' : 'Bellek: %$memory kullanım',
-            style: const TextStyle(color: Color(0xFFB5C4BE)),
+            style: TextStyle(color: scheme.onSurfaceVariant),
           ),
         ],
       ),

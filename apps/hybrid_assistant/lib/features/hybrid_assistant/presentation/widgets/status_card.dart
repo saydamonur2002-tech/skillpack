@@ -24,24 +24,19 @@ class StatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     final (label, color) = cloudError
-        ? ('Bulut hatası', const Color(0xFFC4A35A))
+        ? ('Bulut hatası', scheme.error)
         : switch (status) {
-      EngineStatus.localActive => (
-          'Lokal Motor Aktif',
-          const Color(0xFF7CB89A),
-        ),
+      EngineStatus.localActive => ('Lokal Motor Aktif', scheme.primary),
       EngineStatus.geminiConnected => (
           'Gemini\'ye Bağlandı',
-          const Color(0xFF6AA8D6),
+          scheme.tertiary,
         ),
-      EngineStatus.offline => (
-          'Çevrimdışı — yerel yedek',
-          const Color(0xFFC4A35A),
-        ),
+      EngineStatus.offline => ('Çevrimdışı — yerel yedek', scheme.error),
       EngineStatus.awaitingBudget => (
           'Günlük token onayı bekleniyor',
-          const Color(0xFFB89A7C),
+          scheme.secondary,
         ),
     };
 
@@ -65,14 +60,14 @@ class StatusCard extends StatelessWidget {
                 Text(
                   firebaseReady ? label : '$label · Firebase stub',
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        color: const Color(0xFF9BB0A6),
+                        color: scheme.onSurface,
                       ),
                 ),
                 if (freeBytes != null && totalBytes != null)
                   Text(
                     'Depolama ${formatByteSize(freeBytes!)} boş / ${formatByteSize(totalBytes!)}',
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: const Color(0xFF8FA39A),
+                          color: scheme.onSurfaceVariant,
                         ),
                   ),
               ],

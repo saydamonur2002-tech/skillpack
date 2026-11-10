@@ -21,13 +21,15 @@ Hiçbir faz henüz başlamadı. Güncel plan ve görev listeleri [ROADMAP.md](RO
 
 Teknik taslak: [docs/TEKNIK_PROJE_v0.1.md](docs/TEKNIK_PROJE_v0.1.md) (9 Kasım 2026, tartışma taslağı).
 
+F1 için hazır araç listesi [docs/F1_ACIK_KAYNAKLAR.md](docs/F1_ACIK_KAYNAKLAR.md), koli ayırma veri notu [docs/F1_VERI_KAYNAKLARI.md](docs/F1_VERI_KAYNAKLARI.md). Tek örnek iskelet [examples/koli-ayirma](examples/koli-ayirma/) içindedir. Doğrulayıcı ve imza henüz yok.
+
 ## Depo yapısı
 
 | Klasör | İçerik | Durum |
 |---|---|---|
 | `spec/` | skillpack v0.1 spesifikasyon taslağı | ⬜ Başlamadı |
 | `schemas/` | JSON Schema dosyaları (`skillpack.yaml`, `robot_profile.yaml`, iptal listesi, indeks) | ⬜ Başlamadı |
-| `examples/` | Örnek beceri paketleri | ⬜ Başlamadı |
+| `examples/` | Örnek beceri paketi: koli ayırma iskeleti | ⬜ Başlamadı |
 | `cli/` | Doğrulayıcı ve paketleyici CLI (`init`, `validate`, `pack`, `sign`, `verify`, `publish`, `revoke-check`) | ⬜ Başlamadı |
 | `docs/` | Teknik proje taslağı ve belgeler | Taslak metin mevcut; uygulama başlamadı |
 

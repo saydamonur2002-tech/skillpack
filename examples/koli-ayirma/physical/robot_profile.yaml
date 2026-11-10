@@ -1,0 +1,28 @@
+# İskelet. URDF, mesh ve politika ağırlığı yok.
+# Güvenlik zarfı bilgilidir; saha durdurucusu bu dosyanın işi değildir.
+
+profile: "0.1-taslak"
+mode: simulation-only
+body:
+  type: kol
+  doF: null
+  end_effector: tutucu
+  urdf: null
+sensors:
+  - { type: camera, pose: null }
+interface:
+  ros2: []
+  opcua: []
+safety_envelope:
+  informative_only: true
+  max_speed: null
+  forbidden_zones: []
+  real_motion: approve-each
+simulator:
+  preferred: mujoco
+  alternate: gz-sim
+  scene: null
+dataset:
+  format: LeRobotDataset-v3
+  embedded: false
+  trajectories: synthetic-not-generated

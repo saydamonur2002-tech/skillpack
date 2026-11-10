@@ -1,0 +1,26 @@
+# Basit ayırma kuralları. Motor yok. İlk uyan kural kazanır.
+# Gerçek hareket bu dosyayla açılmaz.
+
+mode: simulation-only
+physical_motion: approve-each
+bins:
+  rampa-1: küçük koli, etiket A
+  rampa-2: orta koli
+  rampa-3: büyük koli
+  insan: etiket yok, çelişki veya hareket onayı
+rules:
+  - id: bilinmeyen-etiket
+    when: { label: unknown }
+    then: { bin: insan, reason: etiket okunamadı }
+  - id: kucuk-a
+    when: { size: small, label: A }
+    then: { bin: rampa-1, reason: küçük ve A }
+  - id: orta
+    when: { size: medium }
+    then: { bin: rampa-2, reason: orta boy }
+  - id: buyuk
+    when: { size: large }
+    then: { bin: rampa-3, reason: büyük boy }
+default:
+  bin: insan
+  reason: kural yok

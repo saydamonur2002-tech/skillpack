@@ -1,0 +1,76 @@
+# Taslak manifest. Doğrulayıcı bu dosyayı henüz çalıştırmaz.
+# Birincil model alt sınırı, birleşmemiş PR #9 kararına göredir:
+# https://github.com/saydamonur2002-tech/skillpack/pull/9
+# main üzerindeki Bölüm 2.3 hâlâ yaklaşık 8B yazar. Bu örnek 32B alt sınırını kullanır.
+
+skillpack: "0.1-taslak"
+name: koli-ayirma
+version: "0.0.0"
+mode: simulation-only
+domain: { sector: lojistik, task: koli-ayirma, lang: [tr] }
+components:
+  procedure: SKILL.md
+  rules: references/kurallar.yaml
+  tests: tests/KABUL.md
+  physical: physical/robot_profile.yaml
+runtime:
+  min_context_tokens: 8192
+  model_class: ["local-32b-primary"]
+  tiers: { edge: auxiliary-only, local: full, cloud: optional }
+efficiency:
+  min_model_size: "32B"
+  tokens_per_task: ""
+  wh_per_task: ""
+  method: ""
+capabilities:
+  tools: []
+  network: none
+  filesystem: { read: ["./"], write: [] }
+  devices: ["sim:mujoco:suggest"]
+  data_classes_in: [operasyonel]
+  cloud_egress: { allowed: false }
+human_in_loop:
+  mode: suggest
+  physical_motion: approve-each
+privacy:
+  raw_customer_data: false
+  examples: synthetic
+license:
+  spdx: "CC-BY-4.0"
+  terms: "LICENSE.txt"
+data_sources:
+  - name: ARMBench
+    license: CC-BY-4.0
+    url: https://www.armbench.com/
+    embedded: false
+    role: depo algısı, atıf
+  - name: LOCO
+    license: CC0-1.0
+    url: https://github.com/tum-fml/loco
+    embedded: false
+    role: lojistik sahne, atıf
+  - name: OCID
+    license: CC-BY-4.0
+    url: https://researchdata.tuwien.at/records/pcbjd-4wa12
+    embedded: false
+    role: dağınık nesne RGB-D, atıf
+  - name: YCB
+    license: CC-BY-4.0
+    url: https://ycb-benchmarks.s3.amazonaws.com/index.html
+    embedded: false
+    role: kutu mesh atfı, dosya yok
+  - name: DROID
+    license: CC-BY-4.0
+    url: https://droid-dataset.github.io/
+    embedded: false
+    role: biçim referansı
+  - name: PhysicalAI-GR00T-Tuned-Tasks
+    license: CC-BY-4.0
+    url: https://huggingface.co/datasets/nvidia/PhysicalAI-GR00T-Tuned-Tasks
+    embedded: false
+    role: sentetik görev biçimi, koli yörüngesi değil
+provenance:
+  taught_on: "yok"
+  trajectories: "sentetik-simulasyon-planlandi"
+  note: "Ölçülmüş token ve Wh yok."
+certification: { level: none }

@@ -1,0 +1,6 @@
+{
+  "sentetik": true,
+  "olcum_degil": true,
+  "girdi": { "size": "small", "label": "A" },
+  "beklenen": { "bin": "rampa-1", "hareket": false }
+}

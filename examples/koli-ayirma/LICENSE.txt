@@ -1,0 +1,5 @@
+Bu örnek paketin metni Creative Commons Attribution 4.0 International (CC-BY-4.0) ile paylaşılır.
+
+https://creativecommons.org/licenses/by/4.0/
+
+Veri kümesi gömülü değildir. Dış kaynakların atfı skillpack.yaml içindeki data_sources alanındadır. Bu dosya lisansın tam hukuk metninin yerine geçmez.

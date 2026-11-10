@@ -9,7 +9,7 @@ Her fazın durumu bu belgede ve ilgili GitHub issue'sunda tutulur. Görev kutula
 | Faz | Süre | Amaç (kısa) | Durum |
 |---|---|---|---|
 | [F0 — Hazırlık](#f0--hazırlık-a0a2) | A0–A2 | Taslağı yayımlamak, geri bildirim ve hukuki ön görüş almak | ⬜ Başlamadı |
-| [F1 — Çekirdek](#f1--çekirdek-a2a6) | A2–A6 | Şemalar, doğrulayıcı CLI, imza ve iki dijital örnek paket | ⬜ Başlamadı |
+| [F1 — Çekirdek](#f1--çekirdek-a2a6) | A2–A6 | Şemalar, doğrulayıcı CLI, imza ve tek koli ayırma örneği | ⬜ Başlamadı |
 | [F2 — Yerel çalışma](#f2--yerel-çalışma-a5a9) | A5–A9 | Yerel depo, yönlendirici, telefon istemcisi, öğretme döngüsü | ⬜ Başlamadı |
 | [F3 — Fiziksel profil](#f3--fiziksel-profil-a8a12) | A8–A12 | Robot profili, LeRobotDataset, koli ayırma simülasyonu | ⬜ Başlamadı |
 | [F4 — Dağıtım ve iptal](#f4--dağıtım-ve-iptal-a10a14) | A10–A14 | Aynalar, IPFS, iptal listesi, TUF, iptal tatbikatı | ⬜ Başlamadı |
@@ -58,7 +58,7 @@ En az bir dış teknik inceleme alınmıştır; yazılı hukuki görüş alınm�
 
 **Durum:** ⬜ Başlamadı
 
-**Amaç:** Paketin kurallara uyup uymadığını kontrol eden, onu imzalayan ve doğrulayan çekirdeği ortaya çıkarmak. İlk elle tutulur çıktı buradadır. İki basit dijital örnek paket de bu fazda hazırlanır.
+**Amaç:** Paketin kurallara uyup uymadığını kontrol eden, onu imzalayan ve doğrulayan çekirdeği ortaya çıkarmak. İlk elle tutulur çıktı buradadır. Örnek tektir: koli ayırma. Depo stok tanısı ve ses kaydı düzeltme ertelendi. Açık araç listesi [docs/F1_ACIK_KAYNAKLAR.md](docs/F1_ACIK_KAYNAKLAR.md), veri notu [docs/F1_VERI_KAYNAKLARI.md](docs/F1_VERI_KAYNAKLARI.md).
 
 ### Görevler
 
@@ -85,11 +85,15 @@ Güven ve gizlilik yardımcıları:
 - [ ] `raw_customer_data: false` kuralını doğrulayıcıda zorunlu kılmak
 - [ ] Bilinmeyen alanları uyarıyla geçme, bilinmeyen MAJOR spesifikasyonu reddetme davranışını yazmak
 
-Örnek paketler:
+Açık liste ve veri notu (metin; çalışan araç değil):
 
-- [ ] Dijital örnek paket 1: depo stok sapması tanısı (anonim/sentetik örnekler, kabul testleri)
-- [ ] Dijital örnek paket 2: ses kaydı düzeltme iş akışı (anonim/sentetik örnekler, kabul testleri)
-- [ ] Her iki örneği `validate` + `pack` + `sign` + `verify` zincirinden geçirmek
+- [x] Benimsenen ve kullanılmayan açık kaynakları yazmak — [docs/F1_ACIK_KAYNAKLAR.md](docs/F1_ACIK_KAYNAKLAR.md)
+- [x] Koli ayırma veri notunu yazmak — [docs/F1_VERI_KAYNAKLARI.md](docs/F1_VERI_KAYNAKLARI.md). Yörünge gömülmedi
+
+Örnek paket:
+
+- [ ] Tek örnek: koli ayırma. İskelet `examples/koli-ayirma/` duruyor. Şema doğrulama, imza, simülasyon ve kabul testi yok. Depo stok tanısı ve ses kaydı düzeltme ertelendi
+- [ ] İskeleti `validate` + `pack` + `sign` + `verify` zincirinden geçirmek
 
 Uçtan uca kanıt:
 

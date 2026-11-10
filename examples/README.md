@@ -1,13 +1,9 @@
 # examples/
 
-Örnek beceri paketleri burada hazırlanacak.
+Örnek beceri paketleri.
 
-Planlanan ilk örnekler (MVP):
+Tek örnek iskelet: [koli-ayirma](koli-ayirma/) (simülasyon, koli ayırma). Depo stok tanısı ve ses kaydı düzeltme ertelendi.
 
-- Dijital: depo stok sapması tanısı
-- Dijital: ses kaydı düzeltme iş akışı
-- Fiziksel (simülasyon): koli ayırma (LeRobotDataset bağlantısı; gerçek robot hareketi yok)
+İskelet doğrulanmaz ve imzalanmaz. Yörünge dosyası yoktur. Durum: ⬜ Başlamadı
 
-Durum: ⬜ Başlamadı
-
-İlgili faz: F1 (dijital örnekler), F3 (fiziksel örnek). Ayrıntılı görevler için kök dizindeki [ROADMAP.md](../ROADMAP.md) dosyasına bakın.
+Araç listesi: [docs/F1_ACIK_KAYNAKLAR.md](../docs/F1_ACIK_KAYNAKLAR.md). Veri notu: [docs/F1_VERI_KAYNAKLARI.md](../docs/F1_VERI_KAYNAKLARI.md). Görevler: [ROADMAP.md](../ROADMAP.md) F1.

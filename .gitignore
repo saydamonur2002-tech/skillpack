@@ -24,3 +24,21 @@ htmlcov/
 .idea/
 .vscode/
 *.swp
+
+# Flutter / Dart
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+build/
+*.iml
+**/Generated.xcconfig
+**/flutter_export_environment.sh
+**/firebase_options.dart
+!apps/hybrid_assistant/lib/core/firebase/firebase_options_stub.dart
+google-services.json
+GoogleService-Info.plist
+**/assets/keys/rules_public_key.pem

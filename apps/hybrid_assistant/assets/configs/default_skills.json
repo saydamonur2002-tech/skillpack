@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "pack_id": "hybrid-assistant.demo",
+  "version": "1.0.0",
+  "updated_at": "2026-11-10T00:00:00Z",
+  "budget": {
+    "cloud_max_tokens_per_day": 0,
+    "on_exceed": "ask_user"
+  },
+  "rules": [
+    {
+      "id": "greet",
+      "priority": 10,
+      "description": "Simple greeting handled fully offline.",
+      "when": {
+        "field": "intent",
+        "op": "eq",
+        "value": "greet"
+      },
+      "then": {
+        "action": "answer_local",
+        "message": "Merhaba. Karar yerel kurallarda; açıklama gerekirse buluta sorulur.",
+        "allow_cloud": false
+      }
+    },
+    {
+      "id": "explain-need",
+      "priority": 20,
+      "description": "Needs an explanation; may ask cloud after user budget consent.",
+      "when": {
+        "field": "intent",
+        "op": "eq",
+        "value": "explain"
+      },
+      "then": {
+        "action": "ask_cloud_explain",
+        "message": "Yerel kural eşleşti; açıklama için bulut modeli kullanılabilir.",
+        "allow_cloud": true
+      }
+    },
+    {
+      "id": "unknown",
+      "priority": 1000,
+      "description": "Catch-all local fallback.",
+      "when": {
+        "field": "query",
+        "op": "contains",
+        "value": ""
+      },
+      "then": {
+        "action": "fallback",
+        "message": "Eşleşen kural yok. Çevrimdışı yedek yanıt kullanılıyor.",
+        "allow_cloud": false
+      }
+    }
+  ]
+}

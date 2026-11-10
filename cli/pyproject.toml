@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "skillpack"
+version = "0.1.0"
+description = "skillpack v0.1-taslak referans çalıştırıcısı: doğrula, imzala, yükle, yürüt"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+dependencies = [
+  "PyYAML>=6",
+  "jsonschema>=4.18",
+  "cryptography>=42",
+]
+
+[project.optional-dependencies]
+mcp = ["mcp>=2,<3"]
+
+[project.scripts]
+skillpack = "skillpack.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["skillpack*"]
+
+[tool.setuptools.package-data]
+skillpack = ["schemas/*.json"]

@@ -1,0 +1,16 @@
+{
+  "skillpack": "0.1-taslak",
+  "algorithm": "ed25519",
+  "key_id": "e3d6cd1f2ecd0220",
+  "pack_id": "sha256:416e1eefc0abdd5195d990bb160ebda5186fdf2ce2533f3dd9dcd9dfb1d3d876",
+  "name": "rulman-isi-titresim",
+  "version": "0.1.0",
+  "checksums": {
+    "SKILL.md": "sha256:3969676b9e5623a2136ecfe3a1cc700860eac580de1aea14b77049df7bfddf43",
+    "flow.yaml": "sha256:fb022412e56ad588710b8882375efd0b409dc2b5338fc86fd9b493f9ea3a5ad8",
+    "provenance/approvals.json": "sha256:6b9eede566deb5489237ac243f37a6f8e03e91bc17ff3211ed4a173ae5b62100",
+    "skillpack.yaml": "sha256:4760b49116d603dd6a38f37cce57598d15c37b759ca1bebc773ebfa363d08d09",
+    "tests/cases.yaml": "sha256:eb02632e2c149a24d879ab785d1f939f5cc14115210ea70030dd13df00b0b623"
+  },
+  "signature": "O2fAhSgE8P34npCcRznyZODpClX0JwGybPwGpWZJuYcimtl9y+/aAL4hR6EYkaM2DraGmJJIxxlSpN76+iTIDA=="
+}

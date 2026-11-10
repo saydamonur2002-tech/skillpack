@@ -1,0 +1,82 @@
+flow: "0.1"
+
+# Değerler örnektir. Öğretmen kendi ölçütünü yazar.
+params:
+  mastery_pct: 80       # bu ve üstü: kazanım edinilmiş say
+  reteach_pct: 50       # bunun altı: sınıfça yeniden öğret
+
+inputs:
+  class_size:
+    type: integer
+    prompt: "Soruyu kaç öğrenci cevapladı?"
+    min: 1
+    max: 200
+  correct_count:
+    type: integer
+    prompt: "Kaç öğrenci doğru yaptı?"
+    min: 0
+    max: 200
+  common_error:
+    type: choice
+    prompt: "Yanlış yapanlarda en sık görülen hata hangisi?"
+    hint: "Emin değilseniz belirgin_degil seçin. Öğrenci adı yazmayın."
+    choices: [kavram_yanilgisi, islem_hatasi, soru_anlasilmadi, belirgin_degil]
+
+steps:
+  - id: mevcut
+    ask: class_size
+  - id: dogru
+    ask: correct_count
+  - id: tutarlilik
+    decide:
+      - when: "correct_count > class_size"
+        finish: tutarsiz
+      - else: true
+        continue: true
+  - id: oran
+    compute:
+      pct: "round(100 * correct_count / class_size)"
+      wrong_count: "class_size - correct_count"
+  - id: yeterli_mi
+    decide:
+      - when: "pct >= mastery_pct"
+        finish: ilerle
+      - else: true
+        continue: true
+  - id: hata
+    ask: common_error
+  - id: karar
+    decide:
+      - when: "pct < reteach_pct and common_error == 'kavram_yanilgisi'"
+        finish: yeniden_ogret_farkli
+      - when: "pct < reteach_pct"
+        finish: yeniden_ogret
+      - when: "common_error == 'soru_anlasilmadi'"
+        finish: soruyu_yenile
+      - else: true
+        finish: kucuk_grup
+
+outcomes:
+  ilerle:
+    verdict: ok
+    message: "Başarı %{pct} (ölçüt %{mastery_pct}). Sonraki kazanıma geçin; yanlış yapan {wrong_count} öğrenciye bireysel geri bildirim yeter."
+  kucuk_grup:
+    verdict: warn
+    message: "Başarı %{pct}. Sınıfın çoğu yapmış; yanlış yapan {wrong_count} öğrenciyle küçük grup çalışması yapın, sonra kısa bir soruyla yeniden yoklayın."
+  soruyu_yenile:
+    verdict: warn
+    message: "Başarı %{pct}, ama hata sorunun anlaşılmamasından. Kazanımı farklı ifadeyle yazılmış bir soruyla yeniden ölçün; konu anlatımını tekrarlamadan önce sonucu görün."
+  yeniden_ogret:
+    verdict: stop
+    message: "Başarı %{pct} (alt sınır %{reteach_pct}). Sonraki kazanıma geçmeyin; konuyu sınıfça yeniden işleyin ve yeniden ölçün."
+  yeniden_ogret_farkli:
+    verdict: stop
+    message: "Başarı %{pct} ve yaygın hata kavram yanılgısı. Aynı anlatımı tekrarlamayın; kavramı farklı bir örnek ya da somut materyalle yeniden öğretin, sonra yeniden ölçün."
+  tutarsiz:
+    verdict: warn
+    message: "Doğru yapan sayısı ({correct_count}) cevaplayan sayısından ({class_size}) büyük olamaz. Sayıları kontrol edip yeniden başlatın."
+  bilinmiyor:
+    verdict: escalate
+    message: "Şu soru cevapsız kaldı: {missing} Bu bilgi olmadan karar üretilmez."
+
+on_unknown: bilinmiyor

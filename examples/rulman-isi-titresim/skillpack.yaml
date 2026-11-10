@@ -1,0 +1,19 @@
+skillpack: "0.1-taslak"
+name: rulman-isi-titresim
+version: "0.1.0"
+publisher: {display: "Örnek yayıncı", org_role: bireysel}
+domain: {sector: imalat, task: rulman-kontrol, lang: [tr]}
+components: {procedure: SKILL.md, flow: flow.yaml, tests: tests/cases.yaml}
+runtime: {llm_role: route-only, model_class: ["edge-1b-3b", "local-7b-14b"]}
+routing:
+  title: "Rulman ısı ve titreşim kontrolü"
+  triggers: ["rulman", "titreşim", "motor ısın", "yatak sıcaklığı", "pompa ses"]
+capabilities:
+  tools: ["host:record"]
+  sensors: ["bearing_temp_c"]
+  network: none
+  cloud_egress: {allowed: false}
+human_in_loop: {mode: approve-each}
+privacy: {raw_customer_data: false, examples: synthetic}
+license: {spdx: Apache-2.0}
+provenance: {approvals: provenance/approvals.json}

@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/saydamonur2002-tech/skillpack/schemas/skillpack.schema.json",
+  "title": "skillpack.yaml (v0.1-taslak, MVP alt kümesi)",
+  "type": "object",
+  "required": [
+    "skillpack", "name", "version", "publisher", "domain", "components",
+    "routing", "capabilities", "human_in_loop", "privacy", "license", "provenance"
+  ],
+  "properties": {
+    "skillpack": {"const": "0.1-taslak"},
+    "name": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "maxLength": 64},
+    "version": {"type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"},
+    "publisher": {
+      "type": "object",
+      "required": ["display", "org_role"],
+      "properties": {
+        "display": {"type": "string", "minLength": 1},
+        "org_role": {"enum": ["bireysel", "isveren-adina", "kurum"]}
+      }
+    },
+    "domain": {
+      "type": "object",
+      "required": ["sector", "task", "lang"],
+      "properties": {
+        "sector": {"type": "string", "minLength": 1},
+        "task": {"type": "string", "minLength": 1},
+        "lang": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+      }
+    },
+    "components": {
+      "type": "object",
+      "required": ["procedure", "flow", "tests"],
+      "properties": {
+        "procedure": {"const": "SKILL.md"},
+        "flow": {"type": "string", "minLength": 1},
+        "tests": {"type": "string", "minLength": 1}
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "properties": {
+        "model_class": {"type": "array", "items": {"type": "string"}},
+        "llm_role": {"const": "route-only"}
+      }
+    },
+    "routing": {
+      "type": "object",
+      "required": ["title", "triggers"],
+      "properties": {
+        "title": {"type": "string", "minLength": 1},
+        "triggers": {"type": "array", "items": {"type": "string", "minLength": 2}, "minItems": 1}
+      }
+    },
+    "capabilities": {
+      "type": "object",
+      "required": ["tools", "network", "cloud_egress"],
+      "properties": {
+        "tools": {
+          "type": "array",
+          "items": {"type": "string", "pattern": "^host:[a-z_]+$"}
+        },
+        "sensors": {"type": "array", "items": {"type": "string"}},
+        "network": {"enum": ["none", "local", "allowlist"]},
+        "cloud_egress": {
+          "type": "object",
+          "required": ["allowed"],
+          "properties": {"allowed": {"type": "boolean"}}
+        }
+      }
+    },
+    "human_in_loop": {
+      "type": "object",
+      "required": ["mode"],
+      "properties": {"mode": {"enum": ["suggest", "approve-each", "approve-batch"]}}
+    },
+    "privacy": {
+      "type": "object",
+      "required": ["raw_customer_data", "examples"],
+      "properties": {
+        "raw_customer_data": {"const": false},
+        "examples": {"enum": ["anonymized", "synthetic"]}
+      }
+    },
+    "license": {
+      "type": "object",
+      "required": ["spdx"],
+      "properties": {"spdx": {"type": "string", "minLength": 1}}
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["approvals"],
+      "properties": {"approvals": {"type": "string", "minLength": 1}}
+    }
+  }
+}

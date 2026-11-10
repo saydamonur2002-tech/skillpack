@@ -1,5 +1,7 @@
 # hybrid_assistant
 
+> **Erken deneme.** Bu uygulama skillpack biçimini kullanmaz ve projenin referans uygulaması değildir; referans çalıştırıcı [`cli/`](../../cli/) altındadır. Bilinen eksik: kural yaması doğrulaması (`hot_patch_manager.dart`) simetrik HMAC kullanır, yani gerçek bir imza değildir; yama akışı hiçbir yerden çağrılmadığı için bugün etkisizdir. Gerçek imza için `cli/skillpack/signing.py` (Ed25519) örnek alınabilir.
+
 Tek işlevli hibrit yapay zeka mobil iskeleti.
 
 **Karar betikte, açıklama modelde.** Lokal JSON kural motoru karar verir; Gemini yalnız açıklama (ve imzalı JSON kural yaması) üretir.

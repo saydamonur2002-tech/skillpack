@@ -1,0 +1,18 @@
+skillpack: "0.1-taslak"
+name: soguk-mal-kabul
+version: "0.1.0"
+publisher: {display: "Örnek yayıncı", org_role: bireysel}
+domain: {sector: yiyecek-icecek, task: mal-kabul, lang: [tr]}
+components: {procedure: SKILL.md, flow: flow.yaml, tests: tests/cases.yaml}
+runtime: {llm_role: route-only, model_class: ["edge-1b-3b", "local-7b-14b"]}
+routing:
+  title: "Soğuk zincir mal kabul kontrolü"
+  triggers: ["mal kabul", "soğuk zincir", "teslimat", "tedarikçi", "kabul edeyim", "sevkiyat"]
+capabilities:
+  tools: ["host:record"]
+  network: none
+  cloud_egress: {allowed: false}
+human_in_loop: {mode: suggest}
+privacy: {raw_customer_data: false, examples: synthetic}
+license: {spdx: Apache-2.0}
+provenance: {approvals: provenance/approvals.json}

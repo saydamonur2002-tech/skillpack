@@ -13,26 +13,69 @@ Tasarım hedefleri üç çerçevede toplanır: orta segment donanımda çalışa
 
 Bu depo bir şirket, ürün veya pazar yeri değildir. Ticari olmayan, bireysel bir açık kaynak / açık standart katkısıdır.
 
+## Ne çalışıyor
+
+Bir ustanın tekniği bir **pakete** çevrilir; yerel bir dil modeli bu paketi **uygular**. Niş işte model karar vermez: kararı paketteki akış verir, akışı çalıştırıcı yürütür. Modelin işi yalnız kullanıcının cümlesinden doğru paketi seçmek ve söylenen değerleri çıkarmaktır.
+
+Mimari merkez ve çevre biçimindedir. Bağlantı standardı MCP'dir (Model Context Protocol):
+
+```text
+        MERKEZ                  MCP                     ÇEVRE
+  yerel modeli çalıştıran   ◄────────►   skillpack sunucusu
+  uygulama                                 ├─ dikey teknik: rulman kontrolü ──► sensör
+  (kullanıcıyla konuşur)                   ├─ dikey teknik: soğuk mal kabul ──► kayıt defteri
+                                           └─ dikey teknik: kazanım telafisi
+```
+
+Merkez genel araçlar yerine dikey teknikleri görür. Model bir tekniği çağırır; teknik eksik ölçümü geri sorar, sonra hükmü verir:
+
+```text
+"Tedarikçi tavuk getirdi, 6,5 derece ölçtüm"
+  → araç: soguk-mal-kabul {product: tavuk, core_temp_c: 6.5}
+  ← eksik: "Ambalaj yırtık, ezik, şişmiş ya da sızdırıyor mu?"
+  → ... {package_damaged: false, days_to_expiry: 5}
+  ← [DUR] Reddedin. tavuk: 6,5 °C (sınır 4 °C) ...   + kullanılan değerler
+```
+
+Depo kökünde deneyin (Python 3.10+):
+
+```bash
+pip install -e "cli/[mcp]"
+skillpack list
+skillpack ask "Tedarikçi tavuk getirdi, kabul edeyim mi?"   # MCP'siz, doğrudan terminalde
+skillpack serve                                              # MCP sunucusu (stdio)
+```
+
+MCP destekleyen bir uygulamaya bağlamak için: [cli/README.md](cli/README.md#mcp-sunucusu).
+
+Üç örnek paket vardır: fabrika (rulman kontrolü), lokanta (soğuk mal kabul), okul (kazanım telafi kararı). Eşik değerleri örnektir; gerçek bir usta onayı taşımazlar ([examples/README.md](examples/README.md)).
+
+| Belge | İçerik |
+|---|---|
+| [spec/SKILLPACK_v0.1.md](spec/SKILLPACK_v0.1.md) | Standart: paket yapısı, akış profili, modelin sınırı, imza, iptal, uygunluk, MCP bağlaması |
+| [docs/USTADAN_PAKETE.md](docs/USTADAN_PAKETE.md) | Yöntem: bir tekniği yedi adımda pakete çevirmek |
+| [cli/README.md](cli/README.md) | Çalıştırıcının komutları ve yapısı |
+
 ## Durum
 
-**⬜ Başlamadı / taslak**
+**🚧 MVP çalışıyor; standart taslak aşamasında.**
 
-Hiçbir faz henüz başlamadı. Güncel plan ve görev listeleri [ROADMAP.md](ROADMAP.md) dosyasındadır. Her faz ayrıca bir GitHub issue olarak da izlenir (`başlamadı` etiketi).
+Çalışan: paket doğrulama, kabul testleri, Ed25519 imza ve doğrulama, yerel iptal listesi, belirlenimci akış yürütme, insan onaylı eylem, paketleri araç olarak sunan MCP sunucusu (dosya tabanlı sensör bağı ve kayıt defteriyle), terminalde anahtar kelime ve Ollama yönlendiricisi.
 
-Teknik taslak: [docs/TEKNIK_PROJE_v0.1.md](docs/TEKNIK_PROJE_v0.1.md) (9 Kasım 2026, tartışma taslağı).
+Henüz yok: Sigstore ve şeffaflık günlüğü, imzalı iptal listesi (TUF), dağıtım, fiziksel profil, öğretme döngüsü arayüzü. MCP sunucusu resmî MCP Python istemcisiyle sınandı, ama gerçek bir yerel modelin araçları doğru çağırıp çağırmadığı ölçülmedi; Ollama yönlendiricisi de yalnız Ollama yanıt biçimini taklit eden bir test sunucusuyla sınandı. Ayrıntı: spesifikasyon Bölüm 13 ve [ROADMAP.md](ROADMAP.md).
 
-Proje devamı (10 Kasım 2026 tartışma notları, ilk demo hedefi): [docs/PROJE_DEVAMI.md](docs/PROJE_DEVAMI.md).
+Uzun vadeli hedefler: [docs/TEKNIK_PROJE_v0.1.md](docs/TEKNIK_PROJE_v0.1.md) (9 Kasım 2026, tartışma taslağı) ve [docs/PROJE_DEVAMI.md](docs/PROJE_DEVAMI.md).
 
 ## Depo yapısı
 
 | Klasör | İçerik | Durum |
 |---|---|---|
-| `spec/` | skillpack v0.1 spesifikasyon taslağı | ⬜ Başlamadı |
-| `schemas/` | JSON Schema dosyaları (`skillpack.yaml`, `robot_profile.yaml`, iptal listesi, indeks) | ⬜ Başlamadı |
-| `examples/` | Örnek beceri paketleri | ⬜ Başlamadı |
-| `apps/hybrid_assistant` | Hibrit AI mobil iskelet (Flutter: lokal JSON kurallar + Firebase AI Logic) | 🚧 İskelet |
-| `cli/` | Doğrulayıcı ve paketleyici CLI (`init`, `validate`, `pack`, `sign`, `verify`, `publish`, `revoke-check`) | ⬜ Başlamadı |
-| `docs/` | Teknik proje taslağı ve belgeler | Taslak metin mevcut; uygulama başlamadı |
+| `spec/` | skillpack v0.1-taslak spesifikasyonu | 🚧 Taslak |
+| `cli/` | Referans çalıştırıcı (Python): `init`, `validate`, `test`, `keygen`, `sign`, `verify`, `list`, `run`, `ask`, `serve` (MCP), `route-test`; JSON şemaları | 🚧 MVP |
+| `examples/` | Üç imzalı örnek paket ve güvenilen açık anahtar | 🚧 Örnek (usta onayı yok) |
+| `schemas/` | Şemaların yerini gösterir (`cli/skillpack/schemas/`) | 🚧 MVP alt kümesi |
+| `docs/` | Yöntem belgesi, teknik taslak, tartışma notları | Taslak |
+| `apps/hybrid_assistant` | Erken deneme: Flutter + Firebase AI Logic ile telefon pili/ısı asistanı. skillpack biçimini kullanmaz | 🧪 Deneme |
 
 ## Yol haritası (özet)
 
@@ -40,9 +83,9 @@ Süreler göreli aylardır (A0 = başlangıç) ve [VARSAYIM] niteliğindedir. Ay
 
 | Faz | Süre | Durum |
 |---|---|---|
-| F0 — Hazırlık | A0–A2 | ⬜ Başlamadı |
-| F1 — Çekirdek | A2–A6 | ⬜ Başlamadı |
-| F2 — Yerel çalışma | A5–A9 | ⬜ Başlamadı |
+| F0 — Hazırlık | A0–A2 | 🚧 Başladı (spesifikasyon taslağı) |
+| F1 — Çekirdek | A2–A6 | 🚧 Başladı |
+| F2 — Yerel çalışma | A5–A9 | 🚧 Başladı (yönlendirici, yerel depo) |
 | F3 — Fiziksel profil | A8–A12 | ⬜ Başlamadı |
 | F4 — Dağıtım ve iptal | A10–A14 | ⬜ Başlamadı |
 | F5 — Pilot | A12–A18 | ⬜ Başlamadı |
@@ -63,4 +106,4 @@ Proje **ticari değildir**. Şirket, ürün, pazar yeri veya ücretli hizmet ola
 
 Öneren bir kamu görevlisidir. 657 sayılı Devlet Memurları Kanunu md. 28 çerçevesinde proje açık standart ve açık kaynak katkısı olarak kurgulanmıştır. Bu not hukuki görüş değildir. Gelir, lisans devri veya vakıf görevi gibi adımlardan önce bağlı olunan kurumun personel biriminden ve bir avukattan yazılı görüş alınması F0 fazının çıkış ölçütüdür. Ayrıntı: teknik taslak, Bölüm 14.
 
-Katkılar hoş gelir. Henüz katkı rehberi yazılmadı (F0 / F6). Şimdilik bir issue açmak veya taslağa yorum bırakmak yeterlidir.
+Katkılar hoş gelir. Henüz katkı rehberi yazılmadı (F0 / F6). Şimdilik bir issue açmak veya taslağa yorum bırakmak yeterlidir. En değerli katkı, kendi işini bilen birinin yazdığı ve onayladığı gerçek bir pakettir.

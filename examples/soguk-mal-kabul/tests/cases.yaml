@@ -1,0 +1,36 @@
+# Sentetik vakalar. Gerçek teslimat kaydı değildir.
+cases:
+  - name: tavuk soğuk ve taze
+    inputs: {product: tavuk, core_temp_c: 3, package_damaged: false, days_to_expiry: 5}
+    expect: {outcome: kabul, verdict: ok, values: {limit_c: 4}}
+  - name: tavuk tam sınırda
+    inputs: {product: tavuk, core_temp_c: 4, package_damaged: false, days_to_expiry: 5}
+    expect: {outcome: kabul}
+  - name: süt ürünü pay içinde
+    inputs: {product: sut_urunu, core_temp_c: 7.5, package_damaged: false, days_to_expiry: 10}
+    expect: {outcome: sartli, verdict: warn}
+  - name: balık payı aşıyor
+    inputs: {product: balik, core_temp_c: 4.5, package_damaged: false, days_to_expiry: 2}
+    expect: {outcome: ret, verdict: stop}
+  - name: dondurulmuşta pay yok
+    inputs: {product: dondurulmus, core_temp_c: -17, package_damaged: false, days_to_expiry: 200}
+    expect: {outcome: ret}
+  - name: dondurulmuş uygun
+    inputs: {product: dondurulmus, core_temp_c: -19, package_damaged: false, days_to_expiry: 200}
+    expect: {outcome: kabul}
+  - name: ambalaj hasarlı
+    inputs: {product: kirmizi_et, core_temp_c: 2, package_damaged: true, days_to_expiry: 6}
+    expect: {outcome: ret}
+  - name: tarihi geçmiş
+    inputs: {product: sut_urunu, core_temp_c: 4, package_damaged: false, days_to_expiry: -1}
+    expect: {outcome: ret}
+  - name: bir gün kalmış
+    inputs: {product: kirmizi_et, core_temp_c: 3, package_damaged: false, days_to_expiry: 1}
+    expect: {outcome: kisa_omur, verdict: warn}
+  - name: termometre yok
+    inputs: {product: tavuk}
+    expect: {outcome: bilinmiyor, verdict: escalate}
+routing:
+  - utterance: "Tedarikçi tavuk getirdi, kabul edeyim mi?"
+  - utterance: "Sabah teslimatı geldi, mal kabul yapacağım"
+  - utterance: "Soğuk zincir kontrolü yapalım"

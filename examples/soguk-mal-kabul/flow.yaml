@@ -1,0 +1,92 @@
+flow: "0.1"
+
+# Değerler örnektir. İşletmenin kendi gıda güvenliği planındaki sınırlar yazılır.
+params:
+  tolerance_c: 2        # soğuk üründe şartlı kabul payı
+  min_shelf_days: 2     # bundan az gün kaldıysa: kısa ömür
+
+inputs:
+  product:
+    type: choice
+    prompt: "Gelen ürün hangisi?"
+    choices: [kirmizi_et, tavuk, balik, sut_urunu, dondurulmus]
+  core_temp_c:
+    type: number
+    prompt: "Ürünün ölçülen iç sıcaklığı kaç derece?"
+    hint: "Saplama termometreyle, ambalajlar arasından ya da ürünün ortasından."
+    unit: "°C"
+    min: -40
+    max: 40
+  package_damaged:
+    type: bool
+    prompt: "Ambalaj yırtık, ezik, şişmiş ya da sızdırıyor mu?"
+  days_to_expiry:
+    type: integer
+    prompt: "Son tüketim tarihine kaç gün var? (geçmişse eksi yazın)"
+    unit: "gün"
+    min: -365
+    max: 3650
+
+tables:
+  limit_by_product:
+    type: map
+    rows:
+      kirmizi_et: 4
+      tavuk: 4
+      balik: 2
+      sut_urunu: 6
+      dondurulmus: -18
+
+steps:
+  - id: urun
+    ask: product
+  - id: sinir
+    lookup: {table: limit_by_product, key: product, into: limit_c}
+  - id: sicaklik
+    ask: core_temp_c
+  - id: fark
+    compute:
+      over_c: "core_temp_c - limit_c"
+  - id: ambalaj
+    ask: package_damaged
+  - id: tarih
+    ask: days_to_expiry
+  - id: karar
+    decide:
+      - when: "package_damaged or days_to_expiry < 0"
+        goto: ret_kaydi
+      - when: "product == 'dondurulmus' and over_c > 0"
+        goto: ret_kaydi
+      - when: "over_c > tolerance_c"
+        goto: ret_kaydi
+      - when: "over_c > 0"
+        finish: sartli
+      - when: "days_to_expiry < min_shelf_days"
+        finish: kisa_omur
+      - else: true
+        finish: kabul
+  - id: ret_kaydi
+    act:
+      action: record
+      text: "Mal kabul RET: {product}, {core_temp_c} °C (sınır {limit_c} °C), SKT'ye {days_to_expiry} gün, ambalaj hasarı: {package_damaged}."
+  - id: ret_sonu
+    finish: ret
+
+outcomes:
+  kabul:
+    verdict: ok
+    message: "Kabul. {product}: {core_temp_c} °C, sınır {limit_c} °C. Hemen soğuk depoya alın."
+  kisa_omur:
+    verdict: warn
+    message: "Sıcaklık uygun ({core_temp_c} °C) ama son tüketim tarihine {days_to_expiry} gün var. Yalnız bu sürede kullanılacak kadarını kabul edin."
+  sartli:
+    verdict: warn
+    message: "Şartlı kabul. {product} sınırın {over_c} °C üstünde ({core_temp_c} °C, sınır {limit_c} °C). Hemen soğutun ve bugün kullanın; teslim fişine not düşün."
+  ret:
+    verdict: stop
+    message: "Reddedin. {product}: {core_temp_c} °C (sınır {limit_c} °C), SKT'ye {days_to_expiry} gün, ambalaj hasarı: {package_damaged}. Ürünü teslim almayın."
+  bilinmiyor:
+    verdict: escalate
+    message: "Şu soru cevapsız kaldı: {missing} Ölçmeden kabul etmeyin; emin değilseniz şefe sorun."
+
+on_unknown: bilinmiyor

@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/repositories/assistant_repository.dart';
 import '../../domain/services/token_budget_service.dart';
+import '../widgets/app_check_debug_token_banner.dart';
 import '../widgets/status_card.dart';
 
 /// Tek işlevli minimalist ana ekran (durum, giriş, sonuç/log).
@@ -10,10 +12,14 @@ class HomeScreen extends StatefulWidget {
     super.key,
     required this.repository,
     required this.tokenBudgetService,
+    this.appCheckDebugToken,
   });
 
   final AssistantRepository repository;
   final TokenBudgetService tokenBudgetService;
+
+  /// Debug derlemede Firebase konsoluna eklenecek App Check anahtarı.
+  final String? appCheckDebugToken;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -224,6 +230,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   status: _status,
                   firebaseReady: widget.repository.firebaseReady,
                 ),
+                if (kDebugMode && widget.appCheckDebugToken != null) ...[
+                  const SizedBox(height: 12),
+                  AppCheckDebugTokenBanner(token: widget.appCheckDebugToken!),
+                ],
                 const SizedBox(height: 20),
                 TextField(
                   controller: _controller,

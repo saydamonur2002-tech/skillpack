@@ -28,6 +28,7 @@ class AppConstants {
   static const String onExceedPolicy = 'ask_user';
 
   /// SharedPreferences anahtarları.
+  static const String prefsAppCheckDebugToken = 'app_check_debug_token';
   static const String prefsDailyLimit = 'cloud_max_tokens_per_day';
   static const String prefsUsedToday = 'cloud_tokens_used_today';
   static const String prefsDayStamp = 'cloud_tokens_day';

@@ -10,6 +10,7 @@ import '../features/hybrid_assistant/data/repositories/assistant_repository.dart
 import '../features/hybrid_assistant/domain/services/hot_patch_manager.dart';
 import '../features/hybrid_assistant/domain/services/rule_engine.dart';
 import '../features/hybrid_assistant/domain/services/token_budget_service.dart';
+import 'firebase/app_check_debug_token.dart';
 import 'firebase/firebase_options_stub.dart';
 import 'storage/local_storage.dart';
 
@@ -25,6 +26,9 @@ class AppBootstrap {
   late final AssistantRepository repository;
   bool firebaseReady = false;
 
+  /// Yalnızca debug derlemede dolu. Firebase konsoluna eklenecek UUID.
+  String? appCheckDebugToken;
+
   Future<void> init() async {
     localStorage = LocalStorage();
     ruleEngine = RuleEngine();
@@ -32,6 +36,11 @@ class AppBootstrap {
     localRulesLoader = LocalRulesLoader();
     connectivityGuard = ConnectivityGuard();
     tokenBudgetService = TokenBudgetService(storage: localStorage);
+
+    if (kDebugMode) {
+      appCheckDebugToken = await loadOrCreateAppCheckDebugToken(localStorage);
+      debugPrint('App Check debug token: $appCheckDebugToken');
+    }
 
     try {
       await Firebase.initializeApp(
@@ -61,9 +70,10 @@ class AppBootstrap {
 
   Future<void> _activateAppCheck() async {
     if (kDebugMode) {
+      final token = appCheckDebugToken;
       await FirebaseAppCheck.instance.activate(
-        providerAndroid: const AndroidDebugProvider(),
-        providerApple: const AppleDebugProvider(),
+        providerAndroid: AndroidDebugProvider(debugToken: token),
+        providerApple: AppleDebugProvider(debugToken: token),
       );
     } else {
       await FirebaseAppCheck.instance.activate(

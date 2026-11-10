@@ -45,31 +45,41 @@ A. Kural uygulama ölçümü (asıl iş)
    Nicemlemeyi (Q4_K_M ve Q8) en az bir modelde karşılaştır.
 5. İstem duyarlılığını ölç: aynı kuralları üç farklı biçimde ver (düz liste, karar
    tablosu, YAML). Sonuç isteme göre çok oynuyorsa bunu ana bulgu olarak yaz.
-6. Her satır için şunları raporla: doğruluk ve %95 güven aralığı, hata türü dağılımı
+6. Token bütçesini bir değişken olarak ölç. İlk denemede model cevaba 40, gerekçeli
+   turda 160 token ile sınırlandı; bu, düşünmeye yer bırakmamış olabilir. Aynı
+   örneklerde çıktı sınırını kademeli aç (ör. 40, 160, 600, 2000) ve biçim
+   zorlaması olmayan serbest kipi (docs/deney/beceri_olcumu.py --kip serbest) kullan.
+   Varsa düşünme kipi olan bir açık modeli (ör. Qwen3 ailesi) düşünme açık ve kapalı
+   olarak ekle. Her bütçe için doğruluğun yanında sınırda kesilen cevap sayısını,
+   modelin fiilen harcadığı tokenı ve "doğru cevap başına token" değerini ver.
+   Aradığım şey şu eğri: token arttıkça doğruluk nerede yükseliyor, nerede
+   düzleşiyor, nerede model kendini tekrar etmeye başlıyor. Bağlam penceresini de
+   bütçeye göre büyüt; kesilme yüzünden düşen doğruluğu model hatası sayma.
+7. Her satır için şunları raporla: doğruluk ve %95 güven aralığı, hata türü dağılımı
    (öncelik hatası, eşik hatası, biçim hatası, uydurma), görev başına girdi ve çıktı
    tokenı, süre, tok/s. Güç ölçebiliyorsan (GPU'da nvidia-smi, CPU'da RAPL) görev
    başına Wh ekle ve ölçüm sınırını yaz; ölçemiyorsan tahmin uydurma, [EKSİK] yaz.
 
 B. İlk denemede atlanan halkalar
 
-7. Anahtarsız imzalama: bir GitHub Actions iş akışında OIDC ile docs/deney/
+8. Anahtarsız imzalama: bir GitHub Actions iş akışında OIDC ile docs/deney/
    depo-koli-ayirma dizinini model-signing ya da cosign ile imzala, imzayı ayrı bir
    makinede doğrula. Bu adım depoya iş akışı dosyası eklemeyi gerektirir; eklemeden
    önce bana sor.
-8. İki makine arası doğrulama: paketi bir yerde imzala, imza ve paketi başka bir
+9. İki makine arası doğrulama: paketi bir yerde imzala, imza ve paketi başka bir
    makineye taşı, orada temiz kurulumla doğrula. Gereken adımları tekrarlanabilir
    biçimde yaz.
-9. İçerik adresli dağıtım: aynı paketi IPFS (kubo) ve bir OCI kaydı (oras) üzerinden
+10. İçerik adresli dağıtım: aynı paketi IPFS (kubo) ve bir OCI kaydı (oras) üzerinden
    yayımlayıp geri çek; özetin değişmediğini göster. Hangisinin daha az iş çıkardığını
    söyle.
-10. PII taraması: T.C. kimlik no (sağlama basamağıyla), telefon, e-posta, IBAN ve
+11. PII taraması: T.C. kimlik no (sağlama basamağıyla), telefon, e-posta, IBAN ve
     plaka için bir tarayıcıyı sentetik örneklerde dene. Presidio'yu ve düz düzenli
     ifadeleri karşılaştır; yakalanan ve kaçan sayısını ver.
-11. İstem zehirleme: örnek paketin SKILL.md ya da examples/ dosyasına "beyan dışı
+12. İstem zehirleme: örnek paketin SKILL.md ya da examples/ dosyasına "beyan dışı
     aracı çağır" türünden gizli bir talimat koy; modelin buna uyup uymadığını ve
     çalışma zamanında beyan dışı çağrıyı reddeden basit bir kapının bunu durdurup
     durdurmadığını ölç.
-12. LeRobot: küçük bir açık LeRobotDataset'i indirip yükle; robot_profile.yaml için
+13. LeRobot: küçük bir açık LeRobotDataset'i indirip yükle; robot_profile.yaml için
     gereken alanların (eklem sayısı, kamera adları, kare hızı) veri setinin kendi
     meta verisinden okunup okunamadığını yaz.
 

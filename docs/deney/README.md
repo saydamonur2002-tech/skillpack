@@ -5,6 +5,7 @@
 - `depo-koli-ayirma/` — taslak Bölüm 4.3'teki örneğin küçültülmüş hâli. Yalnız sentetik veri içerir. `skillpack.yaml` taslak alanların küçük bir alt kümesidir; şema henüz yok.
 - `beceri_olcumu.py` — aynı görevi becerisiz ve beceriyle küçük yerel modelde çalıştırır, doğruluğu deterministik referansla karşılaştırır.
 - `iptal_tatbikati.py` — yerel bir TUF deposunda iptal listesi yayımlar; imzasız değişiklik, geri sarma ve dondurma saldırılarını dener.
+- `ince_ayar.py` — betiğin etiketlediği sentetik kolilerle küçük modele LoRA ince ayarı yapar; öncesini ve sonrasını ölçer. Ek gereksinim: `torch`, `transformers`, `peft`.
 
 ```sh
 pip install skills-ref "tuf>=7" "securesystemslib[crypto]" llama-cpp-python

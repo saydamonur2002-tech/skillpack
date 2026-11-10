@@ -55,31 +55,41 @@ A. Kural uygulama ölçümü (asıl iş)
    Aradığım şey şu eğri: token arttıkça doğruluk nerede yükseliyor, nerede
    düzleşiyor, nerede model kendini tekrar etmeye başlıyor. Bağlam penceresini de
    bütçeye göre büyüt; kesilme yüzünden düşen doğruluğu model hatası sayma.
-7. Her satır için şunları raporla: doğruluk ve %95 güven aralığı, hata türü dağılımı
+7. İnce ayar kolu. docs/deney/ince_ayar.py, betiğin etiketlediği 640 koliyle 1.5B
+   modele tek turluk LoRA eğitimi yaptı; taze kolilerde doğruluk yalnız %42'ye çıktı
+   ve kayıp hâlâ düşüyordu. Bunu düzgün ölç: örnek sayısını (ör. 500, 2000, 8000) ve
+   tur sayısını değiştirerek öğrenme eğrisini çıkar; 1.5B ve 7B'yi karşılaştır;
+   istemde kural metni olan ve olmayan iki eğitimi ayrı tut. Eğitimde hiç görülmemiş
+   değerlerde (yeni şehir, yeni barkod biçimi, eşik çevresindeki ağırlıklar) doğruluğu
+   ayrı raporla; ezber ile kuralı öğrenmeyi bu ayırır. Son olarak bir kuralı değiştir
+   (ör. eşiği 25'ten 30 kg'a çek) ve modelin yeni kurala uyması için ne kadar yeni
+   örnek ve süre gerektiğini, betikte aynı değişikliğin tek satır olduğunu not ederek
+   yaz.
+8. Her satır için şunları raporla: doğruluk ve %95 güven aralığı, hata türü dağılımı
    (öncelik hatası, eşik hatası, biçim hatası, uydurma), görev başına girdi ve çıktı
    tokenı, süre, tok/s. Güç ölçebiliyorsan (GPU'da nvidia-smi, CPU'da RAPL) görev
    başına Wh ekle ve ölçüm sınırını yaz; ölçemiyorsan tahmin uydurma, [EKSİK] yaz.
 
 B. İlk denemede atlanan halkalar
 
-8. Anahtarsız imzalama: bir GitHub Actions iş akışında OIDC ile docs/deney/
+9. Anahtarsız imzalama: bir GitHub Actions iş akışında OIDC ile docs/deney/
    depo-koli-ayirma dizinini model-signing ya da cosign ile imzala, imzayı ayrı bir
    makinede doğrula. Bu adım depoya iş akışı dosyası eklemeyi gerektirir; eklemeden
    önce bana sor.
-9. İki makine arası doğrulama: paketi bir yerde imzala, imza ve paketi başka bir
+10. İki makine arası doğrulama: paketi bir yerde imzala, imza ve paketi başka bir
    makineye taşı, orada temiz kurulumla doğrula. Gereken adımları tekrarlanabilir
    biçimde yaz.
-10. İçerik adresli dağıtım: aynı paketi IPFS (kubo) ve bir OCI kaydı (oras) üzerinden
+11. İçerik adresli dağıtım: aynı paketi IPFS (kubo) ve bir OCI kaydı (oras) üzerinden
    yayımlayıp geri çek; özetin değişmediğini göster. Hangisinin daha az iş çıkardığını
    söyle.
-11. PII taraması: T.C. kimlik no (sağlama basamağıyla), telefon, e-posta, IBAN ve
+12. PII taraması: T.C. kimlik no (sağlama basamağıyla), telefon, e-posta, IBAN ve
     plaka için bir tarayıcıyı sentetik örneklerde dene. Presidio'yu ve düz düzenli
     ifadeleri karşılaştır; yakalanan ve kaçan sayısını ver.
-12. İstem zehirleme: örnek paketin SKILL.md ya da examples/ dosyasına "beyan dışı
+13. İstem zehirleme: örnek paketin SKILL.md ya da examples/ dosyasına "beyan dışı
     aracı çağır" türünden gizli bir talimat koy; modelin buna uyup uymadığını ve
     çalışma zamanında beyan dışı çağrıyı reddeden basit bir kapının bunu durdurup
     durdurmadığını ölç.
-13. LeRobot: küçük bir açık LeRobotDataset'i indirip yükle; robot_profile.yaml için
+14. LeRobot: küçük bir açık LeRobotDataset'i indirip yükle; robot_profile.yaml için
     gereken alanların (eklem sayısı, kamera adları, kare hızı) veri setinin kendi
     meta verisinden okunup okunamadığını yaz.
 

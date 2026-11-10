@@ -6,7 +6,9 @@ class AppConstants {
   const AppConstants._();
 
   /// Firebase AI Logic model kimliği (anahtar değil).
-  static const String geminiModel = 'gemini-2.5-flash';
+  ///
+  /// gemini-2.5-flash yeni projelerde kapanmış durumda; güncel kısa model.
+  static const String geminiModel = 'gemini-3.5-flash-lite';
 
   /// Paketlenmiş temel kural seti (Skillpack).
   static const String defaultSkillsAsset = 'assets/configs/default_skills.json';

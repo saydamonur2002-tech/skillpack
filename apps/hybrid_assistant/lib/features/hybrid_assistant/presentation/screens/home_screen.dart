@@ -38,6 +38,14 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
+  void _logResult(AssistantResult result) {
+    _log('kaynak: ${result.source.name}');
+    final detail = result.errorDetail;
+    if (detail != null && detail.isNotEmpty) {
+      _log('bulut: $detail');
+    }
+  }
+
   void _log(String line) {
     setState(() {
       _logs.insert(0, '${TimeOfDay.now().format(context)}  $line');
@@ -70,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
             _result = continued;
             _status = continued.engineStatus;
           });
-          _log('kaynak: ${continued.source.name}');
+          _logResult(continued);
           return;
         }
         setState(() {
@@ -91,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _result = result;
         _status = result.engineStatus;
       });
-      _log('kaynak: ${result.source.name}');
+      _logResult(result);
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -229,6 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 StatusCard(
                   status: _status,
                   firebaseReady: widget.repository.firebaseReady,
+                  cloudError: _result?.errorDetail != null,
                 ),
                 if (kDebugMode && widget.appCheckDebugToken != null) ...[
                   const SizedBox(height: 12),

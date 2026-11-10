@@ -8,14 +8,20 @@ class StatusCard extends StatelessWidget {
     super.key,
     required this.status,
     required this.firebaseReady,
+    this.cloudError = false,
   });
 
   final EngineStatus status;
   final bool firebaseReady;
 
+  /// Bulut çağrısı hata verdi. Ağ durumu değil.
+  final bool cloudError;
+
   @override
   Widget build(BuildContext context) {
-    final (label, color) = switch (status) {
+    final (label, color) = cloudError
+        ? ('Bulut hatası', const Color(0xFFC4A35A))
+        : switch (status) {
       EngineStatus.localActive => (
           'Lokal Motor Aktif',
           const Color(0xFF7CB89A),

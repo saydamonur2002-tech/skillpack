@@ -130,12 +130,14 @@ class AssistantRepository {
         tokensUsed: explanation.totalTokens,
         engineStatus: EngineStatus.geminiConnected,
       );
-    } catch (_) {
+    } catch (error) {
+      final detail = error.toString();
       return AssistantResult(
         source: AssistantSource.offlineFallback,
         title: 'Bulut hatası — yedek',
-        body: connectivityGuard.fallbackMessage(localRuleMessage: localMessage),
+        body: '${connectivityGuard.fallbackMessage(localRuleMessage: localMessage)}\n\n$detail',
         ruleId: ruleId,
+        errorDetail: detail,
         engineStatus: EngineStatus.offline,
       );
     }
@@ -179,6 +181,7 @@ class AssistantResult {
     this.pendingLocalSummary,
     this.pendingQuery,
     this.tokensUsed,
+    this.errorDetail,
   });
 
   final AssistantSource source;
@@ -191,4 +194,7 @@ class AssistantResult {
   final String? pendingLocalSummary;
   final String? pendingQuery;
   final int? tokensUsed;
+
+  /// Bulut çağrısı düşerse yutulan istisnanın metni. Ağ kopukluğu değil.
+  final String? errorDetail;
 }

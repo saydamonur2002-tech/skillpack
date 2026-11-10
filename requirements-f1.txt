@@ -1,0 +1,17 @@
+# F1 referans kütüphaneleri. Bu dosya CI'da kurulmaz.
+# Sürüm tavanı major'dur. PyPI okuması: 10 Kasım 2026.
+# ORAS ve Gazebo pip paketi değildir. python-tuf F4'e bırakıldı.
+# lerobot torch çeker; iskelet onu çalıştırmaz, satır bilinçli olarak kapalıdır.
+
+jsonschema>=4,<5
+check-jsonschema>=0.39,<1
+sigstore>=4,<5
+model-signing>=1,<2
+in-toto-attestation>=0.9,<1
+presidio-analyzer>=2,<3
+presidio-anonymizer>=2,<3
+Faker>=40,<41
+mujoco>=4,<5
+
+# lerobot>=0.4,<1
+# tuf>=7,<8

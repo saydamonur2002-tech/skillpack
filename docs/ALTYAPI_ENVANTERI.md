@@ -78,6 +78,27 @@ Görev: bir koliyi beş kurala göre rampaya atamak. Kurallar sıralıdır, ilk 
 
 Taslak Bölüm 13, "kuralların deterministik kısmını betiklere taşımak" maddesini bir risk azaltma yolu olarak anar. Bu ölçüm, maddenin varsayılan tasarım kuralı olmasını destekler `[VARSAYIM]`: kural motoru kararı verir; model girdiyi yapılandırır, tanı kartını yazar ve öğretme döngüsünde taslak kural önerir. Bu öneri ek ölçümle sınanmalıdır ([EK_TEST_ISTEMI.md](EK_TEST_ISTEMI.md)).
 
+### 4.5 Ek turlar: token bütçesi ve ince ayar
+
+İlk ölçümden sonra iki ek deneme yapıldı `[VERİ]`.
+
+**Token bütçesi.** Qwen2.5 1.5B'ye biçim zorlaması olmadan 600 token çıktı sınırı verildi (`beceri_olcumu.py --kip serbest`). Doğruluk 4/20'den 1/20'ye düştü; model görev başına ortalama 342 token harcadı ve kural metnini tekrar etti. 7B için aynı tur yarıda kesildi; sonucu yoktur `[EKSİK]`.
+
+**Betikle etiketlenmiş veriyle ince ayar.** Qwen2.5 1.5B, deterministik betiğin etiketlediği 640 sentetik koliyle LoRA ince ayarı gördü ([deney/ince_ayar.py](deney/ince_ayar.py)). İstemde kural metni yoktur; model kuralı yalnız örneklerden çıkarmak zorundadır. Eğitim: 1 tur, 160 adım, 4'lük parti, 18,5M eğitilen parametre (%1,18), CPU'da 15,6 dakika. Kayıp 2,39'dan yaklaşık 0,14'e indi.
+
+**Tablo E2b. İnce ayar öncesi ve sonrası doğruluk (istemde kural yok)** `[VERİ]`
+
+| Sınama kümesi | Önce | Sonra |
+|---|---|---|
+| İlk denemenin 20 kolisi | 0/20 | 4/20 |
+| 200 taze koli, eğitimle aynı dağılım | 0/200 | 83/200 (%42) |
+| 80 koli, eğitimde görülmemiş şehir ve barkod biçimi | 0/80 | 29/80 (%36) |
+
+- "Önce" satırındaki sıfır beklenir: kural ne istemde ne ağırlıklarda vardır.
+- En sık hata, ağır kolinin "insan" rampasına atanmasıdır (200 taze kolide 60 kez). Model, barkod kuralı ile ağırlık kuralını ayıramamıştır.
+- Bu eğitim küçüktür: tek tur, 640 örnek, ayar araması yok; kayıp hâlâ düşüyordu. Sonuç "ince ayar işe yaramaz" anlamına gelmez; "bu kadar küçük bir eğitim yetmez" anlamına gelir. Daha uzun eğitim, daha çok örnek ve 7B model denenmedi `[EKSİK]`.
+- Aynı işi yapan betik üç kümede de hatasızdır, çünkü etiketleri o üretir.
+
 ## 5. Envanter: canlı parçalar
 
 GitHub kayıtları 10 Kasım 2026'da okundu `[VERİ]`. "Denendi" sütunu bu çalışmayı gösterir. Bir parçanın ne işe yaradığına dair açıklamalar, denenmeyen satırlarda proje belgelerinden değil genel bilgiden gelir `[VEKİL]`.

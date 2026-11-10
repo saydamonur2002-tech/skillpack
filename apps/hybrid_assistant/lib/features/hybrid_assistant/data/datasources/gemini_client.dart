@@ -1,6 +1,7 @@
 import 'package:firebase_ai/firebase_ai.dart';
 
 import '../../../../core/constants.dart';
+import '../../domain/services/privacy_guard.dart';
 
 /// Gemini bağlantısı.
 ///
@@ -8,7 +9,7 @@ import '../../../../core/constants.dart';
 /// üzerinden gider; istekleri yalnız doğrulanmış uygulama yapabilir.
 abstract class GeminiClient {
   Future<GeminiExplanation> explain({
-    required String query,
+    required String figures,
     required String localDecisionSummary,
     int maxOutputTokens = 256,
   });
@@ -45,17 +46,19 @@ class FirebaseAiGeminiClient implements GeminiClient {
 
   @override
   Future<GeminiExplanation> explain({
-    required String query,
+    required String figures,
     required String localDecisionSummary,
     int maxOutputTokens = 256,
   }) async {
+    final safeFigures = PrivacyGuard.mask(figures);
+    final safeDecision = PrivacyGuard.mask(localDecisionSummary);
     final response = await _model.generateContent(
       [
         Content.text(
           'You explain a local rule-engine decision. '
           'Do not invent a new decision. Keep the answer short.\n'
-          'User query: $query\n'
-          'Local decision: $localDecisionSummary',
+          'Device figures:\n$safeFigures\n'
+          'Local decision: $safeDecision',
         ),
       ],
       generationConfig: GenerationConfig(maxOutputTokens: maxOutputTokens),
@@ -79,8 +82,8 @@ class FirebaseAiGeminiClient implements GeminiClient {
       Content.text(
         'Return ONLY a JSON object that conforms to HybridAssistantRulePack. '
         'No markdown. No executable code. No scripts. Data only.\n'
-        'Instruction: $instruction\n'
-        'Current rules JSON:\n$currentRulesJson',
+        'Instruction: ${PrivacyGuard.mask(instruction)}\n'
+        'Current rules JSON:\n${PrivacyGuard.mask(currentRulesJson)}',
       ),
     ]);
     return response.text?.trim() ?? '';
@@ -91,13 +94,14 @@ class FirebaseAiGeminiClient implements GeminiClient {
 class StubGeminiClient implements GeminiClient {
   @override
   Future<GeminiExplanation> explain({
-    required String query,
+    required String figures,
     required String localDecisionSummary,
     int maxOutputTokens = 256,
   }) async {
     return GeminiExplanation(
       text:
-          '[stub] Yerel karar: $localDecisionSummary. Firebase AI Logic bağlanınca gerçek açıklama gelir.',
+          '[stub] Yerel karar: ${PrivacyGuard.mask(localDecisionSummary)}. '
+          'Ölçüm:\n${PrivacyGuard.mask(figures)}',
       promptTokens: 0,
       candidatesTokens: 0,
     );

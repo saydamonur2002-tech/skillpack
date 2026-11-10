@@ -15,12 +15,12 @@ class AppCheckDebugTokenBanner extends StatelessWidget {
     if (!kDebugMode) return const SizedBox.shrink();
 
     final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 4),
       decoration: BoxDecoration(
-        color: const Color(0x33203028),
+        color: scheme.surfaceContainerLow,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFF3A4A44)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -28,7 +28,7 @@ class AppCheckDebugTokenBanner extends StatelessWidget {
           Text(
             'App Check debug anahtarı',
             style: theme.textTheme.labelLarge?.copyWith(
-              color: const Color(0xFFD5E8DE),
+              color: scheme.onSurface,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -37,14 +37,14 @@ class AppCheckDebugTokenBanner extends StatelessWidget {
             'Kopyalayıp Firebase konsolunda App Check debug token '
             'listesine ekleyin.',
             style: theme.textTheme.bodySmall?.copyWith(
-              color: const Color(0xFF8FA39A),
+              color: scheme.onSurfaceVariant,
             ),
           ),
           const SizedBox(height: 8),
           SelectableText(
             token,
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: const Color(0xFFE7F0EC),
+              color: scheme.onSurface,
               fontFamily: 'monospace',
               letterSpacing: 0.2,
             ),

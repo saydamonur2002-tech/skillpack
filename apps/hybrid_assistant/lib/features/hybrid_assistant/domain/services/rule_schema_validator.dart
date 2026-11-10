@@ -9,6 +9,36 @@ class RuleSchemaValidator {
     'rules',
   };
 
+  static const allowedFields = {
+    'intent',
+    'query',
+    'category',
+    'confidence',
+    'battery_level',
+    'is_charging',
+    'is_plugged',
+    'battery_temp_c',
+    'health',
+    'power_save',
+    'thermal_supported',
+    'thermal_status',
+    'low_memory',
+    'available_bytes',
+    'is_metered',
+  };
+
+  static const allowedOps = {
+    'eq',
+    'contains',
+    'starts_with',
+    'gte',
+    'lte',
+    'gt',
+    'lt',
+  };
+
+  static const allowedSettings = {'battery_saver', 'display', 'storage'};
+
   static const forbiddenKeys = {
     'code',
     'script',
@@ -101,14 +131,7 @@ class RuleSchemaValidator {
 
     final when = raw['when'];
     if (when is Map<String, dynamic>) {
-      _rejectForbidden(when, 'rules[$index].when', errors);
-      if (!{'intent', 'query', 'category', 'confidence'}
-          .contains(when['field'])) {
-        errors.add('rules[$index].when.field geçersiz');
-      }
-      if (!{'eq', 'contains', 'starts_with', 'gte', 'lte'}.contains(when['op'])) {
-        errors.add('rules[$index].when.op geçersiz');
-      }
+      _validateWhen(when, 'rules[$index].when', errors);
     }
 
     final then = raw['then'];
@@ -118,6 +141,41 @@ class RuleSchemaValidator {
           .contains(then['action'])) {
         errors.add('rules[$index].then.action geçersiz');
       }
+      final settings = then['settings'];
+      if (settings != null) {
+        if (settings is! List ||
+            settings.any((item) => !allowedSettings.contains(item))) {
+          errors.add('rules[$index].then.settings geçersiz');
+        }
+      }
+    }
+  }
+
+  void _validateWhen(Map<String, dynamic> when, String path, List<String> errors) {
+    _rejectForbidden(when, path, errors);
+    final all = when['all'];
+    final any = when['any'];
+    if (all != null || any != null) {
+      final list = all ?? any;
+      if (list is! List || list.isEmpty) {
+        errors.add('$path bileşik koşul boş');
+        return;
+      }
+      for (var i = 0; i < list.length; i++) {
+        final child = list[i];
+        if (child is Map<String, dynamic>) {
+          _validateWhen(child, '$path[$i]', errors);
+        } else {
+          errors.add('$path[$i] nesne olmalı');
+        }
+      }
+      return;
+    }
+    if (!allowedFields.contains(when['field'])) {
+      errors.add('$path.field geçersiz');
+    }
+    if (!allowedOps.contains(when['op'])) {
+      errors.add('$path.op geçersiz');
     }
   }
 

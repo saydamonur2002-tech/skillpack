@@ -9,6 +9,8 @@ Yerel sunucuda öğretilen, açık, taşınabilir ve imzalı ajan becerileri iç
 
 Tasarım duruşu muhafazakârdır: ajanlar tanı ve öneri üretir, kararı insan verir; ham müşteri verisi pakete girmez; bulut varsayılan olarak kapalıdır.
 
+Tasarım hedefleri üç çerçevede toplanır: orta segment donanımda çalışabilirlik, görev başına enerji verimliliği ve açık modelle gündelik hayat etkisi. Kabul ölçütü teknik taslağın [Bölüm 2.3](docs/TEKNIK_PROJE_v0.1.md#23-tasarım-hedefleri-üç-çerçeve) başlığındadır.
+
 Bu depo bir şirket, ürün veya pazar yeri değildir. Ticari olmayan, bireysel bir açık kaynak / açık standart katkısıdır.
 
 ## Durum

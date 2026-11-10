@@ -7,6 +7,7 @@ Teknik Proje Dokümanı — Taslak v0.1
 Agent Skills (`SKILL.md`) için fiziksel gösterim/politika uzantısı, merkezsiz dağıtım, vakıf imzası ve iptal listesi, telefon ↔ yerel sunucu ↔ bulut yönlendirmesi
 
 - Tarih: 9 Kasım 2026
+- Güncelleme: 10 Kasım 2026 (Bölüm 2.3 eklendi; önceki bölümlerin anlamı aynıdır)
 - Öneren: gülümse (bireysel katkıcı; açık kaynak / vakıf modeli)
 - Hazırlık desteği: Grok Bot
 - Hedef okur: teknik değerlendiriciler, Linux Foundation AAIF çalışma grupları, hibe değerlendiricileri
@@ -16,7 +17,7 @@ Kaynak etiketleri:
 - `[VERİ]` birincil/doğrulanmış kaynak
 - `[VEKİL]` ikincil kaynak veya yaklaşık gösterge
 - `[VARSAYIM]` tasarım/ekip varsayımı
-- `[HESAP]` dosyalardaki hesap çıktısı
+- `[HESAP]` dosyalardaki hesap çıktısı veya bu dokümanda gösterilen aritmetik
 - `[EKSİK]` bulunamadı / doğrulanmadı
 
 **Durum:** tartışma taslağı. Bu doküman bir şirket ya da ürün planı değildir; açık standart ve açık kaynak katkı önerisidir. Belirtilen hiçbir kuruluşla resmî ilişki yoktur.
@@ -30,6 +31,7 @@ Bu dosya, 9 Kasım 2026 tarihli taslağın temiz Markdown dönüşümüdür. Anl
 - [Özet](#özet)
 - [1. Problem ve boşluk](#1-problem-ve-boşluk)
 - [2. Hedefler ve hedef olmayanlar](#2-hedefler-ve-hedef-olmayanlar)
+  - [2.3 Tasarım hedefleri (üç çerçeve)](#23-tasarım-hedefleri-üç-çerçeve)
 - [3. Sistem mimarisi](#3-sistem-mimarisi)
 - [4. Beceri paketi spesifikasyonu (taslak "skillpack" v0.1)](#4-beceri-paketi-spesifikasyonu-taslak-skillpack-v01)
 - [5. Öğretme döngüsü](#5-öğretme-döngüsü)
@@ -156,6 +158,82 @@ Bu çalışmanın hedeflediği boşluk beş maddeye indirgenebilir. Her biri ayr
 - Klinik teşhis, tıbbi cihaz işlevi ya da düzenlenmiş güvenlik işlevi sertifikasyonu. Sağlık alanında kapsam idari/teknik iş akışlarıyla sınırlıdır.
 - Bir şirket kurmak. Proje açık kaynak / vakıf modeliyle ilerler (bkz. Bölüm 14).
 
+### 2.3 Tasarım hedefleri (üç çerçeve)
+
+Bölüm 2.1'deki H1–H7, standardın üretilecek çıktılarıdır. Bu alt bölüm, bir paketin **standart profile** girebilmesi için üç çerçeveyi sabitler. Model boyutu, tok/s ve güç bandı öneridir `[VARSAYIM]`. Enerji kazancının kendisi henüz ölçülmedi `[EKSİK]`. Telefon, Mac mini sınıfı yerel sunucu ve isteğe bağlı buluttan oluşan tipik katman donanımı Bölüm 3.1'de durur. Buradaki referans, standart profilin ölçüm tezgâhıdır.
+
+**1. Orta segment donanımda çalışabilirlik.** Paket, tek bir orta segment GPU sunucusunda çalışabilmelidir. Referans donanım: 24–48 GB belleğe sahip tek GPU (RTX 4090 / 5090 veya L40S sınıfı), kart gücü kabaca 300–500 W `[VARSAYIM]`. Her paket, birlikte çalıştığı asgari model boyutunu beyan eder. Beceri uygulamasının hedefi yaklaşık 8B sınıfı bir açık modeldir `[VARSAYIM]`. Etkileşimli kullanım için önerilen alt hız yaklaşık 40 tok/s'tir `[VARSAYIM]`. 70B ve üzeri yoğun modellerde sınır muhakemesi (frontier) yerel kapsamın dışındadır; bu işler isteğe bağlı bulut katmanına gider (Bölüm 3.1, Katman 3).
+
+**Tablo 3a. Referans kartta tek kullanıcılı üretim hızı (decode)**
+
+| Kurulum | Hız | Etiket / kaynak |
+|---|---|---|
+| Llama 3.1 8B, RTX 4090 24 GB, llama.cpp GGUF Q4_K_M, batch 1 | 148 tok/s | `[VERİ]` [quantized.uk ölçümleri](https://quantized.uk/benchmarks/) |
+| Aynı kart ve model, vLLM AWQ INT4 | 218 tok/s | `[VERİ]` quantized.uk |
+| Aynı kart ve model, ExLlamaV2 EXL2 4,65 bpw | 235 tok/s | `[VERİ]` quantized.uk |
+| Llama 3.1 8B, RTX 4090, llama.cpp / vLLM (Temmuz 2026) | 162 / 185 tok/s | `[VERİ]` [Plugsky yerel çıkarım ölçümü](https://plugsky.com/local-inference-benchmark) |
+| Qwen2.5 32B / Qwen3 32B, RTX 4090, llama.cpp Q4_K_M | 44 / 42 tok/s | `[VERİ]` quantized.uk |
+| Qwen 2.5 32B, RTX 4090, vLLM AWQ INT4, batch 1 | 65 tok/s | `[VEKİL]` [GigaGPU ölçümü](https://gigagpu.com/rtx-4090-24gb-qwen-32b-benchmark/) (barındırıcının kendi sayfası, Mayıs 2026) |
+| Llama 3.3 70B Q4, RTX 4090 24 GB, Ollama | 5,1 tok/s | `[VERİ]` Plugsky |
+| Llama 3 70B Q4_K_M, tek 48 GB kart (A6000 14,6; L40S 15,3; RTX 6000 Ada 18,4 tok/s) | yaklaşık 15–18 tok/s | `[VEKİL]` [GPU-Benchmarks-on-LLM-Inference](https://github.com/XiongjieDai/GPU-Benchmarks-on-LLM-Inference) (llama.cpp, Llama 3; 2026 yeniden ölçümü değil) |
+
+quantized.uk satırları 4-bit civarıdır (Q4_K_M, AWQ INT4, EXL2 yaklaşık 4,65 bpw), tek dizidir ve üretim hızıdır; ön-doldurma (prefill) ayrı raporlanmaz `[VERİ]`. Plugsky aynı kartta Llama 3.1 8B için llama.cpp 162 tok/s ve vLLM 185 tok/s verir; tepe bellek yaklaşık 5,8–5,9 GB'dır `[VERİ]`. Sayfanın genel yöntem satırı GPU ölçümlerini FP16 diye yazar, 8B satırı nicemlemeyi ayrıca belirtmez. Kayıtlı bellek 4-bit ile uyumludur `[VEKİL]`. 70B Q4, 24 GB'ta 5,1 tok/s ile yaklaşık 40 tok/s etkileşim önerisinin altındadır `[VERİ]` / `[VARSAYIM]`. 48 GB sınıfı tek kartta (A6000, L40S, RTX 6000 Ada) llama.cpp ölçümü yaklaşık 15–18 tok/s'tir; bu, 10–20 tok/s vekil bandının içindedir `[VEKİL]`. İki hız da etkileşim önerisinin altındadır. ≥70B yoğun model yerel standart profilin dışında kalır ve isteğe bağlı bulut katmanına gider.
+
+8B satırları (148–235 tok/s), yaklaşık 40 tok/s önerisinin birkaç kat üstündedir `[HESAP]`. Yaklaşık 32B yoğun model 42–65 tok/s ile eşiğin kıyısındadır: alt uç quantized.uk llama.cpp (42 ve 44) `[VERİ]`, üst uç barındırıcı AWQ ölçümü (65) `[VEKİL]`. Beceri uygulamasının hedefi bu yüzden yaklaşık 8B'de tutulur `[VARSAYIM]`.
+
+**2. Enerji verimliliği.** Bu çerçeve bir watt tavanı koymaz. Birincil ölçü, 1.000 token başına enerji değil, **tamamlanan görev başına** Wh ve token'dır. Paket, aynı görevin iki ölçümünü raporlamalıdır: (a) becerisiz genel bir ajan, (b) paketlenmiş beceri, küçük bir yerel modelin üzerinde. Raporda token, süre ve tahmini Wh bulunur.
+
+Yerel 8B decode için sabit 400 W `[VARSAYIM]` (300–500 W bandının içi) ve yalnız üretim hızı alındığında:
+
+Wh/1000 decode token = P / (3,6 × tok/s) `[HESAP]`.
+
+- 148 tok/s → 400 / (3,6 × 148) ≈ 0,75 Wh/1000
+- 218 tok/s (vLLM, quantized.uk) → ≈ 0,51 Wh/1000
+- 185 tok/s (vLLM, Plugsky) → ≈ 0,60 Wh/1000
+
+vLLM aralığı yaklaşık 0,51–0,60 Wh/1000 decode token'dır `[HESAP]`. Hesap, duvar gücü çarpı üretim süresidir. Boşta güç, veri merkezi ek yükü (PUE), ön-doldurma ve yarım kalan görev bu sayının dışındadır.
+
+Aşağıdaki sayılar başka ölçüm sınırlarına aittir. Görev başına tasarruf bunlardan çıkmaz:
+
+- Google, medyan Gemini Apps metin istemi için 0,24 Wh verir. Sınır tam yığındır (hızlandırıcı, ana makine, boşta kapasite, PUE); ölçüm Mayıs 2025'tir `[VERİ]` ([Google Cloud blogu](https://cloud.google.com/blog/products/infrastructure/measuring-the-environmental-impact-of-ai-inference/), [arXiv:2508.15734](https://arxiv.org/abs/2508.15734)).
+- Sam Altman, ortalama bir ChatGPT sorgusu için yaklaşık 0,34 Wh yazar. Yöntem yayımlanmamıştır `[VEKİL]` ([The Gentle Singularity](https://blog.samaltman.com/the-gentle-singularity)).
+- Ajan görevleri tek turdan çok daha fazla token yer. OpenHands ve SWE-bench Verified çalışması, ajanik kodlama görevlerinin tipik tek turlu muhakemeden yaklaşık 3500 kat, çok turlu sohbetten yaklaşık 1200 kat fazla token tükettiğini yazar. Fark, her turda yeniden gönderilen girdi bağlamındadır `[VERİ]` ([arXiv:2604.22750](https://arxiv.org/abs/2604.22750)).
+- Artificial Analysis Coding Agent Index'te GitHub Copilot Fusion görev başına yaklaşık 7,2M token kullanır `[VERİ]` ([AA yazısı](https://artificialanalysis.ai/articles/github-copilot-fusion-orchestrates-anthropic-and-openai-models-to-balance-performance-and-cost)). Karşılaştırma sayfası Fusion (max) için 7,34M token/görev listeler `[VERİ]` ([Claude Code ve Copilot karşılaştırması](https://artificialanalysis.ai/agents/coding-agents/comparisons/claude-code-vs-github-copilot)).
+
+Ajan izi ön-doldurma ağırlıklıdır: aynı bağlam her turda yeniden okunur. 0,75 Wh/1000 sayısı yalnız decode'dur. Görev başına Wh, bu cetvelden türetilemez. Becerinin enerji kazandırdığı bir hipotezdir ve ölçülmedi `[EKSİK]`. Ölçüm düzeneği (benchmark harness) yol haritasında F2'dedir ([ROADMAP.md](../ROADMAP.md)).
+
+İsteğe bağlı alanlar, Agent Skills `metadata` alanının dizge→dizge kuralıyla ve Bölüm 4.1'deki ek dosya tercihiyle uyumludur. Kanonik yer, `skillpack.yaml` içinde `runtime` ile yan yana duran isteğe bağlı `efficiency` bloğudur. Değerler dizgedir; aynı dizgeler istenirse `metadata`'ya kopyalanır. Zorunlu iki anahtar (`skillpack-spec`, `skillpack-manifest`) durur. Alan adları taslaktır `[VARSAYIM]`.
+
+```yaml
+efficiency:                              # isteğe bağlı; Bölüm 2.3
+  min_model_size: "8B"                   # asgari açık model
+  tokens_per_task: ""                    # ölçülmüş girdi+çıktı, dizge
+  wh_per_task: ""                        # ölçülmüş tahmini Wh/görev, dizge
+  method: ""                             # donanım, çalışma zamanı, nicemleme, görev
+```
+
+Yalnız `SKILL.md` okuyan bir ajana göstermek için aynı dizgeler:
+
+```yaml
+metadata:
+  skillpack-min-model-size: "8B"
+  skillpack-tokens-per-task: ""
+  skillpack-wh-per-task: ""
+  skillpack-measure-method: ""
+```
+
+**3. Açık model ve gündelik hayat etkisi.** Paket, ağırlıkları indirilebilen bir açık modelde çalışmalıdır. Ham veri yerelde kalır, çalışma çevrim dışı olabilir, token başına ücret yoktur. Usta (fabrika ustası, teknisyen) bir kez öğretir; başkası paketi yeniden kullanır (Bölüm 5). Bulut isteğe bağlıdır ve varsayılan kapalıdır (Bölüm 2.2 ve 3.3).
+
+Dürüst sınır: açık ağırlıklı modeller, sınır modellerin gerisindedir. 10 Kasım 2026 okumasında Artificial Analysis Intelligence Index'te en yüksek kapalı model Claude Fable 5.2 (Max) 65, en iyi açık ağırlık Kimi K3.1 Pro 46'dır `[VERİ]` ([Fable 5.2](https://artificialanalysis.ai/models/claude-fable-5-2), [Kimi K3.1 Pro](https://artificialanalysis.ai/models/kimi-k3-1-pro)). Kimi K3.1 Pro 2,8T toplam ve 104B etkin parametrelidir; referans donanıma sığmaz `[VERİ]` (aynı model sayfası). Yerel boyutta skor yaklaşık 20'dir: AA ana sayfası Nanbeige4.3-33B için 20 yazar `[VERİ]` ([artificialanalysis.ai](https://artificialanalysis.ai/), 5 Kasım 2026 duyurusu, 10 Kasım 2026 okundu). 7 Kasım 2026 tarihli ikinci el okuma, Qwen3.8 27B (Xhigh) için 20,1 ve Nanbeige4.3-33B için 20,4 aktarır `[VEKİL]` ([GPUwerk](https://gpuwerk.com/blog/open-weight-model-leaderboard/)). Yeni ya da zor görev buluta gider. Tekrar eden görev yerelde, paketlenmiş beceriyle kalır.
+
+**Birleşik kabul ölçütü.** Bir beceri, aşağıdaki üçünü birlikte sağladığında standart profile girer:
+
+1. Referans donanımda çalışır ve asgari model boyutunu beyan eder.
+2. Aynı görevin ölçülmüş verim karşılaştırmasını raporlar: becerisiz genel ajan ve paketlenmiş beceri, küçük yerel model; token, süre, tahmini Wh.
+3. Açık ağırlıklı bir modelde çalışır; ham veri sahadan çıkmaz.
+
+Üç madde birlikte standart profilin tanımıdır. Bulut katmanı bu ölçütün yerine konmaz; yeni ve zor iş için isteğe bağlı kanal olarak durur. Eşikler öneridir `[VARSAYIM]`. İkinci maddenin göstereceği tasarruf henüz yoktur `[EKSİK]`.
+
 ---
 
 ## 3. Sistem mimarisi
@@ -176,7 +254,7 @@ Mimari, önceki "Yerel Tanı Sistemi" çalışmasının (salt-okur bağlayıcıl
 
 Kaynak: `platform_tarama/bosluk.md`; rapor (Bölüm 4.3–4.4); `mini_sunucu/ozet.csv`
 
-Önceki çalışmadaki vekil ölçümlere göre Mac mini M4'te Qwen2.5 7B ~22,2 token/s, 14B ~11,6 token/s `[VEKİL]` üretiyor. Gerçek iş yüküyle sahada ölçülmedi `[EKSİK]`. Tek işlevli ajanlar kısa, yapılandırılmış çıktı ürettiği için bu hızların yeterli olacağı bir `[VARSAYIM]`; referans uygulamada ilk ölçülecek konulardan biridir (Bölüm 12).
+Önceki çalışmadaki vekil ölçümlere göre Mac mini M4'te Qwen2.5 7B ~22,2 token/s, 14B ~11,6 token/s `[VEKİL]` üretiyor. Gerçek iş yüküyle sahada ölçülmedi `[EKSİK]`. Tek işlevli ajanlar kısa, yapılandırılmış çıktı ürettiği için bu hızların yeterli olacağı bir `[VARSAYIM]`; referans uygulamada ilk ölçülecek konulardan biridir (Bölüm 12). Standart profilin ölçüm tezgâhı ayrıdır: tek 24–48 GB GPU sunucusu ve yaklaşık 8B beceri hedefi Bölüm 2.3'tedir. Bu tablodaki Mac mini sınıfı, saha için daha hafif bir yerel örnektir.
 
 ### 3.2 Ajan hiyerarşisi
 
@@ -339,6 +417,7 @@ certification: { level: none }               # none | topluluk | vakif-dogrulanm
 | domain | Evet | Sektör, görev, dil; keşif ve yönlendirme için |
 | components | Evet | Prosedür, kurallar, testler, örnekler, isteğe bağlı fiziksel profil |
 | runtime | Evet | Asgari bağlam, model sınıfı, katman uygunluğu (edge/local/cloud) |
+| efficiency | Hayır | İsteğe bağlı dizgeler: asgari model boyutu, ölçülmüş token/görev, Wh/görev, ölçüm yöntemi (Bölüm 2.3). Aynı dizgeler `metadata` anahtarı olarak tekrarlanabilir |
 | capabilities | Evet | Araçlar, ağ, dosya sistemi, cihazlar, girdi veri sınıfları, bulut çıkışı |
 | human_in_loop | Evet | Öneri / tek tek onay / toplu onay; fiziksel hareket için ayrı kural |
 | privacy | Evet | `raw_customer_data: false` zorunlu; örnek türü; anonimleştirme raporu; isteğe bağlı diferansiyel gizlilik parametreleri |
@@ -606,7 +685,7 @@ Görev düzeyinde ayrıntılı ve "Başlamadı" işaretli plan bu depodaki [ROAD
 |---|---|---|---|
 | F0 — Hazırlık | A0–A2 | Spesifikasyon taslağı v0.1 yayımı; geri bildirim çağrısı; hukuki ön görüş (Bölüm 14) | En az bir dış teknik inceleme; yazılı hukuki görüş alındı |
 | F1 — Çekirdek | A2–A6 | Şemalar + doğrulayıcı CLI; Sigstore imza/doğrulama; iki dijital örnek paket | Paket uçtan uca imzalanıp başka bir makinede doğrulanıyor |
-| F2 — Yerel çalışma | A5–A9 | Yerel depo + yönlendirici + izin uygulama; telefon istemcisi; öğretme döngüsü prototipi | Geliştirici olmayan bir usta, yardımla bir beceriyi paketleyebiliyor |
+| F2 — Yerel çalışma | A5–A9 | Yerel depo + yönlendirici + izin uygulama; telefon istemcisi; öğretme döngüsü prototipi; görev başına verim düzeneği (Bölüm 2.3) | Geliştirici olmayan bir usta, yardımla bir beceriyi paketleyebiliyor |
 | F3 — Fiziksel profil | A8–A12 | `robot_profile` şeması; LeRobotDataset bağlantısı; koli ayırma simülasyon testi | Fiziksel paket simülasyonda kabul testlerini geçiyor |
 | F4 — Dağıtım ve iptal | A10–A14 | İndeks formatı; aynalar + IPFS; iptal listesi + TUF rolleri; iptal tatbikatı | Bir test paketinin iptali tüm pilot istemcilerde tespit ediliyor |
 | F5 — Pilot | A12–A18 | 2–3 gönüllü pilot saha; Bölüm 12'deki ölçümler | Ölçüm raporu; olay kayıtları |
@@ -616,7 +695,7 @@ Görev düzeyinde ayrıntılı ve "Başlamadı" işaretli plan bu depodaki [ROAD
 
 ## 12. Başarı ölçütleri
 
-Hedef değerler bilinçli olarak sayı içermiyor, çünkü taban ölçümü yok. İlk pilotta taban ölçülür, hedefler sonra belirlenir `[EKSİK]`.
+Hedef değerler bilinçli olarak sayı içermiyor, çünkü taban ölçümü yok. İlk pilotta taban ölçülür, hedefler sonra belirlenir `[EKSİK]`. Bir paketin standart profile girmesi Bölüm 2.3'teki üçlü kabul ölçütüyle önerilir. Buradaki liste, projenin pilot başarı ölçütleridir. Eşikler `[VARSAYIM]`; görev başına enerji kazancı `[EKSİK]`.
 
 **Tablo 18. Başarı ölçütleri**
 
@@ -793,5 +872,24 @@ Proje dosyaları: `beceri_standardi/` (`ozet.md`, `veri_tablosu.csv`, `kaynaklar
 | 32 | DPB görüşü: memur ve FSEK eserleri (AGÜ arşivi) |
 | 33 | Görüş: içerik üreticiliği / uygulama geliştiriciliği (KTÜ arşivi) |
 | 34 | Görüş: memurların ticari faaliyetleri (ÇŞB arşivi) |
+
+### B.3 Bölüm 2.3 ile eklenen kaynaklar
+
+Bağlantılar 10 Kasım 2026'da açıldı. Açılmayan bağlantı yoktur. İkinci el satırlar `[VEKİL]` olarak durur.
+
+**Tablo 23. Tasarım hedefleri kaynakları (erişim: 2026-11-10)**
+
+| # | Kaynak | Tarih / okuma | Etiket |
+|---|---|---|---|
+| 1 | [quantized.uk ölçümleri](https://quantized.uk/benchmarks/) — RTX 4090, Llama 3.1 8B ve ~32B | sayfa okuması 2026-11-10 | `[VERİ]` |
+| 2 | [Plugsky yerel çıkarım ölçümü](https://plugsky.com/local-inference-benchmark) — Temmuz 2026 | sayfa okuması 2026-11-10 | `[VERİ]` |
+| 3 | [GigaGPU, Qwen 2.5 32B AWQ](https://gigagpu.com/rtx-4090-24gb-qwen-32b-benchmark/) | Mayıs 2026; barındırıcı ölçümü | `[VEKİL]` |
+| 4 | [GPU-Benchmarks-on-LLM-Inference](https://github.com/XiongjieDai/GPU-Benchmarks-on-LLM-Inference) — Llama 3, 48 GB | llama.cpp tablosu; 2026 yeniden ölçümü değil | `[VEKİL]` |
+| 5 | [Google: AI çıkarımının çevresel etkisi](https://cloud.google.com/blog/products/infrastructure/measuring-the-environmental-impact-of-ai-inference/) ve [arXiv:2508.15734](https://arxiv.org/abs/2508.15734) | blog 2025-08-21; makale medyan 0,24 Wh | `[VERİ]` |
+| 6 | [Sam Altman, The Gentle Singularity](https://blog.samaltman.com/the-gentle-singularity) — ortalama sorgu 0,34 Wh | şirket beyanı, yöntem yok | `[VEKİL]` |
+| 7 | [arXiv:2604.22750](https://arxiv.org/abs/2604.22750) — OpenHands, SWE-bench Verified, token katları | HTML v3 okuması 2026-11-10 | `[VERİ]` |
+| 8 | [AA: Copilot Fusion](https://artificialanalysis.ai/articles/github-copilot-fusion-orchestrates-anthropic-and-openai-models-to-balance-performance-and-cost) ve [karşılaştırma sayfası](https://artificialanalysis.ai/agents/coding-agents/comparisons/claude-code-vs-github-copilot) | ~7,2M ve 7,34M token/görev | `[VERİ]` |
+| 9 | [AA: Claude Fable 5.2](https://artificialanalysis.ai/models/claude-fable-5-2) ve [Kimi K3.1 Pro](https://artificialanalysis.ai/models/kimi-k3-1-pro); [AA ana sayfası](https://artificialanalysis.ai/) | okuma 2026-11-10; 65 ve 46, Nanbeige4.3-33B 20 | `[VERİ]` |
+| 10 | [GPUwerk açık ağırlık özeti](https://gpuwerk.com/blog/open-weight-model-leaderboard/) — 27B / 33B ≈ 20 | 7 Kasım 2026 okuması | `[VEKİL]` |
 
 Not: Kaynak tablosundaki bazı rakamlar ikinci el aktarımdır (`[VEKİL]`). Birincil belgeyle doğrulanmadıkça karar girdisi olarak kullanılmamalıdır.

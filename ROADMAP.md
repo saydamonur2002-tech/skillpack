@@ -113,6 +113,7 @@ Yerel ortam:
 
 - [ ] Mini sunucuya Ollama (veya llama.cpp) kurulumunu belgelemek
 - [ ] Qwen2.5 7B (Q4, Apache-2.0) modelini kurmak ve ilk gecikme / token/s / bellek ölçümünü almak (Bölüm 12; taban henüz yok)
+- [ ] Görev başına verim için küçük bir ölçüm düzeneği (benchmark harness) yazmak (teknik taslak Bölüm 2.3, hedef 2): aynı görevi (a) becerisiz genel ajan ve (b) paketlenmiş beceriyle küçük yerel modelde çalıştırıp token, süre ve tahmini Wh kaydetmek. Durum: ⬜ Başlamadı
 - [ ] Kurulumun kurum kaynağı kullanmadan, kişisel/gönüllü donanımda yapıldığını netleştirmek
 
 Yerel depo servisi:

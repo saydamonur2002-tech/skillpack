@@ -1,0 +1,33 @@
+# Sentetik vakalar. Gerçek sınıf ya da öğrenci verisi değildir.
+cases:
+  - name: sınıfın çoğu yapmış
+    inputs: {class_size: 30, correct_count: 27}
+    expect: {outcome: ilerle, verdict: ok, values: {pct: 90, wrong_count: 3}}
+  - name: tam ölçütte
+    inputs: {class_size: 30, correct_count: 24}
+    expect: {outcome: ilerle, values: {pct: 80}}
+  - name: arada, işlem hatası
+    inputs: {class_size: 30, correct_count: 20, common_error: islem_hatasi}
+    expect: {outcome: kucuk_grup, verdict: warn}
+  - name: arada, soru anlaşılmamış
+    inputs: {class_size: 30, correct_count: 18, common_error: soru_anlasilmadi}
+    expect: {outcome: soruyu_yenile}
+  - name: tam alt sınırda yeniden öğretim yok
+    inputs: {class_size: 30, correct_count: 15, common_error: belirgin_degil}
+    expect: {outcome: kucuk_grup, values: {pct: 50}}
+  - name: düşük, işlem hatası
+    inputs: {class_size: 30, correct_count: 10, common_error: islem_hatasi}
+    expect: {outcome: yeniden_ogret, verdict: stop}
+  - name: düşük, kavram yanılgısı
+    inputs: {class_size: 30, correct_count: 8, common_error: kavram_yanilgisi}
+    expect: {outcome: yeniden_ogret_farkli, verdict: stop}
+  - name: sayılar tutarsız
+    inputs: {class_size: 20, correct_count: 25}
+    expect: {outcome: tutarsiz}
+  - name: hata türü bilinmiyor
+    inputs: {class_size: 30, correct_count: 20}
+    expect: {outcome: bilinmiyor, verdict: escalate}
+routing:
+  - utterance: "Kesirler kazanımında quiz yaptım, 30 kişiden 18'i doğru yaptı. Ne yapmalıyım?"
+  - utterance: "Yazılı sonuçlarına göre telafi gerekir mi?"
+  - utterance: "Bu konuyu tekrar anlatmalı mıyım?"

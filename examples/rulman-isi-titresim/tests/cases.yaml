@@ -1,0 +1,34 @@
+# Sentetik vakalar. Gerçek makine kaydı değildir.
+cases:
+  - name: serin ve sakin
+    inputs: {bearing_c: 45, ambient_c: 25, vib_mm_s: 1.8, abnormal_noise: false}
+    expect: {outcome: uygun, verdict: ok, values: {delta_c: 20}}
+  - name: ısı farkı uyarı sınırında, yağlama zamanında
+    inputs: {bearing_c: 50, ambient_c: 25, vib_mm_s: 2.0, abnormal_noise: false, grease_ok: true}
+    expect: {outcome: izle, verdict: warn}
+  - name: yalnız ses var, yağlama gecikmiş
+    inputs: {bearing_c: 40, ambient_c: 25, vib_mm_s: 1.0, abnormal_noise: true, grease_ok: false}
+    expect: {outcome: yagla, verdict: warn}
+  - name: titreşim uyarı sınırının hemen altında
+    inputs: {bearing_c: 40, ambient_c: 25, vib_mm_s: 4.4, abnormal_noise: false}
+    expect: {outcome: uygun}
+  - name: titreşim durdurma sınırında
+    inputs: {bearing_c: 40, ambient_c: 25, vib_mm_s: 7.1, abnormal_noise: false}
+    expect: {outcome: dur, verdict: stop}
+  - name: mutlak sıcaklık sınırı
+    inputs: {bearing_c: 92, ambient_c: 55, vib_mm_s: 1.0, abnormal_noise: false}
+    expect: {outcome: dur}
+  - name: ısı farkı durdurma sınırında
+    inputs: {bearing_c: 70, ambient_c: 30, vib_mm_s: 1.0, abnormal_noise: false}
+    expect: {outcome: dur}
+  - name: sıcaklık sensörden gelir
+    sensors: {bearing_temp_c: 45}
+    inputs: {ambient_c: 25, vib_mm_s: 1.8, abnormal_noise: false}
+    expect: {outcome: uygun, values: {bearing_c: 45}}
+  - name: titreşim ölçülemedi
+    inputs: {bearing_c: 45, ambient_c: 25}
+    expect: {outcome: bilinmiyor, verdict: escalate}
+routing:
+  - utterance: "3 numaralı pompanın rulmanı ısınıyor gibi, bakar mısın"
+  - utterance: "Motorda titreşim arttı, çalıştırmaya devam edeyim mi?"
+  - utterance: "Yatak sıcaklığı yüksek geldi"

@@ -1,12 +1,13 @@
 # schemas/
 
-JSON Schema dosyaları burada yazılacak:
+JSON Schema (2020-12) dosyaları çalıştırıcıyla birlikte paketlendiği için [cli/skillpack/schemas/](../cli/skillpack/schemas/) altında durur:
 
-- `skillpack.yaml` şeması
-- `robot_profile.yaml` şeması
-- iptal listesi şeması
-- paket indeksi şeması
+| Dosya | Durum |
+|---|---|
+| `skillpack.schema.json` — manifest | 🚧 MVP alt kümesi |
+| `flow.schema.json` — akış profili | 🚧 MVP |
+| `revocations.schema.json` — iptal listesi | 🚧 Yerel dosya biçimi; imzalı liste F4'te |
+| `robot_profile.yaml` şeması | ⬜ Başlamadı (F3) |
+| Paket indeksi şeması | ⬜ Başlamadı (F4) |
 
-Durum: ⬜ Başlamadı
-
-İlgili faz: F1 (çekirdek şemalar), F3 (`robot_profile` olgunlaşması), F4 (indeks ve iptal listesi). Ayrıntılı görevler için kök dizindeki [ROADMAP.md](../ROADMAP.md) dosyasına bakın.
+Alanların anlamı: [spec/SKILLPACK_v0.1.md](../spec/SKILLPACK_v0.1.md).

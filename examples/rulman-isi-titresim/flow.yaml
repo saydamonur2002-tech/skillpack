@@ -1,0 +1,93 @@
+flow: "0.1"
+
+# Ustanın sayıları. Değerler örnektir; makinenin el kitabına ve ustanın
+# deneyimine göre değiştirilir.
+params:
+  delta_warn_c: 25      # ortamın bu kadar üstü: dikkat
+  delta_stop_c: 40      # ortamın bu kadar üstü: dur
+  temp_stop_c: 90       # mutlak sınır: dur
+  vib_warn_mm_s: 4.5
+  vib_stop_mm_s: 7.1
+
+inputs:
+  bearing_c:
+    type: number
+    prompt: "Rulman yatağının sıcaklığı kaç derece?"
+    hint: "Temassız termometreyle yatak gövdesinden ölçün."
+    unit: "°C"
+    min: -20
+    max: 200
+    sensor: bearing_temp_c
+  ambient_c:
+    type: number
+    prompt: "Ortam sıcaklığı kaç derece?"
+    unit: "°C"
+    min: -20
+    max: 60
+  vib_mm_s:
+    type: number
+    prompt: "Titreşim hızı kaç?"
+    hint: "El tipi titreşim ölçerin RMS değeri."
+    unit: "mm/s"
+    min: 0
+    max: 50
+  abnormal_noise:
+    type: bool
+    prompt: "Normalden farklı bir ses (sürtünme, vuruntu, ıslık) var mı?"
+  grease_ok:
+    type: bool
+    prompt: "Son yağlama planlanan aralık içinde yapıldı mı?"
+
+steps:
+  - id: sicaklik
+    ask: bearing_c
+  - id: ortam
+    ask: ambient_c
+  - id: fark
+    compute:
+      delta_c: "bearing_c - ambient_c"
+  - id: titresim
+    ask: vib_mm_s
+  - id: ses
+    ask: abnormal_noise
+  - id: ilk_karar
+    decide:
+      - when: "bearing_c >= temp_stop_c or delta_c >= delta_stop_c or vib_mm_s >= vib_stop_mm_s"
+        goto: dur_kaydi
+      - when: "delta_c >= delta_warn_c or vib_mm_s >= vib_warn_mm_s or abnormal_noise"
+        goto: yaglama
+      - else: true
+        finish: uygun
+  - id: yaglama
+    ask: grease_ok
+  - id: yaglama_karari
+    decide:
+      - when: "not grease_ok"
+        finish: yagla
+      - else: true
+        finish: izle
+  - id: dur_kaydi
+    act:
+      action: record
+      text: "Rulman kontrolü: DUR. Sıcaklık {bearing_c} °C (ortam +{delta_c}), titreşim {vib_mm_s} mm/s."
+  - id: dur_sonu
+    finish: dur
+
+outcomes:
+  uygun:
+    verdict: ok
+    message: "Rulman normal. Sıcaklık ortamın {delta_c} °C üstünde, titreşim {vib_mm_s} mm/s. Çalışmaya devam."
+  izle:
+    verdict: warn
+    message: "Sınıra yakın: ortam +{delta_c} °C, titreşim {vib_mm_s} mm/s. Yağlama zamanında. Bir saat sonra yeniden ölçün, bakıma haber verin."
+  yagla:
+    verdict: warn
+    message: "Sınıra yakın: ortam +{delta_c} °C, titreşim {vib_mm_s} mm/s. Yağlama gecikmiş. Makineyi güvenli duruşa alıp yağlayın, sonra yeniden ölçün."
+  dur:
+    verdict: stop
+    message: "Sınır aşıldı: sıcaklık {bearing_c} °C (ortam +{delta_c}), titreşim {vib_mm_s} mm/s. Makineyi durdurun ve bakım ekibini çağırın."
+  bilinmiyor:
+    verdict: escalate
+    message: "Şu soru cevapsız kaldı: {missing} Ölçüm yapılamıyorsa karar vermeyin, bakım ustasına danışın."
+
+on_unknown: bilinmiyor

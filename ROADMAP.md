@@ -4,6 +4,18 @@ Süreler göreli aylarla verilmiştir (A0 = başlangıç). Gönüllü veya hibe 
 
 Her fazın durumu bu belgede ve ilgili GitHub issue'sunda tutulur. Görev kutuları işlendikçe işaretlenir.
 
+## Şu an çalışan (10 Kasım 2026)
+
+Referans çalıştırıcı (`cli/`), spesifikasyon taslağı (`spec/SKILLPACK_v0.1.md`) ve üç imzalı örnek paket (`examples/`) depodadır. Aşağıdaki görev kutuları buna göre işaretlendi. Kısmen yapılan işler kutunun yanında "kısmen" notuyla durur.
+
+Planlanandan sapmalar:
+
+- İmza Sigstore yerine anahtarlı Ed25519 ile yapıldı (teknik taslak Bölüm 6.1'deki "anahtarlı imza" seçeneği). Sigstore görevi açık duruyor.
+- İlk örnekler planlanan iki dijital örnek yerine üç farklı meslekten seçildi: fabrika, lokanta, okul.
+- Spesifikasyona teknik taslakta olmayan bir **akış profili** eklendi: tekniğin adımlarını bildirimsel olarak taşır, çalıştırıcı yürütür, model yalnız yönlendirir.
+
+Sıradaki en değerli iş: örnek paketlerden birini işin gerçek sahibine (bir usta, bir şef ya da bir öğretmen) okutup eşikleri düzelttirmek ve onaylatmak. Bugünkü örneklerde gerçek usta onayı yoktur.
+
 ## Proje devamı
 
 10 Kasım 2026 tartışma notları: [docs/PROJE_DEVAMI.md](docs/PROJE_DEVAMI.md). Bu bölüm F0–F6 sırasını değiştirmez. Fazların durumu aşağıda aynıdır.
@@ -22,9 +34,9 @@ Her fazın durumu bu belgede ve ilgili GitHub issue'sunda tutulur. Görev kutula
 
 | Faz | Süre | Amaç (kısa) | Durum |
 |---|---|---|---|
-| [F0 — Hazırlık](#f0--hazırlık-a0a2) | A0–A2 | Taslağı yayımlamak, geri bildirim ve hukuki ön görüş almak | ⬜ Başlamadı |
-| [F1 — Çekirdek](#f1--çekirdek-a2a6) | A2–A6 | Şemalar, doğrulayıcı CLI, imza ve iki dijital örnek paket | ⬜ Başlamadı |
-| [F2 — Yerel çalışma](#f2--yerel-çalışma-a5a9) | A5–A9 | Yerel depo, yönlendirici, telefon istemcisi, öğretme döngüsü | ⬜ Başlamadı |
+| [F0 — Hazırlık](#f0--hazırlık-a0a2) | A0–A2 | Taslağı yayımlamak, geri bildirim ve hukuki ön görüş almak | 🚧 Başladı |
+| [F1 — Çekirdek](#f1--çekirdek-a2a6) | A2–A6 | Şemalar, doğrulayıcı CLI, imza ve iki dijital örnek paket | 🚧 Başladı |
+| [F2 — Yerel çalışma](#f2--yerel-çalışma-a5a9) | A5–A9 | Yerel depo, yönlendirici, telefon istemcisi, öğretme döngüsü | 🚧 Başladı |
 | [F3 — Fiziksel profil](#f3--fiziksel-profil-a8a12) | A8–A12 | Robot profili, LeRobotDataset, koli ayırma simülasyonu | ⬜ Başlamadı |
 | [F4 — Dağıtım ve iptal](#f4--dağıtım-ve-iptal-a10a14) | A10–A14 | Aynalar, IPFS, iptal listesi, TUF, iptal tatbikatı | ⬜ Başlamadı |
 | [F5 — Pilot](#f5--pilot-a12a18) | A12–A18 | 2–3 gönüllü saha, Bölüm 12 ölçümleri | ⬜ Başlamadı |
@@ -34,7 +46,7 @@ Her fazın durumu bu belgede ve ilgili GitHub issue'sunda tutulur. Görev kutula
 
 ## F0 — Hazırlık (A0–A2)
 
-**Durum:** ⬜ Başlamadı
+**Durum:** 🚧 Başladı (spesifikasyon taslağı yazıldı; hukuki görüş ve dış inceleme açık)
 
 **Amaç:** Spesifikasyon taslağı v0.1'i yayımlamak, geri bildirim çağırmak ve kamu görevlisi statüsü için yazılı hukuki ön görüş almak. Uygulama kodu bu fazda hedef değildir; kurallar ve izin netleşmeden F1'e geçilmez.
 
@@ -50,11 +62,11 @@ Hukuki ön görüş (Bölüm 14):
 
 Spesifikasyon taslağı v0.1:
 
-- [ ] `spec/` altında skillpack v0.1 taslağını yazmak (tasarım ilkeleri, klasör yapısı, `SKILL.md` uzantısı, `skillpack.yaml` alanları)
-- [ ] Agent Skills ile geriye uyumluluk kurallarını açıkça belgelemek (yalnız `SKILL.md` okuyan bir ajanın paketi kullanabilmesi)
-- [ ] Sürümleme, izin beyanları, gizlilik kuralları ve köken/lisans alanlarını taslakta tanımlamak
-- [ ] Kod için Apache-2.0, spesifikasyon metni ve veri için CC-BY-4.0 notunu netleştirmek
-- [ ] LLM'ye giden içeriğin İngilizce yazılması önerisini taslağa not etmek (`SKILL.md`, kurallar, örnekler, testler, istemler). Kullanıcıya dönük dil ikincil kalır. Ayrıntı: [docs/PROJE_DEVAMI.md](docs/PROJE_DEVAMI.md)
+- [x] `spec/` altında skillpack v0.1 taslağını yazmak (tasarım ilkeleri, klasör yapısı, `SKILL.md` uzantısı, `skillpack.yaml` alanları)
+- [x] Agent Skills ile geriye uyumluluk kurallarını açıkça belgelemek (yalnız `SKILL.md` okuyan bir ajanın paketi kullanabilmesi)
+- [ ] Sürümleme, izin beyanları, gizlilik kuralları ve köken/lisans alanlarını taslakta tanımlamak (kısmen: sürümleme, izin ve gizlilik yazıldı; köken beyanı kapsam dışı bırakıldı)
+- [x] Kod için Apache-2.0, spesifikasyon metni ve veri için CC-BY-4.0 notunu netleştirmek
+- [x] LLM'ye giden içeriğin İngilizce yazılması önerisini taslağa not etmek (`SKILL.md`, kurallar, örnekler, testler, istemler). Kullanıcıya dönük dil ikincil kalır. Ayrıntı: [docs/PROJE_DEVAMI.md](docs/PROJE_DEVAMI.md)
 - [ ] Taslağı bu depoda yayımlamak ve sürüm etiketini (`v0.1-taslak`) kararlaştırmak
 
 Geri bildirim:
@@ -71,7 +83,7 @@ En az bir dış teknik inceleme alınmıştır; yazılı hukuki görüş alınm�
 
 ## F1 — Çekirdek (A2–A6)
 
-**Durum:** ⬜ Başlamadı
+**Durum:** 🚧 Başladı
 
 **Amaç:** Paketin kurallara uyup uymadığını kontrol eden, onu imzalayan ve doğrulayan çekirdeği ortaya çıkarmak. İlk elle tutulur çıktı buradadır. İki basit dijital örnek paket de bu fazda hazırlanır.
 
@@ -79,33 +91,35 @@ En az bir dış teknik inceleme alınmıştır; yazılı hukuki görüş alınm�
 
 JSON şemaları:
 
-- [ ] `skillpack.yaml` için JSON Schema yazmak
-- [ ] İptal listesi için basit bir JSON Schema taslağı yazmak (olgunlaşma F4'te)
+- [x] `skillpack.yaml` için JSON Schema yazmak (MVP alt kümesi; `flow.yaml` şeması da eklendi)
+- [x] İptal listesi için basit bir JSON Schema taslağı yazmak (olgunlaşma F4'te)
 - [ ] Paket indeksi için JSON Schema taslağı yazmak (olgunlaşma F4'te)
 - [ ] `robot_profile.yaml` için iskelet şema yazmak (olgunlaşma F3'te)
 - [ ] İsteğe bağlı `budget` alanı önerisini değerlendirmek (`skill_max_tokens`, `local_max_output`, `cloud_max_tokens_per_day`, `on_exceed`). Öneri: [docs/PROJE_DEVAMI.md](docs/PROJE_DEVAMI.md). Alan kabul edilene kadar şema dosyası yazılmaz.
 
 CLI komutları (her biri ayrı iş):
 
-- [ ] `skillpack init` — yeni paket iskeleti (klasör yapısı, `SKILL.md`, `skillpack.yaml`)
-- [ ] `skillpack validate` — şema, zorunlu alanlar, geriye uyumluluk ve temel kural denetimi
-- [ ] `skillpack pack` — kanonik arşiv, SHA-256 özetleri, içerik adresli paket kimliği
-- [ ] `skillpack sign` — Sigstore (anahtarsız / OIDC) ile imzalama
-- [ ] `skillpack verify` — imza, özet ve (varsa) şeffaflık günlüğü kanıtını doğrulama
+- [x] `skillpack init` — yeni paket iskeleti (klasör yapısı, `SKILL.md`, `skillpack.yaml`)
+- [x] `skillpack validate` — şema, zorunlu alanlar, geriye uyumluluk ve temel kural denetimi
+- [ ] `skillpack pack` — kanonik arşiv, SHA-256 özetleri, içerik adresli paket kimliği (kısmen: özetler ve içerik adresli kimlik `sign` içinde; arşiv yok)
+- [ ] `skillpack sign` — Sigstore (anahtarsız / OIDC) ile imzalama (kısmen: anahtarlı Ed25519 imza çalışıyor; Sigstore yok)
+- [ ] `skillpack verify` — imza, özet ve (varsa) şeffaflık günlüğü kanıtını doğrulama (kısmen: imza ve özet doğrulanıyor; şeffaflık günlüğü yok)
 - [ ] `skillpack publish` — paketi dağıtım hedefine (önce yerel dizin veya basit HTTP) yayımlama
-- [ ] `skillpack revoke-check` — iptal listesine bakma (basit liste; TUF F4'te)
+- [x] `skillpack revoke-check` — iptal listesine bakma (basit liste; TUF F4'te). Ayrı komut değil: `verify --revocations` ve depo taraması içinde
 
 Güven ve gizlilik yardımcıları:
 
-- [ ] PII tarama yardımcısı eklemek (T.C. kimlik no, telefon, e-posta, IBAN, plaka; yüz görüntüsü uyarısı). Tarama yardımcıtır, garanti değildir.
-- [ ] `raw_customer_data: false` kuralını doğrulayıcıda zorunlu kılmak
-- [ ] Bilinmeyen alanları uyarıyla geçme, bilinmeyen MAJOR spesifikasyonu reddetme davranışını yazmak
+- [ ] PII tarama yardımcısı eklemek (T.C. kimlik no, telefon, e-posta, IBAN, plaka; yüz görüntüsü uyarısı). Tarama yardımcıtır, garanti değildir. (kısmen: e-posta, telefon, IBAN ve 11 haneli numara taranıyor; plaka ve görüntü yok)
+- [x] `raw_customer_data: false` kuralını doğrulayıcıda zorunlu kılmak
+- [x] Bilinmeyen alanları uyarıyla geçme, bilinmeyen MAJOR spesifikasyonu reddetme davranışını yazmak
 
 Örnek paketler:
 
 - [ ] Dijital örnek paket 1: depo stok sapması tanısı (anonim/sentetik örnekler, kabul testleri)
 - [ ] Dijital örnek paket 2: ses kaydı düzeltme iş akışı (anonim/sentetik örnekler, kabul testleri)
 - [ ] Her iki örneği `validate` + `pack` + `sign` + `verify` zincirinden geçirmek
+- [x] Üç meslek örneği (fabrika, lokanta, okul): `validate` + `test` + `sign` + `verify` zincirinden geçti. Eşikler örnektir; gerçek usta onayı yok
+- [ ] Örneklerden en az birini işin gerçek sahibine onaylatmak
 
 Uçtan uca kanıt:
 
@@ -119,7 +133,7 @@ Bir paket uçtan uca imzalanıp başka bir makinede doğrulanabiliyor.
 
 ## F2 — Yerel çalışma (A5–A9)
 
-**Durum:** ⬜ Başlamadı
+**Durum:** 🚧 Başladı (yerel depo ve yönlendirici; model ölçümü, telefon istemcisi ve öğretme döngüsü açık)
 
 **Amaç:** Mini sunucuda çalışan yerel sistemi kurmak: model, paket deposu, izin uygulayan yönlendirici, ince telefon istemcisi ve öğretme döngüsü prototipi. Hedef, yazılımcı olmayan bir ustanın yardımla bir beceriyi paketleyebilmesidir.
 
@@ -135,17 +149,17 @@ Yerel ortam:
 Yerel depo servisi:
 
 - [ ] Paket indirme ve yerel saklama
-- [ ] İndirilen paketin imza ve özet doğrulaması
+- [x] İndirilen paketin imza ve özet doğrulaması (yerel dizin için; indirme yok)
 - [ ] İptal listesi senkronu (basit periyodik çekme)
 - [ ] İzin onay arayüzü (yeni veya genişleyen yetkiler otomatik uygulanmaz)
 
 Yönlendirici:
 
-- [ ] Kural tabanlı eşleştirme (istek türü → dikey ajan / paket)
-- [ ] Eşleşme yoksa veya güven düşükse yerel LLM ile yedek sınıflama
-- [ ] İzin beyanını uygulama (beyan dışı araç çağrısını reddetme ve kaydetme)
+- [x] Kural tabanlı eşleştirme (istek türü → dikey ajan / paket): anahtar ifade yönlendiricisi
+- [ ] Eşleşme yoksa veya güven düşükse yerel LLM ile yedek sınıflama (kısmen: Ollama yönlendiricisi yazıldı, model düşerse anahtar ifadeye iner; gerçek modelle isabet ölçülmedi)
+- [ ] İzin beyanını uygulama (beyan dışı araç çağrısını reddetme ve kaydetme) (kısmen: beyan dışı eylem ya da sensör kullanan paket yüklenmiyor; kayıt yok)
 - [ ] Katmanlar arası kural: kişisel/müşteri/gizli verinin buluta gitmemesi; bulut varsayılan kapalı
-- [ ] Denetim izi: paket sürümü, karar, kanıt, onaylayan, süre
+- [ ] Denetim izi: paket sürümü, karar, kanıt, onaylayan, süre (kısmen: her sonuçla paket sürümü, karar ve gerekçe izi dönüyor; kalıcı kayıt, onaylayan ve süre yok)
 
 Telefon istemcisi (ince):
 

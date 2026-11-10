@@ -1,0 +1,16 @@
+{
+  "skillpack": "0.1-taslak",
+  "algorithm": "ed25519",
+  "key_id": "e3d6cd1f2ecd0220",
+  "pack_id": "sha256:127bee77719b9486050a698e14c97357956975a7c50cdf619ebf5bc4406f9b4a",
+  "name": "kazanim-telafi-karari",
+  "version": "0.1.0",
+  "checksums": {
+    "SKILL.md": "sha256:7cf83c15d7f631e6ca6542615dab2a33e1086b5401f26e2d28672e42329712f0",
+    "flow.yaml": "sha256:ec42fee208384553a945f5a0f9a070622d02b52b70d9b1bc4f56a5a1af89499a",
+    "provenance/approvals.json": "sha256:825f18e19d7d93b0735894cebef04fdb978e9f4f0339daf6e054397ec1269871",
+    "skillpack.yaml": "sha256:a90ccba988be7abe0eb4f23f3c14d43c0486609dd24621f2c32555c0048a80e0",
+    "tests/cases.yaml": "sha256:69c5763f2f4ba74a1edc47b54e078c4b746a3129679ad408eb9744d7588c1f3f"
+  },
+  "signature": "QHSffne7DbW/qnyAGegX276Yax3X/VCl7/DlhzMLzx6d+gJ8zwQEfTz0aJfbHTRqoFSJWCSUZt42NNF3jdGVDA=="
+}

@@ -1,7 +1,5 @@
 # spec/
 
-skillpack v0.1 spesifikasyon taslağı burada yazılacak: paket klasör yapısı, `SKILL.md` uzantısı, `skillpack.yaml` alanları, sürümleme, izin beyanları, gizlilik kuralları.
+- [SKILLPACK_v0.1.md](SKILLPACK_v0.1.md) — skillpack v0.1-taslak spesifikasyonu: paket yapısı, manifest, akış profili, yürütme kuralları, modelin sınırı, imza, iptal ve uygunluk koşulları.
 
-Durum: ⬜ Başlamadı
-
-İlgili faz: F0 (taslak metin) ve F1 (şemayla hizalama). Ayrıntılı görevler için kök dizindeki [ROADMAP.md](../ROADMAP.md) dosyasına bakın.
+Durum: 🚧 Taslak. Referans çalıştırıcının (`cli/`) uyguladığı kuralları yazar. Teknik taslaktaki daha geniş hedefler (Sigstore, TUF, fiziksel profil) Bölüm 13'te kapsam dışı olarak listelenir.

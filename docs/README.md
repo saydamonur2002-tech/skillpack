@@ -1,8 +1,7 @@
 # docs/
 
-Teknik proje taslağı ve yardımcı belgeler.
+- [USTADAN_PAKETE.md](USTADAN_PAKETE.md) — bir ustanın tekniğini pakete çevirme yöntemi (yedi adım).
+- [TEKNIK_PROJE_v0.1.md](TEKNIK_PROJE_v0.1.md) — 9 Kasım 2026 tarihli tartışma taslağı: problemin tamamı, uzun vadeli hedefler, yönetişim. 10 Kasım 2026'da Bölüm 2.3 eklendi.
+- [PROJE_DEVAMI.md](PROJE_DEVAMI.md) — 10 Kasım 2026 tartışma notları. Sayılar tahmin, varsayım veya sentetik olarak işaretlidir.
 
-- [TEKNIK_PROJE_v0.1.md](TEKNIK_PROJE_v0.1.md) — 9 Kasım 2026 tarihli tartışma taslağı. 10 Kasım 2026'da Bölüm 2.3 (üç tasarım çerçevesi) eklendi.
-- [PROJE_DEVAMI.md](PROJE_DEVAMI.md) — 10 Kasım 2026 tartışma notları: MVP yolu, ilk demo hedefi ve tasarım önerileri. Sayılar tahmin, varsayım veya sentetik olarak işaretlidir.
-
-Durum: ⬜ Başlamadı (metin taslak olarak duruyor; uygulama başlamadı).
+Uygulanan kurallar için: [spec/SKILLPACK_v0.1.md](../spec/SKILLPACK_v0.1.md). Teknik taslak hedefi, spesifikasyon bugün çalışanı anlatır; ikisi ayrıştığında spesifikasyonun 13. bölümü farkı listeler.

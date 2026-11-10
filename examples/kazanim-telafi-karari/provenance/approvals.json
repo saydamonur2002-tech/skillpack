@@ -1,0 +1,11 @@
+{
+  "approvals": [
+    {
+      "approver": "ORNEK - gercek usta onayi yok",
+      "role": "ogretmen",
+      "date": "2026-11-10",
+      "version": "0.1.0",
+      "statement": "Bu paket bicimi gostermek icin yazildi. Esik degerleri ornektir; sahada kullanmadan once isin sahibi bir usta tarafindan gozden gecirilip onaylanmalidir."
+    }
+  ]
+}

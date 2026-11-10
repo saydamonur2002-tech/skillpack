@@ -1,0 +1,16 @@
+{
+  "skillpack": "0.1-taslak",
+  "algorithm": "ed25519",
+  "key_id": "e3d6cd1f2ecd0220",
+  "pack_id": "sha256:389b2e1a7c3ddea9fe97011f4a87bbde7776d458d4bcabc9b0c55d3d57bd4382",
+  "name": "soguk-mal-kabul",
+  "version": "0.1.0",
+  "checksums": {
+    "SKILL.md": "sha256:d47d1d804da654c12233bc998366259d472893e8d203b9bb6d72dc7346f2c65b",
+    "flow.yaml": "sha256:d24c3cb721b5985f754e493c169b666d8bc63a591f08db51b47099edf83dc8f4",
+    "provenance/approvals.json": "sha256:dde747f6cdd7287f0447d843421602fb168bd9d867c4669701cd142ca3681d48",
+    "skillpack.yaml": "sha256:a870d289f32e2ecda89fa53dafb4d1b7044a5135541efcd78fc7a95acbd6e806",
+    "tests/cases.yaml": "sha256:5078e5c34e58ed7b8357095e3b6e870351e7adeb90ec199574216919824e421d"
+  },
+  "signature": "tx28nMGbMqex/0V5DAt+5wfpIo12gVnSqpalmoNccR6hDA3AXKEYm/izkGk9YpFbpqJYaDuSCZUtMIPoMn3rDw=="
+}

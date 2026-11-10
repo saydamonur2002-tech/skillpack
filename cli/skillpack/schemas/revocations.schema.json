@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/saydamonur2002-tech/skillpack/schemas/revocations.schema.json",
+  "title": "İptal listesi (v0.1-taslak, yerel dosya)",
+  "type": "object",
+  "required": ["revocations", "revoked"],
+  "properties": {
+    "revocations": {"const": "0.1-taslak"},
+    "updated_at": {"type": "string"},
+    "revoked": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["reason", "date"],
+        "oneOf": [{"required": ["pack_id"]}, {"required": ["key_id"]}],
+        "properties": {
+          "pack_id": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+          "key_id": {"type": "string", "pattern": "^[0-9a-f]{16}$"},
+          "reason": {"enum": ["zararli", "guvenlik-acigi", "lisans-ihlali", "yanlis-beyan", "yayinci-talebi"]},
+          "date": {"type": "string"}
+        }
+      }
+    }
+  }
+}

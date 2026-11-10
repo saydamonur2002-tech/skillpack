@@ -13,6 +13,9 @@ Planlanandan sapmalar:
 - İmza Sigstore yerine anahtarlı Ed25519 ile yapıldı (teknik taslak Bölüm 6.1'deki "anahtarlı imza" seçeneği). Sigstore görevi açık duruyor.
 - İlk örnekler planlanan iki dijital örnek yerine üç farklı meslekten seçildi: fabrika, lokanta, okul.
 - Spesifikasyona teknik taslakta olmayan bir **akış profili** eklendi: tekniğin adımlarını bildirimsel olarak taşır, çalıştırıcı yürütür, model yalnız yönlendirir.
+- Merkez ile çevre arasındaki bağlantı MCP ile kuruldu: `skillpack serve` her paketi bir MCP aracı olarak sunar. Teknik taslakta MCP paketin *kullandığı* araçlar için geçiyordu; burada paketin kendisi araç olarak sunuluyor.
+
+Açık kalan bağlantı işleri: gerçek bir yerel modelle araç çağırma isabetini ölçmek; ağ üzerinden sensör bağı (ör. ev otomasyonu); paketin bağlı bir uygulamada onaylı eylem başlatması.
 
 Sıradaki en değerli iş: örnek paketlerden birini işin gerçek sahibine (bir usta, bir şef ya da bir öğretmen) okutup eşikleri düzelttirmek ve onaylatmak. Bugünkü örneklerde gerçek usta onayı yoktur.
 

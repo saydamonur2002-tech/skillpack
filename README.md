@@ -17,32 +17,42 @@ Bu depo bir şirket, ürün veya pazar yeri değildir. Ticari olmayan, bireysel 
 
 Bir ustanın tekniği bir **pakete** çevrilir; yerel bir dil modeli bu paketi **uygular**. Niş işte model karar vermez: kararı paketteki akış verir, akışı çalıştırıcı yürütür. Modelin işi yalnız kullanıcının cümlesinden doğru paketi seçmek ve söylenen değerleri çıkarmaktır.
 
+Mimari merkez ve çevre biçimindedir. Bağlantı standardı MCP'dir (Model Context Protocol):
+
 ```text
-"Tedarikçi tavuk getirdi, kabul edeyim mi?"
-        │
-        ▼
-  yönlendirici (yerel model ya da anahtar kelime)  →  paket: soguk-mal-kabul
-        │
-        ▼
-  çalıştırıcı: imzayı doğrular, akışı yürütür, eksik ölçümü insana sorar
-        │
-        ▼
-  [DUR] Reddedin. tavuk: 6,5 °C (sınır 4 °C) ...   + gerekçe izi
+        MERKEZ                  MCP                     ÇEVRE
+  yerel modeli çalıştıran   ◄────────►   skillpack sunucusu
+  uygulama                                 ├─ dikey teknik: rulman kontrolü ──► sensör
+  (kullanıcıyla konuşur)                   ├─ dikey teknik: soğuk mal kabul ──► kayıt defteri
+                                           └─ dikey teknik: kazanım telafisi
+```
+
+Merkez genel araçlar yerine dikey teknikleri görür. Model bir tekniği çağırır; teknik eksik ölçümü geri sorar, sonra hükmü verir:
+
+```text
+"Tedarikçi tavuk getirdi, 6,5 derece ölçtüm"
+  → araç: soguk-mal-kabul {product: tavuk, core_temp_c: 6.5}
+  ← eksik: "Ambalaj yırtık, ezik, şişmiş ya da sızdırıyor mu?"
+  → ... {package_damaged: false, days_to_expiry: 5}
+  ← [DUR] Reddedin. tavuk: 6,5 °C (sınır 4 °C) ...   + kullanılan değerler
 ```
 
 Depo kökünde deneyin (Python 3.10+):
 
 ```bash
-pip install -e cli/
+pip install -e "cli/[mcp]"
 skillpack list
-skillpack ask "Tedarikçi tavuk getirdi, kabul edeyim mi?"
+skillpack ask "Tedarikçi tavuk getirdi, kabul edeyim mi?"   # MCP'siz, doğrudan terminalde
+skillpack serve                                              # MCP sunucusu (stdio)
 ```
+
+MCP destekleyen bir uygulamaya bağlamak için: [cli/README.md](cli/README.md#mcp-sunucusu).
 
 Üç örnek paket vardır: fabrika (rulman kontrolü), lokanta (soğuk mal kabul), okul (kazanım telafi kararı). Eşik değerleri örnektir; gerçek bir usta onayı taşımazlar ([examples/README.md](examples/README.md)).
 
 | Belge | İçerik |
 |---|---|
-| [spec/SKILLPACK_v0.1.md](spec/SKILLPACK_v0.1.md) | Standart: paket yapısı, akış profili, modelin sınırı, imza, iptal, uygunluk |
+| [spec/SKILLPACK_v0.1.md](spec/SKILLPACK_v0.1.md) | Standart: paket yapısı, akış profili, modelin sınırı, imza, iptal, uygunluk, MCP bağlaması |
 | [docs/USTADAN_PAKETE.md](docs/USTADAN_PAKETE.md) | Yöntem: bir tekniği yedi adımda pakete çevirmek |
 | [cli/README.md](cli/README.md) | Çalıştırıcının komutları ve yapısı |
 
@@ -50,9 +60,9 @@ skillpack ask "Tedarikçi tavuk getirdi, kabul edeyim mi?"
 
 **🚧 MVP çalışıyor; standart taslak aşamasında.**
 
-Çalışan: paket doğrulama, kabul testleri, Ed25519 imza ve doğrulama, yerel iptal listesi, belirlenimci akış yürütme, insan onaylı eylem, anahtar kelime ve Ollama yönlendiricisi.
+Çalışan: paket doğrulama, kabul testleri, Ed25519 imza ve doğrulama, yerel iptal listesi, belirlenimci akış yürütme, insan onaylı eylem, paketleri araç olarak sunan MCP sunucusu (dosya tabanlı sensör bağı ve kayıt defteriyle), terminalde anahtar kelime ve Ollama yönlendiricisi.
 
-Henüz yok: Sigstore ve şeffaflık günlüğü, imzalı iptal listesi (TUF), dağıtım, fiziksel profil, öğretme döngüsü arayüzü. Ollama yönlendiricisi gerçek bir modelle değil, Ollama yanıt biçimini taklit eden bir test sunucusuyla sınandı. Ayrıntı: spesifikasyon Bölüm 13 ve [ROADMAP.md](ROADMAP.md).
+Henüz yok: Sigstore ve şeffaflık günlüğü, imzalı iptal listesi (TUF), dağıtım, fiziksel profil, öğretme döngüsü arayüzü. MCP sunucusu resmî MCP Python istemcisiyle sınandı, ama gerçek bir yerel modelin araçları doğru çağırıp çağırmadığı ölçülmedi; Ollama yönlendiricisi de yalnız Ollama yanıt biçimini taklit eden bir test sunucusuyla sınandı. Ayrıntı: spesifikasyon Bölüm 13 ve [ROADMAP.md](ROADMAP.md).
 
 Uzun vadeli hedefler: [docs/TEKNIK_PROJE_v0.1.md](docs/TEKNIK_PROJE_v0.1.md) (9 Kasım 2026, tartışma taslağı) ve [docs/PROJE_DEVAMI.md](docs/PROJE_DEVAMI.md).
 
@@ -61,7 +71,7 @@ Uzun vadeli hedefler: [docs/TEKNIK_PROJE_v0.1.md](docs/TEKNIK_PROJE_v0.1.md) (9 
 | Klasör | İçerik | Durum |
 |---|---|---|
 | `spec/` | skillpack v0.1-taslak spesifikasyonu | 🚧 Taslak |
-| `cli/` | Referans çalıştırıcı (Python): `init`, `validate`, `test`, `keygen`, `sign`, `verify`, `list`, `run`, `ask`, `route-test`; JSON şemaları | 🚧 MVP |
+| `cli/` | Referans çalıştırıcı (Python): `init`, `validate`, `test`, `keygen`, `sign`, `verify`, `list`, `run`, `ask`, `serve` (MCP), `route-test`; JSON şemaları | 🚧 MVP |
 | `examples/` | Üç imzalı örnek paket ve güvenilen açık anahtar | 🚧 Örnek (usta onayı yok) |
 | `schemas/` | Şemaların yerini gösterir (`cli/skillpack/schemas/`) | 🚧 MVP alt kümesi |
 | `docs/` | Yöntem belgesi, teknik taslak, tartışma notları | Taslak |

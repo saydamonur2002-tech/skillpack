@@ -7,7 +7,8 @@ Durum: 🚧 MVP. Python 3.10+. Bağımlılıklar: PyYAML, jsonschema, cryptograp
 ## Kurulum
 
 ```bash
-pip install -e cli/
+pip install -e "cli/[mcp]"     # MCP sunucusu dahil
+pip install -e cli/            # yalnız terminal kullanımı
 ```
 
 Kurmadan denemek için depo kökünde `PYTHONPATH=cli python3 -m skillpack ...` da çalışır.
@@ -34,6 +35,31 @@ skillpack route-test --router ollama --model qwen2.5:7b
 
 Model yalnız paketi seçer ve söylenen değerleri çıkarır; çıkardığı her değer size onaylatılır. Model yanıt vermezse anahtar kelime yönlendiricisine düşülür.
 
+## MCP sunucusu
+
+`skillpack serve`, depodaki her imzalı paketi bir MCP aracı olarak sunar (stdio). MCP destekleyen bir uygulamada sunucu tanımı genellikle şu biçimdedir; dosyanın yeri uygulamaya göre değişir:
+
+```json
+{
+  "mcpServers": {
+    "skillpack": {
+      "command": "skillpack",
+      "args": ["serve", "--packs", "/tam/yol/examples", "--trust", "/tam/yol/examples/trust",
+               "--journal", "/tam/yol/calistirmalar.jsonl"]
+    }
+  }
+}
+```
+
+Uygulamadaki model aracı çağırır. Değer eksikse araç sorulacak soruyu döndürür; model kullanıcıya sorar ve aracı yeniden çağırır. Bütün değerler gelince araç hükmü, ustanın mesajını ve kullandığı değerleri döndürür.
+
+Bağlı yazılımlar:
+
+- `--sensor ad=dosya` — paketin beyan ettiği sensörün değeri bu dosyadan okunur. Örnek: `--sensor bearing_temp_c=/run/olcum/rulman.txt`. Dosyayı başka bir program günceller.
+- `--journal dosya` — tamamlanan her çalıştırma JSON Lines olarak eklenir.
+
+MCP üzerinden paket eylem yapmaz (yalnız önerir) ve değerlerin kullanıcıya onaylatılması uygulamaya kalır. Ayrıntı: spesifikasyon Bölüm 14.
+
 ## Komutlar
 
 | Komut | İş |
@@ -47,9 +73,10 @@ Model yalnız paketi seçer ve söylenen değerleri çıkarır; çıkardığı h
 | `list` | Depodaki paketleri ve reddedilenleri gerekçesiyle listeler. |
 | `run <ad>` | Paketi adıyla yürütür. `--set girdi=değer`, `--json`, `--journal`. |
 | `ask "<cümle>"` | Yönlendirir ve yürütür. `--router keyword\|ollama`. |
+| `serve` | Paketleri MCP araçları olarak sunar (stdio). `--sensor ad=dosya`, `--journal`. |
 | `route-test` | Paketlerdeki yönlendirme örneklerinin isabetini ölçer. |
 
-`list`, `run`, `ask` ve `route-test` için varsayılan depo `examples/`, güvenilen anahtarlar `examples/trust/` dizinidir (`--packs`, `--trust`, `--revocations` ile değişir).
+`list`, `run`, `ask`, `serve` ve `route-test` için varsayılan depo `examples/`, güvenilen anahtarlar `examples/trust/` dizinidir (`--packs`, `--trust`, `--revocations` ile değişir).
 
 Teknik taslakta planlanan `pack` ve `publish` komutları henüz yok.
 
@@ -62,7 +89,8 @@ Teknik taslakta planlanan `pack` ve `publish` komutları henüz yok.
 | `skillpack/pack.py` | Paketi okuma ve doğrulama. |
 | `skillpack/signing.py` | Özet, Ed25519 imza, doğrulama, iptal. |
 | `skillpack/registry.py` | Yerel depo; her istekte yeniden tarar. |
-| `skillpack/router.py` | Anahtar kelime ve Ollama yönlendiricileri. |
+| `skillpack/mcp_server.py` | MCP bağlaması: paket → araç, durumsuz çağrı, sensör bağı, kayıt defteri. |
+| `skillpack/router.py` | Terminal kullanımı için anahtar kelime ve Ollama yönlendiricileri. |
 | `skillpack/host.py` | İnsan, sensör ve eylem arayüzü. Yeni ortam buraya uyarlanır. |
 | `skillpack/schemas/` | JSON Schema dosyaları. |
 
@@ -72,4 +100,4 @@ Teknik taslakta planlanan `pack` ve `publish` komutları henüz yok.
 cd cli && python3 -m unittest discover -s . -t .
 ```
 
-Ollama yönlendiricisi testlerde gerçek modelle değil, Ollama'nın `/api/chat` yanıt biçimini taklit eden yerel bir sunucuyla sınanır.
+MCP sunucusu testlerde resmî MCP Python SDK'sının istemcisiyle, hem süreç içinde hem stdio üzerinden ayrı süreç olarak sınanır (SDK kurulu değilse bu testler atlanır). Ollama yönlendiricisi testlerde gerçek modelle değil, Ollama'nın `/api/chat` yanıt biçimini taklit eden yerel bir sunucuyla sınanır.

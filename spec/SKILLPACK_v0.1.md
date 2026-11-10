@@ -15,6 +15,8 @@ Temel ilke şudur: **niş işte model karar vermez.** Kararı paketteki akış v
 
 Model hesap yapmaz, eşik karşılaştırmaz, sonuç mesajı yazmaz, eylem başlatmaz. Bu sınır Bölüm 9'da kurallaştırılır.
 
+Mimari **merkez ve çevre** biçimindedir. Merkezde yerel modeli çalıştıran uygulama durur. Çevrede dikey teknikler (paketler) ve onlara bağlı yazılımlar (sensörler, kayıt defteri) durur. İkisini bağlayan standart Model Context Protocol'dür (MCP): her paket merkeze bir araç olarak görünür (Bölüm 14).
+
 Bu belgede **ZORUNLU**, **YASAK** ve **ÖNERİLİR** sözcükleri uygunluk koşullarını belirtir.
 
 ## 2. Dayanılan standartlar
@@ -35,6 +37,7 @@ Yeni bir şey icat edilmeden kullanılanlar:
 | Dil etiketi | BCP 47 | Bölüm 5 |
 | Tarih | ISO 8601 | Bölüm 8, 11 |
 | Modelin çıktısını kısıtlama | JSON Schema ile yapılandırılmış çıktı (ör. Ollama `format`) | Bölüm 9 |
+| Merkez ile çevre arasındaki bağlantı | Model Context Protocol (MCP), stdio taşıması | Bölüm 14 |
 
 Bu belgenin eklediği tek yeni biçim **akış profilidir** (Bölüm 6): ustanın tekniğini adım adım tanımlayan bildirimsel dosya.
 
@@ -330,7 +333,7 @@ Bu sürümde **yoktur**; teknik taslaktaki (`docs/TEKNIK_PROJE_v0.1.md`) hedefle
 - Sigstore ile anahtarsız imza, şeffaflık günlüğü, TUF tarzı imzalı ve zaman damgalı iptal listesi. Bu sürümde iptal listesi imzasız yerel dosyadır; listeyi değiştirebilen biri iptali kaldırabilir.
 - Paket arşivi, dağıtım, aynalar (`pack`, `publish`).
 - Fiziksel profil (`robot_profile.yaml`), gösterim verisi, politika ağırlıkları.
-- Ağ, bulut ve dosya sistemi yetkileri; MCP araçları.
+- Ağ, bulut ve dosya sistemi yetkileri. Paketin başka MCP sunucularındaki araçları çağırması (paketler MCP üzerinden sunulur, ama kendileri MCP aracı çağırmaz).
 - `budget` alanı (model yürütmede kullanılmadığı için bu profilde harcama yoktur).
 - Köken beyanı (SLSA/in-toto), anonimleştirme raporu.
 - Onay kaydının onaylayanın kendi anahtarıyla imzalanması. Bu sürümde onay, yayıncının imzasının kapsadığı bir beyandır; onaylayanın kimliği kriptografik olarak kanıtlanmaz.
@@ -345,3 +348,74 @@ Tasarımın sınırları:
 - Akış profili **karar ağırlıklı** teknikleri taşır: kontrol, teşhis, kabul/ret, sıradaki adımı seçme. El becerisi (kaynak, sıva, bıçak kullanımı) bu profille taşınmaz.
 - Paket, ustanın öngördüğü durumları kapsar. Öngörülmeyen durumda doğru davranış `else` dalı ve `escalate` sonucudur; paket doğaçlama yapmaz.
 - Biçim garantisi doğruluk garantisi değildir. Yönlendirici yanlış paketi seçebilir; bu yüzden çalıştırıcı seçilen paketin adını kullanıcıya gösterir ve çıkarılan değerleri onaylatır.
+
+## 14. MCP bağlaması: merkez ve çevre
+
+### 14.1 Mimari
+
+```text
+                 MERKEZ                                   ÇEVRE
+  ┌───────────────────────────────┐        ┌──────────────────────────────────┐
+  │ yerel modeli çalıştıran       │  MCP   │ skillpack sunucusu               │
+  │ uygulama (MCP istemcisi)      │◄──────►│  ├─ paket: rulman-isi-titresim   │──► sensör bağı
+  │                               │ stdio  │  ├─ paket: soguk-mal-kabul       │──► kayıt defteri
+  │ kullanıcıyla konuşur          │        │  └─ paket: kazanim-telafi-karari │
+  └───────────────────────────────┘        └──────────────────────────────────┘
+```
+
+Merkez, MCP konuşan herhangi bir istemcidir; hangi modeli çalıştırdığı bu standardın konusu değildir. Çevre, `skillpack serve` komutuyla başlatılan sunucudur. Sunucu genel amaçlı araç (dosya oku, komut çalıştır) sunmaz; yalnız dikey teknikleri sunar.
+
+### 14.2 Paketin araca eşlenmesi
+
+Depodaki her geçerli ve imzası doğrulanmış paket bir MCP aracıdır.
+
+| Araç alanı | Kaynak |
+|---|---|
+| `name` | Paketin `name` değeri |
+| `title` | `routing.title` |
+| `description` | `SKILL.md` içindeki `description` + modelin sınırını bildiren sabit cümle |
+| `inputSchema` | Akıştaki `inputs` |
+
+`inputSchema` kuralları: her girdi bir özelliktir; **hiçbiri zorunlu değildir**; her özellik kendi türünün yanında `null` kabul eder; `min`/`max` değerleri `minimum`/`maximum` olarak, seçenekler `enum` olarak yazılır; tanımsız özellik kabul edilmez.
+
+Araç listesi her istekte depodan yeniden üretilir. Bölüm 10.3'ten geçmeyen paket listede görünmez ve çağrılamaz.
+
+### 14.3 Çağrı kuralları
+
+Çağrı **durumsuzdur**: her çağrıda akış baştan, verilen argümanlarla yürütülür. Sunucu oturum tutmaz; aynı argümanlar aynı cevabı verir.
+
+| Durum | Cevap |
+|---|---|
+| Bir girdi eksik ve bağlı sensörden de okunamıyor | `status: needs_input` ve `ask` (sorulacak sorunun adı, metni, türü, birimi, seçenekleri). Hata değildir. |
+| Verilen değer türüne ya da sınırına uymuyor | `status: needs_input`, `ask` ve `rejected` (hangi değer, neden). Değer kullanılmaz. |
+| Bir girdi `null` | Kullanıcı bilmiyor demektir; akış `on_unknown` sonucuna gider. |
+| Bütün gerekli girdiler var | `status: done` ve Bölüm 7.4'teki sonucun tamamı. |
+| Paket yok, reddedilmiş ya da tanımsız argüman var | Araç hatası (`isError`). |
+
+İstemci `needs_input` cevabında soruyu kullanıcıya sorar ve aracı önceki argümanlara yenisini ekleyerek yeniden çağırır. Sunucu eksik değeri hiçbir durumda kendisi doldurmaz.
+
+Cevap hem yapılandırılmış içerik hem düz metin taşır. Düz metnin ilk satırı hüküm ve ustanın mesajıdır; ardından önerilen eylemler, kullanılan bütün değerler ve paketin adı ile sürümü gelir.
+
+### 14.4 MCP üzerinden değişen güvenceler
+
+- **Eylem yapılmaz.** Sunucu insana doğrudan soramadığı için `human_in_loop.mode` ne olursa olsun `act` adımları yalnız öneri olarak döner.
+- **Değerlerin onayı istemciye kalır.** Bölüm 7.2'deki "modelin çıkardığı değer insana onaylatılır" kuralını sunucu uygulayamaz: değerin kullanıcıdan mı modelden mi geldiğini bilemez. Bunun yerine sunucu, kullandığı bütün değerleri sonuç metnine yazar. İstemcinin araç çağrılarını kullanıcıya onaylatması ÖNERİLİR.
+- **Mesajın değişmeden gösterilmesi istemciye kalır.** Sunucu bunu araç açıklamasında ve sunucu talimatında ister, ama zorlayamaz.
+
+Bu üç güvencenin tamamı gerekiyorsa paket, doğrudan çalıştırıcıyla (`skillpack ask`, `skillpack run`) kullanılır.
+
+### 14.5 Bağlı yazılımlar
+
+Çevredeki yazılımlar sunucuya iki yoldan bağlanır:
+
+- **Sensör bağı.** `--sensor ad=dosya`: adı geçen sensörün güncel değeri bir dosyadan okunur. Başka bir yazılım (ölçüm cihazının programı, ev otomasyonu) bu dosyayı günceller. İstemcinin açıkça verdiği değer sensörden önce gelir. Paket yalnız `capabilities.sensors` içinde beyan ettiği sensörü okuyabilir.
+- **Kayıt defteri.** `--journal dosya`: tamamlanan her çalıştırma (zaman, paket, sürüm, sonuç, değerler) JSON Lines biçiminde eklenir. Başka bir yazılım bu dosyayı okuyabilir.
+
+Bu sürümde bağ yalnız dosya üzerindendir. Ağ üzerinden bağ (ör. bir ev otomasyonu sunucusu) ve paketin başka bir uygulamada eylem başlatması yoktur.
+
+### 14.6 Sınırlar
+
+- Taşıma yalnız stdio'dur.
+- Soru sorma, MCP'nin kendi girdi isteme mekanizmasıyla değil, araç cevabındaki `needs_input` durumuyla yapılır. Gerekçe: her istemci bu mekanizmayı desteklemez; düz araç cevabını hepsi okur.
+- Referans sunucu resmî MCP Python SDK'sının istemcisiyle sınandı. Gerçek bir yerel modelin aracı doğru argümanlarla çağırıp çağırmadığı ölçülmedi.
+

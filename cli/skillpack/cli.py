@@ -344,6 +344,25 @@ def cmd_route_test(args: argparse.Namespace) -> int:
     return 0 if total and correct == total else 1
 
 
+def cmd_serve(args: argparse.Namespace) -> int:
+    from .mcp_server import Hub, serve_stdio
+
+    sensors: dict[str, Path] = {}
+    for pair in args.sensor or []:
+        name, sep, path = pair.partition("=")
+        if not sep or not name or not path:
+            print(f"hata: geçersiz --sensor: {pair}", file=sys.stderr)
+            return 1
+        sensors[name] = Path(path)
+    hub = Hub(_registry(args), sensors, Path(args.journal) if args.journal else None)
+    try:
+        serve_stdio(hub)
+    except RuntimeError as exc:
+        print(f"hata: {exc}", file=sys.stderr)
+        return 1
+    return 0
+
+
 def _add_store(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--packs", default="examples", help="paket deposu dizini")
     parser.add_argument("--trust", default="examples/trust", help="güvenilen açık anahtarlar")
@@ -410,6 +429,15 @@ def build_parser() -> argparse.ArgumentParser:
     _add_store(p)
     _add_router(p)
     p.set_defaults(func=cmd_ask)
+
+    p = sub.add_parser("serve", help="paketleri MCP araçları olarak sun (stdio)")
+    p.add_argument("--journal", help="tamamlanan çalıştırmaların yazılacağı JSONL dosyası")
+    p.add_argument(
+        "--sensor", action="append", metavar="AD=DOSYA",
+        help="sensör adını, güncel değeri içeren bir dosyaya bağla",
+    )
+    _add_store(p)
+    p.set_defaults(func=cmd_serve)
 
     p = sub.add_parser("route-test", help="paketlerdeki yönlendirme örneklerini sına")
     _add_store(p)

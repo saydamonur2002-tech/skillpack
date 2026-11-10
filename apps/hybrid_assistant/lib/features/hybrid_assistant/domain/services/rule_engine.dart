@@ -30,12 +30,21 @@ class RuleEngine {
   }
 
   bool _matches(RuleWhen when, RuleContext context) {
-    final left = context[when.field];
+    if (when.all.isNotEmpty) {
+      return when.all.every((child) => _matches(child, context));
+    }
+    if (when.any.isNotEmpty) {
+      return when.any.any((child) => _matches(child, context));
+    }
+    final field = when.field;
+    final op = when.op;
+    if (field == null || op == null) return false;
+    final left = context[field];
     final right = when.value;
 
-    switch (when.op) {
+    switch (op) {
       case 'eq':
-        return left?.toString() == right.toString();
+        return left?.toString() == right?.toString();
       case 'contains':
         if (left is! String || right is! String) return false;
         if (right.isEmpty) return true;
@@ -44,16 +53,23 @@ class RuleEngine {
         if (left is! String || right is! String) return false;
         return left.toLowerCase().startsWith(right.toLowerCase());
       case 'gte':
-        return _asNum(left) != null &&
-            _asNum(right) != null &&
-            _asNum(left)! >= _asNum(right)!;
+        return _cmp(left, right, (a, b) => a >= b);
       case 'lte':
-        return _asNum(left) != null &&
-            _asNum(right) != null &&
-            _asNum(left)! <= _asNum(right)!;
+        return _cmp(left, right, (a, b) => a <= b);
+      case 'gt':
+        return _cmp(left, right, (a, b) => a > b);
+      case 'lt':
+        return _cmp(left, right, (a, b) => a < b);
       default:
         return false;
     }
+  }
+
+  bool _cmp(Object? left, Object? right, bool Function(double, double) test) {
+    final a = _asNum(left);
+    final b = _asNum(right);
+    if (a == null || b == null) return false;
+    return test(a, b);
   }
 
   double? _asNum(Object? value) {

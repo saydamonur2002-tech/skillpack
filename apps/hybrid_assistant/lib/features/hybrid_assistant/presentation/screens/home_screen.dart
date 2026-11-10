@@ -1,9 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../data/datasources/system_probe.dart';
 import '../../data/repositories/assistant_repository.dart';
+import '../../domain/models/device_snapshot.dart';
+import '../../domain/services/privacy_guard.dart';
 import '../../domain/services/token_budget_service.dart';
 import '../widgets/app_check_debug_token_banner.dart';
+import '../widgets/device_panels.dart';
 import '../widgets/status_card.dart';
 
 /// Tek işlevli minimalist ana ekran (durum, giriş, sonuç/log).
@@ -12,11 +18,13 @@ class HomeScreen extends StatefulWidget {
     super.key,
     required this.repository,
     required this.tokenBudgetService,
+    required this.probe,
     this.appCheckDebugToken,
   });
 
   final AssistantRepository repository;
   final TokenBudgetService tokenBudgetService;
+  final SystemProbe probe;
 
   /// Debug derlemede Firebase konsoluna eklenecek App Check anahtarı.
   final String? appCheckDebugToken;
@@ -25,30 +33,96 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   final _controller = TextEditingController();
   final _logs = <String>[];
   AssistantResult? _result;
   EngineStatus _status = EngineStatus.localActive;
+  DeviceSnapshot _snapshot = DeviceSnapshot.empty;
+  StreamSubscription<DeviceSnapshot>? _snapshots;
   bool _busy = false;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _snapshots = widget.probe.snapshots.listen((snapshot) {
+      if (mounted) setState(() => _snapshot = snapshot);
+    });
+    widget.probe.start();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      widget.probe.start();
+    } else if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.detached) {
+      widget.probe.stop();
+    }
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _snapshots?.cancel();
+    widget.probe.stop();
     _controller.dispose();
     super.dispose();
   }
 
   void _logResult(AssistantResult result) {
+    if (result.ruleId != null) {
+      _log('kural: ${result.ruleId}');
+    }
+    final throttle = result.throttleReason;
+    if (throttle != null && throttle.isNotEmpty) {
+      _log('kısıt: $throttle');
+    }
     _log('kaynak: ${result.source.name}');
+    if (result.source == AssistantSource.offlineFallback ||
+        result.ruleId == 'unknown') {
+      _log('yedek: ${result.title}');
+    }
     final detail = result.errorDetail;
     if (detail != null && detail.isNotEmpty) {
-      _log('bulut: $detail');
+      _log('yedek: $detail');
+    }
+  }
+
+  Future<void> _refresh() async {
+    setState(() => _busy = true);
+    try {
+      final snapshot = await widget.probe.read();
+      if (!mounted) return;
+      final result = await widget.repository.reevaluateLocal();
+      setState(() {
+        _snapshot = snapshot;
+        _result = result;
+        _status = result.engineStatus;
+      });
+      _log('yenile');
+      _logResult(result);
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  Future<void> _openSettings(String target) async {
+    final opened = await widget.probe.openSettings(target);
+    if (!mounted) return;
+    if (!opened) {
+      _log('yedek: bu telefonda bu sayfa yok');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Bu telefonda bu sayfa yok')),
+      );
     }
   }
 
   void _log(String line) {
+    final safe = PrivacyGuard.mask(line);
     setState(() {
-      _logs.insert(0, '${TimeOfDay.now().format(context)}  $line');
+      _logs.insert(0, '${TimeOfDay.now().format(context)}  $safe');
       if (_logs.length > 40) _logs.removeLast();
     });
   }
@@ -234,10 +308,39 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
+                DeviceLiveCards(snapshot: _snapshot),
+                const SizedBox(height: 12),
+                SystemHealthPanel(snapshot: _snapshot),
+                const SizedBox(height: 12),
                 StatusCard(
                   status: _status,
                   firebaseReady: widget.repository.firebaseReady,
                   cloudError: _result?.errorDetail != null,
+                  freeBytes: _snapshot.availableBytes,
+                  totalBytes: _snapshot.totalBytes,
+                ),
+                if (_result?.throttleReason != null) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    _result!.throttleReason!,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: const Color(0xFFC4A35A),
+                    ),
+                  ),
+                ],
+                if (_result != null && _result!.settings.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  SettingsShortcutButtons(
+                    targets: _result!.settings,
+                    onOpen: _openSettings,
+                  ),
+                ],
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                    onPressed: _busy ? null : _refresh,
+                    child: const Text('Durumu yenile'),
+                  ),
                 ),
                 if (kDebugMode && widget.appCheckDebugToken != null) ...[
                   const SizedBox(height: 12),

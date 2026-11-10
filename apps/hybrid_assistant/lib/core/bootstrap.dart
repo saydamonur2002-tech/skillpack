@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import '../features/hybrid_assistant/data/datasources/connectivity_guard.dart';
 import '../features/hybrid_assistant/data/datasources/gemini_client.dart';
 import '../features/hybrid_assistant/data/datasources/local_rules_loader.dart';
+import '../features/hybrid_assistant/data/datasources/system_probe.dart';
 import '../features/hybrid_assistant/data/repositories/assistant_repository.dart';
 import '../features/hybrid_assistant/domain/services/hot_patch_manager.dart';
 import '../features/hybrid_assistant/domain/services/rule_engine.dart';
@@ -22,6 +23,7 @@ class AppBootstrap {
   late final LocalRulesLoader localRulesLoader;
   late final ConnectivityGuard connectivityGuard;
   late final TokenBudgetService tokenBudgetService;
+  late final SystemProbe systemProbe;
   late final GeminiClient geminiClient;
   late final AssistantRepository repository;
   bool firebaseReady = false;
@@ -36,6 +38,7 @@ class AppBootstrap {
     localRulesLoader = LocalRulesLoader();
     connectivityGuard = ConnectivityGuard();
     tokenBudgetService = TokenBudgetService(storage: localStorage);
+    systemProbe = AndroidSystemProbe();
 
     if (kDebugMode) {
       appCheckDebugToken = await loadOrCreateAppCheckDebugToken(localStorage);
@@ -64,6 +67,7 @@ class AppBootstrap {
       connectivityGuard: connectivityGuard,
       tokenBudgetService: tokenBudgetService,
       firebaseReady: firebaseReady,
+      systemProbe: systemProbe,
     );
     await repository.initialize();
   }

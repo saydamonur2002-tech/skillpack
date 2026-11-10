@@ -9,6 +9,102 @@
   },
   "rules": [
     {
+      "id": "thermal-severe",
+      "priority": 1,
+      "description": "Android 10+ sistem ısı durumu ciddi ve üzeri.",
+      "when": {
+        "all": [
+          {"field": "thermal_supported", "op": "eq", "value": true},
+          {"field": "thermal_status", "op": "gte", "value": 3}
+        ]
+      },
+      "then": {
+        "action": "answer_local",
+        "message": "Sistem ısınıyor. Şarjı ve kılıfı çıkarın.",
+        "allow_cloud": false,
+        "settings": ["battery_saver", "display"]
+      }
+    },
+    {
+      "id": "battery-temp-high",
+      "priority": 2,
+      "description": "Isı durumu yoksa pil sıcaklığına bak.",
+      "when": {
+        "all": [
+          {"field": "thermal_supported", "op": "eq", "value": false},
+          {"field": "battery_temp_c", "op": "gte", "value": 40}
+        ]
+      },
+      "then": {
+        "action": "answer_local",
+        "message": "Pil sıcak. Şarjı ve kılıfı çıkarın.",
+        "allow_cloud": false,
+        "settings": ["battery_saver", "display"]
+      }
+    },
+    {
+      "id": "charge-overheat",
+      "priority": 3,
+      "description": "Sistem aşırı ısınma kodu veya şarjdayken yüksek pil sıcaklığı.",
+      "when": {
+        "any": [
+          {"field": "health", "op": "eq", "value": "overheat"},
+          {
+            "all": [
+              {"field": "is_plugged", "op": "eq", "value": true},
+              {"field": "battery_temp_c", "op": "gte", "value": 40}
+            ]
+          }
+        ]
+      },
+      "then": {
+        "action": "answer_local",
+        "message": "Şarjı çıkarın; pil ısınıyor.",
+        "allow_cloud": false,
+        "settings": ["display"]
+      }
+    },
+    {
+      "id": "battery-low",
+      "priority": 4,
+      "description": "Pil yüzde 20 altında ve şarj olmuyor.",
+      "when": {
+        "all": [
+          {"field": "battery_level", "op": "lt", "value": 20},
+          {"field": "is_charging", "op": "eq", "value": false}
+        ]
+      },
+      "then": {
+        "action": "answer_local",
+        "message": "Pil düşük. Güç tasarrufunu Ayarlar'dan açabilirsiniz.",
+        "allow_cloud": false,
+        "settings": ["battery_saver"]
+      }
+    },
+    {
+      "id": "low-memory",
+      "priority": 5,
+      "description": "Sistem düşük bellek bildiriyor.",
+      "when": {"field": "low_memory", "op": "eq", "value": true},
+      "then": {
+        "action": "answer_local",
+        "message": "Sistem bellek baskısı bildiriyor; ağır iş durdu.",
+        "allow_cloud": false
+      }
+    },
+    {
+      "id": "storage-low",
+      "priority": 6,
+      "description": "Boş depolama 1 GB altında.",
+      "when": {"field": "available_bytes", "op": "lt", "value": 1000000000},
+      "then": {
+        "action": "answer_local",
+        "message": "Depolama azaldı. Depolama ayarını açabilirsiniz.",
+        "allow_cloud": false,
+        "settings": ["storage"]
+      }
+    },
+    {
       "id": "greet",
       "priority": 10,
       "description": "Simple greeting handled fully offline.",

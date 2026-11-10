@@ -70,22 +70,7 @@
           "maxLength": 500
         },
         "when": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["field", "op", "value"],
-          "properties": {
-            "field": {
-              "type": "string",
-              "enum": ["intent", "query", "category", "confidence"]
-            },
-            "op": {
-              "type": "string",
-              "enum": ["eq", "contains", "starts_with", "gte", "lte"]
-            },
-            "value": {
-              "type": ["string", "number", "boolean"]
-            }
-          }
+          "$ref": "#/$defs/when"
         },
         "then": {
           "type": "object",
@@ -103,7 +88,55 @@
             "allow_cloud": {
               "type": "boolean",
               "default": false
+            },
+            "settings": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["battery_saver", "display", "storage"]
+              }
             }
+          }
+        }
+      },
+      "when": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "field": {
+            "type": "string",
+            "enum": [
+              "intent",
+              "query",
+              "category",
+              "confidence",
+              "battery_level",
+              "is_charging",
+              "is_plugged",
+              "battery_temp_c",
+              "health",
+              "power_save",
+              "thermal_supported",
+              "thermal_status",
+              "low_memory",
+              "available_bytes",
+              "is_metered"
+            ]
+          },
+          "op": {
+            "type": "string",
+            "enum": ["eq", "contains", "starts_with", "gte", "lte", "gt", "lt"]
+          },
+          "value": {
+            "type": ["string", "number", "boolean"]
+          },
+          "all": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/when" }
+          },
+          "any": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/when" }
           }
         }
       }

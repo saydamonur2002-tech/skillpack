@@ -1,11 +1,14 @@
 import '../../../../core/constants.dart';
 import '../../domain/models/rule_model.dart';
 import '../../domain/services/hot_patch_manager.dart';
+import '../../domain/services/privacy_guard.dart';
 import '../../domain/services/rule_engine.dart';
 import '../../domain/services/token_budget_service.dart';
+import '../../domain/services/work_throttle.dart';
 import '../datasources/connectivity_guard.dart';
 import '../datasources/gemini_client.dart';
 import '../datasources/local_rules_loader.dart';
+import '../datasources/system_probe.dart';
 
 /// Lokal motor ile Gemini arasında karar köprüsü.
 ///
@@ -20,6 +23,7 @@ class AssistantRepository {
     required this.connectivityGuard,
     required this.tokenBudgetService,
     required this.firebaseReady,
+    required this.systemProbe,
   });
 
   final RuleEngine ruleEngine;
@@ -29,6 +33,8 @@ class AssistantRepository {
   final ConnectivityGuard connectivityGuard;
   final TokenBudgetService tokenBudgetService;
   final bool firebaseReady;
+  final SystemProbe systemProbe;
+  String _lastQuery = '';
 
   Future<void> initialize() async {
     final bundled = await localRulesLoader.loadBundled();
@@ -41,18 +47,36 @@ class AssistantRepository {
   Future<AssistantResult> handle({
     required String query,
     String? intent,
+  }) {
+    _lastQuery = query;
+    return _decide(query: query, intent: intent, allowCloud: true);
+  }
+
+  /// Ölçümü yeniden okuduktan sonra yalnız yerel motoru çalıştırır.
+  Future<AssistantResult> reevaluateLocal() {
+    return _decide(query: _lastQuery, allowCloud: false);
+  }
+
+  Future<AssistantResult> _decide({
+    required String query,
+    String? intent,
+    required bool allowCloud,
   }) async {
+    final snapshot = systemProbe.latest;
     final context = RuleContext(
       query: query,
       intent: intent ?? _guessIntent(query),
+      values: snapshot.toRuleValues(),
     );
     final match = ruleEngine.evaluate(context);
+    final throttle = WorkThrottle.evaluate(snapshot);
 
     if (match == null) {
       return AssistantResult(
         source: AssistantSource.offlineFallback,
         title: 'Yedek yanıt',
         body: connectivityGuard.fallbackMessage(),
+        throttleReason: throttle.reason,
         engineStatus: EngineStatus.localActive,
       );
     }
@@ -60,15 +84,25 @@ class AssistantRepository {
     final action = match.rule.then.action;
     final localMessage =
         match.rule.then.message ?? 'Kural eşleşti: ${match.rule.id}';
+    final settings = match.rule.then.settings;
+    final cloudAllowed = allowCloud &&
+        match.rule.then.allowCloud &&
+        action != 'answer_local' &&
+        action != 'fallback';
 
-    if (action == 'answer_local' ||
-        action == 'fallback' ||
-        !match.rule.then.allowCloud) {
+    if (!cloudAllowed || throttle.skip) {
+      final skippedCloud = cloudAllowed && throttle.skip;
       return AssistantResult(
-        source: AssistantSource.localRule,
-        title: 'Yerel kural: ${match.rule.id}',
+        source: action == 'fallback'
+            ? AssistantSource.offlineFallback
+            : AssistantSource.localRule,
+        title: skippedCloud
+            ? throttle.reason!
+            : 'Yerel kural: ${match.rule.id}',
         body: localMessage,
         ruleId: match.rule.id,
+        settings: settings,
+        throttleReason: throttle.reason,
         engineStatus: EngineStatus.localActive,
       );
     }
@@ -79,6 +113,7 @@ class AssistantRepository {
         title: 'Yerel kural (çevrimdışı)',
         body: connectivityGuard.fallbackMessage(localRuleMessage: localMessage),
         ruleId: match.rule.id,
+        settings: settings,
         engineStatus: EngineStatus.offline,
       );
     }
@@ -96,6 +131,7 @@ class AssistantRepository {
         budgetDecision: budget,
         pendingLocalSummary: localMessage,
         pendingQuery: query,
+        settings: settings,
         engineStatus: EngineStatus.awaitingBudget,
       );
     }
@@ -112,10 +148,23 @@ class AssistantRepository {
     required String localMessage,
     String? ruleId,
   }) async {
+    final snapshot = systemProbe.latest;
+    final throttle = WorkThrottle.evaluate(snapshot);
+    if (throttle.skip) {
+      return AssistantResult(
+        source: AssistantSource.localRule,
+        title: throttle.reason!,
+        body: localMessage,
+        ruleId: ruleId,
+        throttleReason: throttle.reason,
+        engineStatus: EngineStatus.localActive,
+      );
+    }
+    final figures = PrivacyGuard.figuresText(snapshot.toCloudFigures());
     try {
       final explanation = await geminiClient.explain(
-        query: query,
-        localDecisionSummary: localMessage,
+        figures: figures,
+        localDecisionSummary: PrivacyGuard.mask(localMessage),
       );
       await tokenBudgetService.recordUsage(
         explanation.totalTokens == 0
@@ -131,7 +180,7 @@ class AssistantRepository {
         engineStatus: EngineStatus.geminiConnected,
       );
     } catch (error) {
-      final detail = error.toString();
+      final detail = PrivacyGuard.mask(error.toString());
       return AssistantResult(
         source: AssistantSource.offlineFallback,
         title: 'Bulut hatası — yedek',
@@ -182,6 +231,8 @@ class AssistantResult {
     this.pendingQuery,
     this.tokensUsed,
     this.errorDetail,
+    this.settings = const [],
+    this.throttleReason,
   });
 
   final AssistantSource source;
@@ -197,4 +248,8 @@ class AssistantResult {
 
   /// Bulut çağrısı düşerse yutulan istisnanın metni. Ağ kopukluğu değil.
   final String? errorDetail;
+  final List<String> settings;
+
+  /// Ağır iş atlandıysa durum satırında görünen gerekçe.
+  final String? throttleReason;
 }

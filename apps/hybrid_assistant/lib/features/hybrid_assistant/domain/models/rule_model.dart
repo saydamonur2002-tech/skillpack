@@ -85,22 +85,50 @@ class RuleModel {
 }
 
 class RuleWhen {
-  RuleWhen({required this.field, required this.op, required this.value});
+  RuleWhen({
+    this.field,
+    this.op,
+    this.value,
+    this.all = const [],
+    this.any = const [],
+  });
 
-  final String field;
-  final String op;
-  final Object value;
+  final String? field;
+  final String? op;
+  final Object? value;
+  final List<RuleWhen> all;
+  final List<RuleWhen> any;
 
-  factory RuleWhen.fromJson(Map<String, dynamic> json) => RuleWhen(
-        field: json['field'] as String,
-        op: json['op'] as String,
-        value: json['value'] as Object,
+  factory RuleWhen.fromJson(Map<String, dynamic> json) {
+    final all = json['all'];
+    if (all is List) {
+      return RuleWhen(
+        all: all
+            .map((e) => RuleWhen.fromJson(e as Map<String, dynamic>))
+            .toList(),
       );
+    }
+    final any = json['any'];
+    if (any is List) {
+      return RuleWhen(
+        any: any
+            .map((e) => RuleWhen.fromJson(e as Map<String, dynamic>))
+            .toList(),
+      );
+    }
+    return RuleWhen(
+      field: json['field'] as String?,
+      op: json['op'] as String?,
+      value: json['value'],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-        'field': field,
-        'op': op,
-        'value': value,
+        if (all.isNotEmpty) 'all': all.map((e) => e.toJson()).toList(),
+        if (any.isNotEmpty) 'any': any.map((e) => e.toJson()).toList(),
+        if (field != null) 'field': field,
+        if (op != null) 'op': op,
+        if (value != null) 'value': value,
       };
 }
 
@@ -109,22 +137,31 @@ class RuleThen {
     required this.action,
     this.message,
     this.allowCloud = false,
+    this.settings = const [],
   });
 
   final String action;
   final String? message;
   final bool allowCloud;
 
+  /// battery_saver, display, storage. Yalnız ayar sayfası açar.
+  final List<String> settings;
+
   factory RuleThen.fromJson(Map<String, dynamic> json) => RuleThen(
         action: json['action'] as String,
         message: json['message'] as String?,
         allowCloud: json['allow_cloud'] as bool? ?? false,
+        settings: (json['settings'] as List<dynamic>?)
+                ?.map((e) => e as String)
+                .toList() ??
+            const [],
       );
 
   Map<String, dynamic> toJson() => {
         'action': action,
         if (message != null) 'message': message,
         'allow_cloud': allowCloud,
+        if (settings.isNotEmpty) 'settings': settings,
       };
 }
 
@@ -134,12 +171,14 @@ class RuleContext {
     this.intent,
     this.category,
     this.confidence,
+    this.values = const {},
   });
 
   final String query;
   final String? intent;
   final String? category;
   final double? confidence;
+  final Map<String, Object?> values;
 
   Object? operator [](String field) {
     switch (field) {
@@ -152,7 +191,7 @@ class RuleContext {
       case 'confidence':
         return confidence;
       default:
-        return null;
+        return values[field];
     }
   }
 }

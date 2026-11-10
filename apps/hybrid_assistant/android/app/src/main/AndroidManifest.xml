@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
         android:label="hybrid_assistant"
         android:name="${applicationName}"
@@ -40,6 +41,18 @@
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
+        </intent>
+        <intent>
+            <action android:name="android.settings.BATTERY_SAVER_SETTINGS"/>
+        </intent>
+        <intent>
+            <action android:name="android.settings.DISPLAY_SETTINGS"/>
+        </intent>
+        <intent>
+            <action android:name="android.settings.INTERNAL_STORAGE_SETTINGS"/>
+        </intent>
+        <intent>
+            <action android:name="android.os.storage.action.MANAGE_STORAGE"/>
         </intent>
     </queries>
 </manifest>

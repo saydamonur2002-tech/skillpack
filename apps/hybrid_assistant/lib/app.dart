@@ -25,6 +25,7 @@ class HybridAssistantApp extends StatelessWidget {
       home: HomeScreen(
         repository: bootstrap.repository,
         tokenBudgetService: bootstrap.tokenBudgetService,
+        probe: bootstrap.systemProbe,
         appCheckDebugToken: bootstrap.appCheckDebugToken,
       ),
     );

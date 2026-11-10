@@ -4,6 +4,20 @@ Süreler göreli aylarla verilmiştir (A0 = başlangıç). Gönüllü veya hibe 
 
 Her fazın durumu bu belgede ve ilgili GitHub issue'sunda tutulur. Görev kutuları işlendikçe işaretlenir.
 
+## Proje devamı
+
+10 Kasım 2026 tartışma notları: [docs/PROJE_DEVAMI.md](docs/PROJE_DEVAMI.md). Bu bölüm F0–F6 sırasını değiştirmez. Fazların durumu aşağıda aynıdır.
+
+### Sonraki adım — ilk demo
+
+- [ ] Home Assistant + Ollama + bir imzalı beceri: buzdolabı sıcaklık takibi
+- [ ] Windows "oyun/performans modu" beceri adayını ayrıca not etmek (yalnız resmî Windows ayarları; sistem dosyası silinmez; hile karşıtı yazılıma ve oyun belleğine dokunulmaz; her değişiklik geri alınabilir)
+
+### Öneriler (şema henüz değişmez)
+
+- [ ] LLM'ye giden içeriğin İngilizce yazılması: `SKILL.md`, kurallar, örnekler, testler, istemler. Kullanıcıya dönük dil ikincil kalır. Ayrıntı: [docs/PROJE_DEVAMI.md](docs/PROJE_DEVAMI.md)
+- [ ] İsteğe bağlı `budget` alanı önerisini F1 şema işine not etmek: `skill_max_tokens`, `local_max_output`, `cloud_max_tokens_per_day`, `on_exceed`. Örnek değerler ölçülmüş limit değildir. Ayrıntı: [docs/PROJE_DEVAMI.md](docs/PROJE_DEVAMI.md). `spec/`, `schemas/` ve CLI bu maddeyle değişmez.
+
 ## Durum özeti
 
 | Faz | Süre | Amaç (kısa) | Durum |
@@ -40,6 +54,7 @@ Spesifikasyon taslağı v0.1:
 - [ ] Agent Skills ile geriye uyumluluk kurallarını açıkça belgelemek (yalnız `SKILL.md` okuyan bir ajanın paketi kullanabilmesi)
 - [ ] Sürümleme, izin beyanları, gizlilik kuralları ve köken/lisans alanlarını taslakta tanımlamak
 - [ ] Kod için Apache-2.0, spesifikasyon metni ve veri için CC-BY-4.0 notunu netleştirmek
+- [ ] LLM'ye giden içeriğin İngilizce yazılması önerisini taslağa not etmek (`SKILL.md`, kurallar, örnekler, testler, istemler). Kullanıcıya dönük dil ikincil kalır. Ayrıntı: [docs/PROJE_DEVAMI.md](docs/PROJE_DEVAMI.md)
 - [ ] Taslağı bu depoda yayımlamak ve sürüm etiketini (`v0.1-taslak`) kararlaştırmak
 
 Geri bildirim:
@@ -68,6 +83,7 @@ JSON şemaları:
 - [ ] İptal listesi için basit bir JSON Schema taslağı yazmak (olgunlaşma F4'te)
 - [ ] Paket indeksi için JSON Schema taslağı yazmak (olgunlaşma F4'te)
 - [ ] `robot_profile.yaml` için iskelet şema yazmak (olgunlaşma F3'te)
+- [ ] İsteğe bağlı `budget` alanı önerisini değerlendirmek (`skill_max_tokens`, `local_max_output`, `cloud_max_tokens_per_day`, `on_exceed`). Öneri: [docs/PROJE_DEVAMI.md](docs/PROJE_DEVAMI.md). Alan kabul edilene kadar şema dosyası yazılmaz.
 
 CLI komutları (her biri ayrı iş):
 

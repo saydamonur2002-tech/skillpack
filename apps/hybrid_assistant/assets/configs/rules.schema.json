@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skillpack.local/schemas/rules.v1.json",
+  "title": "HybridAssistantRulePack",
+  "description": "Declarative JSON rules only. No executable code. Decision lives in the script; explanation may come from the model.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "pack_id", "version", "rules"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "pack_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cloud_max_tokens_per_day": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "on_exceed": {
+          "type": "string",
+          "enum": ["ask_user", "local_only", "deny"]
+        }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 200,
+      "items": {
+        "$ref": "#/$defs/rule"
+      }
+    }
+  },
+  "$defs": {
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "priority", "when", "then"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "priority": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "when": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["field", "op", "value"],
+          "properties": {
+            "field": {
+              "type": "string",
+              "enum": ["intent", "query", "category", "confidence"]
+            },
+            "op": {
+              "type": "string",
+              "enum": ["eq", "contains", "starts_with", "gte", "lte"]
+            },
+            "value": {
+              "type": ["string", "number", "boolean"]
+            }
+          }
+        },
+        "then": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["action"],
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["answer_local", "ask_cloud_explain", "ask_user", "fallback"]
+            },
+            "message": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "allow_cloud": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        }
+      }
+    }
+  }
+}

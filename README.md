@@ -30,6 +30,7 @@ Proje devamı (10 Kasım 2026 tartışma notları, ilk demo hedefi): [docs/PROJE
 | `spec/` | skillpack v0.1 spesifikasyon taslağı | ⬜ Başlamadı |
 | `schemas/` | JSON Schema dosyaları (`skillpack.yaml`, `robot_profile.yaml`, iptal listesi, indeks) | ⬜ Başlamadı |
 | `examples/` | Örnek beceri paketleri | ⬜ Başlamadı |
+| `apps/hybrid_assistant` | Hibrit AI mobil iskelet (Flutter: lokal JSON kurallar + Firebase AI Logic) | 🚧 İskelet |
 | `cli/` | Doğrulayıcı ve paketleyici CLI (`init`, `validate`, `pack`, `sign`, `verify`, `publish`, `revoke-check`) | ⬜ Başlamadı |
 | `docs/` | Teknik proje taslağı ve belgeler | Taslak metin mevcut; uygulama başlamadı |
 

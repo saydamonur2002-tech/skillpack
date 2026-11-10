@@ -7,7 +7,7 @@ Teknik Proje Dokümanı — Taslak v0.1
 Agent Skills (`SKILL.md`) için fiziksel gösterim/politika uzantısı, merkezsiz dağıtım, vakıf imzası ve iptal listesi, telefon ↔ yerel sunucu ↔ bulut yönlendirmesi
 
 - Tarih: 9 Kasım 2026
-- Güncelleme: 10 Kasım 2026 (Bölüm 2.3 eklendi; önceki bölümlerin anlamı aynıdır)
+- Güncelleme: 10 Kasım 2026 (Bölüm 2.3; birincil beceri modeli alt sınırı 32B, referans kart tek 48 GB GPU)
 - Öneren: gülümse (bireysel katkıcı; açık kaynak / vakıf modeli)
 - Hazırlık desteği: Grok Bot
 - Hedef okur: teknik değerlendiriciler, Linux Foundation AAIF çalışma grupları, hibe değerlendiricileri
@@ -162,9 +162,9 @@ Bu çalışmanın hedeflediği boşluk beş maddeye indirgenebilir. Her biri ayr
 
 Bölüm 2.1'deki H1–H7, standardın üretilecek çıktılarıdır. Bu alt bölüm, bir paketin **standart profile** girebilmesi için üç çerçeveyi sabitler. Model boyutu, tok/s ve güç bandı öneridir `[VARSAYIM]`. Enerji kazancının kendisi henüz ölçülmedi `[EKSİK]`. Telefon, Mac mini sınıfı yerel sunucu ve isteğe bağlı buluttan oluşan tipik katman donanımı Bölüm 3.1'de durur. Buradaki referans, standart profilin ölçüm tezgâhıdır.
 
-**1. Orta segment donanımda çalışabilirlik.** Paket, tek bir orta segment GPU sunucusunda çalışabilmelidir. Referans donanım: 24–48 GB belleğe sahip tek GPU (RTX 4090 / 5090 veya L40S sınıfı), kart gücü kabaca 300–500 W `[VARSAYIM]`. Her paket, birlikte çalıştığı asgari model boyutunu beyan eder. Beceri uygulamasının hedefi yaklaşık 8B sınıfı bir açık modeldir `[VARSAYIM]`. Etkileşimli kullanım için önerilen alt hız yaklaşık 40 tok/s'tir `[VARSAYIM]`. 70B ve üzeri yoğun modellerde sınır muhakemesi (frontier) yerel kapsamın dışındadır; bu işler isteğe bağlı bulut katmanına gider (Bölüm 3.1, Katman 3).
+**1. Orta segment donanımda çalışabilirlik.** Paketin birincil modeli açık ağırlıklı olmalı ve en az 32B parametre taşımalıdır. 32B alt sınırdır `[VARSAYIM]`. Referans donanım tek 48 GB GPU'dur (L40S / RTX 6000 sınıfı); kart gücü kabaca 300–500 W `[VARSAYIM]`. Her paket, birlikte çalıştığı asgari model boyutunu beyan eder. Standart profilde bu beyan 32B'nin altına inmez. Etkileşimli kullanım için önerilen alt hız yaklaşık 40 tok/s'tir `[VARSAYIM]`. RTX 4090 24 GB, 4-bit yoğun 32B modelde yaklaşık 42–65 tok/s verir ve bu eşiği kıyısından geçer `[VERİ]` / `[VEKİL]`; 24 GB bu yüzden asgari kenar durumdur, referans kart 48 GB'dır. 1,5B–8B sınıfı modeller yalnız yardımcı bileşen olabilir (yönlendirme, güvenlik kapısı). Becerinin birincil modeli olamaz `[VARSAYIM]`. 70B ve üzeri isteğe bağlıdır: 48 GB'ta 4-bit ile yaklaşık 10–20 tok/s `[VEKİL]`. Bulut katmanı da isteğe bağlıdır (Bölüm 3.1, Katman 3).
 
-**Tablo 3a. Referans kartta tek kullanıcılı üretim hızı (decode)**
+**Tablo 3a. Tek kullanıcılı üretim hızı (decode): 24 GB kenar kart ve 48 GB sınıfı**
 
 | Kurulum | Hız | Etiket / kaynak |
 |---|---|---|
@@ -177,21 +177,23 @@ Bölüm 2.1'deki H1–H7, standardın üretilecek çıktılarıdır. Bu alt böl
 | Llama 3.3 70B Q4, RTX 4090 24 GB, Ollama | 5,1 tok/s | `[VERİ]` Plugsky |
 | Llama 3 70B Q4_K_M, tek 48 GB kart (A6000 14,6; L40S 15,3; RTX 6000 Ada 18,4 tok/s) | yaklaşık 15–18 tok/s | `[VEKİL]` [GPU-Benchmarks-on-LLM-Inference](https://github.com/XiongjieDai/GPU-Benchmarks-on-LLM-Inference) (llama.cpp, Llama 3; 2026 yeniden ölçümü değil) |
 
-quantized.uk satırları 4-bit civarıdır (Q4_K_M, AWQ INT4, EXL2 yaklaşık 4,65 bpw), tek dizidir ve üretim hızıdır; ön-doldurma (prefill) ayrı raporlanmaz `[VERİ]`. Plugsky aynı kartta Llama 3.1 8B için llama.cpp 162 tok/s ve vLLM 185 tok/s verir; tepe bellek yaklaşık 5,8–5,9 GB'dır `[VERİ]`. Sayfanın genel yöntem satırı GPU ölçümlerini FP16 diye yazar, 8B satırı nicemlemeyi ayrıca belirtmez. Kayıtlı bellek 4-bit ile uyumludur `[VEKİL]`. 70B Q4, 24 GB'ta 5,1 tok/s ile yaklaşık 40 tok/s etkileşim önerisinin altındadır `[VERİ]` / `[VARSAYIM]`. 48 GB sınıfı tek kartta (A6000, L40S, RTX 6000 Ada) llama.cpp ölçümü yaklaşık 15–18 tok/s'tir; bu, 10–20 tok/s vekil bandının içindedir `[VEKİL]`. İki hız da etkileşim önerisinin altındadır. ≥70B yoğun model yerel standart profilin dışında kalır ve isteğe bağlı bulut katmanına gider.
+quantized.uk satırları 4-bit civarıdır (Q4_K_M, AWQ INT4, EXL2 yaklaşık 4,65 bpw), tek dizidir ve üretim hızıdır; ön-doldurma (prefill) ayrı raporlanmaz `[VERİ]`. RTX 4090 24 GB'ta yoğun 32B, llama.cpp Q4 ile 42 ve 44 tok/s `[VERİ]`, barındırıcı AWQ ölçümünde 65 tok/s `[VEKİL]` verir. 42–65 tok/s aralığı, yaklaşık 40 tok/s etkileşim önerisini kıyısından geçer `[VARSAYIM]`. 24 GB bu yüzden asgari kenar durumdur. Standart profilin referans kartı tek 48 GB GPU'dur. Bu kartta 32B üretim hızı ölçülmedi `[EKSİK]`.
 
-8B satırları (148–235 tok/s), yaklaşık 40 tok/s önerisinin birkaç kat üstündedir `[HESAP]`. Yaklaşık 32B yoğun model 42–65 tok/s ile eşiğin kıyısındadır: alt uç quantized.uk llama.cpp (42 ve 44) `[VERİ]`, üst uç barındırıcı AWQ ölçümü (65) `[VEKİL]`. Beceri uygulamasının hedefi bu yüzden yaklaşık 8B'de tutulur `[VARSAYIM]`.
+8B satırları (148–235 tok/s) aynı 24 GB kartta etkileşim önerisinin birkaç kat üstündedir `[HESAP]`. Bu sınıfın yeri yardımcı bileşendir; birincil model en az 32B'dir `[VARSAYIM]`. Plugsky'nin 8B satırında tepe bellek yaklaşık 5,8–5,9 GB'dır `[VERİ]`. Sayfanın genel yöntem satırı GPU ölçümlerini FP16 diye yazar, 8B satırı nicemlemeyi ayrıca belirtmez; kayıtlı bellek 4-bit ile uyumludur `[VEKİL]`.
 
-**2. Enerji verimliliği.** Bu çerçeve bir watt tavanı koymaz. Birincil ölçü, 1.000 token başına enerji değil, **tamamlanan görev başına** Wh ve token'dır. Paket, aynı görevin iki ölçümünü raporlamalıdır: (a) becerisiz genel bir ajan, (b) paketlenmiş beceri, küçük bir yerel modelin üzerinde. Raporda token, süre ve tahmini Wh bulunur.
+70B Q4, 24 GB'ta 5,1 tok/s ile etkileşim önerisinin altındadır `[VERİ]` / `[VARSAYIM]`. 48 GB sınıfı tek kartta (A6000 14,6; L40S 15,3; RTX 6000 Ada 18,4 tok/s) yaklaşık 15–18 tok/s ölçülmüştür; bu, 10–20 tok/s vekil bandının içindedir `[VEKİL]`. ≥70B bu yüzden isteğe bağlı kalır. Bulut katmanı da isteğe bağlıdır.
 
-Yerel 8B decode için sabit 400 W `[VARSAYIM]` (300–500 W bandının içi) ve yalnız üretim hızı alındığında:
+**2. Enerji verimliliği.** Bu çerçeve bir watt tavanı koymaz. Birincil ölçü, 1.000 token başına enerji değil, **tamamlanan görev başına** Wh ve token'dır. Paket, aynı görevin iki ölçümünü raporlamalıdır: (a) becerisiz genel bir ajan, (b) paketlenmiş beceri, alt sınırı 32B olan yerel açık modelin üzerinde. Raporda token, süre ve tahmini Wh bulunur.
+
+Aşağıdaki decode örneği, beceri alt sınırı olan 32B içindir. Hızlar RTX 4090 24 GB kenar kartında ölçülmüştür. Referans olan 48 GB kartta 32B hızı yoktur; o kart için Wh uydurulmadı `[EKSİK]`. Güç 400 W alındı `[VARSAYIM]` (300–500 W bandının içi). Formül yalnız üretim hızını kullanır:
 
 Wh/1000 decode token = P / (3,6 × tok/s) `[HESAP]`.
 
-- 148 tok/s → 400 / (3,6 × 148) ≈ 0,75 Wh/1000
-- 218 tok/s (vLLM, quantized.uk) → ≈ 0,51 Wh/1000
-- 185 tok/s (vLLM, Plugsky) → ≈ 0,60 Wh/1000
+- 42 tok/s (Qwen3 32B, llama.cpp Q4) → 400 / (3,6 × 42) ≈ 2,65 Wh/1000. Hız `[VERİ]`, Wh `[HESAP]`
+- 44 tok/s (Qwen2.5 32B, llama.cpp Q4) → 400 / (3,6 × 44) ≈ 2,53 Wh/1000. Hız `[VERİ]`, Wh `[HESAP]`
+- 65 tok/s (Qwen 2.5 32B, vLLM AWQ, barındırıcı) → 400 / (3,6 × 65) ≈ 1,71 Wh/1000. Hız `[VEKİL]`, Wh `[HESAP]`
 
-vLLM aralığı yaklaşık 0,51–0,60 Wh/1000 decode token'dır `[HESAP]`. Hesap, duvar gücü çarpı üretim süresidir. Boşta güç, veri merkezi ek yükü (PUE), ön-doldurma ve yarım kalan görev bu sayının dışındadır.
+llama.cpp uçları yaklaşık 2,53–2,65 Wh/1000 decode token verir `[HESAP]`. Hesap, varsayılan duvar gücü çarpı üretim süresidir. Boşta güç, veri merkezi ek yükü (PUE), ön-doldurma ve yarım kalan görev bu sayının dışındadır. 48 GB referans kartın 32B görevindeki Wh değeri ölçülmedi `[EKSİK]`.
 
 Aşağıdaki sayılar başka ölçüm sınırlarına aittir. Görev başına tasarruf bunlardan çıkmaz:
 
@@ -200,13 +202,13 @@ Aşağıdaki sayılar başka ölçüm sınırlarına aittir. Görev başına tas
 - Ajan görevleri tek turdan çok daha fazla token yer. OpenHands ve SWE-bench Verified çalışması, ajanik kodlama görevlerinin tipik tek turlu muhakemeden yaklaşık 3500 kat, çok turlu sohbetten yaklaşık 1200 kat fazla token tükettiğini yazar. Fark, her turda yeniden gönderilen girdi bağlamındadır `[VERİ]` ([arXiv:2604.22750](https://arxiv.org/abs/2604.22750)).
 - Artificial Analysis Coding Agent Index'te GitHub Copilot Fusion görev başına yaklaşık 7,2M token kullanır `[VERİ]` ([AA yazısı](https://artificialanalysis.ai/articles/github-copilot-fusion-orchestrates-anthropic-and-openai-models-to-balance-performance-and-cost)). Karşılaştırma sayfası Fusion (max) için 7,34M token/görev listeler `[VERİ]` ([Claude Code ve Copilot karşılaştırması](https://artificialanalysis.ai/agents/coding-agents/comparisons/claude-code-vs-github-copilot)).
 
-Ajan izi ön-doldurma ağırlıklıdır: aynı bağlam her turda yeniden okunur. 0,75 Wh/1000 sayısı yalnız decode'dur. Görev başına Wh, bu cetvelden türetilemez. Becerinin enerji kazandırdığı bir hipotezdir ve ölçülmedi `[EKSİK]`. Ölçüm düzeneği (benchmark harness) yol haritasında F2'dedir ([ROADMAP.md](../ROADMAP.md)).
+Ajan izi ön-doldurma ağırlıklıdır: aynı bağlam her turda yeniden okunur. 2,53–2,65 Wh/1000 sayıları yalnız 24 GB kenar kartında, varsayılan 400 W ile decode'dur `[HESAP]`. Görev başına Wh, bu cetvelden türetilemez. Becerinin enerji kazandırdığı bir hipotezdir ve ölçülmedi `[EKSİK]`. Ölçüm düzeneği (benchmark harness) yol haritasında F2'dedir ([ROADMAP.md](../ROADMAP.md)).
 
 İsteğe bağlı alanlar, Agent Skills `metadata` alanının dizge→dizge kuralıyla ve Bölüm 4.1'deki ek dosya tercihiyle uyumludur. Kanonik yer, `skillpack.yaml` içinde `runtime` ile yan yana duran isteğe bağlı `efficiency` bloğudur. Değerler dizgedir; aynı dizgeler istenirse `metadata`'ya kopyalanır. Zorunlu iki anahtar (`skillpack-spec`, `skillpack-manifest`) durur. Alan adları taslaktır `[VARSAYIM]`.
 
 ```yaml
 efficiency:                              # isteğe bağlı; Bölüm 2.3
-  min_model_size: "8B"                   # asgari açık model
+  min_model_size: "32B"                  # birincil model alt sınırı; 1,5B–8B yalnız yardımcı
   tokens_per_task: ""                    # ölçülmüş girdi+çıktı, dizge
   wh_per_task: ""                        # ölçülmüş tahmini Wh/görev, dizge
   method: ""                             # donanım, çalışma zamanı, nicemleme, görev
@@ -216,20 +218,20 @@ Yalnız `SKILL.md` okuyan bir ajana göstermek için aynı dizgeler:
 
 ```yaml
 metadata:
-  skillpack-min-model-size: "8B"
+  skillpack-min-model-size: "32B"
   skillpack-tokens-per-task: ""
   skillpack-wh-per-task: ""
   skillpack-measure-method: ""
 ```
 
-**3. Açık model ve gündelik hayat etkisi.** Paket, ağırlıkları indirilebilen bir açık modelde çalışmalıdır. Ham veri yerelde kalır, çalışma çevrim dışı olabilir, token başına ücret yoktur. Usta (fabrika ustası, teknisyen) bir kez öğretir; başkası paketi yeniden kullanır (Bölüm 5). Bulut isteğe bağlıdır ve varsayılan kapalıdır (Bölüm 2.2 ve 3.3).
+**3. Açık model ve gündelik hayat etkisi.** Paket, ağırlıkları indirilebilen bir açık modelde çalışmalıdır. Birincil modelin alt sınırı 32B'dir (hedef 1). Ham veri yerelde kalır, çalışma çevrim dışı olabilir, token başına ücret yoktur. Usta (fabrika ustası, teknisyen) bir kez öğretir; başkası paketi yeniden kullanır (Bölüm 5). Bulut isteğe bağlıdır ve varsayılan kapalıdır (Bölüm 2.2 ve 3.3).
 
-Dürüst sınır: açık ağırlıklı modeller, sınır modellerin gerisindedir. 10 Kasım 2026 okumasında Artificial Analysis Intelligence Index'te en yüksek kapalı model Claude Fable 5.2 (Max) 65, en iyi açık ağırlık Kimi K3.1 Pro 46'dır `[VERİ]` ([Fable 5.2](https://artificialanalysis.ai/models/claude-fable-5-2), [Kimi K3.1 Pro](https://artificialanalysis.ai/models/kimi-k3-1-pro)). Kimi K3.1 Pro 2,8T toplam ve 104B etkin parametrelidir; referans donanıma sığmaz `[VERİ]` (aynı model sayfası). Yerel boyutta skor yaklaşık 20'dir: AA ana sayfası Nanbeige4.3-33B için 20 yazar `[VERİ]` ([artificialanalysis.ai](https://artificialanalysis.ai/), 5 Kasım 2026 duyurusu, 10 Kasım 2026 okundu). 7 Kasım 2026 tarihli ikinci el okuma, Qwen3.8 27B (Xhigh) için 20,1 ve Nanbeige4.3-33B için 20,4 aktarır `[VEKİL]` ([GPUwerk](https://gpuwerk.com/blog/open-weight-model-leaderboard/)). Yeni ya da zor görev buluta gider. Tekrar eden görev yerelde, paketlenmiş beceriyle kalır.
+Dürüst sınır: açık ağırlıklı modeller, sınır modellerin gerisindedir. 10 Kasım 2026 okumasında Artificial Analysis Intelligence Index'te en yüksek kapalı model Claude Fable 5.2 (Max) 65, en iyi açık ağırlık Kimi K3.1 Pro 46'dır `[VERİ]` ([Fable 5.2](https://artificialanalysis.ai/models/claude-fable-5-2), [Kimi K3.1 Pro](https://artificialanalysis.ai/models/kimi-k3-1-pro)). Kimi K3.1 Pro 2,8T toplam ve 104B etkin parametrelidir; referans karta sığmaz `[VERİ]` (aynı model sayfası). Alt sınıra yakın yerel sınıfın skoru yaklaşık 20'dir: AA ana sayfası Nanbeige4.3-33B için 20 yazar `[VERİ]` ([artificialanalysis.ai](https://artificialanalysis.ai/), 5 Kasım 2026 duyurusu, 10 Kasım 2026 okundu). 7 Kasım 2026 tarihli ikinci el okuma, Qwen3.8 27B (Xhigh) için 20,1 ve Nanbeige4.3-33B için 20,4 aktarır `[VEKİL]` ([GPUwerk](https://gpuwerk.com/blog/open-weight-model-leaderboard/)). 27B, 32B alt sınırının altında kalır. Yeni ya da zor görev buluta gider. Tekrar eden görev yerelde, en az 32B açık model ve paketlenmiş beceriyle kalır.
 
 **Birleşik kabul ölçütü.** Bir beceri, aşağıdaki üçünü birlikte sağladığında standart profile girer:
 
-1. Referans donanımda çalışır ve asgari model boyutunu beyan eder.
-2. Aynı görevin ölçülmüş verim karşılaştırmasını raporlar: becerisiz genel ajan ve paketlenmiş beceri, küçük yerel model; token, süre, tahmini Wh.
+1. Referans donanımda (tek 48 GB GPU) çalışır. Birincil model açık ağırlıklıdır ve en az 32B'dir; paket bu asgari boyutu beyan eder. 24 GB yalnız kenar durumdur. 1,5B–8B yalnız yardımcı bileşendir.
+2. Aynı görevin ölçülmüş verim karşılaştırmasını raporlar: becerisiz genel ajan ve paketlenmiş beceri, yerel açık model (alt sınır 32B); token, süre, tahmini Wh.
 3. Açık ağırlıklı bir modelde çalışır; ham veri sahadan çıkmaz.
 
 Üç madde birlikte standart profilin tanımıdır. Bulut katmanı bu ölçütün yerine konmaz; yeni ve zor iş için isteğe bağlı kanal olarak durur. Eşikler öneridir `[VARSAYIM]`. İkinci maddenin göstereceği tasarruf henüz yoktur `[EKSİK]`.
@@ -254,7 +256,7 @@ Mimari, önceki "Yerel Tanı Sistemi" çalışmasının (salt-okur bağlayıcıl
 
 Kaynak: `platform_tarama/bosluk.md`; rapor (Bölüm 4.3–4.4); `mini_sunucu/ozet.csv`
 
-Önceki çalışmadaki vekil ölçümlere göre Mac mini M4'te Qwen2.5 7B ~22,2 token/s, 14B ~11,6 token/s `[VEKİL]` üretiyor. Gerçek iş yüküyle sahada ölçülmedi `[EKSİK]`. Tek işlevli ajanlar kısa, yapılandırılmış çıktı ürettiği için bu hızların yeterli olacağı bir `[VARSAYIM]`; referans uygulamada ilk ölçülecek konulardan biridir (Bölüm 12). Standart profilin ölçüm tezgâhı ayrıdır: tek 24–48 GB GPU sunucusu ve yaklaşık 8B beceri hedefi Bölüm 2.3'tedir. Bu tablodaki Mac mini sınıfı, saha için daha hafif bir yerel örnektir.
+Önceki çalışmadaki vekil ölçümlere göre Mac mini M4'te Qwen2.5 7B ~22,2 token/s, 14B ~11,6 token/s `[VEKİL]` üretiyor. Gerçek iş yüküyle sahada ölçülmedi `[EKSİK]`. Tek işlevli ajanlar kısa, yapılandırılmış çıktı ürettiği için bu hızların yeterli olacağı bir `[VARSAYIM]`; referans uygulamada ilk ölçülecek konulardan biridir (Bölüm 12). Standart profilin ölçüm tezgâhı ayrıdır: tek 48 GB GPU ve birincil model için 32B alt sınırı Bölüm 2.3'tedir. 24 GB kenar durumdur. Bu tablodaki Mac mini sınıfı, saha için daha hafif bir yerel örnektir; 1,5B–8B modeller orada yardımcı bileşen olabilir.
 
 ### 3.2 Ajan hiyerarşisi
 

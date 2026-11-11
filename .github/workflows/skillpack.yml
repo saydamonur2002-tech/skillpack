@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install -e "cli/[mcp]"
+      - run: pip install -e "cli/[mcp,tuf]"
       - name: Birim testleri
         run: python -m unittest discover -s . -t .
         working-directory: cli

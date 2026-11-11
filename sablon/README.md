@@ -105,15 +105,17 @@ Uyarlama sırası:
 | Özellik | Durum |
 |---|---|
 | Akış, tablo, karar, test, Ed25519 imza, MCP sunucusu | Mevcut çalıştırıcıda **var** |
-| Kaynak önceliği (sensör > LLM), tazelik kontrolü | **Yok** — şu an LLM argümanı sensör değerini ezebiliyor |
-| Eksik veride önce tehlike kuralı | **Yok** — bilinen tehlike "bilinmiyor"a düşebiliyor |
+| Kaynak önceliği (sensör > LLM), tazelik kontrolü | **Var** — `flow.yaml` biçiminde (`sensor`, `max_age_s`); `kayıt` kaynağı yok |
+| Eksik veride önce tehlike kuralı | **Var** — `flow.yaml` içindeki `hazards` bölümüyle |
 | Amaç / ön koşul / etki / doğrulama alanları | **Yok** — bu şablonla tanımlandı |
 | Profil – sert sınır ayrımı, onaylı değişiklik akışı | **Yok** — yalnız şablonda |
 | Bağlayıcı arayüzleri | **Yok** |
-| Boş beklentili testin reddi | **Yok** — şu an geçiyor sayılıyor |
+| Boş beklentili testin reddi | **Var** |
 | Donanım tarifi ve anlam katmanı (`donanim.yaml`, MCP amaç/ön koşul/etki/durum) | **Yok** — yalnız şablonda |
 | Kurulum kontrolleri (imza+iptal sırası, arayüz var mı, sürüm geri dönüşü) ve MCP'den önce kurulum | **Yok** — yalnız [`KURULUM.md`](KURULUM.md)'de |
 | `sorular/` paketleme oyunu | **Yok** — yalnız şablonda |
 | Adımların ayrı dosya, kural / profil / veri ayrımı (iskelet biçimi) | **Yok** — yalnız şablonda |
+
+"Var" yazan satırlar çalıştırıcının kendi biçiminde (`flow.yaml`, [spec/SKILLPACK_v0.1.md](../spec/SKILLPACK_v0.1.md) Bölüm 6.7 ve 7.2) uygulanmıştır; bu şablonun Türkçe alan adlarıyla (`tazelik_sn`, `tehlike`) değil.
 
 Bu şablon bir **sözleşme taslağıdır**; çalıştırıcının bunu uygulaması sonraki iştir.

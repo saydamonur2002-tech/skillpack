@@ -105,13 +105,16 @@ Doğrulayıcı bilinmeyen üst düzey alanları uyarıyla geçer. `skillpack` al
 
 ## 6. Akış profili (`flow.yaml`)
 
-Şema: `cli/skillpack/schemas/flow.schema.json`. Akış beş bölümden oluşur.
+Şema: `cli/skillpack/schemas/flow.schema.json`. Akış beş zorunlu bölümden ve isteğe bağlı tehlike kurallarından oluşur.
+
+Dosyalar YAML'dır ve sürprizsiz bir alt kümeyle okunur: yalnız `true` ve `false` mantıksal değerdir, yalnız ondalık yazım sayıdır. `1:30`, `no`, `yes`, `012` ve tarih görünümlü değerler **metin** kalır; tür şemaya uymuyorsa paket reddedilir. Aynı eşlemede yinelenen anahtar hatadır. Gerekçe: yaygın YAML 1.1 okuyucuları bu değerleri sessizce başka bir şeye çevirir (`1:30` → 90, `no` → false) ve ustanın yazdığı eşik fark edilmeden değişir.
 
 ```yaml
 flow: "0.1"
 params:      # ustanın sayıları
 inputs:      # insandan ya da sensörden alınacak değerler
 tables:      # arama tabloları (isteğe bağlı)
+hazards:     # tehlike kuralları (isteğe bağlı, Bölüm 6.7)
 steps:       # adımlar
 outcomes:    # olası sonuçlar ve mesajları
 on_unknown:  # cevap alınamazsa varılacak sonuç
@@ -132,7 +135,7 @@ Her girdinin `type` ve `prompt` alanı ZORUNLUDUR.
 | `bool` | evet / hayır | — |
 | `choice` | Seçeneklerden biri ya da sıra numarası | `choices` (zorunlu) |
 
-`hint`, ölçümün nasıl yapılacağını anlatır. `sensor`, değerin önce okunacağı sensörün adıdır.
+`hint`, ölçümün nasıl yapılacağını anlatır. `sensor`, değerin önce okunacağı sensörün adıdır. `max_age_s`, sensör okumasının en çok kaç saniyelik olabileceğini söyler; yalnız `sensor` ile birlikte kullanılır. Sensör bağlı bir girdide `max_age_s` beyan etmek ÖNERİLİR: beyan edilmezse bayat bir okuma da kullanılır.
 
 Serbest metin girdisi **yoktur**. Karar, sayılabilir ya da sınıflanabilir gözleme dayanmak zorundadır; ustanın "kıvamına bakarım" dediği şey bir `choice` ya da `bool` sorusuna indirgenmeden pakete giremez.
 
@@ -163,15 +166,36 @@ Son adım `finish` olmak ya da bütün dalları `goto`/`finish` ile biten bir `d
 
 `when`, `compute` ve `lookup.key` ifadeleri şu yapılarla sınırlıdır:
 
-- Sabitler: sayı, tek ya da çift tırnaklı dizge, `true`, `false`.
+- Sabitler: sayı, tek ya da çift tırnaklı metin, `true`, `false`.
 - Adlar: parametre, girdi ya da daha önce hesaplanmış değer.
 - Aritmetik: `+ - * / %`, tekli `-`.
 - Karşılaştırma: `== != < <= > >=`, `in`, `not in`; zincirleme (`0 < x < 10`) geçerlidir.
 - Mantık: `and`, `or`, `not`.
-- Liste sabiti: `[a, b]` (yalnız `in` için).
 - Fonksiyonlar: `min`, `max`, `abs`, `round`.
 
-Öznitelik erişimi, indeksleme, atama, döngü, koşullu ifade, üs alma ve başka fonksiyon çağrısı YASAKTIR. İfade en çok 300 karakterdir. Çalıştırıcı ifadeyi genel amaçlı bir değerlendiriciye (`eval`) vermez; sözdizim ağacını yorumlar.
+Öznitelik erişimi, indeksleme, atama, döngü, koşullu ifade, üs alma ve başka fonksiyon çağrısı YASAKTIR. İfade en çok 300 karakter ve 100 sözdizim düğümüdür. Çalıştırıcı ifadeyi genel amaçlı bir değerlendiriciye (`eval`) vermez; sözdizim ağacını yorumlar.
+
+Sözdizimi Python'unkine benzer, ama **anlam bu bölümde tanımlıdır** ve hiçbir programlama dilinin davranışına bırakılmaz. Farklı dillerde yazılmış çalıştırıcılar aynı ifadeye aynı sonucu vermek ZORUNDADIR.
+
+Üç değer türü vardır: sayı, metin, mantıksal. Türler birbirine dönüşmez.
+
+| Yapı | İşlenen | Sonuç ve kural |
+|---|---|---|
+| `+ - * / %`, tekli `-` | sayı | Sayı. `/` her zaman ondalık böler (`7 / 2` = 3,5). `%` sonucu bölenin işaretini taşır. Sıfıra bölme hatadır. |
+| `< <= > >=` | sayı | Mantıksal. |
+| `== !=` | aynı türden iki değer | Mantıksal. Farklı türleri karşılaştırmak hatadır. |
+| `in`, `not in` | sol: tek değer; sağ: sabitlerden oluşan `[...]` listesi | Mantıksal. Listede aynı türden eşit bir değer aranır. Metin içinde metin arama yoktur. |
+| `and`, `or`, `not` | mantıksal | Mantıksal. Sayı ya da metin koşul yerine geçmez. `and`/`or` soldan sağa değerlendirilir ve sonuç belli olunca durur. |
+| `min`, `max` | iki ya da daha çok sayı | Sayı. |
+| `abs(x)` | sayı | Sayı. |
+| `round(x)` | sayı | En yakın tam sayı; tam yarımda **sıfırdan uzağa** yuvarlanır (2,5 → 3; -2,5 → -3). |
+| `round(x, n)` | sayı; `n` 0–6 arası sabit tam sayı | `n` ondalık basamağa, aynı kuralla (2,675 → 2,68). |
+
+Liste yalnız `in` işlecinin sağında kullanılabilir. Tür kuralına uymayan ifade hatadır; akış o noktada durur. Her sabit ve her ara sonuç sonlu olmak ve mutlak değeri 10¹⁵'i aşmamak ZORUNDADIR; aşan ifade hatadır.
+
+`decide` kuralının `when` ifadesi mantıksal değer vermek ZORUNDADIR.
+
+Sayılar ikili kayan noktadır; `0.1 + 0.2 == 0.3` yanlıştır. Ondalık değerleri eşitlikle sınamak yerine aralıkla sınamak (`abs(a - b) < 0.01`) ÖNERİLİR.
 
 Parametre, girdi ve hesaplanan değer adları tek bir ad uzayını paylaşır; çakışma paketi geçersiz kılar.
 
@@ -188,6 +212,25 @@ Her sonucun `verdict` ve `message` alanı vardır.
 
 `message`, kullanıcıya gösterilecek metindir ve usta tarafından yazılır. `{ad}` yer tutucuları çalıştırıcı tarafından doldurulur. `on_unknown`, `verdict` değeri `escalate` olan bir sonuca işaret etmek ZORUNDADIR; bu sonucun mesajında `{missing}` cevapsız kalan sorunun metnini verir.
 
+### 6.7 Tehlike kuralları
+
+`hazards`, akıştaki sıradan bağımsız olarak geçerli olan "bunu görürsen dur" kurallarının listesidir.
+
+```yaml
+hazards:
+  - when: "package_damaged or days_to_expiry < 0"
+    finish: ret
+    note: "Hasarlı ya da tarihi geçmiş ürün alınmaz."
+```
+
+- `finish`, `verdict` değeri `stop` olan bir sonuca işaret etmek ZORUNDADIR.
+- O sonucun mesajındaki yer tutucular yalnız kuralın kullandığı adlar ve parametreler olabilir; kural, diğer değerler henüz bilinmezken de ateşleyebilir.
+- Kurallar akış başlamadan önce ve değer üreten her adımdan (`ask`, `compute`, `lookup`) sonra yazıldıkları sırayla sınanır. İlk doğru kural akışı bitirir.
+- Değerlendirme **üç değerlidir**: bir ad henüz bilinmiyorsa ona bağlı alt ifade "bilinmiyor"dur. `a or b` içinde `a` doğruysa `b` bilinmese de sonuç doğrudur; `a and b` içinde `a` yanlışsa sonuç yanlıştır. Kural yalnız sonucu kesin doğru olduğunda ateşler.
+- Henüz sorulmamış bir girdi için çalıştırıcı yalnız eldeki kaynaklara bakar: sensör okuması ve konuşmadan gelen değer. Tehlike kuralı için insana soru sorulmaz ve konuşmadan gelen değer onay beklemeden kullanılır; yanlış bir "dur", kaçırılmış bir "dur"dan daha az zararlıdır.
+
+Amaç: eksik veri, bilinen bir tehlikeyi örtmemelidir. Tehlike kuralı olmayan bir akışta tek bir cevapsız soru, o ana kadar görülen dur koşulunu `on_unknown` sonucuna düşürebilir. Dur sonucu olan bir pakette `hazards` beyan etmek ÖNERİLİR; doğrulayıcı eksikliği öneri olarak bildirir.
+
 ## 7. Yürütme kuralları
 
 ### 7.1 Belirlenimcilik
@@ -198,15 +241,17 @@ Adımlar yazıldıkları sırayla yürür. Bir çalıştırmada en çok 200 adı
 
 ### 7.2 Girdinin edinilmesi
 
-Bir `ask` adımı değeri şu sırayla arar:
+Kaynak önceliği sabittir: **sensör, sonra konuşmadan gelen değer, sonra insana soru**. Alttaki kaynak üsttekini ezemez. Bir `ask` adımı değeri şu sırayla arar:
 
-1. Yönlendiricinin konuşmadan çıkardığı değer. Kaynak model ise değer, kullanılmadan önce insana gösterilip onaylatılmak ZORUNDADIR. Onaylanmazsa atılır.
-2. Girdide `sensor` varsa sensör okuması.
+1. Girdide `sensor` varsa sensör okuması. Okuma geçerli ve tazeyse kullanılır. Aynı girdi için konuşmadan farklı bir değer gelmişse o değer kullanılmaz ve ize `override` kaydı düşülür.
+2. Konuşmadan gelen değer (yönlendiricinin çıkardığı ya da istemcinin verdiği). Kaynak model ise değer, kullanılmadan önce insana gösterilip onaylatılmak ZORUNDADIR. Onaylanmazsa atılır.
 3. İnsana soru. Geçersiz cevapta soru yinelenir; üç denemeden sonra cevap "bilinmiyor" sayılır.
+
+Tazelik: girdi `max_age_s` beyan ediyorsa, bundan eski ya da yaşı bilinmeyen okuma kullanılmaz; çalıştırıcı bir sonraki kaynağa geçer ve reddi ize yazar. Bir sensör bir çalıştırmada en çok bir kez okunur.
 
 Her değer, kaynağı ne olursa olsun, girdinin türü ve `min`/`max` sınırlarıyla denetlenir. Sınır dışı değer kullanılmaz.
 
-Cevap alınamazsa akış **tahmin yürütmez**: `on_unknown` sonucuyla biter.
+Cevap alınamazsa akış **tahmin yürütmez**: `on_unknown` sonucuyla biter. Bundan önce tehlike kuralları sınanmıştır (Bölüm 6.7).
 
 ### 7.3 Eylemler ve insan onayı
 
@@ -222,7 +267,7 @@ Cevap alınamazsa akış **tahmin yürütmez**: `on_unknown` sonucuyla biter.
 
 ### 7.4 Sonuç ve iz
 
-Çalıştırıcı her çalıştırmada şunları döndürür: paket adı ve sürümü, sonuç kimliği, `verdict`, mesaj, edinilen ve hesaplanan değerler, önerilen ve yapılan eylemler ve **iz**. İz; her girdinin değerini ve kaynağını (insan, sensör, model+onay), her hesabı, her tablo aramasını ve tetiklenen her kuralı sırayla listeler. İz, "bu sonuca neden varıldı" sorusunun cevabıdır.
+Çalıştırıcı her çalıştırmada şunları döndürür: paket adı ve sürümü, sonuç kimliği, `verdict`, mesaj, edinilen ve hesaplanan değerler, önerilen ve yapılan eylemler ve **iz**. İz; her girdinin değerini ve kaynağını (insan, sensör, model+onay), reddedilen sensör okumalarını, sensörün ezdiği değerleri, her hesabı, her tablo aramasını ve tetiklenen her kuralı (tehlike kuralları dahil) sırayla listeler. İz, "bu sonuca neden varıldı" sorusunun cevabıdır.
 
 ## 8. Kabul testleri ve insan onayı
 
@@ -291,10 +336,24 @@ Simetrik yöntemler (HMAC gibi) YASAKTIR: doğrulayan tarafın imza üretebildi�
 5. Paket kimliği yeniden hesaplanan değerle aynı.
 6. `key_id` güvenilenler dizininde var.
 7. İmza geçerli.
-8. Paket kimliği ve anahtar kimliği iptal listesinde yok (Bölüm 11).
+8. Paket kimliği ve anahtar kimliği iptal listesinde yok (Bölüm 11). İmzalı iptal önbelleği kullanılıyorsa önbellek taze.
 9. Paket Bölüm 4–8 kurallarından geçiyor.
+10. Kurulum kaydı kullanılıyorsa paket kayıtla çelişmiyor (Bölüm 10.4).
 
 Depo her istekte yeniden taranır. Çalışırken eklenen imzalı paket bir sonraki istekte kullanılabilir; değiştirilen, silinen ya da iptal edilen paket bir sonraki istekte düşer.
+
+### 10.4 Kurulum kaydı: geri sarma ve yayıncı değişimi
+
+İmza paketin kimden geldiğini söyler, ama eski ve hatalı bir sürüm de aynı anahtarla imzalıdır; güvenilen her anahtar da her paket adını imzalayabilir. Çalıştırıcı bu yüzden bir **kurulum kaydı** tutabilir (`--state dosya`). Kayıt her paket adı için son kabul edilen sürümü, paket kimliğini ve imzalayan anahtarı saklar (ilk görüşte güven). Kayıt kullanılırken:
+
+- kayıtlıdan düşük sürüm reddedilir (geri sarma);
+- aynı sürümün farklı içeriği reddedilir (yayımlanmış sürüm değişmez);
+- kayıtlıdan farklı bir anahtarla imzalanmış aynı adlı paket reddedilir;
+- okunamayan kayıt güvenmek için gerekçe değildir: paket yüklenmez.
+
+Bilerek geri dönmek ya da yayıncı değiştirmek için kayıt silinir (`skillpack forget <ad> --state dosya`). Sürümler `ANA.ALT.YAMA` sayılarıyla karşılaştırılır.
+
+Kayıt yerel bir dosyadır ve imzasızdır; dosyayı değiştirebilen biri korumayı kaldırabilir. Paket adlarını yayıncılara bağlayan imzalı bir indeks bu sürümde yoktur.
 
 ## 11. İptal
 
@@ -312,6 +371,19 @@ Depo her istekte yeniden taranır. Çalışırken eklenen imzalı paket bir sonr
 
 Gerekçe kodları: `zararli`, `guvenlik-acigi`, `lisans-ihlali`, `yanlis-beyan`, `yayinci-talebi`. Bir anahtarın iptali, o anahtarla imzalanmış bütün paketleri düşürür. Okunamayan iptal listesi verildiğinde çalıştırıcı paketi yüklemez.
 
+### 11.1 İmzalı dağıtım
+
+Liste düz bir dosya olarak verildiğinde (`--revocations`) onu değiştirebilen biri iptali kaldırabilir. Bu kullanım yalnız deneme içindir. Asıl yol, listenin The Update Framework (TUF) ile dağıtılmasıdır; referans çalıştırıcı python-tuf kullanır.
+
+- İptal deposu dört rol taşır: kök, hedefler, anlık görüntü, zaman damgası. Liste, `revocations.json` adlı hedef dosyadır.
+- İstemci yalnız kök meta verisine güvenir ve onu ilk kurulumda **elden** alır.
+- `skillpack revocations sync --source <adres ya da dizin> --root <kök> --cache <dizin>` listeyi çeker, doğrular ve önbelleğe yazar. Kaynak bir HTTP(S) adresi ya da yerel bir dizin olabilir; çevrim dışı sahada depo taşınabilir bellekle getirilir.
+- Doğrulama düşerse önbellek değişmez. İmzasız değişiklik, eski bir listenin yeniden sunulması (geri sarma) ve süresi dolmuş zaman damgası (dondurma) reddedilir.
+- Çalıştırıcı önbelleği `--revocation-cache <dizin>` ile kullanır. Son başarılı eşitleme `--revocation-max-age-days` değerinden (varsayılan 7) eskiyse **hiçbir paket yüklenmez**: iptal edilmiş bir paketi bilmeden çalıştırmaktansa durmak yeğdir. Uzun süre çevrim dışı kalan saha bu sınırı kendi politikasına göre büyütür; `0` sınırı kaldırır.
+- Yayıncı zaman damgasını süresi dolmadan yeniden imzalamak ZORUNDADIR (`skillpack revocations publish` kayıt eklemeden çağrıldığında yalnız bunu yapar).
+
+`skillpack revocations publish` küçük kurulumlar ve denemeler içindir: dört rolün anahtarını tek dizinde ve şifresiz tutar. Gerçek bir yayında kök anahtarı çevrim dışı tutulmalı ve roller ayrılmalıdır.
+
 ## 12. Uygunluk
 
 **Uygun paket**, `skillpack validate` komutundan hatasız geçen, kabul testlerinin tamamı geçen ve imzası doğrulanan pakettir.
@@ -324,13 +396,16 @@ Gerekçe kodları: `zararli`, `guvenlik-acigi`, `lisans-ihlali`, `yanlis-beyan`,
 4. Beyan edilmeyen eylem ya da sensörü kullandırmaz.
 5. İnsan onayı olmadan eylem yapmaz.
 6. Modeli yalnız Bölüm 9'daki iki iş için kullanır ve modelsiz çalışabilir.
+6a. Kaynak önceliğini, tazelik sınırını ve tehlike kurallarını Bölüm 6.7 ve 7.2'ye göre uygular.
 7. Her sonuçla birlikte izi verir.
 
 ## 13. Kapsam dışı ve bilinen sınırlar
 
 Bu sürümde **yoktur**; teknik taslaktaki (`docs/TEKNIK_PROJE_v0.1.md`) hedefler olarak durur:
 
-- Sigstore ile anahtarsız imza, şeffaflık günlüğü, TUF tarzı imzalı ve zaman damgalı iptal listesi. Bu sürümde iptal listesi imzasız yerel dosyadır; listeyi değiştirebilen biri iptali kaldırabilir.
+- Sigstore ile anahtarsız imza ve şeffaflık günlüğü. İptal listesi TUF ile imzalı dağıtılır (Bölüm 11.1), ama paketlerin kendisi TUF hedefi değildir ve iptal deposunun rol anahtarlarını ayıran bir yayın süreci tanımlı değildir.
+- Paket adlarını yayıncılara bağlayan imzalı indeks. Kurulum kaydı (Bölüm 10.4) yereldir ve ilk görüşte güvene dayanır.
+- Girdilerde birim denetimi ve dönüşümü: `unit` yalnız etikettir.
 - Paket arşivi, dağıtım, aynalar (`pack`, `publish`).
 - Fiziksel profil (`robot_profile.yaml`), gösterim verisi, politika ağırlıkları.
 - Ağ, bulut ve dosya sistemi yetkileri. Paketin başka MCP sunucularındaki araçları çağırması (paketler MCP üzerinden sunulur, ama kendileri MCP aracı çağırmaz).
@@ -399,23 +474,25 @@ Cevap hem yapılandırılmış içerik hem düz metin taşır. Düz metnin ilk s
 ### 14.4 MCP üzerinden değişen güvenceler
 
 - **Eylem yapılmaz.** Sunucu insana doğrudan soramadığı için `human_in_loop.mode` ne olursa olsun `act` adımları yalnız öneri olarak döner.
-- **Değerlerin onayı istemciye kalır.** Bölüm 7.2'deki "modelin çıkardığı değer insana onaylatılır" kuralını sunucu uygulayamaz: değerin kullanıcıdan mı modelden mi geldiğini bilemez. Bunun yerine sunucu, kullandığı bütün değerleri sonuç metnine yazar. İstemcinin araç çağrılarını kullanıcıya onaylatması ÖNERİLİR.
+- **Değerler kullanıcıya doğrudan onaylatılır, istemci destekliyorsa.** Sunucu, bir değerin kullanıcıdan mı modelden mi geldiğini bilemez; bu yüzden istemcinin aktardığı her değeri onaysız sayar. Hüküm böyle değerlere dayanıyorsa sunucu, MCP'nin girdi isteme mekanizmasıyla (elicitation) değerleri kullanıcıya gösterir. Bu soru modelden geçmez. Kullanıcı onaylarsa hüküm döner (`confirmed_by_user: true`). Onaylamazsa hüküm **verilmez**: cevap `status: not_confirmed` olur ve kayıt defterine yazılmaz. Sensörden gelen değerler onay gerektirmez.
+- **İstemci girdi istemeyi desteklemiyorsa** hüküm yine döner, ama `confirmed_by_user: false` ve `unconfirmed_inputs` alanlarıyla ve metinde açık bir uyarıyla. Sonuç metni her değerin kaynağını da yazar.
 - **Mesajın değişmeden gösterilmesi istemciye kalır.** Sunucu bunu araç açıklamasında ve sunucu talimatında ister, ama zorlayamaz.
 
-Bu üç güvencenin tamamı gerekiyorsa paket, doğrudan çalıştırıcıyla (`skillpack ask`, `skillpack run`) kullanılır.
+Bu güvencelerin tamamı gerekiyorsa paket, doğrudan çalıştırıcıyla (`skillpack ask`, `skillpack run`) kullanılır.
 
 ### 14.5 Bağlı yazılımlar
 
 Çevredeki yazılımlar sunucuya iki yoldan bağlanır:
 
-- **Sensör bağı.** `--sensor ad=dosya`: adı geçen sensörün güncel değeri bir dosyadan okunur. Başka bir yazılım (ölçüm cihazının programı, ev otomasyonu) bu dosyayı günceller. İstemcinin açıkça verdiği değer sensörden önce gelir. Paket yalnız `capabilities.sensors` içinde beyan ettiği sensörü okuyabilir.
-- **Kayıt defteri.** `--journal dosya`: tamamlanan her çalıştırma (zaman, paket, sürüm, sonuç, değerler) JSON Lines biçiminde eklenir. Başka bir yazılım bu dosyayı okuyabilir.
+- **Sensör bağı.** `--sensor ad=dosya`: adı geçen sensörün güncel değeri bir dosyadan okunur. Başka bir yazılım (ölçüm cihazının programı, ev otomasyonu) bu dosyayı günceller. Dosyanın son yazılma anı ölçümün anı sayılır ve `max_age_s` buna göre uygulanır. Sensör okuması istemcinin verdiği değerden önce gelir (Bölüm 7.2); ezilen değer sonuç metninde belirtilir. Paket yalnız `capabilities.sensors` içinde beyan ettiği sensörü okuyabilir.
+- **Kayıt defteri.** `--journal dosya`: tamamlanan her çalıştırma (zaman, paket, sürüm, sonuç, değerler, değerlerin kaynağı, kullanıcı onayı) JSON Lines biçiminde eklenir. Başka bir yazılım bu dosyayı okuyabilir.
 
 Bu sürümde bağ yalnız dosya üzerindendir. Ağ üzerinden bağ (ör. bir ev otomasyonu sunucusu) ve paketin başka bir uygulamada eylem başlatması yoktur.
 
 ### 14.6 Sınırlar
 
 - Taşıma yalnız stdio'dur.
-- Soru sorma, MCP'nin kendi girdi isteme mekanizmasıyla değil, araç cevabındaki `needs_input` durumuyla yapılır. Gerekçe: her istemci bu mekanizmayı desteklemez; düz araç cevabını hepsi okur.
+- Eksik girdinin sorulması, MCP'nin kendi girdi isteme mekanizmasıyla değil, araç cevabındaki `needs_input` durumuyla yapılır. Gerekçe: her istemci bu mekanizmayı desteklemez; düz araç cevabını hepsi okur. Değerlerin onayı ise bu mekanizmayla yapılır (Bölüm 14.4), çünkü onayın modelden geçmemesi gerekir.
+- Değer onayı, 2026-07-28 protokol sürümündeki "girdi gerekli" sonucuyla resmî SDK istemcisine karşı sınandı. Daha eski protokol sürümlerindeki sunucudan istemciye istek yolu yazıldı ama sınanmadı.
 - Referans sunucu resmî MCP Python SDK'sının istemcisiyle sınandı. Gerçek bir yerel modelin aracı doğru argümanlarla çağırıp çağırmadığı ölçülmedi.
 

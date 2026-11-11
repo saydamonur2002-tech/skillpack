@@ -59,12 +59,14 @@ Profil değişikliği: LLM önerir, şema sert sınırı kontrol eder, insan ona
 | Özellik | Durum |
 |---|---|
 | Akış, tablo, karar, test, Ed25519 imza, MCP sunucusu | Mevcut çalıştırıcıda **var** |
-| Kaynak önceliği (sensör > LLM), tazelik kontrolü | **Yok** — şu an LLM argümanı sensör değerini ezebiliyor |
-| Eksik veride önce tehlike kuralı | **Yok** — bilinen tehlike "bilinmiyor"a düşebiliyor |
+| Kaynak önceliği (sensör > LLM), tazelik kontrolü | **Var** — sensör okuması model değerinden önce gelir; `max_age_s` beyan edilmişse bayat okuma kullanılmaz. `kayıt` kaynağı yok |
+| Eksik veride önce tehlike kuralı | **Var** — `flow.yaml` içindeki `hazards` bölümüyle; üç örnek paket bunu henüz beyan etmiyor |
+| İmzalı iptal listesi, geri sarma koruması | **Var** — TUF ile (`skillpack revocations`), kurulum kaydı ile (`--state`) |
+| Modelin aktardığı değerin kullanıcıya onaylatılması (MCP) | **Var** — istemci girdi istemeyi destekliyorsa; yoksa uyarılı sonuç |
 | Amaç / ön koşul / etki / doğrulama alanları | **Yok** — bu şablonla tanımlandı |
 | Profil – sert sınır ayrımı, onaylı değişiklik akışı | **Yok** — yalnız şablonda |
 | Bağlayıcı arayüzleri | **Yok** |
-| Boş beklentili testin reddi | **Yok** — şu an geçiyor sayılıyor |
+| Boş beklentili testin reddi | **Var** — beklentisiz test paketi geçersiz kılar |
 | Donanım tarifi ve anlam katmanı (`donanim.yaml`, MCP amaç/ön koşul/etki/durum) | **Yok** — yalnız şablonda |
 | Kurulum kontrolleri ve MCP'den önce kurulum | **Yok** — yalnız [`sablon/KURULUM.md`](sablon/KURULUM.md)'de |
 | `sorular/` paketleme oyunu | **Yok** — yalnız şablonda |
@@ -134,9 +136,9 @@ MCP destekleyen bir uygulamaya bağlamak için: [cli/README.md](cli/README.md#mc
 
 **🚧 MVP çalışıyor; standart taslak aşamasında.**
 
-Çalışan: paket doğrulama, kabul testleri, Ed25519 imza ve doğrulama, yerel iptal listesi, belirlenimci akış yürütme, insan onaylı eylem, paketleri araç olarak sunan MCP sunucusu (dosya tabanlı sensör bağı ve kayıt defteriyle), terminalde anahtar kelime ve Ollama yönlendiricisi.
+Çalışan: paket doğrulama, kabul testleri, Ed25519 imza ve doğrulama, TUF ile imzalı iptal listesi (kurcalama, geri sarma ve dondurma reddedilir), geri sarma ve yayıncı değişimine karşı kurulum kaydı, belirlenimci akış yürütme, sabit kaynak önceliği ve sensör tazeliği, tehlike kuralları, insan onaylı eylem, paketleri araç olarak sunan MCP sunucusu (dosya tabanlı sensör bağı, kayıt defteri ve değerlerin kullanıcıya doğrudan onaylatılmasıyla), terminalde anahtar kelime ve Ollama yönlendiricisi.
 
-Henüz yok: Sigstore ve şeffaflık günlüğü, imzalı iptal listesi (TUF), dağıtım, fiziksel profil, öğretme döngüsü arayüzü. MCP sunucusu resmî MCP Python istemcisiyle sınandı, ama gerçek bir yerel modelin araçları doğru çağırıp çağırmadığı ölçülmedi; Ollama yönlendiricisi de yalnız Ollama yanıt biçimini taklit eden bir test sunucusuyla sınandı. Ayrıntı: spesifikasyon Bölüm 13 ve [ROADMAP.md](ROADMAP.md).
+Henüz yok: Sigstore ve şeffaflık günlüğü, paketlerin dağıtımı, paket adlarını yayıncılara bağlayan imzalı indeks, fiziksel profil, öğretme döngüsü arayüzü. Üç örnek paket yeni `hazards` ve `max_age_s` alanlarını kullanmıyor; eklenince yayıncı anahtarıyla yeniden imzalanmaları gerekir. MCP sunucusu resmî MCP Python istemcisiyle sınandı, ama gerçek bir yerel modelin araçları doğru çağırıp çağırmadığı ölçülmedi; Ollama yönlendiricisi de yalnız Ollama yanıt biçimini taklit eden bir test sunucusuyla sınandı. Ayrıntı: spesifikasyon Bölüm 13 ve [ROADMAP.md](ROADMAP.md).
 
 Uzun vadeli hedefler: [docs/TEKNIK_PROJE_v0.1.md](docs/TEKNIK_PROJE_v0.1.md) (9 Kasım 2026, tartışma taslağı) ve [docs/PROJE_DEVAMI.md](docs/PROJE_DEVAMI.md).
 

@@ -1,0 +1,11 @@
+{
+  "approvals": [
+    {
+      "approver": "ORNEK - insan onayi yok",
+      "role": "acik veriden derleme",
+      "date": "2026-11-11",
+      "version": "0.1.0",
+      "statement": "Denklem ve siniflar NWS sayfalarindan aktarildi (provenance/KAYNAK.md). Paketi bir uzman gozden gecirmedi; hukum eslemesi paketleyenin yorumudur."
+    }
+  ]
+}

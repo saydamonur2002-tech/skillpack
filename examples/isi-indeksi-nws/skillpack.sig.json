@@ -1,0 +1,17 @@
+{
+  "skillpack": "0.1-taslak",
+  "algorithm": "ed25519",
+  "key_id": "7077cb86c8cc2f7d",
+  "pack_id": "sha256:186bb26dba15c256f6bf0487ec002607b05ce4cf1d40e667d96916ac3f0829e8",
+  "name": "isi-indeksi-nws",
+  "version": "0.1.0",
+  "checksums": {
+    "SKILL.md": "sha256:e68182018f39b2e6b4229e357db5f78cd1f29f48b1e4c47595453b1409234728",
+    "flow.yaml": "sha256:4f940f01c8652ea2cf0ec0363e7e52c818eaf8f997f3e75cfcee057c815e39f6",
+    "provenance/KAYNAK.md": "sha256:dc685e1ba9e0a15b0d6a7fab187154dfe61c34dae9dc2f604f8458693c9c9ffb",
+    "provenance/approvals.json": "sha256:94ac5204ce7ba8364f4430a0715e4a3df5be125463b65c23310b067911f869b3",
+    "skillpack.yaml": "sha256:12b6836634bedfc8e9f65c61f6d0e76e9bf12f8b3b49bdd73a5fe06ec3ecbe46",
+    "tests/cases.yaml": "sha256:34837c22ae26e2cde1f3369fc1643829a10c65d95d20c0857ae0f8457e984d0e"
+  },
+  "signature": "UrpOvpdh8vGV98Ow4paO7ZvUD9adw1Q+QkKBfMhNK7yIsvxYrfISHH3nrB2Kg3PZNy7AaVWqhdHZqx95ZFIRCg=="
+}

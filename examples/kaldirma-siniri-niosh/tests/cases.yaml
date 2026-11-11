@@ -1,0 +1,60 @@
+# İlk beş vaka NIOSH kılavuzunun kendi çözülmüş örnekleridir (Bölüm 3.2); ölçüler inçten
+# santimetreye, ağırlık libreden kilograma çevrilmiştir. Beklenen değerler metrik formülle,
+# paketten bağımsız hesaplanmıştır. Kılavuzdaki sonuçlarla karşılaştırma: provenance/KAYNAK.md
+# Diğer vakalar sentetiktir.
+cases:
+  - name: "Kılavuz Örnek 1 başlangıç (pres makarası)"
+    inputs: {h_cm: 58.42, v_cm: 38.1, d_cm: 121.92, a_deg: 0, frequency: f0_2, duration: bir_saat, coupling: orta, load_kg: 19.96}
+    expect: {outcome: riskli, verdict: warn, values: {rwl_kg: 7.13, li: 2.8}}
+  - name: "Kılavuz Örnek 1 varış"
+    inputs: {h_cm: 58.42, v_cm: 160.02, d_cm: 121.92, a_deg: 0, frequency: f0_2, duration: bir_saat, coupling: orta, load_kg: 19.96}
+    expect: {outcome: cok_riskli, verdict: stop, values: {rwl_kg: 6.28, li: 3.18}}
+  - name: "Kılavuz Örnek 2 başlangıç (kâğıt rulosu)"
+    inputs: {h_cm: 38.1, v_cm: 68.58, d_cm: 43.18, a_deg: 0, frequency: f0_2, duration: bir_saat, coupling: zayif, load_kg: 15.88}
+    expect: {outcome: riskli, verdict: warn, values: {rwl_kg: 12.31, li: 1.29}}
+  - name: "Kılavuz Örnek 2 varış"
+    inputs: {h_cm: 50.8, v_cm: 25.4, d_cm: 43.18, a_deg: 0, frequency: f0_2, duration: bir_saat, coupling: zayif, load_kg: 15.88}
+    expect: {outcome: riskli, verdict: warn, values: {rwl_kg: 8.01, li: 1.98}}
+  - name: "Kılavuz Örnek 3 başlangıç (torba, 45 derece dönüş)"
+    inputs: {h_cm: 45.72, v_cm: 38.1, d_cm: 53.34, a_deg: 45, frequency: f0_2, duration: bir_saat, coupling: orta, load_kg: 18.14}
+    expect: {outcome: riskli, verdict: warn, values: {rwl_kg: 8.23, li: 2.2}}
+  - name: "ideal duruş, yük tam sınırda"
+    inputs: {h_cm: 25, v_cm: 75, d_cm: 25, a_deg: 0, frequency: f0_2, duration: bir_saat, coupling: iyi, load_kg: 23}
+    expect: {outcome: uygun, verdict: ok, values: {rwl_kg: 23.0, li: 1.0}}
+  - name: "yatay uzaklık 25 cm altı 25 sayılır"
+    inputs: {h_cm: 10, v_cm: 75, d_cm: 10, a_deg: 0, frequency: f0_2, duration: bir_saat, coupling: iyi, load_kg: 20}
+    expect: {outcome: uygun, verdict: ok, values: {rwl_kg: 23.0, li: 0.87}}
+  - name: "sık kaldırma, iki saat, bel üstü (Tablo 5: 0,21)"
+    inputs: {h_cm: 30, v_cm: 90, d_cm: 40, a_deg: 0, frequency: f12, duration: iki_saat, coupling: iyi, load_kg: 5}
+    expect: {outcome: riskli, verdict: warn, values: {rwl_kg: 3.58, li: 1.4}}
+  - name: "sekiz saat, bel altı, dakikada 4 (Tablo 5: 0,45)"
+    inputs: {h_cm: 35, v_cm: 50, d_cm: 50, a_deg: 30, frequency: f4, duration: sekiz_saat, coupling: orta, load_kg: 6}
+    expect: {outcome: riskli, verdict: warn, values: {rwl_kg: 5.34, li: 1.12}}
+  - name: "sekiz saat, bel üstü, dakikada 9 (Tablo 5: 0,15)"
+    inputs: {h_cm: 30, v_cm: 100, d_cm: 30, a_deg: 0, frequency: f9, duration: sekiz_saat, coupling: zayif, load_kg: 10}
+    expect: {outcome: cok_riskli, verdict: stop, values: {rwl_kg: 2.32, li: 4.31}}
+  - name: "sekiz saat, bel altı, dakikada 9 (Tablo 5: 0,00)"
+    inputs: {h_cm: 30, v_cm: 50, d_cm: 30, a_deg: 0, frequency: f9, duration: sekiz_saat, coupling: iyi}
+    expect: {outcome: siklik_asimi, verdict: stop}
+  - name: "dakikada 15'ten sık"
+    inputs: {h_cm: 30, v_cm: 100, d_cm: 30, a_deg: 0, frequency: f15_ustu, duration: bir_saat, coupling: iyi}
+    expect: {outcome: siklik_asimi, verdict: stop}
+  - name: "yük gövdeden 63 cm'den uzak, başka ölçü yok"
+    inputs: {h_cm: 70}
+    expect: {outcome: erisim_disi, verdict: stop}
+  - name: "eller 175 cm üstünde"
+    inputs: {h_cm: 30, v_cm: 180}
+    expect: {outcome: erisim_disi, verdict: stop}
+  - name: "135 dereceden fazla dönüş"
+    inputs: {h_cm: 30, v_cm: 80, d_cm: 30, a_deg: 150}
+    expect: {outcome: erisim_disi, verdict: stop}
+  - name: "sınır değerler tehlike sayılmaz (63 cm, 175 cm, 135 derece)"
+    inputs: {h_cm: 63, v_cm: 175, d_cm: 25, a_deg: 135, frequency: f0_2, duration: bir_saat, coupling: iyi, load_kg: 3}
+    expect: {outcome: uygun, verdict: ok}
+  - name: "kavrama bilinmiyor"
+    inputs: {h_cm: 30, v_cm: 80, d_cm: 30, a_deg: 0, frequency: f1, duration: bir_saat}
+    expect: {outcome: bilinmiyor, verdict: escalate}
+routing:
+  - utterance: "Bu koliyi elle kaldırmak güvenli mi, kaç kilo kaldırabilirim?"
+  - utterance: "Kaldırma sınırını hesaplayalım, yük 20 kilo"
+  - utterance: "NIOSH kaldırma indeksi kaç çıkıyor?"

@@ -1,0 +1,43 @@
+# İlk iki vaka NWS sayfasında verilen örneklerdir (100 °F = 37,78 °C). Diğerleri formülün
+# her dalını sınayan sentetik vakalardır; beklenen değerler paketten bağımsız hesaplanmıştır.
+cases:
+  - name: "NWS örneği: 100 °F ve %55 nem, gölgede (sayfadaki sonuç 124 °F)"
+    inputs: {temp_c: 37.78, rh: 55, gunes: false}
+    expect: {outcome: tehlike, verdict: warn, values: {hi_f: 124, hi_c: 50.9}}
+  - name: "NWS örneği: 100 °F ve %15 nem, gölgede (sayfadaki sonuç 96 °F)"
+    inputs: {temp_c: 37.78, rh: 15, gunes: false}
+    expect: {outcome: cok_dikkat, verdict: warn, values: {hi_f: 96, hi_c: 35.5}}
+  - name: "serin gün: yalnız basit formül"
+    inputs: {temp_c: 20, rh: 50, gunes: false}
+    expect: {outcome: normal, verdict: ok, values: {hi_f: 67, hi_c: 19.7}}
+  - name: "80 °F eşiğinin hemen altı"
+    inputs: {temp_c: 26.5, rh: 40, gunes: false}
+    expect: {outcome: normal, verdict: ok, values: {hi_f: 79, hi_c: 26.4}}
+  - name: "düşük nem düzeltmesi"
+    inputs: {temp_c: 35, rh: 10, gunes: false}
+    expect: {outcome: dikkat, verdict: warn, values: {hi_f: 89, hi_c: 31.9}}
+  - name: "yüksek nem düzeltmesi"
+    inputs: {temp_c: 30, rh: 90, gunes: false}
+    expect: {outcome: tehlike, verdict: warn, values: {hi_f: 105, hi_c: 40.8}}
+  - name: "gölgede dikkat, güneşte bir üst sınıf"
+    inputs: {temp_c: 28, rh: 70, gunes: true}
+    expect: {outcome: cok_dikkat, verdict: warn, values: {hi_f: 102, hi_c: 39.0}}
+  - name: "aynı hava, gölgede"
+    inputs: {temp_c: 28, rh: 70, gunes: false}
+    expect: {outcome: dikkat, verdict: warn, values: {hi_f: 87, hi_c: 30.7}}
+  - name: "çok sıcak ve nemli"
+    inputs: {temp_c: 40, rh: 40, gunes: false}
+    expect: {outcome: tehlike, verdict: warn, values: {hi_f: 119, hi_c: 48.3}}
+  - name: "çok sıcak, güneşte: en üst sınıf"
+    inputs: {temp_c: 40, rh: 40, gunes: true}
+    expect: {outcome: asiri_tehlike, verdict: stop, values: {hi_f: 134, hi_c: 56.6}}
+  - name: "nem ölçülemedi"
+    inputs: {temp_c: 33}
+    expect: {outcome: bilinmiyor, verdict: escalate}
+  - name: "güneş bilgisi yok"
+    inputs: {temp_c: 33, rh: 50}
+    expect: {outcome: bilinmiyor, verdict: escalate}
+routing:
+  - utterance: "Bugün hava 36 derece ve çok nemli, dışarıda çalışmak tehlikeli mi?"
+  - utterance: "Isı indeksi kaç, hissedilen sıcaklığı hesapla"
+  - utterance: "Sıcak çarpması riski var mı, nem yüzde 70"

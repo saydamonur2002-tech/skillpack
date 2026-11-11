@@ -14,7 +14,13 @@ from skillpack.router import KeywordRouter
 from skillpack.signing import generate_key
 
 EXAMPLES = Path(__file__).resolve().parents[2] / "examples"
-NAMES = ["kazanim-telafi-karari", "rulman-isi-titresim", "soguk-mal-kabul"]
+NAMES = [
+    "isi-indeksi-nws",
+    "kaldirma-siniri-niosh",
+    "kazanim-telafi-karari",
+    "rulman-isi-titresim",
+    "soguk-mal-kabul",
+]
 
 
 class ExamplesTest(unittest.TestCase):

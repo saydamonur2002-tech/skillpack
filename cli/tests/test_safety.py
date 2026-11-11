@@ -178,6 +178,15 @@ class StrictExprTest(unittest.TestCase):
         self.assertEqual(expr.evaluate("round(2.675, 2)", {}), 2.68)
         self.assertIs(type(expr.evaluate("round(2.0)", {})), int)
 
+    def test_sqrt(self):
+        self.assertEqual(expr.evaluate("sqrt(16)", {}), 4)
+        self.assertAlmostEqual(expr.evaluate("sqrt(x) * 2", {"x": 2}), 2.8284271247, places=9)
+        self.assertIs(expr.evaluate("sqrt(x)", {}, partial=True), expr.UNKNOWN)
+        for source in ["sqrt(-1)", "sqrt('a')", "sqrt(1, 2)"]:
+            with self.subTest(source=source):
+                with self.assertRaises(expr.ExprError):
+                    expr.evaluate(source, {})
+
     def test_three_valued_logic(self):
         partial = lambda source, env: expr.evaluate(source, env, partial=True)  # noqa: E731
         self.assertIs(partial("a or b", {"a": True}), True)

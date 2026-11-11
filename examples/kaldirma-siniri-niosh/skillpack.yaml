@@ -1,0 +1,18 @@
+skillpack: "0.1-taslak"
+name: kaldirma-siniri-niosh
+version: "0.1.0"
+publisher: {display: "Açık veri derlemesi (örnek)", org_role: bireysel}
+domain: {sector: is-guvenligi, task: elle-kaldirma, lang: [tr]}
+components: {procedure: SKILL.md, flow: flow.yaml, tests: tests/cases.yaml}
+runtime: {llm_role: route-only, model_class: ["edge-1b-3b", "local-7b-14b"]}
+routing:
+  title: "Elle kaldırma sınırı (NIOSH denklemi)"
+  triggers: ["kaldırma sınırı", "kaldırma indeksi", "elle kaldır", "niosh", "kaç kilo kaldır", "koliyi kaldır"]
+capabilities:
+  tools: []
+  network: none
+  cloud_egress: {allowed: false}
+human_in_loop: {mode: suggest}
+privacy: {raw_customer_data: false, examples: synthetic}
+license: {spdx: Apache-2.0}
+provenance: {approvals: provenance/approvals.json}

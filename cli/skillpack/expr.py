@@ -25,7 +25,7 @@ _BIN = (ast.Add, ast.Sub, ast.Mult, ast.Div, ast.Mod)
 _ORDER = (ast.Lt, ast.LtE, ast.Gt, ast.GtE)
 _EQUAL = (ast.Eq, ast.NotEq)
 _MEMBER = (ast.In, ast.NotIn)
-_FUNCS = {"min", "max", "abs", "round"}
+_FUNCS = {"min", "max", "abs", "round", "sqrt"}
 _LITERALS = {"true": True, "false": False}
 
 
@@ -90,15 +90,15 @@ def _check(node: ast.AST) -> None:
                 raise ExprError("desteklenmeyen karşılaştırma")
     elif isinstance(node, ast.Call):
         if not isinstance(node.func, ast.Name) or node.func.id not in _FUNCS:
-            raise ExprError("yalnız min, max, abs, round çağrılabilir")
+            raise ExprError("yalnız min, max, abs, round, sqrt çağrılabilir")
         if node.keywords:
             raise ExprError("adlı argüman desteklenmez")
         count = len(node.args)
         name = node.func.id
         if name in ("min", "max") and count < 2:
             raise ExprError(f"{name} en az iki argüman ister")
-        if name == "abs" and count != 1:
-            raise ExprError("abs tek argüman ister")
+        if name in ("abs", "sqrt") and count != 1:
+            raise ExprError(f"{name} tek argüman ister")
         if name == "round":
             if count not in (1, 2):
                 raise ExprError("round bir ya da iki argüman ister")
@@ -296,5 +296,9 @@ def _eval(node: ast.AST, env: Mapping[str, Any], partial: bool) -> Any:
             _number(arg, name)
         if name == "abs":
             return _result(abs(args[0]))
+        if name == "sqrt":
+            if args[0] < 0:
+                raise ExprError("sqrt eksi sayı almaz")
+            return _result(math.sqrt(args[0]))
         return min(args) if name == "min" else max(args)
     raise ExprError(f"desteklenmeyen yapı: {type(node).__name__}")

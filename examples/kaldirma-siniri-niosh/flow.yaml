@@ -1,0 +1,323 @@
+flow: "0.1"
+
+# Kaynak: Applications Manual for the Revised NIOSH Lifting Equation,
+# DHHS (NIOSH) Publication No. 94-110 (1994). Kamu malı.
+# Bölüm 1.3 (denklem ve çarpanlar), Tablo 5 (sıklık), Tablo 7 (kavrama), Bölüm 1.4 (kaldırma indeksi).
+# Sayılar kılavuzdan birebir alınmıştır. Ayrıntı ve sapmalar: provenance/KAYNAK.md
+
+params:
+  lc_kg: 23            # yük sabiti (metrik)
+  h_min_cm: 25         # yatay uzaklık bundan küçükse 25 alınır
+  d_min_cm: 25         # dikey yol bundan küçükse 25 alınır
+  li_esik: 1           # kaldırma indeksi bunun üstündeyse risk artar
+  li_yuksek: 3         # bunun üstünde hemen herkes için risk artar
+
+inputs:
+  h_cm:
+    type: number
+    prompt: "Ellerin, ayak bileklerinin orta noktasına yatay uzaklığı kaç santimetre?"
+    hint: "Yükü tutan ellerin ortasından, iki ayak bileğinin ortasına yere paralel ölçün."
+    unit: "cm"
+    min: 0
+    max: 200
+  v_cm:
+    type: number
+    prompt: "Ellerin yerden yüksekliği kaç santimetre?"
+    hint: "Kaldırmanın başladığı (ya da değerlendirdiğiniz) noktada, yerden ellerin ortasına."
+    unit: "cm"
+    min: 0
+    max: 250
+  d_cm:
+    type: number
+    prompt: "Yük dikeyde kaç santimetre yol alıyor?"
+    hint: "Başlangıç ve bitiş el yüksekliklerinin farkı."
+    unit: "cm"
+    min: 0
+    max: 175
+  a_deg:
+    type: number
+    prompt: "Gövde kaç derece dönüyor (asimetri açısı)?"
+    hint: "Yük tam önünüzdeyse 0. Yük yana düşüyorsa, önünüzle yük arasındaki açı."
+    unit: "derece"
+    min: 0
+    max: 180
+  frequency:
+    type: choice
+    prompt: "Dakikada kaç kaldırma yapılıyor?"
+    hint: "Listede yoksa bir üstteki değeri seçin (temkinli taraf). 5 dakikada birden seyrekse f0_2. f1 = dakikada 1, f0_5 = iki dakikada 1."
+    choices: [f0_2, f0_5, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f15_ustu]
+  duration:
+    type: choice
+    prompt: "Kaldırma işi aralıksız ne kadar sürüyor?"
+    hint: "bir_saat: 1 saate kadar. iki_saat: 1 ile 2 saat arası. sekiz_saat: 2 ile 8 saat arası."
+    choices: [bir_saat, iki_saat, sekiz_saat]
+  coupling:
+    type: choice
+    prompt: "Yük nasıl kavranıyor?"
+    hint: "iyi: uygun tutamak ya da rahatça sarılan parça. orta: tutamak yetersiz, parmaklar 90 derece bükülebiliyor. zayif: tutamaksız, hantal, keskin kenarlı ya da sarkan torba. Kararsızsanız kötü olanı seçin."
+    choices: [iyi, orta, zayif]
+  load_kg:
+    type: number
+    prompt: "Kaldırılan yük kaç kilogram?"
+    unit: "kg"
+    min: 0.1
+    max: 500
+
+tables:
+  fm_1s_alt:
+    type: map
+    rows:
+      f0_2: 1.00
+      f0_5: 0.97
+      f1: 0.94
+      f2: 0.91
+      f3: 0.88
+      f4: 0.84
+      f5: 0.80
+      f6: 0.75
+      f7: 0.70
+      f8: 0.60
+      f9: 0.52
+      f10: 0.45
+      f11: 0.41
+      f12: 0.37
+      f13: 0.00
+      f14: 0.00
+      f15: 0.00
+      f15_ustu: 0.00
+  fm_1s_ust:
+    type: map
+    rows:
+      f0_2: 1.00
+      f0_5: 0.97
+      f1: 0.94
+      f2: 0.91
+      f3: 0.88
+      f4: 0.84
+      f5: 0.80
+      f6: 0.75
+      f7: 0.70
+      f8: 0.60
+      f9: 0.52
+      f10: 0.45
+      f11: 0.41
+      f12: 0.37
+      f13: 0.34
+      f14: 0.31
+      f15: 0.28
+      f15_ustu: 0.00
+  fm_2s_alt:
+    type: map
+    rows:
+      f0_2: 0.95
+      f0_5: 0.92
+      f1: 0.88
+      f2: 0.84
+      f3: 0.79
+      f4: 0.72
+      f5: 0.60
+      f6: 0.50
+      f7: 0.42
+      f8: 0.35
+      f9: 0.30
+      f10: 0.26
+      f11: 0.00
+      f12: 0.00
+      f13: 0.00
+      f14: 0.00
+      f15: 0.00
+      f15_ustu: 0.00
+  fm_2s_ust:
+    type: map
+    rows:
+      f0_2: 0.95
+      f0_5: 0.92
+      f1: 0.88
+      f2: 0.84
+      f3: 0.79
+      f4: 0.72
+      f5: 0.60
+      f6: 0.50
+      f7: 0.42
+      f8: 0.35
+      f9: 0.30
+      f10: 0.26
+      f11: 0.23
+      f12: 0.21
+      f13: 0.00
+      f14: 0.00
+      f15: 0.00
+      f15_ustu: 0.00
+  fm_8s_alt:
+    type: map
+    rows:
+      f0_2: 0.85
+      f0_5: 0.81
+      f1: 0.75
+      f2: 0.65
+      f3: 0.55
+      f4: 0.45
+      f5: 0.35
+      f6: 0.27
+      f7: 0.22
+      f8: 0.18
+      f9: 0.00
+      f10: 0.00
+      f11: 0.00
+      f12: 0.00
+      f13: 0.00
+      f14: 0.00
+      f15: 0.00
+      f15_ustu: 0.00
+  fm_8s_ust:
+    type: map
+    rows:
+      f0_2: 0.85
+      f0_5: 0.81
+      f1: 0.75
+      f2: 0.65
+      f3: 0.55
+      f4: 0.45
+      f5: 0.35
+      f6: 0.27
+      f7: 0.22
+      f8: 0.18
+      f9: 0.15
+      f10: 0.13
+      f11: 0.00
+      f12: 0.00
+      f13: 0.00
+      f14: 0.00
+      f15: 0.00
+      f15_ustu: 0.00
+  cm_alt:              # Tablo 7, V < 75 cm
+    type: map
+    rows: {iyi: 1.00, orta: 0.95, zayif: 0.90}
+  cm_ust:              # Tablo 7, V >= 75 cm
+    type: map
+    rows: {iyi: 1.00, orta: 1.00, zayif: 0.90}
+
+# Kılavuz: H > 63 cm ise HM = 0, V > 175 cm ise VM = 0, A > 135 derece ise AM = 0.
+# Çarpanlardan biri sıfırsa önerilen sınır sıfırdır; diğer ölçüler beklenmeden durulur.
+hazards:
+  - when: "h_cm > 63"
+    finish: erisim_disi
+    note: "Yatay uzaklık 63 cm'yi aşıyor (HM = 0)."
+  - when: "v_cm > 175"
+    finish: erisim_disi
+    note: "El yüksekliği 175 cm'yi aşıyor (VM = 0)."
+  - when: "a_deg > 135"
+    finish: erisim_disi
+    note: "Asimetri açısı 135 dereceyi aşıyor (AM = 0)."
+
+steps:
+  - id: yatay
+    ask: h_cm
+  - id: dikey
+    ask: v_cm
+  - id: yol
+    ask: d_cm
+  - id: aci
+    ask: a_deg
+  - id: carpanlar
+    compute:
+      hm: "h_min_cm / max(h_cm, h_min_cm)"
+      vm: "1 - 0.003 * abs(v_cm - 75)"
+      dm: "0.82 + 4.5 / max(d_cm, d_min_cm)"
+      am: "1 - 0.0032 * a_deg"
+  - id: siklik
+    ask: frequency
+  - id: sure
+    ask: duration
+
+  # Tablo 5 iki boyutludur (süre ve el yüksekliği bandı). Akış profili tek boyutlu
+  # tablo taşıdığı için altı sütun ayrı tablodur; koşullar birbirini dışlar.
+  - id: sec_fm_1s_alt
+    decide:
+      - {when: "duration == 'bir_saat' and v_cm < 75", continue: true}
+      - {else: true, goto: sec_fm_1s_ust}
+  - id: bak_fm_1s_alt
+    lookup: {table: fm_1s_alt, key: frequency, into: fm}
+  - id: sec_fm_1s_ust
+    decide:
+      - {when: "duration == 'bir_saat' and v_cm >= 75", continue: true}
+      - {else: true, goto: sec_fm_2s_alt}
+  - id: bak_fm_1s_ust
+    lookup: {table: fm_1s_ust, key: frequency, into: fm}
+  - id: sec_fm_2s_alt
+    decide:
+      - {when: "duration == 'iki_saat' and v_cm < 75", continue: true}
+      - {else: true, goto: sec_fm_2s_ust}
+  - id: bak_fm_2s_alt
+    lookup: {table: fm_2s_alt, key: frequency, into: fm}
+  - id: sec_fm_2s_ust
+    decide:
+      - {when: "duration == 'iki_saat' and v_cm >= 75", continue: true}
+      - {else: true, goto: sec_fm_8s_alt}
+  - id: bak_fm_2s_ust
+    lookup: {table: fm_2s_ust, key: frequency, into: fm}
+  - id: sec_fm_8s_alt
+    decide:
+      - {when: "duration == 'sekiz_saat' and v_cm < 75", continue: true}
+      - {else: true, goto: sec_fm_8s_ust}
+  - id: bak_fm_8s_alt
+    lookup: {table: fm_8s_alt, key: frequency, into: fm}
+  - id: sec_fm_8s_ust
+    decide:
+      - {when: "duration == 'sekiz_saat' and v_cm >= 75", continue: true}
+      - {else: true, goto: kavrama}
+  - id: bak_fm_8s_ust
+    lookup: {table: fm_8s_ust, key: frequency, into: fm}
+
+  - id: kavrama
+    ask: coupling
+  - id: sec_cm_alt
+    decide:
+      - {when: "v_cm < 75", continue: true}
+      - {else: true, goto: bak_cm_ust}
+  - id: bak_cm_alt
+    lookup: {table: cm_alt, key: coupling, into: cm}
+  - id: atla_cm_ust
+    decide:
+      - {else: true, goto: siklik_kontrol}
+  - id: bak_cm_ust
+    lookup: {table: cm_ust, key: coupling, into: cm}
+
+  - id: siklik_kontrol
+    decide:
+      - {when: "fm == 0", finish: siklik_asimi}
+      - {else: true, continue: true}
+  - id: sinir
+    compute:
+      rwl_kg: "round(lc_kg * hm * vm * dm * am * fm * cm, 2)"
+  - id: yuk
+    ask: load_kg
+  - id: indeks
+    compute:
+      li: "round(load_kg / rwl_kg, 2)"
+  - id: karar
+    decide:
+      - {when: "li <= li_esik", finish: uygun}
+      - {when: "li <= li_yuksek", finish: riskli}
+      - {else: true, finish: cok_riskli}
+
+outcomes:
+  uygun:
+    verdict: ok
+    message: "Önerilen ağırlık sınırı {rwl_kg} kg, yük {load_kg} kg, kaldırma indeksi {li}. İndeks 1 ya da altında: bu kaldırma NIOSH ölçütüne göre kabul edilir."
+  riskli:
+    verdict: warn
+    message: "Önerilen ağırlık sınırı {rwl_kg} kg, yük {load_kg} kg, kaldırma indeksi {li}. İndeks 1'in üstünde: çalışanların bir bölümü için bel ağrısı riski artar. İşi yeniden düzenleyin: yükü gövdeye yaklaştırın, başlangıç yüksekliğini bele yakın tutun, dönmeyi kaldırın ya da yükü hafifletin."
+  cok_riskli:
+    verdict: stop
+    message: "Önerilen ağırlık sınırı {rwl_kg} kg, yük {load_kg} kg, kaldırma indeksi {li}. İndeks 3'ün üstünde: hemen hemen bütün çalışanlar için yaralanma riski artar. Bu kaldırmayı elle yaptırmayın; kaldırma aracı kullanın ya da işi yeniden tasarlayın."
+  erisim_disi:
+    verdict: stop
+    message: "Bu duruşta önerilen ağırlık sınırı sıfırdır: yük gövdeden 63 cm'den uzak, eller 175 cm'den yüksek ya da gövde 135 dereceden fazla dönüyor. Elle kaldırmayın; işin yerleşimini değiştirin."
+  siklik_asimi:
+    verdict: stop
+    message: "Bu süre ve yükseklikte bu kaldırma sıklığı için önerilen ağırlık sınırı sıfırdır. Sıklığı düşürün, süreyi kısaltın ya da kaldırma aracı kullanın."
+  bilinmiyor:
+    verdict: escalate
+    message: "Şu ölçü alınamadı: {missing} Ölçmeden karar vermeyin; iş güvenliği uzmanına danışın."
+on_unknown: bilinmiyor

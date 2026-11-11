@@ -171,7 +171,7 @@ Son adım `finish` olmak ya da bütün dalları `goto`/`finish` ile biten bir `d
 - Aritmetik: `+ - * / %`, tekli `-`.
 - Karşılaştırma: `== != < <= > >=`, `in`, `not in`; zincirleme (`0 < x < 10`) geçerlidir.
 - Mantık: `and`, `or`, `not`.
-- Fonksiyonlar: `min`, `max`, `abs`, `round`.
+- Fonksiyonlar: `min`, `max`, `abs`, `round`, `sqrt`.
 
 Öznitelik erişimi, indeksleme, atama, döngü, koşullu ifade, üs alma ve başka fonksiyon çağrısı YASAKTIR. İfade en çok 300 karakter ve 100 sözdizim düğümüdür. Çalıştırıcı ifadeyi genel amaçlı bir değerlendiriciye (`eval`) vermez; sözdizim ağacını yorumlar.
 
@@ -188,6 +188,7 @@ Sözdizimi Python'unkine benzer, ama **anlam bu bölümde tanımlıdır** ve hi�
 | `and`, `or`, `not` | mantıksal | Mantıksal. Sayı ya da metin koşul yerine geçmez. `and`/`or` soldan sağa değerlendirilir ve sonuç belli olunca durur. |
 | `min`, `max` | iki ya da daha çok sayı | Sayı. |
 | `abs(x)` | sayı | Sayı. |
+| `sqrt(x)` | sıfır ya da artı sayı | Karekök. Eksi sayı hatadır. |
 | `round(x)` | sayı | En yakın tam sayı; tam yarımda **sıfırdan uzağa** yuvarlanır (2,5 → 3; -2,5 → -3). |
 | `round(x, n)` | sayı; `n` 0–6 arası sabit tam sayı | `n` ondalık basamağa, aynı kuralla (2,675 → 2,68). |
 

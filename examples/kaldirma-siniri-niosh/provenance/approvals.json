@@ -1,0 +1,11 @@
+{
+  "approvals": [
+    {
+      "approver": "ORNEK - insan onayi yok",
+      "role": "acik veriden derleme",
+      "date": "2026-11-11",
+      "version": "0.1.0",
+      "statement": "Sayilar NIOSH 94-110 kilavuzundan aktarildi (provenance/KAYNAK.md). Paketi bir is guvenligi uzmani gozden gecirmedi; sahada kullanmadan once yetkin bir kisi tarafindan onaylanmalidir."
+    }
+  ]
+}

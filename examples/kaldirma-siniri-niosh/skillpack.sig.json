@@ -1,0 +1,17 @@
+{
+  "skillpack": "0.1-taslak",
+  "algorithm": "ed25519",
+  "key_id": "7077cb86c8cc2f7d",
+  "pack_id": "sha256:527e44094320404f8ee4e47b294d5cd8a14003980846d245cbaba7cb1452be3d",
+  "name": "kaldirma-siniri-niosh",
+  "version": "0.1.0",
+  "checksums": {
+    "SKILL.md": "sha256:fc48d8df92721c4053347354ef4b5ac93892cbbe3dde733a4efaaf672918303d",
+    "flow.yaml": "sha256:3f7b9e11dae7e3e0681cf94446d122da2f289ac092a120c5435ab26312f92fa0",
+    "provenance/KAYNAK.md": "sha256:79fed3e0e6b7097852f630badb46e64bb7591a3e9c962211053c5c29475577de",
+    "provenance/approvals.json": "sha256:f7d1cd32ffc4b35ffa4e7102adf8cdeae6ad5e2fe798875107aca79ae20a91f2",
+    "skillpack.yaml": "sha256:7a32e2df0f17d68de55e9d9a6ae8c8f4ebf8e09dc8330f06b1d2f8db1b91b535",
+    "tests/cases.yaml": "sha256:0ea7175ac4ff70613bef20d23334f4b398d41ce8b645347fe7bf4082418a4a05"
+  },
+  "signature": "3MlWaZ62UGFYD8+yKOdHEx0s+8ATzHJbjhQ8HI3IWIUzS21ku0CSCXqxGyG1F1a0Q+KSsal69T+Eab8FuYakCg=="
+}

@@ -1,0 +1,111 @@
+flow: "0.1"
+
+# Kaynak: ABD Ulusal Hava Servisi (NWS). Isı indeksi denklemi: NWS Weather Prediction Center,
+# "The Heat Index Equation". Sınıflar ve güneş notu: NWS Amarillo, "What is the heat index?".
+# NWS sayfalarındaki bilgi kamu malıdır. Sayılar kaynaktan birebir alınmıştır.
+# Ayrıntı ve paketleyenin yorumları: provenance/KAYNAK.md
+# Denklem Fahrenhayt ile yazılmıştır; paket girdiyi Celsius alır ve çevirir.
+
+params:
+  esik_f: 80           # basit formülün sonucu bunun altındaysa tam denklem kullanılmaz
+  dikkat_f: 80         # Caution alt sınırı
+  cok_dikkat_f: 90     # Extreme Caution alt sınırı
+  tehlike_f: 103       # Danger alt sınırı
+  asiri_f: 125         # Extreme Danger alt sınırı
+  gunes_eki_f: 15      # doğrudan güneşte indeks bu kadar artabilir (en çok)
+
+inputs:
+  temp_c:
+    type: number
+    prompt: "Hava sıcaklığı kaç derece?"
+    hint: "Gölgede ölçülen sıcaklık."
+    unit: "°C"
+    min: -10
+    max: 60
+  rh:
+    type: number
+    prompt: "Bağıl nem yüzde kaç?"
+    unit: "%"
+    min: 0
+    max: 100
+  gunes:
+    type: bool
+    prompt: "Kişi doğrudan güneş altında mı?"
+
+steps:
+  - id: sicaklik
+    ask: temp_c
+  - id: nem
+    ask: rh
+  - id: cevir
+    compute:
+      t: "temp_c * 9 / 5 + 32"
+  - id: basit
+    compute:
+      basit_f: "0.5 * (t + 61.0 + (t - 68.0) * 1.2 + rh * 0.094)"
+      hi: "(basit_f + t) / 2"
+  - id: esik
+    decide:
+      - {when: "hi < esik_f", goto: gunes_sor}
+      - {else: true, continue: true}
+  - id: tam_denklem
+    compute:
+      hi: "-42.379 + 2.04901523*t + 10.14333127*rh - 0.22475541*t*rh - 0.00683783*t*t - 0.05481717*rh*rh + 0.00122874*t*t*rh + 0.00085282*t*rh*rh - 0.00000199*t*t*rh*rh"
+  - id: kuru_mu
+    decide:
+      - {when: "rh < 13 and t >= 80 and t <= 112", continue: true}
+      - {else: true, goto: nemli_mi}
+  - id: kuru_duzeltme
+    compute:
+      hi: "hi - (13 - rh) / 4 * sqrt((17 - abs(t - 95)) / 17)"
+  - id: nemli_mi
+    decide:
+      - {when: "rh > 85 and t >= 80 and t <= 87", continue: true}
+      - {else: true, goto: gunes_sor}
+  - id: nemli_duzeltme
+    compute:
+      hi: "hi + (rh - 85) / 10 * (87 - t) / 5"
+  - id: gunes_sor
+    ask: gunes
+  - id: golge
+    compute:
+      hi_etkin: "hi"
+  - id: gunes_mi
+    decide:
+      - {when: "gunes", continue: true}
+      - {else: true, goto: yuvarla}
+  - id: gunes_ekle
+    compute:
+      hi_etkin: "hi + gunes_eki_f"
+  - id: yuvarla
+    compute:
+      hi_f: "round(hi_etkin)"
+      hi_c: "round((hi_etkin - 32) * 5 / 9, 1)"
+  - id: karar
+    decide:
+      - {when: "hi_etkin < dikkat_f", finish: normal}
+      - {when: "hi_etkin < cok_dikkat_f", finish: dikkat}
+      - {when: "hi_etkin < tehlike_f", finish: cok_dikkat}
+      - {when: "hi_etkin < asiri_f", finish: tehlike}
+      - {else: true, finish: asiri_tehlike}
+
+outcomes:
+  normal:
+    verdict: ok
+    message: "Isı indeksi {hi_c} °C ({hi_f} °F). NWS sınıflamasında uyarı düzeyinin altında."
+  dikkat:
+    verdict: warn
+    message: "Isı indeksi {hi_c} °C ({hi_f} °F): DİKKAT. Uzun süre dışarıda kalınır ya da bedenen çalışılırsa yorgunluk olabilir."
+  cok_dikkat:
+    verdict: warn
+    message: "Isı indeksi {hi_c} °C ({hi_f} °F): ÇOK DİKKAT. Uzun süre dışarıda kalınır ya da bedenen çalışılırsa sıcak çarpması, ısı krampı ya da ısı bitkinliği olabilir."
+  tehlike:
+    verdict: warn
+    message: "Isı indeksi {hi_c} °C ({hi_f} °F): TEHLİKE. Uzun süre dışarıda kalınır ya da bedenen çalışılırsa ısı krampı ya da ısı bitkinliği beklenir, sıcak çarpması olabilir."
+  asiri_tehlike:
+    verdict: stop
+    message: "Isı indeksi {hi_c} °C ({hi_f} °F): AŞIRI TEHLİKE. Sıcak çarpması olasılığı çok yüksek."
+  bilinmiyor:
+    verdict: escalate
+    message: "Şu bilgi alınamadı: {missing} Ölçmeden sınıf verilemez."
+on_unknown: bilinmiyor

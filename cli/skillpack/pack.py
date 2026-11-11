@@ -20,7 +20,7 @@ SIGNATURE_FILE = "skillpack.sig.json"
 
 # Çalıştırıcının sağladığı eylem ilkelleri. Paket bunların dışında eylem isteyemez.
 HOST_ACTIONS = {"notify", "record"}
-RESERVED_NAMES = {"missing", "true", "false", "min", "max", "abs", "round"}
+RESERVED_NAMES = {"missing", "true", "false", "min", "max", "abs", "round", "sqrt"}
 
 _PLACEHOLDER = re.compile(r"\{([a-z][a-z0-9_]*)\}")
 _STEP_KINDS = ("ask", "compute", "lookup", "decide", "say", "act", "finish")

@@ -122,6 +122,9 @@ skillpack serve                                              # MCP sunucusu (std
 
 MCP destekleyen bir uygulamaya bağlamak için: [cli/README.md](cli/README.md#mcp-sunucusu).
 
+**Tek araç modu (`--meta`):**  
+`skillpack serve --meta` çalıştırınca model sadece tek bir `skillpack` aracı görür. İçeride yönlendirici doğru paketi seçer. Çok paket olduğu için modelin şaşırmasını engeller.
+
 Üç örnek paket vardır: fabrika (rulman kontrolü), lokanta (soğuk mal kabul), okul (kazanım telafi kararı). Eşik değerleri örnektir; gerçek bir usta onayı taşımazlar ([examples/README.md](examples/README.md)).
 
 | Belge | İçerik |

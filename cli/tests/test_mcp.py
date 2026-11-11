@@ -16,6 +16,7 @@ from .helpers import FLOW, MANIFEST, write_pack
 
 try:
     import mcp
+    from mcp import types as mcp_types
     from mcp.client.stdio import StdioServerParameters
 except ImportError:  # pragma: no cover
     mcp = None
@@ -73,7 +74,8 @@ class HubTest(HubCase):
         self.assertEqual(first.structured["status"], "done")
         self.assertEqual(first.structured["verdict"], "stop")
         self.assertTrue(first.text.startswith("[DUR] Yüksek: 12, fark 2"))
-        self.assertIn("Kullanılan değerler: olcum=12, fark=2", first.text)
+        self.assertIn("Kullanılan değerler: olcum=12 (istemci), fark=2", first.text)
+        self.assertEqual(first.structured["unconfirmed_inputs"], ["olcum"])
         entries = [json.loads(line) for line in self.journal.read_text("utf-8").splitlines()]
         self.assertEqual(len(entries), 2)
         self.assertEqual(entries[0]["outcome"], "yuksek")
@@ -108,8 +110,11 @@ class HubTest(HubCase):
         self.assertEqual(outcome.structured["status"], "done")
         self.assertEqual(outcome.structured["trace"][0]["source"], "sensör")
         self.assertEqual(outcome.structured["values"]["olcum"], 3.5)
-        # İstemcinin açıkça verdiği değer sensörden önce gelir.
-        self.assertEqual(self.hub.call("ornek-paket", {"olcum": 7}).structured["values"]["olcum"], 7)
+        # Sensör istemcinin (modelin) verdiği değerden önce gelir; ezilen değer ize yazılır.
+        overridden = self.hub.call("ornek-paket", {"olcum": 7})
+        self.assertEqual(overridden.structured["values"]["olcum"], 3.5)
+        self.assertEqual(overridden.structured["sources"]["olcum"], "sensör")
+        self.assertIn("yok sayıldı", overridden.text)
 
     def test_tampered_pack_disappears_and_cannot_be_called(self):
         flow = self.pack / "flow.yaml"
@@ -147,6 +152,56 @@ class McpProtocolTest(HubCase):
         self.assertEqual(done.structured_content["verdict"], "stop")
         self.assertTrue(done.content[0].text.startswith("[DUR]"))
         self.assertTrue(missing.is_error)
+
+    async def _with_user(self, answer, arguments):
+        asked = []
+
+        async def user(context, params):
+            asked.append(params.message)
+            return answer
+
+        params = build_server(self.hub)
+        async with mcp.Client(params, elicitation_callback=user) as client:
+            return asked, await client.call_tool("ornek-paket", arguments)
+
+    def test_user_confirms_values_directly(self):
+        answer = mcp_types.ElicitResult(action="accept", content={"dogru": True})
+        asked, done = asyncio.run(self._with_user(answer, {"olcum": 12}))
+        self.assertEqual(len(asked), 1)
+        self.assertIn("Ölçüm? → 12 bar", asked[0])
+        self.assertTrue(done.structured_content["confirmed_by_user"])
+        self.assertNotIn("onaylatılmadı", done.content[0].text)
+        (line,) = self.journal.read_text("utf-8").splitlines()
+        self.assertTrue(json.loads(line)["confirmed_by_user"])
+
+    def test_user_rejects_values_so_there_is_no_verdict(self):
+        for answer in (
+            mcp_types.ElicitResult(action="accept", content={"dogru": False}),
+            mcp_types.ElicitResult(action="decline"),
+            mcp_types.ElicitResult(action="cancel"),
+        ):
+            with self.subTest(action=answer.action):
+                _, result = asyncio.run(self._with_user(answer, {"olcum": 12}))
+                self.assertEqual(result.structured_content["status"], "not_confirmed")
+                self.assertNotIn("verdict", result.structured_content)
+                self.assertIn("VALUES NOT CONFIRMED", result.content[0].text)
+        self.assertFalse(self.journal.exists())
+
+    def test_sensor_values_need_no_confirmation(self):
+        self.sensor.write_text("12\n", "utf-8")
+        answer = mcp_types.ElicitResult(action="decline")
+        asked, done = asyncio.run(self._with_user(answer, {}))
+        self.assertEqual(asked, [])
+        self.assertEqual(done.structured_content["verdict"], "stop")
+
+    def test_client_without_elicitation_gets_a_warning(self):
+        async def call():
+            async with mcp.Client(build_server(self.hub)) as client:
+                return await client.call_tool("ornek-paket", {"olcum": 12})
+
+        done = asyncio.run(call())
+        self.assertFalse(done.structured_content["confirmed_by_user"])
+        self.assertIn("onaylatılmadı", done.content[0].text)
 
     def test_in_process(self):
         server_name, *results = asyncio.run(self._exercise(build_server(self.hub)))

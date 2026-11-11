@@ -32,7 +32,8 @@
           "min": {"type": "number"},
           "max": {"type": "number"},
           "choices": {"type": "array", "items": {"$ref": "#/$defs/ident"}, "minItems": 2},
-          "sensor": {"type": "string"}
+          "sensor": {"type": "string"},
+          "max_age_s": {"type": "number", "exclusiveMinimum": 0}
         }
       }
     },
@@ -69,6 +70,19 @@
             }
           }
         ]
+      }
+    },
+    "hazards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["when", "finish"],
+        "additionalProperties": false,
+        "properties": {
+          "when": {"type": "string"},
+          "finish": {"$ref": "#/$defs/ident"},
+          "note": {"type": "string"}
+        }
       }
     },
     "steps": {

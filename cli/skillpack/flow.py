@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 from typing import Any, Mapping
 
 from . import expr
-from .host import Host
+from .host import Host, Reading
 from .pack import Pack
 
 MAX_STEPS = 200
@@ -178,27 +178,71 @@ def run(
         except expr.ExprError as exc:
             raise FlowError(f"ifade değerlendirilemedi ({source}): {exc}") from exc
 
-    def obtain(name: str) -> tuple[Any, str] | None:
-        """Girdiyi sırayla dener: konuşmadan çıkan değer, sensör, insan."""
+    def condition(source: str) -> bool:
+        value = evaluate(source)
+        if not isinstance(value, bool):
+            raise FlowError(f"koşul mantıksal değer vermeli ({source})")
+        return value
+
+    sensor_cache: dict[str, Any] = {}
+
+    def from_sensor(name: str) -> Any | None:
+        """Sensör okuması; yoksa, geçersizse ya da bayatsa `None`. Okuma bir kez yapılır."""
         spec = inputs[name]
-        if name in prefilled:
-            try:
-                value = coerce(spec, prefilled[name])
-            except ValueError:
-                value = None
-            if value is not None:
-                if prefilled_source != "model":
-                    return value, prefilled_source
-                unit = f" {spec['unit']}" if spec.get("unit") else ""
-                if host.confirm(f"{spec['prompt']} → {fmt(value)}{unit}. Doğru mu?"):
-                    return value, "model+onay"
-        if spec.get("sensor"):
-            reading = host.read_sensor(spec["sensor"])
-            if reading is not None:
-                try:
-                    return coerce(spec, reading), "sensör"
-                except ValueError:
-                    pass
+        if not spec.get("sensor"):
+            return None
+        if name in sensor_cache:
+            return sensor_cache[name]
+        sensor_cache[name] = None
+        reading = host.read_sensor(spec["sensor"])
+        if reading is None:
+            return None
+        if not isinstance(reading, Reading):
+            reading = Reading(reading)
+        limit = spec.get("max_age_s")
+        if limit is not None and (reading.age_s is None or reading.age_s > limit):
+            reason = "yaşı bilinmiyor" if reading.age_s is None else "bayat"
+            entry = {"kind": "sensor", "name": name, "status": "reddedildi", "reason": reason}
+            if reading.age_s is not None:
+                entry["age_s"] = round(reading.age_s)
+            trace.append(entry)
+            return None
+        try:
+            sensor_cache[name] = coerce(spec, reading.value)
+        except ValueError as exc:
+            trace.append({"kind": "sensor", "name": name, "status": "reddedildi", "reason": str(exc)})
+        return sensor_cache[name]
+
+    def from_prefilled(name: str) -> Any | None:
+        if name not in prefilled:
+            return None
+        try:
+            return coerce(inputs[name], prefilled[name])
+        except ValueError:
+            return None
+
+    def obtain(name: str) -> tuple[Any, str] | None:
+        """Girdiyi sabit öncelikle edinir: sensör, konuşmadan çıkan değer, insan.
+
+        Alttaki kaynak üsttekini ezemez: geçerli ve taze bir sensör okuması varken
+        istemcinin ya da modelin verdiği değer kullanılmaz, yalnız ize yazılır.
+        """
+        spec = inputs[name]
+        measured = from_sensor(name)
+        given = from_prefilled(name)
+        if measured is not None:
+            if given is not None and given != measured:
+                trace.append(
+                    {"kind": "override", "name": name, "ignored": given,
+                     "ignored_source": prefilled_source, "used": measured}
+                )
+            return measured, "sensör"
+        if given is not None:
+            if prefilled_source != "model":
+                return given, prefilled_source
+            unit = f" {spec['unit']}" if spec.get("unit") else ""
+            if host.confirm(f"{spec['prompt']} → {fmt(given)}{unit}. Doğru mu?"):
+                return given, "model+onay"
         for _ in range(ASK_ATTEMPTS):
             raw = host.ask(name, spec)
             if raw is None:
@@ -208,6 +252,51 @@ def run(
             except ValueError as exc:
                 host.say(f"Geçersiz cevap: {exc}.")
         return None
+
+    hazards = flow.get("hazards") or []
+    hazard_inputs = sorted(
+        {name for hazard in hazards for name in expr.names(hazard["when"]) if name in inputs}
+    )
+
+    def hazard() -> Result | None:
+        """Tehlike kurallarını o an bilinen değerlerle sınar.
+
+        Sorulmamış girdiler için yalnız eldeki kaynaklara bakılır (sensör ve
+        konuşmadan gelen değer); insana soru sorulmaz. Kural, bilinen değerlerle
+        kesin doğruysa akış o sonuçla biter: eksik veri bilinen tehlikeyi örtmez.
+        """
+        if not hazards:
+            return None
+        known = env()
+        passive: dict[str, tuple[Any, str]] = {}
+        for name in hazard_inputs:
+            if name in known:
+                continue
+            value = from_sensor(name)
+            source = "sensör"
+            if value is None:
+                value, source = from_prefilled(name), prefilled_source
+            if value is not None:
+                passive[name] = (value, source)
+                known[name] = value
+        for index, rule in enumerate(hazards):
+            try:
+                fired = expr.evaluate(rule["when"], known, partial=True)
+            except expr.ExprError as exc:
+                raise FlowError(f"tehlike kuralı değerlendirilemedi ({rule['when']}): {exc}") from exc
+            if fired is True:
+                for name in sorted(expr.names(rule["when"]) & set(passive)):
+                    values[name] = passive[name][0]
+                    trace.append({"kind": "ask", "name": name, "value": passive[name][0],
+                                  "source": passive[name][1], "step": "hazard"})
+                trace.append({"kind": "hazard", "rule": index, "when": rule["when"],
+                              "to": f"finish:{rule['finish']}"})
+                return finish(rule["finish"])
+        return None
+
+    stopped = hazard()
+    if stopped is not None:
+        return stopped
 
     position = 0
     for _ in range(MAX_STEPS):
@@ -229,11 +318,17 @@ def run(
             trace.append(
                 {"step": step_id, "kind": "ask", "name": name, "value": obtained[0], "source": obtained[1]}
             )
+            stopped = hazard()
+            if stopped is not None:
+                return stopped
         elif "compute" in step:
             assigned = {}
             for name, source in step["compute"].items():
                 values[name] = assigned[name] = evaluate(source)
             trace.append({"step": step_id, "kind": "compute", "set": assigned})
+            stopped = hazard()
+            if stopped is not None:
+                return stopped
         elif "lookup" in step:
             spec = step["lookup"]
             key = evaluate(spec["key"])
@@ -241,9 +336,12 @@ def run(
             trace.append(
                 {"step": step_id, "kind": "lookup", "table": spec["table"], "key": key, "value": values[spec["into"]]}
             )
+            stopped = hazard()
+            if stopped is not None:
+                return stopped
         elif "decide" in step:
             for rule_index, rule in enumerate(step["decide"]):
-                if "else" in rule or evaluate(rule["when"]):
+                if "else" in rule or condition(rule["when"]):
                     entry = {"step": step_id, "kind": "decide", "rule": rule_index, "when": rule.get("when", "else")}
                     if "finish" in rule:
                         trace.append({**entry, "to": f"finish:{rule['finish']}"})

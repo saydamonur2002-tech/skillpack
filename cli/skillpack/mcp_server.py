@@ -11,6 +11,7 @@ SDK'sını kullanarak Hub'ı stdio üzerinden yayınlar.
 from __future__ import annotations
 
 import json
+import time
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -18,7 +19,7 @@ from typing import Any, Mapping
 
 from . import __version__
 from .flow import FlowError, coerce, fmt, run
-from .host import Host
+from .host import Host, Reading
 from .pack import Pack
 from .registry import Registry
 
@@ -38,6 +39,20 @@ _TOOL_RULE = (
 )
 
 
+_UNCONFIRMED_NOTE = (
+    "Uyarı: bu değerler kullanıcıya onaylatılmadı. Read the values above back to the user "
+    "and ask them to confirm before they act on the verdict."
+)
+
+_CONFIRM_KEY = "degerleri_onayla"
+_INPUT_REQUIRED_SINCE = "2026-07-28"
+_CONFIRM_SCHEMA = {
+    "type": "object",
+    "properties": {"dogru": {"type": "boolean", "title": "Değerler doğru", "default": False}},
+    "required": ["dogru"],
+}
+
+
 class _NeedInput(Exception):
     def __init__(self, name: str) -> None:
         super().__init__(name)
@@ -55,15 +70,19 @@ class _HubHost(Host):
         self._unknown = unknown
         self._sensors = sensors
 
-    def read_sensor(self, name: str) -> Any | None:
+    def read_sensor(self, name: str) -> Reading | None:
         path = self._sensors.get(name)
         if path is None:
             return None
         try:
             text = path.read_text("utf-8").strip()
+            age = time.time() - path.stat().st_mtime
         except OSError:
             return None
-        return text or None
+        if not text:
+            return None
+        # Dosyanın son yazılma anı ölçümün anı sayılır.
+        return Reading(text, max(0.0, age))
 
     def ask(self, name: str, spec: Mapping[str, Any]) -> Any | None:
         if name in self._unknown:
@@ -166,7 +185,10 @@ class Hub:
             for name, pack in sorted(self.registry.scan().packs.items())
         ]
 
-    def call(self, name: str, arguments: Mapping[str, Any] | None) -> ToolOutcome:
+    def call(
+        self, name: str, arguments: Mapping[str, Any] | None, record: bool = True
+    ) -> ToolOutcome:
+        """Paketi yürütür. `record=False` ise kayıt defterine yazmayı çağırana bırakır."""
         scan = self.registry.scan()
         pack = scan.packs.get(name)
         if pack is None:
@@ -226,12 +248,33 @@ class Hub:
             return self._error(f"Akış yürütülemedi: {exc}")
 
         structured = {"status": "done", **result.to_dict()}
-        self._record(structured)
         lines = [f"[{_VERDICT[result.verdict]}] {result.message}"]
         for action in result.suggested:
             lines.append(f"Önerilen eylem (yapılmadı): {action['text']}")
-        used = ", ".join(f"{key}={fmt(value)}" for key, value in result.values.items())
+        sources = {
+            entry["name"]: entry.get("source")
+            for entry in result.trace
+            if entry.get("kind") == "ask" and entry.get("value") is not None
+        }
+        used = ", ".join(
+            f"{key}={fmt(value)}" + (f" ({sources[key]})" if key in sources else "")
+            for key, value in result.values.items()
+        )
         lines.append(f"Kullanılan değerler: {used}")
+        for entry in result.trace:
+            if entry.get("kind") == "override":
+                lines.append(
+                    f"Not: {entry['name']} için verilen {fmt(entry['ignored'])} yok sayıldı; "
+                    f"sensör {fmt(entry['used'])} ölçüyor."
+                )
+        unconfirmed = sorted(key for key, source in sources.items() if source == "istemci")
+        if unconfirmed:
+            lines.append(_UNCONFIRMED_NOTE)
+        structured["sources"] = sources
+        structured["unconfirmed_inputs"] = unconfirmed
+        structured["confirmed_by_user"] = False
+        if record:
+            self.record(structured)
         lines.append(f"Paket: {result.skill} {result.version} · sonuç: {result.outcome}")
         lines.append("Show the first line to the user unchanged.")
         return ToolOutcome(text="\n".join(lines), structured=structured)
@@ -239,7 +282,53 @@ class Hub:
     def _error(self, message: str) -> ToolOutcome:
         return ToolOutcome(text=message, structured={"status": "error", "message": message}, is_error=True)
 
-    def _record(self, structured: Mapping[str, Any]) -> None:
+    def confirmation(self, outcome: ToolOutcome) -> str | None:
+        """Kullanıcıya doğrudan sorulacak onay metni; onaylanacak değer yoksa `None`.
+
+        İstemcinin (modelin) aktardığı değerler kullanıcının söylediğiyle aynı
+        olmayabilir. Hüküm bu değerlere dayanıyorsa önce kullanıcıya gösterilir.
+        """
+        structured = outcome.structured
+        names = structured.get("unconfirmed_inputs") or []
+        if structured.get("status") != "done" or not names:
+            return None
+        pack = self.registry.scan().packs.get(structured["skill"])
+        if pack is None:
+            return None
+        lines = [f"{pack.title}: karar şu değerlere göre verilecek. Doğru mu?"]
+        for name in names:
+            spec = pack.flow["inputs"][name]
+            unit = f" {spec['unit']}" if spec.get("unit") else ""
+            lines.append(f"- {spec['prompt']} → {fmt(structured['values'][name])}{unit}")
+        return "\n".join(lines)
+
+    def confirmed(self, outcome: ToolOutcome) -> ToolOutcome:
+        outcome.structured["confirmed_by_user"] = True
+        outcome.structured["unconfirmed_inputs"] = []
+        self.record(outcome.structured)
+        return ToolOutcome(
+            text=outcome.text.replace(_UNCONFIRMED_NOTE + "\n", ""), structured=outcome.structured
+        )
+
+    def declined(self, outcome: ToolOutcome) -> ToolOutcome:
+        """Kullanıcı değerleri onaylamadı: hüküm verilmez ve kayda geçmez."""
+        structured = {
+            "status": "not_confirmed",
+            "skill": outcome.structured["skill"],
+            "version": outcome.structured["version"],
+            "rejected_values": {
+                name: outcome.structured["values"][name]
+                for name in outcome.structured["unconfirmed_inputs"]
+            },
+        }
+        text = (
+            "VALUES NOT CONFIRMED: the user did not confirm the values you passed, so no "
+            "verdict was given. Ask the user for the correct values and call the tool again. "
+            "Do not reuse the rejected values."
+        )
+        return ToolOutcome(text=text, structured=structured)
+
+    def record(self, structured: Mapping[str, Any]) -> None:
         """Tamamlanan her çalıştırmayı kayıt defterine ekler (denetim izi)."""
         if self.journal is None:
             return
@@ -250,6 +339,8 @@ class Hub:
             "outcome": structured["outcome"],
             "verdict": structured["verdict"],
             "values": structured["values"],
+            "sources": structured.get("sources", {}),
+            "confirmed_by_user": structured.get("confirmed_by_user", False),
         }
         with self.journal.open("a", encoding="utf-8") as handle:
             handle.write(json.dumps(entry, ensure_ascii=False) + "\n")
@@ -260,6 +351,7 @@ def build_server(hub: Hub):
     try:
         from mcp import types
         from mcp.server.lowlevel import Server
+        from mcp.shared.exceptions import MCPError
     except ImportError as exc:  # pragma: no cover - kurulum ortamına bağlı
         raise RuntimeError(
             "MCP desteği için SDK gerekli: pip install 'skillpack[mcp]'"
@@ -278,8 +370,48 @@ def build_server(hub: Hub):
             ]
         )
 
-    async def call_tool(ctx, params) -> "types.CallToolResult":
-        outcome = hub.call(params.name, params.arguments)
+    async def call_tool(ctx, params):
+        outcome = hub.call(params.name, params.arguments, record=False)
+        question = hub.confirmation(outcome)
+        if question is None:
+            if outcome.structured.get("status") == "done":
+                hub.record(outcome.structured)
+            return _result(outcome)
+
+        # Onay sorusu modelden geçmez: MCP istemcisi onu doğrudan kullanıcıya gösterir.
+        session = ctx.session
+        can_ask = session.check_client_capability(
+            types.ClientCapabilities(elicitation=types.ElicitationCapability())
+        )
+        answer = None
+        if can_ask and str(ctx.protocol_version) >= _INPUT_REQUIRED_SINCE:
+            # Yeni protokol: sunucu soruyu sonuç olarak döndürür; istemci kullanıcıya
+            # sorar ve aynı çağrıyı cevapla yineler. Sunucu arada durum tutmaz.
+            responses = getattr(params, "input_responses", None) or {}
+            if _CONFIRM_KEY not in responses:
+                request = types.ElicitRequest(
+                    params=types.ElicitRequestFormParams(
+                        message=question, requested_schema=_CONFIRM_SCHEMA
+                    )
+                )
+                return types.InputRequiredResult(input_requests={_CONFIRM_KEY: request})
+            answer = responses[_CONFIRM_KEY]
+        elif can_ask:
+            try:
+                answer = await session.elicit(
+                    question, _CONFIRM_SCHEMA, related_request_id=ctx.request_id
+                )
+            except MCPError:
+                answer = None  # bu bağlantı soru taşıyamıyor; uyarılı sonuca düşülür
+        if answer is None:
+            hub.record(outcome.structured)
+            return _result(outcome)
+        action = getattr(answer, "action", None) or (answer.get("action") if isinstance(answer, dict) else None)
+        content = getattr(answer, "content", None) or (answer.get("content") if isinstance(answer, dict) else None)
+        agreed = action == "accept" and bool((content or {}).get("dogru"))
+        return _result(hub.confirmed(outcome) if agreed else hub.declined(outcome))
+
+    def _result(outcome: ToolOutcome) -> "types.CallToolResult":
         return types.CallToolResult(
             content=[types.TextContent(type="text", text=outcome.text)],
             structured_content=outcome.structured,

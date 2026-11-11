@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import sys
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Mapping
@@ -15,10 +16,23 @@ from typing import Any, Callable, Mapping
 UNKNOWN_WORDS = {"", "?", "bilmiyorum", "bilmem", "emin değilim"}
 
 
+@dataclass(frozen=True)
+class Reading:
+    """Bir sensör okuması ve yaşı.
+
+    `age_s`: ölçümün kaç saniye önce alındığı. Bilinmiyorsa `None`; tazelik
+    sınırı (`max_age_s`) beyan eden bir girdi böyle bir okumayı kullanmaz.
+    """
+
+    value: Any
+    age_s: float | None = None
+
+
 class Host:
     """Varsayılan davranış: sensör yok, her soru bilinmiyor, eylem yapılmaz."""
 
-    def read_sensor(self, name: str) -> Any | None:
+    def read_sensor(self, name: str) -> Reading | Any | None:
+        """Sensörün son okuması. Yaşı biliniyorsa `Reading` döndürülür."""
         return None
 
     def ask(self, name: str, spec: Mapping[str, Any]) -> Any | None:

@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -13,8 +14,10 @@ from .flow import FlowError, Result, coerce, fmt, run
 from .host import ConsoleHost, ScriptedHost
 from .pack import Pack, PackError, load_cases, validate_pack
 from .registry import Registry
+from .revocation import RevocationError, cached, publish, sync
 from .router import KeywordRouter, OllamaRouter
 from .signing import SigningError, generate_key, sign_pack, verify_pack
+from .state import InstallState, StateError
 
 VERDICT_LABEL = {"ok": "UYGUN", "warn": "DİKKAT", "stop": "DUR", "escalate": "USTAYA SOR"}
 
@@ -157,6 +160,7 @@ routing:
 
 def cmd_validate(args: argparse.Namespace) -> int:
     _, report = validate_pack(args.pack)
+    _print_report("öneri", report.advice)
     _print_report("uyarı", report.warnings)
     _print_report("hata", report.errors)
     print("geçerli" if report.ok else "geçersiz")
@@ -237,6 +241,8 @@ def cmd_sign(args: argparse.Namespace) -> int:
 
 def cmd_verify(args: argparse.Namespace) -> int:
     revocations = Path(args.revocations) if args.revocations else None
+    if args.revocation_cache:
+        revocations = cached(Path(args.revocation_cache)).path
     result = verify_pack(Path(args.pack), Path(args.trust), revocations)
     _print_report("ret", result.reasons)
     if result.ok:
@@ -245,11 +251,53 @@ def cmd_verify(args: argparse.Namespace) -> int:
 
 
 def _registry(args: argparse.Namespace) -> Registry:
+    max_age = args.revocation_max_age_days
     return Registry(
         Path(args.packs),
         Path(args.trust),
         Path(args.revocations) if args.revocations else None,
+        revocation_cache=Path(args.revocation_cache) if args.revocation_cache else None,
+        revocation_max_age=None if max_age <= 0 else timedelta(days=max_age),
+        state=InstallState(Path(args.state)) if args.state else None,
     )
+
+
+def cmd_revocations_sync(args: argparse.Namespace) -> int:
+    entry = sync(args.source, Path(args.root), Path(args.cache))
+    count = len(json.loads(entry.path.read_text("utf-8"))["revoked"])
+    print(f"iptal listesi doğrulandı ve eşitlendi: {count} kayıt")
+    print(f"önbellek: {entry.path}")
+    return 0
+
+
+def cmd_revocations_status(args: argparse.Namespace) -> int:
+    entry = cached(Path(args.cache))
+    count = len(json.loads(entry.path.read_text("utf-8"))["revoked"])
+    print(f"kayıt: {count}")
+    print(f"kaynak: {entry.source}")
+    print(f"son eşitleme: {entry.synced_at.isoformat(timespec='seconds')} "
+          f"({entry.age().total_seconds() / 86400:.1f} gün önce)")
+    return 0
+
+
+def cmd_revocations_publish(args: argparse.Namespace) -> int:
+    today = datetime.now(timezone.utc).date().isoformat()
+    add = [{"pack_id": value, "reason": args.reason, "date": today} for value in args.pack_id or []]
+    add += [{"key_id": value, "reason": args.reason, "date": today} for value in args.key_id or []]
+    summary = publish(Path(args.repo), Path(args.keys), add, timestamp_days=args.timestamp_days)
+    if summary["created"]:
+        print(f"iptal deposu oluşturuldu: {args.repo}")
+        print(f"istemcilere elden verilecek güven kökü: {summary['trusted_root']}")
+        print(f"imza anahtarları: {args.keys} (paylaşmayın, depoya koymayın)")
+    print(f"liste sürümü {summary['list_version']}, {summary['entries']} kayıt; "
+          f"zaman damgası {summary['timestamp_expires']} tarihine kadar geçerli")
+    return 0
+
+
+def cmd_forget(args: argparse.Namespace) -> int:
+    removed = InstallState(Path(args.state)).forget(args.name)
+    print(f"kayıt silindi: {args.name}" if removed else f"kayıtta yok: {args.name}")
+    return 0 if removed else 1
 
 
 def cmd_list(args: argparse.Namespace) -> int:
@@ -366,7 +414,17 @@ def cmd_serve(args: argparse.Namespace) -> int:
 def _add_store(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--packs", default="examples", help="paket deposu dizini")
     parser.add_argument("--trust", default="examples/trust", help="güvenilen açık anahtarlar")
-    parser.add_argument("--revocations", help="iptal listesi (JSON)")
+    parser.add_argument("--revocations", help="imzasız yerel iptal listesi (JSON); yalnız deneme için")
+    parser.add_argument(
+        "--revocation-cache", help="'revocations sync' ile doldurulan imzalı iptal önbelleği"
+    )
+    parser.add_argument(
+        "--revocation-max-age-days", type=float, default=7,
+        help="son eşitleme bundan eskiyse hiçbir paket yüklenmez (0 = sınır yok; varsayılan 7)",
+    )
+    parser.add_argument(
+        "--state", help="kurulum kaydı (JSON): geri sarma ve yayıncı değişimine karşı koruma"
+    )
 
 
 def _add_router(parser: argparse.ArgumentParser) -> None:
@@ -408,7 +466,35 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("pack")
     p.add_argument("--trust", default="examples/trust")
     p.add_argument("--revocations")
+    p.add_argument("--revocation-cache")
     p.set_defaults(func=cmd_verify)
+
+    p = sub.add_parser("revocations", help="imzalı iptal listesi (TUF)")
+    rsub = p.add_subparsers(dest="revocations_command", required=True)
+    r = rsub.add_parser("sync", help="listeyi kaynaktan çek, doğrula, önbelleğe yaz")
+    r.add_argument("--source", required=True, help="HTTP(S) adresi ya da yerel dizin (USB)")
+    r.add_argument("--root", required=True, help="elden alınan güven kökü (1.root.json)")
+    r.add_argument("--cache", required=True)
+    r.set_defaults(func=cmd_revocations_sync)
+    r = rsub.add_parser("status", help="önbellekteki listenin yaşı ve kayıt sayısı")
+    r.add_argument("--cache", required=True)
+    r.set_defaults(func=cmd_revocations_status)
+    r = rsub.add_parser("publish", help="iptal deposunu oluştur, kayıt ekle ya da zaman damgasını tazele")
+    r.add_argument("--repo", required=True, help="yayımlanacak dizin (metadata/ ve targets/)")
+    r.add_argument("--keys", required=True, help="imza anahtarları dizini")
+    r.add_argument("--pack-id", action="append", help="iptal edilecek paket kimliği (sha256:...)")
+    r.add_argument("--key-id", action="append", help="iptal edilecek yayıncı anahtarı")
+    r.add_argument(
+        "--reason", default="guvenlik-acigi",
+        choices=["zararli", "guvenlik-acigi", "lisans-ihlali", "yanlis-beyan", "yayinci-talebi"],
+    )
+    r.add_argument("--timestamp-days", type=float, default=7)
+    r.set_defaults(func=cmd_revocations_publish)
+
+    p = sub.add_parser("forget", help="bir paketi kurulum kaydından sil")
+    p.add_argument("name")
+    p.add_argument("--state", required=True)
+    p.set_defaults(func=cmd_forget)
 
     p = sub.add_parser("list", help="depodaki paketleri listele")
     _add_store(p)
@@ -450,6 +536,6 @@ def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
         return args.func(args)
-    except (PackError, SigningError) as exc:
+    except (PackError, SigningError, RevocationError, StateError) as exc:
         print(f"hata: {exc}", file=sys.stderr)
         return 1

@@ -62,6 +62,7 @@ class Pack:
 class Report:
     errors: list[str] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
+    advice: list[str] = field(default_factory=list)
 
     @property
     def ok(self) -> bool:
@@ -73,9 +74,56 @@ def load_schema(name: str) -> dict[str, Any]:
     return json.loads(text)
 
 
+class _StrictLoader(yaml.SafeLoader):
+    """YAML 1.2 çekirdek şemasına yakın, sürprizsiz yükleyici.
+
+    PyYAML'ın YAML 1.1 kuralları ustanın yazdığı değeri sessizce değiştirebilir:
+    `1:30` 90 olur, `no` false olur, `012` 10 olur. Burada yalnız `true`/`false`
+    mantıksal, yalnız ondalık yazım sayıdır; gerisi metin kalır ve şema onu
+    yakalar. Yinelenen anahtar hatadır.
+    """
+
+    def construct_mapping(self, node, deep=False):
+        seen = set()
+        for key_node, _ in node.value:
+            key = self.construct_object(key_node, deep=True)
+            try:
+                duplicate = key in seen
+            except TypeError as exc:
+                raise yaml.constructor.ConstructorError(
+                    None, None, "anahtar basit bir değer olmalı", key_node.start_mark
+                ) from exc
+            if duplicate:
+                raise yaml.constructor.ConstructorError(
+                    None, None, f"yinelenen anahtar: {key}", key_node.start_mark
+                )
+            seen.add(key)
+        return super().construct_mapping(node, deep)
+
+
+_StrictLoader.yaml_implicit_resolvers = {
+    first: [(tag, pattern) for tag, pattern in resolvers
+            if tag not in ("tag:yaml.org,2002:bool", "tag:yaml.org,2002:int",
+                           "tag:yaml.org,2002:float", "tag:yaml.org,2002:timestamp")]
+    for first, resolvers in yaml.SafeLoader.yaml_implicit_resolvers.items()
+}
+_StrictLoader.add_implicit_resolver(
+    "tag:yaml.org,2002:bool", re.compile(r"^(?:true|false)$"), list("tf"))
+_StrictLoader.add_implicit_resolver(
+    "tag:yaml.org,2002:int", re.compile(r"^-?(?:0|[1-9][0-9]*)$"), list("-0123456789"))
+_StrictLoader.add_implicit_resolver(
+    "tag:yaml.org,2002:float",
+    re.compile(r"^-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][-+]?[0-9]+)?$"),
+    list("-0123456789"))
+
+
+def strict_load(text: str) -> Any:
+    return yaml.load(text, Loader=_StrictLoader)  # noqa: S506 - SafeLoader alt sınıfı
+
+
 def _read_yaml(path: Path) -> Any:
     try:
-        return yaml.safe_load(path.read_text("utf-8"))
+        return strict_load(path.read_text("utf-8"))
     except FileNotFoundError as exc:
         raise PackError(f"dosya yok: {path.name}") from exc
     except yaml.YAMLError as exc:
@@ -96,7 +144,7 @@ def read_frontmatter(path: Path) -> dict[str, Any]:
     except StopIteration as exc:
         raise PackError(f"{path.name} ön bilgisi kapanmıyor") from exc
     try:
-        data = yaml.safe_load("\n".join(lines[1:end]))
+        data = strict_load("\n".join(lines[1:end]))
     except yaml.YAMLError as exc:
         raise PackError(f"{path.name} ön bilgisi okunamadı: {exc}") from exc
     if not isinstance(data, dict):
@@ -175,6 +223,10 @@ def check_flow(flow: dict[str, Any], manifest: dict[str, Any]) -> list[str]:
                 )
             elif bounds != sorted(bounds):
                 errors.append(f"tablo {name}: below değerleri artan sırada olmalı")
+
+    for name, spec in inputs.items():
+        if "max_age_s" in spec and "sensor" not in spec:
+            errors.append(f"girdi {name}: max_age_s yalnız sensör bağlı girdide kullanılır")
 
     # Ad uzayı: parametre, girdi ve hesaplanan değerler tek uzayı paylaşır.
     computed: set[str] = set()
@@ -263,6 +315,25 @@ def check_flow(flow: dict[str, Any], manifest: dict[str, Any]) -> list[str]:
         elif kind == "finish":
             if step["finish"] not in outcomes:
                 errors.append(f"{where}: tanımsız sonuç '{step['finish']}'")
+
+    for index, rule in enumerate(flow.get("hazards") or []):
+        where = f"hazards[{index}]"
+        check_expr(rule["when"], where)
+        if rule["finish"] not in outcomes:
+            errors.append(f"{where}: tanımsız sonuç '{rule['finish']}'")
+        elif outcomes[rule["finish"]]["verdict"] != "stop":
+            errors.append(f"{where}: tehlike kuralı yalnız verdict değeri stop olan sonuca gidebilir")
+        else:
+            try:
+                free = expr.names(rule["when"])
+            except expr.ExprError:
+                free = set()
+            usable = free | set(params)
+            for name in sorted(placeholders(outcomes[rule["finish"]]["message"]) - usable):
+                errors.append(
+                    f"{where}: sonuç mesajındaki '{{{name}}}' kuralın kullandığı değerler arasında değil "
+                    "(tehlike kuralı o değer bilinmeden ateşleyebilir)"
+                )
 
     last = steps[-1]
     falls_off = "finish" not in last and not (
@@ -372,11 +443,33 @@ def validate_pack(path: Path | str) -> tuple[Pack | None, Report]:
     else:
         if not cases["cases"]:
             report.errors.append("kabul testi yok: en az bir vaka gerekli")
-        reached = {case.get("expect", {}).get("outcome") for case in cases["cases"]}
+        for case in cases["cases"]:
+            expect = case.get("expect")
+            if not isinstance(expect, dict) or not expect.get("outcome"):
+                report.errors.append(
+                    f"kabul testi '{case.get('name')}': expect.outcome boş; beklentisiz test geçersizdir"
+                )
+            elif expect["outcome"] not in pack.flow["outcomes"]:
+                report.errors.append(
+                    f"kabul testi '{case.get('name')}': tanımsız sonuç '{expect['outcome']}'"
+                )
+        for name, spec in pack.flow["inputs"].items():
+            if "sensor" in spec and "max_age_s" not in spec:
+                report.advice.append(
+                    f"girdi {name}: sensör bağlı ama max_age_s yok; bayat ölçüm de kullanılır"
+                )
+        if not pack.flow.get("hazards") and any(
+            outcome["verdict"] == "stop" for outcome in pack.flow["outcomes"].values()
+        ):
+            report.advice.append(
+                "hazards tanımlı değil: eksik veri, bilinen bir dur koşulunu 'bilinmiyor'a düşürebilir"
+            )
+        reached = {(case.get("expect") or {}).get("outcome") for case in cases["cases"]
+                   if isinstance(case.get("expect"), dict)}
         for name in sorted(set(pack.flow["outcomes"]) - reached):
-            report.warnings.append(f"hiçbir kabul testi '{name}' sonucunu sınamıyor")
+            report.advice.append(f"hiçbir kabul testi '{name}' sonucunu sınamıyor")
         if not cases["routing"]:
-            report.warnings.append("yönlendirme örneği yok (routing)")
+            report.advice.append("yönlendirme örneği yok (routing)")
 
     for hit in scan_pii(pack.path):
         report.warnings.append(f"kişisel veri taraması: {hit}")

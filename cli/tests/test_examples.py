@@ -27,7 +27,7 @@ class ExamplesTest(unittest.TestCase):
         for name in NAMES:
             with self.subTest(name=name):
                 pack, report = validate_pack(EXAMPLES / name)
-                self.assertEqual((report.errors, report.warnings), ([], []))
+                self.assertEqual((report.errors, report.warnings), ([], []))  # öneriler (advice) ayrı tutulur
                 failed = [(case, detail) for case, ok, detail in run_cases(pack) if not ok]
                 self.assertEqual(failed, [])
 

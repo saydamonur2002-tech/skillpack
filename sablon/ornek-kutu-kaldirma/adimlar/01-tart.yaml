@@ -1,0 +1,88 @@
+# ORNEK - gercek usta onayi yok, DEMO
+# ============================================================
+# Adım 1: Kutuyu tart. Kaldırmadan ve kavramadan önce ağırlık bilinir.
+# ============================================================
+
+adim:
+  id: tart
+  surum: "0.1.0"
+  ad: "Kutuyu tart"
+
+  amac: "Kaldırmadan önce kutunun ağırlığını kilogram cinsinden, taze sensör ölçümüyle bilmek."
+
+  girdiler:
+    - ad: agirlik_kg
+      tur: number
+      birim: kg
+      kaynak:
+        - "sensor.agirlik.v1"
+      tazelik_sn: 2
+      sert_sinir:
+        min: 0
+        max: 30
+      soru: "Ağırlık sensörü okumadı. İş durur; insan veya model bu değeri uyduramaz (sensör yokken tartım yapılmaz)."
+
+  on_kosullar:
+    - kosul: "donanim.cihazlar['sensor.agirlik.v1'].durum == bagli"
+      aciklama: "Tartım için ağırlık sensörü bağlı olmalıdır."
+      saglanmazsa: dur
+
+  tehlike:
+    - kosul: "agirlik_kg > 30"
+      sonuc: dur
+      mesaj: "Ağırlık sert sınırı aşıyor (örnek üst 30 kg). Tartım sonrası işlem durur."
+    - kosul: "kaynak.yas_sn > 2"
+      sonuc: dur
+      mesaj: "Ağırlık sensörü verisi bayat; kullanılmaz."
+
+  islem:
+    tur: compute
+    tanim:
+      aciklama: "Sensörden gelen değeri kaydet. Başka kaynakla değiştirme. Değer profil azamisini (25 kg) aşıyorsa sonraki adımlar durur."
+
+  etki:
+    - "agirlik_kg biliniyor"
+    - "durum.on_kosullar.agirlik_biliniyor.saglandi == true"
+
+  dogrulama:
+    olcum: "sensor.agirlik.v1"
+    kosul: "abs(ikinci_okuma_kg - agirlik_kg) <= 0.1"
+    sure_sn: 2
+    sonuclar:
+      - basarili
+      - basarisiz
+      - bilinmiyor
+
+  basarisizlikta:
+    tekrar: 1
+    sonra: dur
+
+  baglayici:
+    arayuz: "sensor.agirlik.v1"
+    eylem: "olc()"
+    eylem_izni: otomatik          # yalnız ölçüm; hareket yok
+
+  llm:
+    yapabilir:
+      - degeri_ayikla
+      - soruyu_cevir
+      - sonucu_anlat
+    yapamaz:
+      - karar_vermek
+      - sensoru_ezmek
+      - sert_siniri_degistirmek
+      - eylem_baslatmak
+
+  testler:
+    - ad: "tart-normal-12kg"
+      kategori: normal
+    - ad: "tart-sinir-25kg"
+      kategori: sinir
+    - ad: "tart-tehlike-35kg"
+      kategori: tehlike
+
+  koken:
+    yazan: "DEMO — şablon örneği"
+    onaylayan: ""
+    dayanak:
+      - "[VARSAYIM] — gerçek usta onayı yok, gerçek mevzuat kontrol edilmedi."

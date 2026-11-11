@@ -1,0 +1,111 @@
+# ORNEK - gercek usta onayi yok, DEMO
+# ============================================================
+# Adım 2: Kutuyu kavra. Ağırlık bilinmeden ve güvenli değilse başlamaz.
+# ============================================================
+
+adim:
+  id: kavra
+  surum: "0.1.0"
+  ad: "Kutuyu kavra"
+
+  amac: "Kutuyu, sonraki kaldırmaya uygun biçimde kavramış olmak."
+
+  girdiler:
+    - ad: agirlik_kg
+      tur: number
+      birim: kg
+      kaynak:
+        - "kayit:tart.agirlik_kg"
+        - "sensor.agirlik.v1"
+      tazelik_sn: 2
+      sert_sinir:
+        min: 0
+        max: 30
+      soru: "Ağırlık bilinmiyor. Kavramadan önce tartım yapılmalıdır."
+    - ad: insan_yakinda
+      tur: bool
+      birim: ""
+      kaynak:
+        - "sensor.yakinlik.v1"
+      tazelik_sn: 1
+      sert_sinir:
+        min: false
+        max: false
+      soru: "Yakınlık sensörü okumadı. İnsan varlığı bilinmiyorken kavrama başlamaz."
+
+  on_kosullar:
+    - kosul: "agirlik_biliniyor == true"
+      aciklama: "Kavramadan önce tartım bitmiş olmalıdır."
+      saglanmazsa: dur
+    - kosul: "agirlik_kg <= profil.degerler.max_agirlik"
+      aciklama: "İşletme azami ağırlığının üstündeki kutu kavranmaz."
+      saglanmazsa: dur
+    - kosul: "insan_yakinda == false"
+      aciklama: "Yakında insan varken kavrayıcı hareket etmez."
+      saglanmazsa: dur
+
+  tehlike:
+    - kosul: "agirlik_kg > 30"
+      sonuc: dur
+      mesaj: "Ağırlık sert sınırı aşıyor. Kavrama durur."
+    - kosul: "agirlik_kg > profil.degerler.max_agirlik"
+      sonuc: dur
+      mesaj: "Ağırlık profil azamisini aşıyor. Kavrama durur."
+    - kosul: "kaynak.yas_sn > kaynak.tazelik_sn"
+      sonuc: dur
+      mesaj: "Sensör verisi bayat; kavrama durur."
+    - kosul: "insan_yakinda == true"
+      sonuc: dur
+      mesaj: "Yakınlık sensörü insan algıladı. Kavrama durur."
+
+  islem:
+    tur: act
+    tanim:
+      aciklama: "Kavrayıcıyı kapat. Tahmin yok; bağlayıcı ancak izin verildikten sonra çağrılır."
+
+  etki:
+    - "kavrandi == true"
+    - "durum.on_kosullar.kavrandi.saglandi == true"
+
+  dogrulama:
+    olcum: "kavrayici.v1"
+    kosul: "kavrama_durumu == kapali"
+    sure_sn: 3
+    sonuclar:
+      - basarili
+      - basarisiz
+      - bilinmiyor
+
+  basarisizlikta:
+    tekrar: 1
+    sonra: dur
+
+  baglayici:
+    arayuz: "kavrayici.v1"
+    eylem: "kavra()"
+    eylem_izni: oneri          # sistem önerir, insan onaylar
+
+  llm:
+    yapabilir:
+      - degeri_ayikla
+      - soruyu_cevir
+      - sonucu_anlat
+    yapamaz:
+      - karar_vermek
+      - sensoru_ezmek
+      - sert_siniri_degistirmek
+      - eylem_baslatmak
+
+  testler:
+    - ad: "kavra-normal-12kg"
+      kategori: normal
+    - ad: "kavra-sinir-25kg"
+      kategori: sinir
+    - ad: "kavra-tehlike-insan-yakinda"
+      kategori: tehlike
+
+  koken:
+    yazan: "DEMO — şablon örneği"
+    onaylayan: ""
+    dayanak:
+      - "[VARSAYIM] — gerçek usta onayı yok, gerçek mevzuat kontrol edilmedi."

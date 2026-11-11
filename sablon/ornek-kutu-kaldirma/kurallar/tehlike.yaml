@@ -1,0 +1,26 @@
+# ORNEK - gercek usta onayi yok, DEMO
+# ============================================================
+# "Görünce dur" kuralları. Eksik veri olsa bile önce bunlar bakılır.
+# Bilinen tek bir tehlike dur için yeterlidir; "bilinmiyor"a düşmez.
+# ============================================================
+
+tehlike:
+  - id: agirlik_sinir_asimi
+    kosul: "agirlik_kg > sert_sinirlar.azami_yuk_kg.max"
+    sonuc: dur
+    mesaj: "Ağırlık sert sınırı aşıyor (örnek üst 30 kg). Kaldırma durur."
+
+  - id: agirlik_profil_asimi
+    kosul: "agirlik_kg > profil.degerler.max_agirlik"
+    sonuc: dur
+    mesaj: "Ağırlık işletme profilindeki azami değeri aşıyor. Kaldırma durur."
+
+  - id: sensor_bayat
+    kosul: "kaynak.yas_sn > kaynak.tazelik_sn"
+    sonuc: dur
+    mesaj: "Sensör verisi bayat; kullanılmaz. Adım durur."
+
+  - id: insan_yakinda
+    kosul: "insan_yakinda == true"
+    sonuc: dur
+    mesaj: "Yakınlık sensörü insan algıladı. Hareket durur."

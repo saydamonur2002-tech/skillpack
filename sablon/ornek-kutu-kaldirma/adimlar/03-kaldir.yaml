@@ -1,0 +1,120 @@
+# ORNEK - gercek usta onayi yok, DEMO
+# ============================================================
+# Adım 3: Kutuyu hedef yüksekliğe kaldır. Kavranmamışsa başlamaz.
+# ============================================================
+
+adim:
+  id: kaldir
+  surum: "0.1.0"
+  ad: "Kutuyu kaldır"
+
+  amac: "Kavranmış kutuyu profildeki hedef yüksekliğe (örnek 30 cm) kaldırmak."
+
+  girdiler:
+    - ad: agirlik_kg
+      tur: number
+      birim: kg
+      kaynak:
+        - "kayit:tart.agirlik_kg"
+        - "sensor.agirlik.v1"
+      tazelik_sn: 2
+      sert_sinir:
+        min: 0
+        max: 30
+      soru: "Ağırlık bilinmiyor. Kaldırmadan önce tartım yapılmalıdır."
+    - ad: hedef_yukseklik_cm
+      tur: number
+      birim: cm
+      kaynak:
+        - "kayit:profil.degerler.hedef_yukseklik_cm"
+      tazelik_sn: 86400
+      sert_sinir:
+        min: 0
+        max: 50
+      soru: "Hedef yükseklik profilde yok. Kaldırma başlamaz."
+    - ad: insan_yakinda
+      tur: bool
+      birim: ""
+      kaynak:
+        - "sensor.yakinlik.v1"
+      tazelik_sn: 1
+      sert_sinir:
+        min: false
+        max: false
+      soru: "Yakınlık sensörü okumadı. İnsan varlığı bilinmiyorken kaldırma başlamaz."
+
+  on_kosullar:
+    - kosul: "kavrandi == true"
+      aciklama: "Kaldırmadan önce kutu kavranmış olmalıdır."
+      saglanmazsa: dur
+    - kosul: "agirlik_kg <= profil.degerler.max_agirlik"
+      aciklama: "İşletme azami ağırlığının üstündeki kutu kaldırılmaz."
+      saglanmazsa: dur
+    - kosul: "insan_yakinda == false"
+      aciklama: "Yakında insan varken kaldırıcı hareket etmez."
+      saglanmazsa: dur
+
+  tehlike:
+    - kosul: "agirlik_kg > 30"
+      sonuc: dur
+      mesaj: "Ağırlık sert sınırı aşıyor. Kaldırma durur."
+    - kosul: "agirlik_kg > profil.degerler.max_agirlik"
+      sonuc: dur
+      mesaj: "Ağırlık profil azamisini aşıyor. Kaldırma durur."
+    - kosul: "kaynak.yas_sn > kaynak.tazelik_sn"
+      sonuc: dur
+      mesaj: "Sensör verisi bayat; kaldırma durur."
+    - kosul: "insan_yakinda == true"
+      sonuc: dur
+      mesaj: "Yakınlık sensörü insan algıladı. Kaldırma durur."
+
+  islem:
+    tur: act
+    tanim:
+      aciklama: "Kaldırıcıyı hedef yüksekliğe götür. Tahmin yok; bağlayıcı ancak izin verildikten sonra çağrılır."
+
+  etki:
+    - "abs(yukseklik_cm - hedef_yukseklik_cm) <= profil.degerler.dogrulama_tolerans_cm"
+
+  dogrulama:
+    olcum: "sensor.yukseklik.v1"
+    kosul: "abs(yukseklik_cm - hedef_yukseklik_cm) <= 2"
+    sure_sn: 5
+    sonuclar:
+      - basarili
+      - basarisiz
+      - bilinmiyor
+
+  basarisizlikta:
+    tekrar: 0
+    sonra: geri_al
+
+  baglayici:
+    arayuz: "kaldirici.v1"
+    eylem: "kaldir(yukseklik_cm)"
+    eylem_izni: oneri          # sistem önerir, insan onaylar
+
+  llm:
+    yapabilir:
+      - degeri_ayikla
+      - soruyu_cevir
+      - sonucu_anlat
+    yapamaz:
+      - karar_vermek
+      - sensoru_ezmek
+      - sert_siniri_degistirmek
+      - eylem_baslatmak
+
+  testler:
+    - ad: "kaldir-normal-12kg"
+      kategori: normal
+    - ad: "kaldir-sinir-25kg"
+      kategori: sinir
+    - ad: "kaldir-tehlike-insan-yakinda"
+      kategori: tehlike
+
+  koken:
+    yazan: "DEMO — şablon örneği"
+    onaylayan: ""
+    dayanak:
+      - "[VARSAYIM] — gerçek usta onayı yok, gerçek mevzuat kontrol edilmedi."

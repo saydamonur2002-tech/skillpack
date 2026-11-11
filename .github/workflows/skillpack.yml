@@ -30,3 +30,21 @@ jobs:
             skillpack test "$dir"
             skillpack verify "$dir"
           done
+
+  sayisal-moduller:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Tur 1 — M001–M010
+        working-directory: paketler/sayisal-2026-11-11/tur1
+        run: |
+          python -m pip install -r requirements-test.txt
+          python -m pytest -q
+      - name: Tur 2 — M011–M020
+        working-directory: paketler/sayisal-2026-11-11/tur2
+        run: |
+          python -m pip install -r M011/requirements-test.txt
+          python -m pytest -q

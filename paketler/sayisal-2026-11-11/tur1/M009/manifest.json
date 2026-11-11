@@ -1,0 +1,163 @@
+{
+  "id": "M009",
+  "name": "Masked image center of mass",
+  "description": "Computes an image center of mass from pixel intensities, optionally excluding a boolean mask. Returns x (column), y (row), and the included signed intensity sum.",
+  "version": "1.0.0",
+  "date": "2026-11-11",
+  "tier": "revival",
+  "license": "BSD-3-Clause",
+  "distribution": "public-ok",
+  "source_url": "https://github.com/astropy/photutils",
+  "upstream_commit_or_version": "0eb74eb4bc450c3d1476d26b774c0011c138bf49",
+  "implementation_kind": "ported-core",
+  "status": "tested",
+  "provenance": {
+    "upstream_repository": "https://github.com/astropy/photutils",
+    "commit": "0eb74eb4bc450c3d1476d26b774c0011c138bf49",
+    "stars_at_mining": 316,
+    "repository_created_year": 2011,
+    "license_spdx": "BSD-3-Clause",
+    "license_path": "LICENSE.rst",
+    "license_sha256": "e2d46b2a96dbc2a68693a40a0d992d5326ee373a8659b2444ac57becb17218df",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2011-2026, Photutils Developers"
+    ],
+    "mined_date": "2026-11-11",
+    "timezone": "Europe/Istanbul",
+    "evidence": [
+      {
+        "path": "photutils/centroids/core.py",
+        "url": "https://github.com/astropy/photutils/blob/0eb74eb4bc450c3d1476d26b774c0011c138bf49/photutils/centroids/core.py",
+        "sha256": "88098f5455d9fe5875c3634192fe0397ea913b90769929c330e7b48a0ebccad2",
+        "scope": "complete original file"
+      },
+      {
+        "path": "photutils/centroids/tests/test_core.py",
+        "url": "https://github.com/astropy/photutils/blob/0eb74eb4bc450c3d1476d26b774c0011c138bf49/photutils/centroids/tests/test_core.py",
+        "sha256": "f4f829b315dcae3a3eebf3f58f0c1fe72dfa571fe510d86212543467a163c6b1",
+        "scope": "complete original file"
+      },
+      {
+        "path": "photutils/centroids/tests/helpers.py",
+        "url": "https://github.com/astropy/photutils/blob/0eb74eb4bc450c3d1476d26b774c0011c138bf49/photutils/centroids/tests/helpers.py",
+        "sha256": "0706a8e97018994d24c8e65c57accc373b0502bbfb946848a80903ce4268fc2d",
+        "scope": "complete original file"
+      }
+    ],
+    "reference_values": "photutils/centroids/tests/test_core.py:56-82 checks centers (25.7,26.2) for 8 Gaussian parameter combinations and their masked versions. helpers.py defines the Gaussian source model."
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": -1e+100,
+            "maximum": 1e+100
+          },
+          "minItems": 1,
+          "maxItems": 64
+        },
+        "minItems": 1,
+        "maxItems": 64
+      },
+      "mask": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "boolean"
+          },
+          "minItems": 1,
+          "maxItems": 64
+        },
+        "minItems": 1,
+        "maxItems": 64
+      }
+    },
+    "required": [
+      "data"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "CLI raw UTF-8 bound and alarm; schema plus finite-value/nesting checks; MCP subprocess killed after 10 seconds; one active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "numerical_runtime": "Python standard library only"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "tool_name": "skillpack_m009"
+  },
+  "limitations": "Rectangular 2D finite real data, at most 64 rows/columns and 4096 pixels. No image file reading, background estimation, PSF fitting, segmentation, nonfinite-value masking or units. Signed intensities are accepted and can place a centroid outside the image. Absolute included total below 1e-30 is an error.",
+  "port_notes": "Ports the 2D finite/masked branch of centroid_com: sum(index*data)/sum(data), reversed to x,y order. Upstream undefined NaN output for near-zero total becomes a structured error. Nonfinite pixels are rejected, not automatically masked.",
+  "verification": {
+    "test_count": 35,
+    "local_tests": 34,
+    "real_mcp_stdio_tests": 1,
+    "status": "passed",
+    "shared_timeout_tests": 2,
+    "suite_total": 261
+  }
+}

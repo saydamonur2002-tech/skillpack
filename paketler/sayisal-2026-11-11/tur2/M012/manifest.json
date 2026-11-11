@@ -1,0 +1,209 @@
+{
+  "id": "M012",
+  "name": "QUADPACK 21-point Gauss\u2013Kronrod panel and error diagnostics",
+  "description": "Integrate one bounded polynomial or enumerated smooth function over a finite interval using the original 10/21 Gauss\u2013Kronrod pair. Return value, absolute error estimate, Gauss-10 result, resabs, resasc and evaluation count.",
+  "version": "1.0.0",
+  "date": "2026-11-11",
+  "tier": "revival",
+  "license": "BSD-3-Clause",
+  "distribution": "public-ok",
+  "source_url": "https://github.com/scipy/scipy",
+  "upstream_commit_or_version": "92d2a8592782ee19a1161d0bf3fc2241ba78bb63",
+  "implementation_kind": "ported-core",
+  "status": "passed-local-tests",
+  "provenance": {
+    "upstream_repository": "https://github.com/scipy/scipy",
+    "commit": "92d2a8592782ee19a1161d0bf3fc2241ba78bb63",
+    "stars_at_mining": 15206,
+    "repository_created_year": 2011,
+    "license_spdx": "BSD-3-Clause",
+    "license_path": "LICENSE.txt",
+    "license_sha256": "c29fb8e5936f33237a8b15256b4c6e93037f05bbf58c3d7b5755aede4c200173",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2001-2002 Enthought, Inc. 2003-2024, SciPy Developers."
+    ],
+    "additional_licenses": [],
+    "mined_date": "2026-11-11",
+    "timezone": "Europe/Istanbul",
+    "metadata_source": "public GitHub repository API, observed this mining round",
+    "evidence": [
+      {
+        "path": "scipy/integrate/quadpack/dqk21.f",
+        "original_path": "scipy/integrate/quadpack/dqk21.f",
+        "url": "https://github.com/scipy/scipy/blob/92d2a8592782ee19a1161d0bf3fc2241ba78bb63/scipy/integrate/quadpack/dqk21.f",
+        "commit": "92d2a8592782ee19a1161d0bf3fc2241ba78bb63",
+        "sha256": "7ffccab6a409c1c01c2ad651279e46097242a4ba8ef0f1d6c77a06a597e292fd",
+        "original_full_file_sha256": "7ffccab6a409c1c01c2ad651279e46097242a4ba8ef0f1d6c77a06a597e292fd",
+        "scope": "original LF lines 1-EOF"
+      },
+      {
+        "path": "scipy/integrate/tests/test_quadpack.py",
+        "original_path": "scipy/integrate/tests/test_quadpack.py",
+        "url": "https://github.com/scipy/scipy/blob/92d2a8592782ee19a1161d0bf3fc2241ba78bb63/scipy/integrate/tests/test_quadpack.py",
+        "commit": "92d2a8592782ee19a1161d0bf3fc2241ba78bb63",
+        "sha256": "0867a4478e6176f4a0e9790b731cd092049db7cf5ebe12117d23388ac15eec45",
+        "original_full_file_sha256": "0849d806a78030ec60222d990cc66ce713b24ba4997cf9543f305934595a44ee",
+        "scope": "original LF lines 85-140"
+      }
+    ],
+    "reference_values": "The upstream quadpack test asserts sin integral=2 and the n=2,z=1.8 Bessel integral=0.30614353532540296487. Those are driver-level published fixtures, applied here to a smooth single panel with declared tolerances. Supplemental polynomial expectations are analytically integrated, not upstream literal gold."
+  },
+  "inputs": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "function": {
+        "enum": [
+          "polynomial",
+          "sin",
+          "cos",
+          "exp",
+          "bessel_integrand"
+        ]
+      },
+      "a": {
+        "type": "number",
+        "minimum": -1000000.0,
+        "maximum": 1000000.0
+      },
+      "b": {
+        "type": "number",
+        "minimum": -1000000.0,
+        "maximum": 1000000.0
+      },
+      "coefficients": {
+        "type": "array",
+        "items": {
+          "type": "number",
+          "minimum": -1e+100,
+          "maximum": 1e+100
+        },
+        "minItems": 1,
+        "maxItems": 33
+      },
+      "order": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 50
+      },
+      "argument": {
+        "type": "number",
+        "minimum": -50,
+        "maximum": 50
+      }
+    },
+    "required": [
+      "function",
+      "a",
+      "b"
+    ],
+    "additionalProperties": false,
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "function": {
+              "const": "polynomial"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "coefficients"
+          ]
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "function": {
+              "const": "bessel_integrand"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "order",
+            "argument"
+          ]
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "Raw CLI byte limit and POSIX alarm; strict schema, finite values and nesting checks; MCP subprocess killed/reaped after 10 seconds. One active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "numerical_runtime": "Python standard library only"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "tool_name": "skillpack_m012"
+  },
+  "limitations": "Exactly one panel: no adaptive subdivision, infinite bounds, singularity detection or QAGS/QAGI implementation. The error estimate is heuristic and may underestimate aliased/narrow features. sin/cos/exp use radians/dimensionless x. bessel_integrand is cos(order*x-argument*sin(x))/pi; it only represents the conventional Bessel integral on [0,pi]. Overflow is an error. Zero-width intervals return zero without sampling.",
+  "port_notes": "Faithful double-precision DQK21 abscissae and weights, even/odd node evaluation order, Gauss comparison, absolute integral, mean-deviation integral, resasc-based error rescaling and 50*machine-epsilon roundoff floor. The upstream prologue dates the Fortran routine to 1980 with a 1983 revision. Only a safe finite set of integrands replaces Fortran callbacks; this does not port the full adaptive QUADPACK driver. Original Fortran was not compiled in this environment.",
+  "validation": {
+    "pytest_pack_tests_passed": 29,
+    "full_release_tests_passed": 324,
+    "native_C_reference_rerun": false,
+    "original_Fortran_binary_executed": false,
+    "complete_upstream_test_suite_executed": false
+  }
+}

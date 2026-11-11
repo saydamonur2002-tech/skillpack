@@ -1,0 +1,71 @@
+[
+  {
+    "input": {
+      "lat1": 50.06632,
+      "lon1": -5.71475,
+      "lat2": 58.64402,
+      "lon2": -3.07009
+    },
+    "expected_subset": {
+      "distance_m": 969954.166,
+      "initial_bearing_deg": 9.1418775,
+      "final_bearing_deg": 11.2972204
+    },
+    "absolute_tolerance": 1e-07,
+    "origin": "Pinned upstream test fixture"
+  },
+  {
+    "input": {
+      "lat1": 0,
+      "lon1": 0,
+      "lat2": 0,
+      "lon2": 1
+    },
+    "expected_subset": {
+      "distance_m": 111319.491
+    },
+    "absolute_tolerance": 1e-05,
+    "origin": "Pinned upstream test fixture"
+  },
+  {
+    "input": {
+      "lat1": 30,
+      "lon1": 120,
+      "lat2": 30,
+      "lon2": -120
+    },
+    "expected_subset": {
+      "distance_m": 10825924.089
+    },
+    "absolute_tolerance": 1e-05,
+    "origin": "Pinned upstream test fixture"
+  },
+  {
+    "input": {
+      "lat1": 0,
+      "lon1": 0,
+      "lat2": 0.5,
+      "lon2": 179.5
+    },
+    "expected_subset": {
+      "distance_m": 19936288.579
+    },
+    "absolute_tolerance": 1e-05,
+    "origin": "Pinned upstream test fixture"
+  },
+  {
+    "input": {
+      "lat1": 0,
+      "lon1": 0,
+      "lat2": 0,
+      "lon2": 0
+    },
+    "expected_subset": {
+      "distance_m": 0,
+      "initial_bearing_deg": null,
+      "final_bearing_deg": null
+    },
+    "absolute_tolerance": 0,
+    "origin": "Pinned upstream test fixture"
+  }
+]

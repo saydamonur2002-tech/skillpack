@@ -1,0 +1,146 @@
+{
+  "id": "M008",
+  "name": "One-level orthonormal Haar analysis and reconstruction",
+  "description": "One-level real Haar/db1 transform for even-length vectors: approximation/detail coefficients, separate low/high reconstructions and full reconstruction. No implicit boundary padding.",
+  "version": "1.0.0",
+  "date": "2026-11-11",
+  "tier": "revival",
+  "license": "MIT",
+  "distribution": "public-ok",
+  "source_url": "https://github.com/PyWavelets/pywt",
+  "upstream_commit_or_version": "7b9e57ed639e7f87490a5bcb31f7b6c088d19031",
+  "implementation_kind": "ported-core",
+  "status": "tested",
+  "provenance": {
+    "upstream_repository": "https://github.com/PyWavelets/pywt",
+    "commit": "7b9e57ed639e7f87490a5bcb31f7b6c088d19031",
+    "stars_at_mining": 2413,
+    "repository_created_year": 2013,
+    "license_spdx": "MIT",
+    "license_path": "LICENSE",
+    "license_sha256": "0c12e8ae3b54dd61072c5b97f97cab62755b893afb91e8e58bf9b9bbe2a2ec88",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2006-2012 Filip Wasilewski <http://en.ig.ma/>",
+      "Copyright (c) 2012-     The PyWavelets Developers <https://github.com/PyWavelets/pywt>"
+    ],
+    "mined_date": "2026-11-11",
+    "timezone": "Europe/Istanbul",
+    "evidence": [
+      {
+        "path": "pywt/_extensions/c/wavelets_coeffs.template.h",
+        "url": "https://github.com/PyWavelets/pywt/blob/7b9e57ed639e7f87490a5bcb31f7b6c088d19031/pywt/_extensions/c/wavelets_coeffs.template.h",
+        "sha256": "0372cc7ca464d250c7d4cea462885827ec54074e4c8c9a00343eb35a5432bef2",
+        "scope": "original lines 1-38 only"
+      },
+      {
+        "path": "pywt/_extensions/c/wt.template.c",
+        "url": "https://github.com/PyWavelets/pywt/blob/7b9e57ed639e7f87490a5bcb31f7b6c088d19031/pywt/_extensions/c/wt.template.c",
+        "sha256": "ad097db2205dfd57cba9576b28cb14b1620240c7c20cc8cdc511dc6d742b284f",
+        "scope": "complete original file"
+      },
+      {
+        "path": "pywt/tests/test_dwt_idwt.py",
+        "url": "https://github.com/PyWavelets/pywt/blob/7b9e57ed639e7f87490a5bcb31f7b6c088d19031/pywt/tests/test_dwt_idwt.py",
+        "sha256": "323f35f5c4db8bfed6d78495d1d5cf24d42478097e47e23291fdd96be339660b",
+        "scope": "complete original file"
+      }
+    ],
+    "reference_values": "pywt/tests/test_dwt_idwt.py:88-103 has explicit complex Haar partial-reconstruction arrays. Fixtures here take their real components, justified by the real-valued linear Haar filter. The original complex fixture is preserved. Coefficients are db1_ in wavelets_coeffs.template.h."
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "type": "array",
+        "items": {
+          "type": "number",
+          "minimum": -1e+100,
+          "maximum": 1e+100
+        },
+        "minItems": 2,
+        "maxItems": 4096
+      }
+    },
+    "required": [
+      "data"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "CLI raw UTF-8 bound and alarm; schema plus finite-value/nesting checks; MCP subprocess killed after 10 seconds; one active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "numerical_runtime": "Python standard library only"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "tool_name": "skillpack_m008"
+  },
+  "limitations": "Real, even-length samples only (2..4096). No complex values, multilevel transform, padding mode, wavelet selection, denoising policy or automatic threshold. Haar detail signs and coefficient order follow PyWavelets.",
+  "port_notes": "Ports the two-tap db1 analysis/reconstruction equations using sqrt(0.5). For even lengths these do not require boundary extension. The upstream complex fixture is explicitly adapted to real components; this is not claimed to be an unchanged real upstream fixture.",
+  "verification": {
+    "test_count": 20,
+    "local_tests": 19,
+    "real_mcp_stdio_tests": 1,
+    "status": "passed",
+    "shared_timeout_tests": 2,
+    "suite_total": 261
+  }
+}

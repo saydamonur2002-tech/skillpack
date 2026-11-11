@@ -1,0 +1,155 @@
+[
+  {
+    "input": {
+      "diagonal": [
+        2.0
+      ],
+      "lower": [],
+      "upper": [],
+      "rhs": [
+        6.0
+      ]
+    },
+    "expected_subset": {
+      "solution": [
+        3.0
+      ]
+    },
+    "absolute_tolerance": 5e-13,
+    "origin": "native pinned LAPACK dgtsv.c, error-handler stub only; generated matrices with known solutions, not upstream literal fixtures"
+  },
+  {
+    "input": {
+      "diagonal": [
+        0.0,
+        2.0
+      ],
+      "lower": [
+        3.0
+      ],
+      "upper": [
+        4.0
+      ],
+      "rhs": [
+        -4.0,
+        1.0
+      ]
+    },
+    "expected_subset": {
+      "solution": [
+        1.0,
+        -1.0
+      ]
+    },
+    "absolute_tolerance": 5e-13,
+    "origin": "native pinned LAPACK dgtsv.c, error-handler stub only; generated matrices with known solutions, not upstream literal fixtures"
+  },
+  {
+    "input": {
+      "diagonal": [
+        0.0,
+        3.0,
+        4.0
+      ],
+      "lower": [
+        2.0,
+        1.0
+      ],
+      "upper": [
+        1.0,
+        2.0
+      ],
+      "rhs": [
+        2.0,
+        14.0,
+        14.0
+      ]
+    },
+    "expected_subset": {
+      "solution": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    },
+    "absolute_tolerance": 5e-13,
+    "origin": "native pinned LAPACK dgtsv.c, error-handler stub only; generated matrices with known solutions, not upstream literal fixtures"
+  },
+  {
+    "input": {
+      "diagonal": [
+        4.0,
+        4.0,
+        4.0,
+        4.0
+      ],
+      "lower": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "upper": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "rhs": [
+        2.0,
+        4.0,
+        6.0,
+        13.0
+      ]
+    },
+    "expected_subset": {
+      "solution": [
+        1.0,
+        2.0,
+        2.9999999999999996,
+        4.0
+      ]
+    },
+    "absolute_tolerance": 5e-13,
+    "origin": "native pinned LAPACK dgtsv.c, error-handler stub only; generated matrices with known solutions, not upstream literal fixtures"
+  },
+  {
+    "input": {
+      "diagonal": [
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1
+      ],
+      "lower": [
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ],
+      "upper": [
+        3.0,
+        3.0,
+        3.0,
+        3.0
+      ],
+      "rhs": [
+        -5.9,
+        10.8,
+        -15.7,
+        20.6,
+        -7.5
+      ]
+    },
+    "expected_subset": {
+      "solution": [
+        0.999999999999992,
+        -1.9999999999999998,
+        3.0000000000000053,
+        -3.9999999999999996,
+        4.9999999999999964
+      ]
+    },
+    "absolute_tolerance": 5e-13,
+    "origin": "native pinned LAPACK dgtsv.c, error-handler stub only; generated matrices with known solutions, not upstream literal fixtures"
+  }
+]

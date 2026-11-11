@@ -1,0 +1,10 @@
+Upstream: https://github.com/astropy/astropy
+Commit: 87cc16fbf125de08066606439a5c5e471c44647b
+License: BSD-3-Clause
+
+Original copyright lines (verbatim):
+Copyright (c) 2011-2026, Astropy Developers
+
+Original source and reference notices are preserved under upstream/.
+AI-generated standalone adaptation and documentation; no upstream endorsement.
+Project concept and packaging direction belong to the project designer; no personal identity is recorded.

@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-11",
+  "timezone": "Europe/Istanbul",
+  "passed": 324,
+  "failed": 0,
+  "errors": 0,
+  "skipped": 0,
+  "per_pack": {
+    "M011": 28,
+    "M012": 29,
+    "M013": 23,
+    "M014": 42,
+    "M015": 39,
+    "M016": 23,
+    "M017": 22,
+    "M018": 28,
+    "M019": 31,
+    "M020": 27
+  },
+  "cross_pack_tests": 32,
+  "cross_pack_breakdown": {
+    "real_mcp_stdio": 10,
+    "timeout_enforcement": 2,
+    "native_upstream_recompilation": 8,
+    "release_artifact_privacy_audit": 12
+  },
+  "frozen_reference_cases": 76,
+  "native_C_reference_cases": 65,
+  "tested_python": "3.13.5",
+  "requirements": {
+    "jsonschema": "4.26.0",
+    "mcp": "1.30.0",
+    "pytest": "9.2.0"
+  },
+  "complete_upstream_suite_executed": false,
+  "original_Fortran_binary_executed": false
+}

@@ -1,0 +1,165 @@
+[
+  {
+    "input": {
+      "matrix": [
+        [
+          -1,
+          -5
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "initial": [
+        0,
+        2
+      ],
+      "t0": 0,
+      "t1": 0.1,
+      "steps": 80
+    },
+    "expected_subset": {
+      "state": [
+        -0.9933466539753061,
+        2.1588024864775446
+      ]
+    },
+    "absolute_tolerance": 3e-11,
+    "origin": "secondary upstream SciPy fun_linear/sol_linear analytic formula, evaluated with stdlib sin/cos; not a FAT literal fixture"
+  },
+  {
+    "input": {
+      "matrix": [
+        [
+          -1,
+          -5
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "initial": [
+        0,
+        2
+      ],
+      "t0": 0,
+      "t1": 1.0,
+      "steps": 80
+    },
+    "expected_subset": {
+      "state": [
+        -4.546487134128409,
+        0.0770037537313969
+      ]
+    },
+    "absolute_tolerance": 3e-11,
+    "origin": "secondary upstream SciPy fun_linear/sol_linear analytic formula, evaluated with stdlib sin/cos; not a FAT literal fixture"
+  },
+  {
+    "input": {
+      "matrix": [
+        [
+          -1,
+          -5
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "initial": [
+        0,
+        2
+      ],
+      "t0": 0,
+      "t1": 2.0,
+      "steps": 80
+    },
+    "expected_subset": {
+      "state": [
+        3.7840124765396412,
+        -2.064089737035152
+      ]
+    },
+    "absolute_tolerance": 3e-11,
+    "origin": "secondary upstream SciPy fun_linear/sol_linear analytic formula, evaluated with stdlib sin/cos; not a FAT literal fixture"
+  },
+  {
+    "input": {
+      "matrix": [
+        [
+          -1,
+          -5
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "initial": [
+        0,
+        2
+      ],
+      "t0": 0,
+      "t1": -1.0,
+      "steps": 80
+    },
+    "expected_subset": {
+      "state": [
+        4.546487134128409,
+        -1.7415910999199666
+      ]
+    },
+    "absolute_tolerance": 3e-11,
+    "origin": "secondary upstream SciPy fun_linear/sol_linear analytic formula, evaluated with stdlib sin/cos; not a FAT literal fixture"
+  },
+  {
+    "input": {
+      "matrix": [
+        [
+          0
+        ]
+      ],
+      "bias": [
+        2
+      ],
+      "initial": [
+        1
+      ],
+      "t0": 0,
+      "t1": 1,
+      "steps": 4
+    },
+    "expected_subset": {
+      "state": [
+        3.0
+      ]
+    },
+    "absolute_tolerance": 2e-14,
+    "origin": "supplementary exact constant derivative y=1+2t"
+  },
+  {
+    "input": {
+      "matrix": [
+        [
+          1
+        ]
+      ],
+      "initial": [
+        1
+      ],
+      "t0": 0,
+      "t1": 1,
+      "steps": 20
+    },
+    "expected_subset": {
+      "state": [
+        2.718281828459045
+      ]
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "supplementary analytic exponential y=exp(t)"
+  }
+]

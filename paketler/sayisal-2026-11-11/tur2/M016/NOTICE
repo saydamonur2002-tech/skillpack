@@ -1,0 +1,15 @@
+Upstream: https://github.com/OpenMathLib/OpenBLAS
+Commit: 6c303de7bc061ccec5a417e3b419a0d5551e4ff6
+License: BSD-3-Clause
+
+Original copyright notices (verbatim; source comment prefixes retained where present):
+Copyright (c) 1992-2023 The University of Tennessee and The University
+                        of Tennessee Research Foundation.  All rights
+                        reserved.
+Copyright (c) 2000-2023 The University of California Berkeley. All
+                        rights reserved.
+Copyright (c) 2006-2023 The University of Colorado Denver.  All rights
+                        reserved.
+
+Full source-specific notices remain under upstream/. Additional licenses are in LICENSES/ where applicable. Only required public upstream legal attribution is included; no project-owner identity or contact data is recorded.
+AI-generated standalone adaptation and teaching material; no upstream endorsement or independent certification.

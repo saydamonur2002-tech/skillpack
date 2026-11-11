@@ -1,0 +1,10 @@
+Upstream: https://github.com/liberfa/erfa
+Commit: 1a8044cde5b7763295d472a6443387239127c6c8
+License: BSD-3-Clause
+
+Original copyright notices (verbatim; source comment prefixes retained where present):
+Copyright (C) 2013-2021, NumFOCUS Foundation.
+**  Copyright (C) 2013-2023, NumFOCUS Foundation.
+
+Full source-specific notices remain under upstream/. Additional licenses are in LICENSES/ where applicable. Only required public upstream legal attribution is included; no project-owner identity or contact data is recorded.
+AI-generated standalone adaptation and teaching material; no upstream endorsement or independent certification.

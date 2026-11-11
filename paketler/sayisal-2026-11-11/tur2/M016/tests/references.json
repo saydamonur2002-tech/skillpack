@@ -1,0 +1,240 @@
+[
+  {
+    "input": {
+      "matrix": [
+        [
+          3.0,
+          1.0,
+          -1.0
+        ],
+        [
+          2.0,
+          4.0,
+          1.0
+        ],
+        [
+          -1.0,
+          2.0,
+          5.0
+        ]
+      ],
+      "rhs": [
+        4.0,
+        1.0,
+        1.0
+      ]
+    },
+    "expected_subset": {
+      "lu": [
+        [
+          3.0,
+          1.0,
+          -1.0
+        ],
+        [
+          0.6666666666666666,
+          3.3333333333333335,
+          1.6666666666666665
+        ],
+        [
+          -0.3333333333333333,
+          0.7000000000000001,
+          3.5
+        ]
+      ],
+      "pivots_1based": [
+        1,
+        2,
+        3
+      ],
+      "solution": [
+        2.0,
+        -0.9999999999999999,
+        1.0
+      ]
+    },
+    "absolute_tolerance": 5e-13,
+    "origin": "native pinned LAPACK dgetf2.c factors/pivots; generated scalar BLAS shim and explicit triangular backsolve; generated inputs, not upstream literal fixtures"
+  },
+  {
+    "input": {
+      "matrix": [
+        [
+          0.0,
+          2.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "rhs": [
+        7.0,
+        3.0,
+        5.0
+      ]
+    },
+    "expected_subset": {
+      "lu": [
+        [
+          2.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          2.0,
+          1.0
+        ],
+        [
+          0.5,
+          0.5,
+          -1.0
+        ]
+      ],
+      "pivots_1based": [
+        3,
+        3,
+        3
+      ],
+      "solution": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    },
+    "absolute_tolerance": 5e-13,
+    "origin": "native pinned LAPACK dgetf2.c factors/pivots; generated scalar BLAS shim and explicit triangular backsolve; generated inputs, not upstream literal fixtures"
+  },
+  {
+    "input": {
+      "matrix": [
+        [
+          2.0
+        ]
+      ],
+      "rhs": [
+        6.0
+      ]
+    },
+    "expected_subset": {
+      "lu": [
+        [
+          2.0
+        ]
+      ],
+      "pivots_1based": [
+        1
+      ],
+      "solution": [
+        3.0
+      ]
+    },
+    "absolute_tolerance": 5e-13,
+    "origin": "native pinned LAPACK dgetf2.c factors/pivots; generated scalar BLAS shim and explicit triangular backsolve; generated inputs, not upstream literal fixtures"
+  },
+  {
+    "input": {
+      "matrix": [
+        [
+          1e-310,
+          0.0
+        ],
+        [
+          0.0,
+          2e-310
+        ]
+      ],
+      "rhs": [
+        2e-310,
+        6e-310
+      ]
+    },
+    "expected_subset": {
+      "lu": [
+        [
+          1e-310,
+          0.0
+        ],
+        [
+          0.0,
+          2e-310
+        ]
+      ],
+      "pivots_1based": [
+        1,
+        2
+      ],
+      "solution": [
+        2.0,
+        3.0
+      ]
+    },
+    "absolute_tolerance": 5e-13,
+    "origin": "native pinned LAPACK dgetf2.c factors/pivots; generated scalar BLAS shim and explicit triangular backsolve; generated inputs, not upstream literal fixtures"
+  },
+  {
+    "input": {
+      "matrix": [
+        [
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          2.0,
+          3.0
+        ],
+        [
+          1.0,
+          3.0,
+          6.0
+        ]
+      ],
+      "rhs": [
+        6.0,
+        14.0,
+        25.0
+      ]
+    },
+    "expected_subset": {
+      "lu": [
+        [
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          2.0,
+          5.0
+        ],
+        [
+          1.0,
+          0.5,
+          -0.5
+        ]
+      ],
+      "pivots_1based": [
+        1,
+        3,
+        3
+      ],
+      "solution": [
+        1.0,
+        2.0,
+        3.0
+      ]
+    },
+    "absolute_tolerance": 5e-13,
+    "origin": "native pinned LAPACK dgetf2.c factors/pivots; generated scalar BLAS shim and explicit triangular backsolve; generated inputs, not upstream literal fixtures"
+  }
+]

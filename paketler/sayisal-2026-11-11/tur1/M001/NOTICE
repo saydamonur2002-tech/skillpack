@@ -1,0 +1,10 @@
+Upstream: https://github.com/certik/fortran-utils
+Commit: b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88
+License: MIT
+
+Original copyright lines (verbatim):
+Copyright (c) 2012 Ondřej Čertík
+
+Original source and reference notices are preserved under upstream/.
+AI-generated standalone adaptation and documentation; no upstream endorsement.
+Project concept and packaging direction belong to the project designer; no personal identity is recorded.

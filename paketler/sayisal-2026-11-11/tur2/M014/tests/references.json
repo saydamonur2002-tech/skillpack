@@ -1,0 +1,168 @@
+[
+  {
+    "input": {
+      "shape": 0.5,
+      "x": 0.5
+    },
+    "expected_subset": {
+      "P": 0.682689492137086,
+      "Q": 0.31731050786291404
+    },
+    "absolute_tolerance": 2.048068476411258e-12,
+    "origin": "native pinned Cephes 1987 igam.c; documented libm lgamma/platform shim"
+  },
+  {
+    "input": {
+      "shape": 1.0,
+      "x": 1.0
+    },
+    "expected_subset": {
+      "P": 0.6321205588285578,
+      "Q": 0.36787944117144233
+    },
+    "absolute_tolerance": 1.8963616764856733e-12,
+    "origin": "native pinned Cephes 1987 igam.c; documented libm lgamma/platform shim"
+  },
+  {
+    "input": {
+      "shape": 2.0,
+      "x": 3.0
+    },
+    "expected_subset": {
+      "P": 0.8008517265285442,
+      "Q": 0.1991482734714558
+    },
+    "absolute_tolerance": 2.4025551795856327e-12,
+    "origin": "native pinned Cephes 1987 igam.c; documented libm lgamma/platform shim"
+  },
+  {
+    "input": {
+      "shape": 5.0,
+      "x": 0.0
+    },
+    "expected_subset": {
+      "P": 0.0,
+      "Q": 1.0
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "native pinned Cephes 1987 igam.c; documented libm lgamma/platform shim"
+  },
+  {
+    "input": {
+      "shape": 10.0,
+      "x": 0.05
+    },
+    "expected_subset": {
+      "P": 2.5715803516000737e-20,
+      "Q": 1.0
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "native pinned Cephes 1987 igam.c; documented libm lgamma/platform shim"
+  },
+  {
+    "input": {
+      "shape": 50.0,
+      "x": 11.0
+    },
+    "expected_subset": {
+      "P": 8.20754777388495e-18,
+      "Q": 1.0
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "native pinned Cephes 1987 igam.c; documented libm lgamma/platform shim"
+  },
+  {
+    "input": {
+      "shape": 0.01,
+      "x": 0.1
+    },
+    "expected_subset": {
+      "P": 0.981864683949013,
+      "Q": 0.01813531605098695
+    },
+    "absolute_tolerance": 2.9455940518470395e-12,
+    "origin": "native pinned Cephes 1987 igam.c; documented libm lgamma/platform shim"
+  },
+  {
+    "input": {
+      "shape": 0.1,
+      "x": 50.0
+    },
+    "expected_subset": {
+      "P": 1.0,
+      "Q": 5.891960493418553e-25
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "native pinned Cephes 1987 igam.c; documented libm lgamma/platform shim"
+  },
+  {
+    "input": {
+      "shape": 100.0,
+      "x": 100.0
+    },
+    "expected_subset": {
+      "P": 0.5132987982791313,
+      "Q": 0.4867012017208352
+    },
+    "absolute_tolerance": 1.5398963948373938e-12,
+    "origin": "native pinned Cephes 1987 igam.c; documented libm lgamma/platform shim"
+  },
+  {
+    "input": {
+      "shape": 1000.0,
+      "x": 1000.0
+    },
+    "expected_subset": {
+      "P": 0.5042052441801859,
+      "Q": 0.49579475581975496
+    },
+    "absolute_tolerance": 1.5126157325405577e-12,
+    "origin": "native pinned Cephes 1987 igam.c; documented libm lgamma/platform shim"
+  },
+  {
+    "input": {
+      "shape": 2.0,
+      "x": 1000.0
+    },
+    "expected_subset": {
+      "P": 1.0,
+      "Q": 0.0
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "native pinned Cephes 1987 igam.c; documented libm lgamma/platform shim"
+  },
+  {
+    "input": {
+      "shape": 100.0,
+      "x": 0.1
+    },
+    "expected_subset": {
+      "P": 9.705034877125812e-259,
+      "Q": 1.0
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "native pinned Cephes 1987 igam.c; documented libm lgamma/platform shim"
+  },
+  {
+    "input": {
+      "shape": 10.0,
+      "x": 0.05
+    },
+    "expected_subset": {
+      "P": 2.5715803516000737e-20
+    },
+    "absolute_tolerance": 2e-31,
+    "origin": "upstream v0.19.1 test_basic.py lines1890-1893 literal; tested with older v0.15.1 core"
+  },
+  {
+    "input": {
+      "shape": 50.0,
+      "x": 11.0
+    },
+    "expected_subset": {
+      "P": 8.207547773884713e-18
+    },
+    "absolute_tolerance": 2e-28,
+    "origin": "upstream v0.19.1 test_basic.py lines1894-1895 inverse fixture, applied in forward direction (derived)"
+  }
+]

@@ -1,0 +1,152 @@
+{
+  "id": "M006",
+  "name": "Robust biweight location, midvariance and scale",
+  "description": "Computes one-dimensional biweight location and midvariance/scale using median absolute deviation, with explicit tuning constants and the upstream optional reduced sample-size definition.",
+  "version": "1.0.0",
+  "date": "2026-11-11",
+  "tier": "revival",
+  "license": "BSD-3-Clause",
+  "distribution": "public-ok",
+  "source_url": "https://github.com/astropy/astropy",
+  "upstream_commit_or_version": "87cc16fbf125de08066606439a5c5e471c44647b",
+  "implementation_kind": "ported-core",
+  "status": "tested",
+  "provenance": {
+    "upstream_repository": "https://github.com/astropy/astropy",
+    "commit": "87cc16fbf125de08066606439a5c5e471c44647b",
+    "stars_at_mining": 5415,
+    "repository_created_year": 2011,
+    "license_spdx": "BSD-3-Clause",
+    "license_path": "LICENSE.rst",
+    "license_sha256": "97d28d33c40cadc630cddfca53969fdd9dc44ede20faa2d892ba730933e9a20e",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2011-2026, Astropy Developers"
+    ],
+    "mined_date": "2026-11-11",
+    "timezone": "Europe/Istanbul",
+    "evidence": [
+      {
+        "path": "astropy/stats/biweight.py",
+        "url": "https://github.com/astropy/astropy/blob/87cc16fbf125de08066606439a5c5e471c44647b/astropy/stats/biweight.py",
+        "sha256": "3d22a7264255bd75dff9ba1e0a84e477b7a240e9d6a5d28a68f1347dd7cad93e",
+        "scope": "complete original file"
+      },
+      {
+        "path": "astropy/stats/tests/test_biweight.py",
+        "url": "https://github.com/astropy/astropy/blob/87cc16fbf125de08066606439a5c5e471c44647b/astropy/stats/tests/test_biweight.py",
+        "sha256": "15f642ca9b383e013c90fd6101800cd723cd6c3acf9dd2b73d6e54b78a2280ce",
+        "scope": "complete original file"
+      }
+    ],
+    "reference_values": "astropy/stats/tests/test_biweight.py:68-70, 251-257, plus constant-array tests; the 2.9238456 fixture is explicitly marked upstream as verified with R."
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "type": "array",
+        "items": {
+          "type": "number",
+          "minimum": -1e+100,
+          "maximum": 1e+100
+        },
+        "minItems": 1,
+        "maxItems": 4096
+      },
+      "location_c": {
+        "type": "number",
+        "minimum": 0.1,
+        "maximum": 1000
+      },
+      "scale_c": {
+        "type": "number",
+        "minimum": 0.1,
+        "maximum": 1000
+      },
+      "modify_sample_size": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "data"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "CLI raw UTF-8 bound and alarm; schema plus finite-value/nesting checks; MCP subprocess killed after 10 seconds; one active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "numerical_runtime": "Python standard library only"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "tool_name": "skillpack_m006"
+  },
+  "limitations": "One finite real vector only, maximum 4096 observations. No axes, masking, NaN omission, measurement units, confidence intervals or multivariate covariance. A zero MAD returns the median and zero variance, as upstream does; this does not prove an absence of variation.",
+  "port_notes": "Ports the finite one-dimensional default-M branches of biweight_location, biweight_midvariance and biweight_scale. Python scalar arithmetic replaces NumPy reductions. Undefined zero denominators are structured errors rather than non-finite results.",
+  "verification": {
+    "test_count": 22,
+    "local_tests": 21,
+    "real_mcp_stdio_tests": 1,
+    "status": "passed",
+    "shared_timeout_tests": 2,
+    "suite_total": 261
+  }
+}

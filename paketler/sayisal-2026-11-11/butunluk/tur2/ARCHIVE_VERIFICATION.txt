@@ -1,0 +1,13 @@
+ARCHIVE VERIFICATION — 2026-11-11 (Europe/Istanbul)
+
+Archive: mined-packs-2026-11-11b.tar.gz
+Bytes: 189987
+SHA-256: 102a9ecdf3854852b49e2a0c54f41e6201bd9d3aec5901261d1dcfbecc0e8604
+
+Two independent deterministic archive builds were byte-identical.
+A clean extraction of this exact final archive passed all 324 pytest tests: 0 failures, 0 errors, 0 skips.
+226 per-pack file SHA-256 values were validated before the extracted test run.
+The suite includes ten real one-tool FastMCP stdio sessions, a real CLI 10-second watchdog, MCP kill/reap cleanup, and eight native pinned-C reference recompilations covering 65 frozen reference cases.
+Tar metadata: zero mtimes and uid/gid, blank user/group strings, no symbolic/hard links. No caches or temporary shared libraries are archived.
+The archive is below 8 MiB; no splitting was needed.
+Original Fortran binaries and the complete upstream library test suites were not executed; see MINING_REPORT.md for precise verification limits.

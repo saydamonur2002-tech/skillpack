@@ -1,0 +1,158 @@
+[
+  {
+    "input": {
+      "a": 1.0,
+      "b": 1.0,
+      "x": 0.2
+    },
+    "expected_subset": {
+      "I": 0.2
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "native pinned Cephes 1995 incbet.c; documented libm beta/lbeta shim"
+  },
+  {
+    "input": {
+      "a": 0.0342,
+      "b": 171.0,
+      "x": 1e-10
+    },
+    "expected_subset": {
+      "I": 0.5526991690181031
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "native pinned Cephes 1995 incbet.c; documented libm beta/lbeta shim"
+  },
+  {
+    "input": {
+      "a": 0.5,
+      "b": 0.5,
+      "x": 0.3
+    },
+    "expected_subset": {
+      "I": 0.36901011956554536
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "native pinned Cephes 1995 incbet.c; documented libm beta/lbeta shim"
+  },
+  {
+    "input": {
+      "a": 2.0,
+      "b": 3.0,
+      "x": 0.4
+    },
+    "expected_subset": {
+      "I": 0.5247999999999999
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "native pinned Cephes 1995 incbet.c; documented libm beta/lbeta shim"
+  },
+  {
+    "input": {
+      "a": 100.0,
+      "b": 100.0,
+      "x": 0.5
+    },
+    "expected_subset": {
+      "I": 0.49999999999989947
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "native pinned Cephes 1995 incbet.c; documented libm beta/lbeta shim"
+  },
+  {
+    "input": {
+      "a": 1000.0,
+      "b": 1000.0,
+      "x": 0.5
+    },
+    "expected_subset": {
+      "I": 0.49999999999995753
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "native pinned Cephes 1995 incbet.c; documented libm beta/lbeta shim"
+  },
+  {
+    "input": {
+      "a": 0.1,
+      "b": 0.9,
+      "x": 0.99999999
+    },
+    "expected_subset": {
+      "I": 0.9999999931041154
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "native pinned Cephes 1995 incbet.c; documented libm beta/lbeta shim"
+  },
+  {
+    "input": {
+      "a": 50.0,
+      "b": 2.0,
+      "x": 0.99
+    },
+    "expected_subset": {
+      "I": 0.9075091007063015
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "native pinned Cephes 1995 incbet.c; documented libm beta/lbeta shim"
+  },
+  {
+    "input": {
+      "a": 50.0,
+      "b": 60.0,
+      "x": 0.4
+    },
+    "expected_subset": {
+      "I": 0.12470685834312005
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "native pinned Cephes 1995 incbet.c; documented libm beta/lbeta shim"
+  },
+  {
+    "input": {
+      "a": 50.0,
+      "b": 60.0,
+      "x": 0.46
+    },
+    "expected_subset": {
+      "I": 0.5479037833735013
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "native pinned Cephes 1995 incbet.c; documented libm beta/lbeta shim"
+  },
+  {
+    "input": {
+      "a": 2.0,
+      "b": 3.0,
+      "x": 0.0
+    },
+    "expected_subset": {
+      "I": 0.0
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "native pinned Cephes 1995 incbet.c; documented libm beta/lbeta shim"
+  },
+  {
+    "input": {
+      "a": 2.0,
+      "b": 3.0,
+      "x": 1.0
+    },
+    "expected_subset": {
+      "I": 1.0
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "native pinned Cephes 1995 incbet.c; documented libm beta/lbeta shim"
+  },
+  {
+    "input": {
+      "a": 0.0342,
+      "b": 171.0,
+      "x": 1e-10
+    },
+    "expected_subset": {
+      "I": 0.5526991690180665
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "upstream v0.19.1 test_basic.py line153 literal regression"
+  }
+]

@@ -1,0 +1,13 @@
+Upstream: https://github.com/scipy/scipy
+Commit: 03b1092cf0e0bdebcbe98a44d289208a1e597416
+License: BSD-3-Clause
+
+Original copyright notices (verbatim; source comment prefixes retained where present):
+Copyright (c) 2001, 2002 Enthought, Inc.
+Copyright (c) 2003-2016 SciPy Developers.
+Copyright 1984, 1995 by Stephen L. Moshier
+ * Copyright 1984, 1995 by Stephen L. Moshier
+  Copyright 1984, 1995, 2000 by Stephen L. Moshier
+
+Full source-specific notices remain under upstream/. Additional licenses are in LICENSES/ where applicable. Only required public upstream legal attribution is included; no project-owner identity or contact data is recorded.
+AI-generated standalone adaptation and teaching material; no upstream endorsement or independent certification.

@@ -1,0 +1,144 @@
+{
+  "id": "M010",
+  "name": "Weighted graph combinatorial and normalized Laplacians",
+  "description": "Constructs combinatorial D-W or normalized graph Laplacians from a finite nonnegative weighted adjacency matrix, averaging directed edges and preserving upstream isolated-node semantics.",
+  "version": "1.0.0",
+  "date": "2026-11-11",
+  "tier": "revival",
+  "license": "BSD-3-Clause",
+  "distribution": "public-ok",
+  "source_url": "https://github.com/epfl-lts2/pygsp",
+  "upstream_commit_or_version": "4716b12c470c579e3f477f2d1c1d99752c73252d",
+  "implementation_kind": "ported-core",
+  "status": "tested",
+  "provenance": {
+    "upstream_repository": "https://github.com/epfl-lts2/pygsp",
+    "commit": "4716b12c470c579e3f477f2d1c1d99752c73252d",
+    "stars_at_mining": 551,
+    "repository_created_year": 2014,
+    "license_spdx": "BSD-3-Clause",
+    "license_path": "LICENSE.txt",
+    "license_sha256": "0ca706d68efce56331820062b38e31cb496ef4082789d374b051c8d236a9abff",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2014, EPFL LTS2"
+    ],
+    "mined_date": "2026-11-11",
+    "timezone": "Europe/Istanbul",
+    "evidence": [
+      {
+        "path": "pygsp/graphs/graph.py",
+        "url": "https://github.com/epfl-lts2/pygsp/blob/4716b12c470c579e3f477f2d1c1d99752c73252d/pygsp/graphs/graph.py",
+        "sha256": "1b1192f04b4663c1f2dfcdb27aea932e5028010e16d2ba70d8bb6a249120cac7",
+        "scope": "complete original file"
+      }
+    ],
+    "reference_values": "pygsp/graphs/graph.py:545-577 contains four explicit directed/undirected Laplacian matrices. compute_laplacian:618-627 specifies isolated-node handling."
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "adjacency": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1e+100
+          },
+          "minItems": 1,
+          "maxItems": 32
+        },
+        "minItems": 1,
+        "maxItems": 32
+      },
+      "kind": {
+        "enum": [
+          "combinatorial",
+          "normalized"
+        ]
+      }
+    },
+    "required": [
+      "adjacency"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "CLI raw UTF-8 bound and alarm; schema plus finite-value/nesting checks; MCP subprocess killed after 10 seconds; one active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "numerical_runtime": "Python standard library only"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "tool_name": "skillpack_m010"
+  },
+  "limitations": "Square nonnegative dense matrix of 1..32 vertices. Directed input is deliberately averaged with its transpose: this loses orientation. No graph inference, eigensolver, Fourier basis, negative-edge model or graph learning. Self-loop handling follows D-W / normalized formula.",
+  "port_notes": "Ports Graph.compute_laplacian combinatorial and normalized formulas using dense Python lists, with directed mean-symmetrization and zero normalized diagonal for isolated vertices. Weighted degrees come from the symmetrized matrix.",
+  "verification": {
+    "test_count": 24,
+    "local_tests": 23,
+    "real_mcp_stdio_tests": 1,
+    "status": "passed",
+    "shared_timeout_tests": 2,
+    "suite_total": 261
+  }
+}

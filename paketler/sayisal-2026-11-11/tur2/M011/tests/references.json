@@ -1,0 +1,129 @@
+[
+  {
+    "input": {
+      "coefficients": [
+        1,
+        -1,
+        0
+      ],
+      "a": 0.5,
+      "b": 1.7320508075688772
+    },
+    "expected_subset": {
+      "root": 0.9999999999999969,
+      "iterations": 10,
+      "evaluations": 11
+    },
+    "absolute_tolerance": 1e-14,
+    "origin": "native pinned SciPy brentq.c, polynomial callback; first three derived from upstream _tstutils f1/f2/f3"
+  },
+  {
+    "input": {
+      "coefficients": [
+        1,
+        0,
+        -1
+      ],
+      "a": 0.5,
+      "b": 1.7320508075688772
+    },
+    "expected_subset": {
+      "root": 0.9999999999999577,
+      "iterations": 8,
+      "evaluations": 9
+    },
+    "absolute_tolerance": 1e-14,
+    "origin": "native pinned SciPy brentq.c, polynomial callback; first three derived from upstream _tstutils f1/f2/f3"
+  },
+  {
+    "input": {
+      "coefficients": [
+        1,
+        -6,
+        11,
+        -6,
+        0
+      ],
+      "a": 0.5,
+      "b": 1.7320508075688772
+    },
+    "expected_subset": {
+      "root": 1.0000000000000007,
+      "iterations": 9,
+      "evaluations": 10
+    },
+    "absolute_tolerance": 1e-14,
+    "origin": "native pinned SciPy brentq.c, polynomial callback; first three derived from upstream _tstutils f1/f2/f3"
+  },
+  {
+    "input": {
+      "coefficients": [
+        1,
+        -2,
+        -1
+      ],
+      "a": 1,
+      "b": 3
+    },
+    "expected_subset": {
+      "root": 2.4142135623731367,
+      "iterations": 8,
+      "evaluations": 9
+    },
+    "absolute_tolerance": 1e-14,
+    "origin": "native pinned SciPy brentq.c, polynomial callback; first three derived from upstream _tstutils f1/f2/f3"
+  },
+  {
+    "input": {
+      "coefficients": [
+        1,
+        0,
+        -2
+      ],
+      "a": 0,
+      "b": 2
+    },
+    "expected_subset": {
+      "root": 1.4142135623731364,
+      "iterations": 8,
+      "evaluations": 9
+    },
+    "absolute_tolerance": 1e-14,
+    "origin": "native pinned SciPy brentq.c, polynomial callback; first three derived from upstream _tstutils f1/f2/f3"
+  },
+  {
+    "input": {
+      "coefficients": [
+        1,
+        0,
+        0,
+        -2
+      ],
+      "a": 2,
+      "b": 0
+    },
+    "expected_subset": {
+      "root": 1.2599210498949451,
+      "iterations": 8,
+      "evaluations": 9
+    },
+    "absolute_tolerance": 1e-14,
+    "origin": "native pinned SciPy brentq.c, polynomial callback; first three derived from upstream _tstutils f1/f2/f3"
+  },
+  {
+    "input": {
+      "coefficients": [
+        1,
+        0,
+        -1
+      ],
+      "a": 0.5,
+      "b": 1.7320508075688772
+    },
+    "expected_subset": {
+      "root": 1.0
+    },
+    "absolute_tolerance": 3e-12,
+    "origin": "literal root 1 from upstream _tstutils f2 and TestBracketMethods.test_basic_individual"
+  }
+]

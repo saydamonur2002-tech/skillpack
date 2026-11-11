@@ -1,0 +1,139 @@
+{
+  "id": "M007",
+  "name": "Median absolute deviation and Gaussian scale",
+  "description": "Computes the median, median absolute deviation (MAD), and MAD multiplied by the upstream Gaussian consistency constant 1.482602218505602.",
+  "version": "1.0.0",
+  "date": "2026-11-11",
+  "tier": "revival",
+  "license": "BSD-3-Clause",
+  "distribution": "public-ok",
+  "source_url": "https://github.com/astropy/astropy",
+  "upstream_commit_or_version": "87cc16fbf125de08066606439a5c5e471c44647b",
+  "implementation_kind": "ported-core",
+  "status": "tested",
+  "provenance": {
+    "upstream_repository": "https://github.com/astropy/astropy",
+    "commit": "87cc16fbf125de08066606439a5c5e471c44647b",
+    "stars_at_mining": 5415,
+    "repository_created_year": 2011,
+    "license_spdx": "BSD-3-Clause",
+    "license_path": "LICENSE.rst",
+    "license_sha256": "97d28d33c40cadc630cddfca53969fdd9dc44ede20faa2d892ba730933e9a20e",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2011-2026, Astropy Developers"
+    ],
+    "mined_date": "2026-11-11",
+    "timezone": "Europe/Istanbul",
+    "evidence": [
+      {
+        "path": "astropy/stats/funcs.py",
+        "url": "https://github.com/astropy/astropy/blob/87cc16fbf125de08066606439a5c5e471c44647b/astropy/stats/funcs.py",
+        "sha256": "17b3c8b52993b0e0bd4a3e089a5931379fec2d50e2fc86eb9ef17db97e769418",
+        "scope": "complete original file"
+      },
+      {
+        "path": "astropy/stats/tests/test_funcs.py",
+        "url": "https://github.com/astropy/astropy/blob/87cc16fbf125de08066606439a5c5e471c44647b/astropy/stats/tests/test_funcs.py",
+        "sha256": "091bcaf5774f45b3f4bb3a4ec4d3bfdcf9a45763cd22216ff57e9799572a5875",
+        "scope": "complete original file"
+      }
+    ],
+    "reference_values": "astropy/stats/tests/test_funcs.py:27-31 (389.5), 67-68 (1); funcs.py:938-940 contains the exact Gaussian scaling constant."
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "type": "array",
+        "items": {
+          "type": "number",
+          "minimum": -1e+100,
+          "maximum": 1e+100
+        },
+        "minItems": 1,
+        "maxItems": 4096
+      }
+    },
+    "required": [
+      "data"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "CLI raw UTF-8 bound and alarm; schema plus finite-value/nesting checks; MCP subprocess killed after 10 seconds; one active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "numerical_runtime": "Python standard library only"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "tool_name": "skillpack_m007"
+  },
+  "limitations": "One finite vector of at most 4096 values; no axes, masks, missing-value omission or units. The Gaussian-scaled value estimates standard deviation only under an appropriate distributional model. MAD can be zero for non-constant discrete data.",
+  "port_notes": "Ports the finite one-dimensional default-median behavior of median_absolute_deviation and mad_std. Rejects invalid input rather than omitting it.",
+  "verification": {
+    "test_count": 21,
+    "local_tests": 20,
+    "real_mcp_stdio_tests": 1,
+    "status": "passed",
+    "shared_timeout_tests": 2,
+    "suite_total": 261
+  }
+}

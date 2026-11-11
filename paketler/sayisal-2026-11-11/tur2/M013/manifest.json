@@ -1,0 +1,200 @@
+{
+  "id": "M013",
+  "name": "Fehlberg 7(8) fixed-step affine linear ODE propagation",
+  "description": "Propagate y'=matrix*y+bias between explicit times using bounded fixed steps and the 13-stage Fehlberg 7(8) tableau. Return the upstream xf combination and raw last-step error indicator plus its h-scaled local-state interpretation.",
+  "version": "1.0.0",
+  "date": "2026-11-11",
+  "tier": "revival",
+  "license": "BSD-3-Clause",
+  "distribution": "public-ok",
+  "source_url": "https://github.com/jacobwilliams/Fortran-Astrodynamics-Toolkit",
+  "upstream_commit_or_version": "3cf0a0a8ba2abf8bc4995c6da5b6abae07b45a0a",
+  "implementation_kind": "ported-core",
+  "status": "passed-local-tests",
+  "provenance": {
+    "upstream_repository": "https://github.com/jacobwilliams/Fortran-Astrodynamics-Toolkit",
+    "commit": "3cf0a0a8ba2abf8bc4995c6da5b6abae07b45a0a",
+    "stars_at_mining": 214,
+    "repository_created_year": 2014,
+    "license_spdx": "BSD-3-Clause",
+    "license_path": "LICENSE",
+    "license_sha256": "e8930764c915f6813c84e982b92be82130d8530a742b8fa0a9aade4ad1c08419",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2014-2025, Jacob Williams",
+      "Copyright (c) 2001-2002 Enthought, Inc. 2003-2024, SciPy Developers."
+    ],
+    "additional_licenses": [
+      {
+        "path": "LICENSES/SCIPY_VALIDATION_LICENSE",
+        "upstream_url": "https://github.com/scipy/scipy/blob/92d2a8592782ee19a1161d0bf3fc2241ba78bb63/LICENSE.txt",
+        "commit": "92d2a8592782ee19a1161d0bf3fc2241ba78bb63",
+        "scope": "original LF lines 1-EOF",
+        "sha256": "c29fb8e5936f33237a8b15256b4c6e93037f05bbf58c3d7b5755aede4c200173"
+      }
+    ],
+    "mined_date": "2026-11-11",
+    "timezone": "Europe/Istanbul",
+    "metadata_source": "public GitHub repository API, observed this mining round",
+    "evidence": [
+      {
+        "path": "src/rk_module_variable_step.f90",
+        "original_path": "src/rk_module_variable_step.f90",
+        "url": "https://github.com/jacobwilliams/Fortran-Astrodynamics-Toolkit/blob/3cf0a0a8ba2abf8bc4995c6da5b6abae07b45a0a/src/rk_module_variable_step.f90",
+        "commit": "3cf0a0a8ba2abf8bc4995c6da5b6abae07b45a0a",
+        "sha256": "f718702f7c1a61dc7ffc0f23295df88ac4c8b50a6c342350cc34d541ec015726",
+        "original_full_file_sha256": "f79e6214802e9b060fef03403301042dc15a5bf871171e963d68ef111161c26d",
+        "scope": "original LF lines 819-944"
+      },
+      {
+        "path": "secondary/scipy_linear_analytic.py",
+        "original_path": "scipy/integrate/_ivp/tests/test_ivp.py",
+        "url": "https://github.com/scipy/scipy/blob/92d2a8592782ee19a1161d0bf3fc2241ba78bb63/scipy/integrate/_ivp/tests/test_ivp.py",
+        "commit": "92d2a8592782ee19a1161d0bf3fc2241ba78bb63",
+        "sha256": "64e40bb533c64a6fbb8eb83078c38592cf684c806ba5ca3d26b18a01b1558dec",
+        "original_full_file_sha256": "d3ab40163ba28225bc29d0a689496c217d8ffc5cf71079a208b0361484e5ce30",
+        "scope": "original LF lines 15-29"
+      }
+    ],
+    "reference_values": "Primary upstream embedded test prints orbital examples but supplies no asserted golden trajectory. State fixtures instead come from the explicitly pinned BSD SciPy test_ivp.py fun_linear/sol_linear analytic solution, a different upstream validation source. Scalar exponential, zero and constant-derivative cases are supplementary analytic checks. Neither RKF78 raw terr nor a full adaptive controller has an independent native-Fortran reference here."
+  },
+  "inputs": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "matrix": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": -1000000.0,
+            "maximum": 1000000.0
+          },
+          "minItems": 1,
+          "maxItems": 8
+        },
+        "minItems": 1,
+        "maxItems": 8
+      },
+      "initial": {
+        "type": "array",
+        "items": {
+          "type": "number",
+          "minimum": -1e+100,
+          "maximum": 1e+100
+        },
+        "minItems": 1,
+        "maxItems": 8
+      },
+      "bias": {
+        "type": "array",
+        "items": {
+          "type": "number",
+          "minimum": -1000000.0,
+          "maximum": 1000000.0
+        },
+        "minItems": 1,
+        "maxItems": 8
+      },
+      "t0": {
+        "type": "number",
+        "minimum": -1000000.0,
+        "maximum": 1000000.0
+      },
+      "t1": {
+        "type": "number",
+        "minimum": -1000000.0,
+        "maximum": 1000000.0
+      },
+      "steps": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 10000
+      }
+    },
+    "required": [
+      "matrix",
+      "initial",
+      "t0",
+      "t1",
+      "steps"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "Raw CLI byte limit and POSIX alarm; strict schema, finite values and nesting checks; MCP subprocess killed/reaped after 10 seconds. One active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "numerical_runtime": "Python standard library only"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "tool_name": "skillpack_m013"
+  },
+  "limitations": "Autonomous affine linear systems only, dimension 1..8 and at most 10000 fixed steps. Not RK45, not a complete adaptive integrator, no stiffness handling, events, dense output, spacecraft model or global-error certificate. Keep physical units consistent between matrix, bias, times and state. Overflow is rejected. The raw upstream terr omits h; treating it as a state error would be dimensionally wrong.",
+  "port_notes": "Preserves all 13 stages and the exact upstream xf weights; returns last_error_indicator=(41/840)*(f0+f10-f11-f12) exactly as the Fortran routine does, WITHOUT h. last_local_error_estimate=h*last_error_indicator is an explicitly derived adapter field, not an upstream output and not a global error bound. Adds a fixed-step loop and limits the callback to matrix*y+bias. The source cites Fehlberg NASA 1968; this is a modern Fortran implementation of that classic formula, not a claim that the repository contains 1968 source. No Fortran compiler was available, so the original Fortran binary was not executed.",
+  "validation": {
+    "pytest_pack_tests_passed": 23,
+    "full_release_tests_passed": 324,
+    "native_C_reference_rerun": false,
+    "original_Fortran_binary_executed": false,
+    "complete_upstream_test_suite_executed": false
+  }
+}

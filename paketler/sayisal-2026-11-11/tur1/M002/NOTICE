@@ -1,0 +1,10 @@
+Upstream: https://github.com/pbrod/numdifftools
+Commit: 54ba279ca9915cbd4fa07ccb2f959b82815950f1
+License: BSD-3-Clause
+
+Original copyright lines (verbatim):
+Copyright (c) 2009-2026, Per A. Brodtkorb, John D'Errico
+
+Original source and reference notices are preserved under upstream/.
+AI-generated standalone adaptation and documentation; no upstream endorsement.
+Project concept and packaging direction belong to the project designer; no personal identity is recorded.

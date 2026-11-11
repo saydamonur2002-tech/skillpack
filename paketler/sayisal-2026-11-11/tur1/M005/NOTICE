@@ -1,0 +1,10 @@
+Upstream: https://github.com/chrisveness/geodesy
+Commit: 3e9fdd35b71dd86cee12383eccdf000ad6741e9d
+License: MIT
+
+Original copyright lines (verbatim):
+Copyright (c) 2014 Chris Veness
+
+Original source and reference notices are preserved under upstream/.
+AI-generated standalone adaptation and documentation; no upstream endorsement.
+Project concept and packaging direction belong to the project designer; no personal identity is recorded.

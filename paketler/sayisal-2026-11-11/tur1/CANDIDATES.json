@@ -1,0 +1,112 @@
+[
+  {
+    "id": "M001",
+    "name": "Consistent-end cubic spline and derivatives",
+    "upstream": "https://github.com/certik/fortran-utils",
+    "stars": 229,
+    "created_year": 2012,
+    "license": "MIT",
+    "commit": "b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88",
+    "status": "tested",
+    "test_count": 23
+  },
+  {
+    "id": "M002",
+    "name": "Fornberg arbitrary-grid finite-difference weights",
+    "upstream": "https://github.com/pbrod/numdifftools",
+    "stars": 283,
+    "created_year": 2014,
+    "license": "BSD-3-Clause",
+    "commit": "54ba279ca9915cbd4fa07ccb2f959b82815950f1",
+    "status": "tested",
+    "test_count": 28
+  },
+  {
+    "id": "M003",
+    "name": "WGS84 Vincenty inverse geodesic",
+    "upstream": "https://github.com/chrisveness/geodesy",
+    "stars": 1228,
+    "created_year": 2014,
+    "license": "MIT",
+    "commit": "3e9fdd35b71dd86cee12383eccdf000ad6741e9d",
+    "status": "tested",
+    "test_count": 40
+  },
+  {
+    "id": "M004",
+    "name": "Spherical great-circle distance and bearings",
+    "upstream": "https://github.com/chrisveness/geodesy",
+    "stars": 1228,
+    "created_year": 2014,
+    "license": "MIT",
+    "commit": "3e9fdd35b71dd86cee12383eccdf000ad6741e9d",
+    "status": "tested",
+    "test_count": 22
+  },
+  {
+    "id": "M005",
+    "name": "Mercator rhumb-line distance and constant bearing",
+    "upstream": "https://github.com/chrisveness/geodesy",
+    "stars": 1228,
+    "created_year": 2014,
+    "license": "MIT",
+    "commit": "3e9fdd35b71dd86cee12383eccdf000ad6741e9d",
+    "status": "tested",
+    "test_count": 24
+  },
+  {
+    "id": "M006",
+    "name": "Robust biweight location, midvariance and scale",
+    "upstream": "https://github.com/astropy/astropy",
+    "stars": 5415,
+    "created_year": 2011,
+    "license": "BSD-3-Clause",
+    "commit": "87cc16fbf125de08066606439a5c5e471c44647b",
+    "status": "tested",
+    "test_count": 22
+  },
+  {
+    "id": "M007",
+    "name": "Median absolute deviation and Gaussian scale",
+    "upstream": "https://github.com/astropy/astropy",
+    "stars": 5415,
+    "created_year": 2011,
+    "license": "BSD-3-Clause",
+    "commit": "87cc16fbf125de08066606439a5c5e471c44647b",
+    "status": "tested",
+    "test_count": 21
+  },
+  {
+    "id": "M008",
+    "name": "One-level orthonormal Haar analysis and reconstruction",
+    "upstream": "https://github.com/PyWavelets/pywt",
+    "stars": 2413,
+    "created_year": 2013,
+    "license": "MIT",
+    "commit": "7b9e57ed639e7f87490a5bcb31f7b6c088d19031",
+    "status": "tested",
+    "test_count": 20
+  },
+  {
+    "id": "M009",
+    "name": "Masked image center of mass",
+    "upstream": "https://github.com/astropy/photutils",
+    "stars": 316,
+    "created_year": 2011,
+    "license": "BSD-3-Clause",
+    "commit": "0eb74eb4bc450c3d1476d26b774c0011c138bf49",
+    "status": "tested",
+    "test_count": 35
+  },
+  {
+    "id": "M010",
+    "name": "Weighted graph combinatorial and normalized Laplacians",
+    "upstream": "https://github.com/epfl-lts2/pygsp",
+    "stars": 551,
+    "created_year": 2014,
+    "license": "BSD-3-Clause",
+    "commit": "4716b12c470c579e3f477f2d1c1d99752c73252d",
+    "status": "tested",
+    "test_count": 24
+  }
+]

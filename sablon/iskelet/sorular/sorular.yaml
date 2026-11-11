@@ -1,0 +1,80 @@
+# ============================================================
+# PAKETLEME OYUNU — Tekniği paketlemenin kendisi.
+# Usta kod yazmaz; her alan bir karttır, soruya cevap verir.
+# Tuzak senaryosu çözülünce o kartın testi kendiliğinden yazılmış olur.
+# Tehlike veya doğrulama boşsa kart kırmızı kalır; paket kurulmaz.
+# Puan "kaç kart doldurdum" ile değil, "kaç tehlike ve test kapsandı" ile verilir.
+# Sert sınır, tehlike kuralı ve gerçek eylem izni oyunun dışında kalır:
+# hızlı onay veya çok kart için puan verilmez.
+# ============================================================
+
+sorular:
+  - alan: amac
+    soru: "Bu adım bitince ortada ne değişmiş olacak? Tek cümle ve ölçülebilir olsun."
+    tuzak:
+      senaryo: "Adım 'başarılı' dendi ama ölçüm değişmedi. Bu kabul mü?"
+      beklenen_cevap: "Hayır. Doğrulama ölçümle yapılır; aracın 'başardım' demesi yetmez."
+      olur_test: "<bu tuzak, ilgili adimin bir testine donusur>"
+
+  - alan: girdi_kaynak
+    soru: "Bu değer önce nereden gelmeli? Sensör, kayıt, insan ve modelden hangileri izinli?"
+    tuzak:
+      senaryo: "Sensör 12 kg gösterirken biri 8 kg dedi. Hangisi kullanılır?"
+      beklenen_cevap: "Sensör. Öncelik sabittir: sensör > kayıt > insan > LLM. Alttaki üsttekini ezemez."
+      olur_test: "<kaynak onceligi testi>"
+
+  - alan: tazelik
+    soru: "Bu sensörün değeri kaç saniyeden eskiyse artık kullanılmamalı?"
+    tuzak:
+      senaryo: "Son ölçüm tazelik süresinden eski. İşleme devam edilir mi?"
+      beklenen_cevap: "Hayır. Bayat sensör verisi kullanılmaz; adım durur."
+      olur_test: "<sensor bayat testi>"
+
+  - alan: sert_sinir
+    soru: "Bu değerin asla geçmemesi gereken fiziksel veya yasal sınırı nedir? Dayanağı nedir?"
+    tuzak:
+      senaryo: "İşletme profili bu sınırın üstüne çıkmak istiyor. Kabul mü?"
+      beklenen_cevap: "Hayır. Profil sert sınırı genişletemez. Dayanak bilinmiyorsa gerçek madde uydurulmaz; [VARSAYIM] yazılır."
+      olur_test: "<sert sinir asimi testi>"
+
+  - alan: on_kosul
+    soru: "Bu adım başlamadan önce ne doğru olmak zorunda? Değilse ne yapılır: bekle, sor, dur?"
+    tuzak:
+      senaryo: "Ön koşul sağlanmadan sonraki adım çağrıldı. Ne olur?"
+      beklenen_cevap: "Adım başlamaz. Yanlış sıra seçilse bile paket ön koşulda durur."
+      olur_test: "<on kosul eksik testi>"
+
+  - alan: tehlike
+    soru: "Bu adımda 'görünce dur' diyeceğin durumlar neler? En az birini yaz."
+    tuzak:
+      senaryo: "Tehlike biliniyor ama başka bir değer eksik. 'Bilinmiyor' mu denir, durulur mu?"
+      beklenen_cevap: "Durulur. Bilinen tek bir tehlike yeterlidir; eksik veri tehlikeyi silmez."
+      olur_test: "<tehlike once bakilir testi>"
+
+  - alan: etki_dogrulama
+    soru: "İş bitince hangi ölçüm, hangi toleransla, doğrulamış sayılır? Başarısız ve bilinmiyor ayrı mıdır?"
+    tuzak:
+      senaryo: "Ölçen sensör cevap vermedi. Sonuç 'başarılı' yazılabilir mi?"
+      beklenen_cevap: "Hayır. Ölçüm yoksa sonuç 'bilinmiyor'dur; başarılıya düşmez."
+      olur_test: "<dogrulama bilinmiyor testi>"
+
+  - alan: baglayici
+    soru: "Bu işi fiilen hangi arayüz yapacak? (Yazılım adı değil, arayüz adı.) Varsayılan izin nedir?"
+    tuzak:
+      senaryo: "Model 'kaldır' diye bağlayıcıyı kendisi başlatmak istiyor. Olur mu?"
+      beklenen_cevap: "Olmaz. Varsayılan izin 'öneri'dir. Model eylem başlatamaz."
+      olur_test: "<eylem izni testi>"
+
+  - alan: profil
+    soru: "Bu işletmeye özel değişebilir değer nedir? Sert sınırın içinde mi?"
+    tuzak:
+      senaryo: "Biri profili sert sınırın üstüne çekmek istiyor. Ne olur?"
+      beklenen_cevap: "Şema reddeder. Değişiklik uygulanmaz, testler de bu yüzden düşer."
+      olur_test: "<profil sinir asimi testi>"
+
+  - alan: llm_siniri
+    soru: "Bu adımda modelin yapabileceği ve yapamayacağı işler net mi?"
+    tuzak:
+      senaryo: "Model eksik sensör yerine bir sayı uydurup işi ilerletmek istiyor. Olur mu?"
+      beklenen_cevap: "Olmaz. Model karar vermez, sensörü ezmez, sınır değiştirmez, eylem başlatmaz."
+      olur_test: "<llm uydurma degeri testi>"

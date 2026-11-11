@@ -1,0 +1,16 @@
+# ============================================================
+# TEHLİKE KURALLARI — "görünce dur".
+# Eksik veri olsa bile önce bunlar bakılır.
+# Bilinen tek bir tehlike dur için yeterlidir; "bilinmiyor"a düşmez.
+# En az bir kural dolu olmadan paket KURULMAZ.
+# ============================================================
+
+tehlike:
+  - id: "<ornek: sinir_asimi>"
+    kosul: "<ornek: agirlik_kg > sert_sinir.max>"
+    sonuc: dur
+    mesaj: "<insana gosterilecek uyari>"
+  - id: "<ornek: sensor_bayat>"
+    kosul: "<ornek: kaynak.yas_sn > tazelik_sn>"
+    sonuc: dur
+    mesaj: "<insana gosterilecek uyari>"

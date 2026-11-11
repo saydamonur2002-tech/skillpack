@@ -1,0 +1,14 @@
+# ============================================================
+# SERT SINIRLAR — yasa, fizik, cihaz etiketi.
+# Profil bu değerleri genişletemez. Boş bırakılırsa paket KURULMAZ.
+# Dayanak bilinmiyorsa gerçek madde uydurulmaz; [VARSAYIM] yazılır.
+# ============================================================
+
+sert_sinirlar:
+  - id: "<ornek: azami_yuk_kg>"
+    degisken: "<degisken_adi>"
+    min: "<...>"
+    max: "<...>"
+    birim: "<ornek: kg>"
+    kaynak: "<yasa | fizik | cihaz_etiketi>"
+    not: "<dayanak; bilinmiyorsa [VARSAYIM] yaz ve gerekceyi belirt>"

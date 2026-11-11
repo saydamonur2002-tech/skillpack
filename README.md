@@ -179,6 +179,4 @@ Proje **ticari değildir**. Şirket, ürün, pazar yeri veya ücretli hizmet ola
 
 Çalışma mesai dışında, kurum bilgisayarı ve kurum kaynakları kullanılmadan, kurumla ilgili gizli bilgi konulmadan yürütülür.
 
-Öneren bir kamu görevlisidir. 657 sayılı Devlet Memurları Kanunu md. 28 çerçevesinde proje açık standart ve açık kaynak katkısı olarak kurgulanmıştır. Bu not hukuki görüş değildir. Gelir, lisans devri veya vakıf görevi gibi adımlardan önce bağlı olunan kurumun personel biriminden ve bir avukattan yazılı görüş alınması F0 fazının çıkış ölçütüdür. Ayrıntı: teknik taslak, Bölüm 14.
-
 Katkılar hoş gelir. Henüz katkı rehberi yazılmadı (F0 / F6). Şimdilik bir issue açmak veya taslağa yorum bırakmak yeterlidir. En değerli katkı, kendi işini bilen birinin yazdığı ve onayladığı gerçek bir pakettir.

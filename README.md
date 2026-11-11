@@ -1,5 +1,7 @@
 # Yerel Beceri Paketi (skillpack)
 
+> **Vizyon:** Ustanın tekniğini, mikro ölçekte, kod yazmadan bir makineye veya robota aktaran basit bir kurulum ve onun açık standardı. Beceri ve tarif katmanları mevcut standartlara (OPC UA, PackML, ISA-88, MTP) uyumlanır; asıl katkı eksik olan **anlatım mekanizmasıdır**: tekniğin ustadan çıkarılması ve modele anlatılması. Ayrıntı: [`VIZYON.md`](VIZYON.md)
+
 ## Adım Şablonu ve Mekanizma (v0.1-taslak)
 
 > Bu bölüm bir **taslaktır**. Şablon ve örnek, gerçek bir uzman onayı taşımaz. Örnek paket `DEMO` etiketlidir.

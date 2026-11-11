@@ -1,0 +1,108 @@
+# ORNEK - gercek usta onayi yok, DEMO
+# ============================================================
+# Adım 4: Doğrula. Araç "başardım" demesi yetmez; ölçümle ayrılır.
+# ============================================================
+
+adim:
+  id: dogrula
+  surum: "0.1.0"
+  ad: "Kaldırmayı doğrula"
+
+  amac: "Kutunun hedef yükseklikte ve hâlâ kavranmış olduğunu ölçümle doğrulamak."
+
+  girdiler:
+    - ad: yukseklik_cm
+      tur: number
+      birim: cm
+      kaynak:
+        - "sensor.yukseklik.v1"
+      tazelik_sn: 1
+      sert_sinir:
+        min: 0
+        max: 50
+      soru: "Yükseklik sensörü okumadı. Sonuç 'bilinmiyor' olur; başarılıya düşmez."
+    - ad: kavrandi
+      tur: bool
+      birim: ""
+      kaynak:
+        - "kavrayici.v1"
+      tazelik_sn: 1
+      sert_sinir:
+        min: false
+        max: true
+      soru: "Kavrama durumu okunamadı. Sonuç 'bilinmiyor' olur."
+    - ad: insan_yakinda
+      tur: bool
+      birim: ""
+      kaynak:
+        - "sensor.yakinlik.v1"
+      tazelik_sn: 1
+      sert_sinir:
+        min: false
+        max: false
+      soru: "Yakınlık sensörü okumadı. Doğrulama sırasında hareket yok; durum net değilse 'bilinmiyor'."
+
+  on_kosullar:
+    - kosul: "kaldir adimi cagirildi"
+      aciklama: "Doğrulama, kaldırma denemesinden sonra yapılır."
+      saglanmazsa: dur
+
+  tehlike:
+    - kosul: "insan_yakinda == true"
+      sonuc: dur
+      mesaj: "Yakınlık sensörü insan algıladı. Doğrulama sırasında hareket yok; işlem durur."
+    - kosul: "kaynak.yas_sn > kaynak.tazelik_sn"
+      sonuc: dur
+      mesaj: "Doğrulama sensörü bayat; 'başarılı' yazılmaz, işlem durur."
+
+  islem:
+    tur: decide
+    tanim:
+      aciklama: "Yükseklik tolerans içinde ve kavrama kapalıysa başarılı; ölçüm yoksa bilinmiyor; aksi halde başarısız."
+
+  etki:
+    - "dogrulama_sonucu in [basarili, basarisiz, bilinmiyor]"
+    - "durum.on_kosullar.hedefte.saglandi, sonuca gore guncellenir"
+
+  dogrulama:
+    olcum: "sensor.yukseklik.v1"
+    kosul: "kavrandi == true and abs(yukseklik_cm - hedef_yukseklik_cm) <= 2"
+    sure_sn: 2
+    sonuclar:
+      - basarili
+      - basarisiz
+      - bilinmiyor
+
+  basarisizlikta:
+    tekrar: 0
+    sonra: insana_sor
+
+  baglayici:
+    arayuz: "sensor.yukseklik.v1"
+    eylem: "olc()"
+    eylem_izni: otomatik          # yalnız ölçüm; hareket yok
+
+  llm:
+    yapabilir:
+      - degeri_ayikla
+      - soruyu_cevir
+      - sonucu_anlat
+    yapamaz:
+      - karar_vermek
+      - sensoru_ezmek
+      - sert_siniri_degistirmek
+      - eylem_baslatmak
+
+  testler:
+    - ad: "dogrula-normal-30cm"
+      kategori: normal
+    - ad: "dogrula-sinir-32cm"
+      kategori: sinir
+    - ad: "dogrula-tehlike-sensor-bayat"
+      kategori: tehlike
+
+  koken:
+    yazan: "DEMO — şablon örneği"
+    onaylayan: ""
+    dayanak:
+      - "[VARSAYIM] — gerçek usta onayı yok, gerçek mevzuat kontrol edilmedi."

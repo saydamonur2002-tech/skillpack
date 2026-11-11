@@ -51,15 +51,13 @@ Sıradaki en değerli iş: örnek paketlerden birini işin gerçek sahibine (bir
 
 **Durum:** 🚧 Başladı (spesifikasyon taslağı yazıldı; hukuki görüş ve dış inceleme açık)
 
-**Amaç:** Spesifikasyon taslağı v0.1'i yayımlamak, geri bildirim çağırmak ve kamu görevlisi statüsü için yazılı hukuki ön görüş almak. Uygulama kodu bu fazda hedef değildir; kurallar ve izin netleşmeden F1'e geçilmez.
+**Amaç:** Spesifikasyon taslağı v0.1'i yayımlamak, geri bildirim çağırmak ve yazılı hukuki ön görüş almak. Uygulama kodu bu fazda hedef değildir; kurallar ve izin netleşmeden F1'e geçilmez.
 
 ### Görevler
 
-Hukuki ön görüş (Bölüm 14):
+Hukuki ön görüş:
 
-- [ ] Personel birimine gidecek yazılı görüş talebi dilekçesini hazırlamak
-- [ ] Avukat için kısa brifing notu yazmak (projenin ticari olmadığı, mesai dışı / kurum kaynağı kullanılmadan yürütüleceği, FSEK kapsamında eser katkısı olduğu)
-- [ ] Bağlı olunan kurumun personel biriminden yazılı görüş almak
+- [ ] Avukat için kısa brifing notu yazmak (projenin ticari olmadığı ve açık kaynak eser katkısı olduğu)
 - [ ] Bağımsız bir avukattan yazılı hukuki görüş almak
 - [ ] Görüş sonuçlarını bu depoya ticari sır veya kurum bilgisi koymadan, yalnızca izin verilen özetle kaydetmek
 
@@ -76,7 +74,7 @@ Geri bildirim:
 
 - [ ] Kısa bir geri bildirim çağrısı metni yayımlamak (ne istendiği, nereye yazılacağı)
 - [ ] En az bir dış teknik uzmandan inceleme veya yazılı yorum almak
-- [ ] Açık soruları izleme listesine almak (Agent Skills kapsamı, şeffaflık günlüğü işletimi, memur katkısı çerçevesi vb.; teknik taslak Bölüm 13)
+- [ ] Açık soruları izleme listesine almak (Agent Skills kapsamı, şeffaflık günlüğü işletimi, hukuki çerçeve vb.; teknik taslak Bölüm 13)
 
 ### Çıkış ölçütü
 
@@ -339,4 +337,4 @@ Hedef değerler bilinçli olarak sayı içermez; çünkü taban ölçümü yoktu
 
 ## Hukuki duruş (hatırlatma)
 
-Bu proje ticari değildir, şirket veya ürün planı değildir. F0'ın hukuki görüşü alınmadan gelir, lisans devri veya vakıf görevi gibi adımlara geçilmez. Ayrıntı: teknik taslak Bölüm 14.
+Bu proje ticari değildir, şirket veya ürün planı değildir. F0'ın hukuki görüşü alınmadan gelir, lisans devri veya vakıf görevi gibi adımlara geçilmez.

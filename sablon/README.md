@@ -1,7 +1,7 @@
 # Adım Şablonu ve Mekanizma (v0.1-taslak)
 
-> Bu bölüm bir **taslaktır**. Şablon boştur; hiçbir değeri gerçek bir uzman onaylamamıştır.
-> Mevcut referans çalıştırıcı (`cli/`) bu şablonun tüm alanlarını henüz uygulamaz; aşağıda "Uygulama durumu"na bakın.
+> Bu bölüm bir **taslaktır**. Şablon ve örnek, gerçek bir uzman onayı taşımaz. Örnek paket `DEMO` etiketlidir.
+> Mevcut referans çalıştırıcı (`cli/`) bu şablonun alanlarını henüz uygulamaz; aşağıda "Uygulama durumu"na bakın.
 
 ## Temel ilke
 
@@ -13,15 +13,45 @@
 
 - **Merkez:** tekniğin adımları, ölçütleri, sınırları, testleri, kökeni.
 - **Çevre:** işi fiilen yapan yazılım ve makineler. Değiştirilebilir; aynı arayüzü sunan her biri takılabilir.
-- **LLM:** insanın söylediğini yapılandırılmış değere çevirir, sonucu anlatır. Karar vermez.
+- **LLM:** insanın söylediğini yapılandırılmış değere çevirir, sonucu anlatır. Karar vermez, sensörü ezmez, sert sınırı değiştirmez, eylem başlatmaz.
+- **Ana model (32B)** yerel sunucudadır; paketler orada kurulur. Telefon arayüz ve küçük yardımcı model (1,5B–8B) içindir. Bulut yalnız insan onayıyla.
 
-## Üç dosya
+## Paket klasörü
 
-| Dosya | Ne tutar | Kim değiştirir |
-|---|---|---|
-| [`sablon/adim.sablon.yaml`](adim.sablon.yaml) | Tekniğin tek bir adımı: amaç, girdi, ön koşul, tehlike, işlem, etki, doğrulama, bağlayıcı, LLM sınırı, test, köken | Usta / paket yazarı |
-| [`sablon/profil.sablon.yaml`](profil.sablon.yaml) | İşletmeye özel değerler (örn. azami ağırlık 25 kg) ve değişiklik kaydı | İşletme, onayla |
-| [`sablon/paket.sablon.yaml`](paket.sablon.yaml) | Adımların sırası, gereken arayüzler, kılavuz, imza | Paket yazarı |
+Her dikey teknik tek bir klasördür. Boş iskelet: [`iskelet/`](iskelet/). Dolu örnek (kutu kaldırma, DEMO): [`ornek-kutu-kaldirma/`](ornek-kutu-kaldirma/). Kurulum sırası: [`KURULUM.md`](KURULUM.md).
+
+```text
+<paket>/
+├─ paket.yaml                 # kimlik, alan, adımların sırası, gereken arayüzler
+├─ adimlar/                   # her adım ayrı dosya
+│   └─ 01-....yaml
+├─ kurallar/
+│   ├─ sert_sinirlar.yaml     # değişmez sınırlar (yasa, fizik, cihaz etiketi)
+│   └─ tehlike.yaml           # "görünce dur" kuralları
+├─ profil.yaml                # işletmeye özel, değişebilir değerler
+├─ donanim.yaml               # cihaz yeteneği + anlık durum (anlam katmanı)
+├─ veri/                      # referans tablolar (CSV); ham müşteri verisi yok
+├─ testler/                   # normal, sınır, tehlike; boş beklenti = geçersiz
+├─ sorular/                   # paketleme oyunu: soru + tuzak senaryosu
+├─ SKILL.md                   # LLM kılavuzu (yalnız çeviri)
+└─ imza.json                  # Ed25519 imza + onaylayan + dayanak
+```
+
+Alanların tek tek açıklaması, durağan şablon dosyalarında durur: [`adim.sablon.yaml`](adim.sablon.yaml), [`profil.sablon.yaml`](profil.sablon.yaml), [`paket.sablon.yaml`](paket.sablon.yaml).
+
+Kural değişmez, profil değişir, veri referanstır, test kanıttır. Her biri farklı izinle değişir.
+
+## Donanım ve anlam katmanı
+
+`donanim.yaml` modelin okuduğu tariftir: her cihaz bir arayüz kimliğiyle (`sensor.agirlik.v1`, `kaldirici.v1` gibi) anılır; türü (sensör / eylemci / yazılım), ölçüm aralığı, hassasiyet, birim, tazelik, yapabildikleri, sınırı, bağlantısı (yerel) ve anlık durumu yazılır. Aynı arayüzü sunan başka bir makine takılabilir.
+
+`durum` bölümü, şu an hangi ön koşulların sağlandığını gösterir. Model burayı okuyarak "şimdi ne yapılabilir"i görür; karar vermez.
+
+MCP araç tarifi yalnız parametre listesi olamaz. Modele **amaç, ön koşul, etki, donanım ve mevcut durum** birlikte verilmelidir. Ayrıntı: [`KURULUM.md`](KURULUM.md#anlam-katmanı).
+
+## Kurulum, sonra MCP
+
+Paket bir uygulama gibi yerel sunucuya yüklenir. Sıra sabittir: imza + iptal, şema, sert sınır / tehlike dolu mu, testler bu cihazda geçer mi, gereken arayüzler `donanim.yaml`'da var mı, profil sert sınırı aşmıyor mu, kayıt + sürüm + geri dönüş. **Ancak bunlar geçtikten sonra** paket MCP'de tek bir araç olarak görünür. Kurulu olmayan paket model tarafından görülmez. Ayrıntı: [`KURULUM.md`](KURULUM.md).
 
 ## Bir adım nasıl çalışır
 
@@ -45,6 +75,10 @@
 ```
 Kod değişmez. Testlerden biri düşerse değişiklik uygulanmaz.
 
+## Paketleme oyunu
+
+Usta kod yazmaz. `sorular/` içindeki her alan bir karttır: soruya cevap verilir, tuzak senaryosu çözülünce test kendiliğinden yazılır. Tehlike veya doğrulama boşsa kart kırmızı kalır. Bu, tekniği paketlemenin kendisidir; paketin süsü değildir. Sert sınır, tehlike kuralı ve gerçek eylem izni oyunun dışında kalır.
+
 ## Dikey işlere nasıl uyarlanır
 
 Şablon aynı kalır; her sektör sadece içini doldurur.
@@ -62,7 +96,7 @@ Uyarlama sırası:
 1. Tekniği bilen kişiyle işi **küçük adımlara** böl.
 2. Her adım için şablonu doldur; özellikle **tehlike** ve **doğrulama** alanlarını boş bırakma.
 3. Değişen değerleri **profile**, değişmez sınırları **sert_sinir**'a ayır.
-4. Her adıma en az bir normal, bir sınır, bir tehlike testi yaz.
+4. Her adıma en az bir normal, bir sınır, bir tehlike testi yaz. Boş beklentili test geçersizdir.
 5. Bağlayıcıyı arayüz adıyla yaz; hangi yazılımın takılacağı sahada seçilir.
 6. Usta onaylamadan paket `DEMO` etiketiyle yüklenir.
 
@@ -74,8 +108,12 @@ Uyarlama sırası:
 | Kaynak önceliği (sensör > LLM), tazelik kontrolü | **Yok** — şu an LLM argümanı sensör değerini ezebiliyor |
 | Eksik veride önce tehlike kuralı | **Yok** — bilinen tehlike "bilinmiyor"a düşebiliyor |
 | Amaç / ön koşul / etki / doğrulama alanları | **Yok** — bu şablonla tanımlandı |
-| Profil – sert sınır ayrımı, onaylı değişiklik akışı | **Yok** |
+| Profil – sert sınır ayrımı, onaylı değişiklik akışı | **Yok** — yalnız şablonda |
 | Bağlayıcı arayüzleri | **Yok** |
 | Boş beklentili testin reddi | **Yok** — şu an geçiyor sayılıyor |
+| Donanım tarifi ve anlam katmanı (`donanim.yaml`, MCP amaç/ön koşul/etki/durum) | **Yok** — yalnız şablonda |
+| Kurulum kontrolleri (imza+iptal sırası, arayüz var mı, sürüm geri dönüşü) ve MCP'den önce kurulum | **Yok** — yalnız [`KURULUM.md`](KURULUM.md)'de |
+| `sorular/` paketleme oyunu | **Yok** — yalnız şablonda |
+| Adımların ayrı dosya, kural / profil / veri ayrımı (iskelet biçimi) | **Yok** — yalnız şablonda |
 
 Bu şablon bir **sözleşme taslağıdır**; çalıştırıcının bunu uygulaması sonraki iştir.

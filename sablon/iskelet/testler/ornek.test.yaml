@@ -1,0 +1,39 @@
+# ============================================================
+# TESTLER — Paket, bu senaryoları bu cihazda geçmeden KURULMAZ.
+# Her adım için en az bir normal, bir sınır, bir tehlike senaryosu yazılır.
+#
+# KURAL: beklenen boşsa test GEÇERSİZDİR; geçti sayılmaz.
+# Aşağıdaki son kayıt bunu göstermek içindir, gerçek bir test değildir.
+# ============================================================
+
+testler:
+  - id: "<ornek: adim-normal-1>"
+    ad: "<ornek: normal durum>"
+    kategori: normal
+    adim: "<adim_id>"
+    girdi: {}
+    beklenen: "<sonuc_adi>"
+
+  - id: "<ornek: adim-sinir-1>"
+    ad: "<ornek: sinirda deger>"
+    kategori: sinir
+    adim: "<adim_id>"
+    girdi: {}
+    beklenen: "<sonuc_adi>"
+
+  - id: "<ornek: adim-tehlike-1>"
+    ad: "<ornek: tehlike gorunce dur>"
+    kategori: tehlike
+    adim: "<adim_id>"
+    girdi: {}
+    beklenen: dur
+
+  # Bu kayıt geçersizdir: beklenen boş. Kurulum bunu test olarak kabul etmez.
+  - id: "<ornek: bos-beklenti>"
+    ad: "<ornek: bos beklenti — gecersiz>"
+    kategori: normal
+    adim: "<adim_id>"
+    girdi: {}
+    beklenen: ""
+    gecerlilik: gecersiz
+    not: "beklenen boş bırakılırsa test GEÇERSİZDİR; geçti sayılmaz."

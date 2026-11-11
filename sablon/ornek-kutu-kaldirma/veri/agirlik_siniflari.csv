@@ -1,0 +1,5 @@
+sinif,min_kg,max_kg,sonuc,not
+hafif,0,10,devam,"ORNEK - gercek usta onayi yok, DEMO"
+orta,10,25,devam,"ORNEK - gercek usta onayi yok, DEMO; 25 kg profil azamisi"
+profil_disi,25.1,30,dur,"ORNEK - gercek usta onayi yok, DEMO; profil asilir, sert sinirin icinde"
+sert_sinir_disi,30.1,50,dur,"ORNEK - gercek usta onayi yok, DEMO; [VARSAYIM] sert sinir 30 kg, gercek mevzuat kontrol edilmedi"

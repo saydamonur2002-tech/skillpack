@@ -1,0 +1,27 @@
+# ============================================================
+# BOŞ PAKET İSKELETİ (v0.1-taslak)
+# "<...>" olan her yer işin sahibi (usta) tarafından doldurulur.
+# Bu dosya olduğu gibi çalışmaz. Dolu bir örnek için:
+#   sablon/ornek-kutu-kaldirma/
+# Çalıştırıcı bu biçimi henüz uygulamaz (yalnız sözleşme taslağı).
+# ============================================================
+
+paket:
+  ad: "<dikey_teknik_adi>"
+  surum: "0.1.0"
+  alan: "<sektor>"
+  amac: "<teknigin_butun_amaci>"
+  adimlar:
+    - "adimlar/01-ornek.yaml"
+  profil: "profil.yaml"
+  donanim: "donanim.yaml"
+  kurallar:
+    sert_sinirlar: "kurallar/sert_sinirlar.yaml"
+    tehlike: "kurallar/tehlike.yaml"
+  veri: "veri/"
+  testler: "testler/"
+  sorular: "sorular/sorular.yaml"
+  kilavuz: "SKILL.md"
+  gereken_arayuzler:
+    - "<ornek: sensor.agirlik.v1>"
+  imza: "imza.json"

@@ -1,0 +1,35 @@
+# ORNEK - gercek usta onayi yok, DEMO
+# ============================================================
+# Dolu örnek: robotik kutu kaldırma (tart → kavra → kaldir → dogrula).
+# Sayılar örnektir. [VARSAYIM] işaretli dayanaklar gerçek mevzuat
+# veya cihaz etiketi kontrolü değildir.
+# Çalıştırıcı bu biçimi henüz uygulamaz (yalnız sözleşme taslağı).
+# ============================================================
+
+paket:
+  ad: kutu-kaldirma
+  surum: "0.1.0"
+  alan: depo
+  etiket: DEMO
+  amac: "Kutuyu tartıp, kavrayıp, hedef yüksekliğe kaldırıp ölçümle doğrulamak."
+  adimlar:
+    - "adimlar/01-tart.yaml"
+    - "adimlar/02-kavra.yaml"
+    - "adimlar/03-kaldir.yaml"
+    - "adimlar/04-dogrula.yaml"
+  profil: "profil.yaml"
+  donanim: "donanim.yaml"
+  kurallar:
+    sert_sinirlar: "kurallar/sert_sinirlar.yaml"
+    tehlike: "kurallar/tehlike.yaml"
+  veri: "veri/"
+  testler: "testler/"
+  sorular: "sorular/sorular.yaml"
+  kilavuz: "SKILL.md"
+  gereken_arayuzler:
+    - "sensor.agirlik.v1"
+    - "sensor.yukseklik.v1"
+    - "sensor.yakinlik.v1"
+    - "kavrayici.v1"
+    - "kaldirici.v1"
+  imza: "imza.json"

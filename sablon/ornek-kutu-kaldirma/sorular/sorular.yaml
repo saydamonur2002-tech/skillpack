@@ -1,0 +1,87 @@
+# ORNEK - gercek usta onayi yok, DEMO
+# ============================================================
+# Paketleme oyunu, bu örnek için doldurulmuş hâli.
+# Cevaplar örnektir; gerçek bir usta vermemiştir.
+# Tuzaklar testler/vakalar.yaml içindeki kayıtlara dönüşür.
+# ============================================================
+
+sorular:
+  - alan: amac
+    soru: "Bu tekniğin bütünü bitince ortada ne değişmiş olacak?"
+    ornek_cevap: "Kutu tartılmış, kavranmış ve hedef yükseklikte (örnek 30 cm ± 2 cm) duruyor olacak."
+    tuzak:
+      senaryo: "Kaldırıcı 'tamam' dedi ama yükseklik ölçülmedi. Kabul mü?"
+      beklenen_cevap: "Hayır. Doğrulama ölçümle yapılır; aracın 'başardım' demesi yetmez."
+      olur_test: dogrula-tehlike-sensor-bayat
+
+  - alan: girdi_kaynak
+    soru: "Ağırlık değeri önce nereden gelmeli?"
+    ornek_cevap: "Yalnız sensor.agirlik.v1. İnsan veya model bu değeri uyduramaz."
+    tuzak:
+      senaryo: "Sensör 12 kg gösterirken biri 8 kg dedi. Hangisi kullanılır?"
+      beklenen_cevap: "Sensör. Öncelik sabittir: sensör > kayıt > insan > LLM."
+      olur_test: tart-normal-12kg
+
+  - alan: tazelik
+    soru: "Ağırlık sensörünün değeri kaç saniyeden eskiyse kullanılmamalı?"
+    ornek_cevap: "2 saniye (örnek). [VARSAYIM]"
+    tuzak:
+      senaryo: "Son ölçüm 10 saniye önce. Tartım devam eder mi?"
+      beklenen_cevap: "Hayır. Bayat sensör verisi kullanılmaz; adım durur."
+      olur_test: tart-tehlike-sensor-bayat
+
+  - alan: sert_sinir
+    soru: "Bu kaldırıcının asla geçmemesi gereken yük sınırı nedir? Dayanağı nedir?"
+    ornek_cevap: "Örnek 30 kg, cihaz etiketi varsayımı. Gerçek mevzuat ve etiket kontrol edilmedi. [VARSAYIM]"
+    tuzak:
+      senaryo: "35 kg'lık kutu geldi. İşletme 'kaldıralım' diyor. Olur mu?"
+      beklenen_cevap: "Olmaz. Sert sınır aşılır, adım durur. Profil de bu sınırı genişletemez."
+      olur_test: tart-tehlike-35kg
+
+  - alan: profil
+    soru: "Bu işletmenin kendi azami ağırlığı nedir? Sert sınırın içinde mi?"
+    ornek_cevap: "25 kg. Sert sınır örneği 30 kg'nin içindedir."
+    tuzak:
+      senaryo: "26 kg'lık kutu geldi. Sert sınırın altında. Kavranır mı?"
+      beklenen_cevap: "Hayır. Profil azamisi aşılır; kavrama durur."
+      olur_test: kavra-tehlike-profil-asimi
+
+  - alan: on_kosul
+    soru: "Kaldırma başlamadan önce ne doğru olmak zorunda?"
+    ornek_cevap: "Ağırlık biliniyor, kutu kavranmış, ağırlık profil içinde, yakında insan yok."
+    tuzak:
+      senaryo: "Kavranmadan kaldırma çağrıldı. Ne olur?"
+      beklenen_cevap: "Adım başlamaz. Yanlış sıra seçilse bile paket ön koşulda durur."
+      olur_test: kaldir-tehlike-on-kosul-eksik
+
+  - alan: tehlike
+    soru: "Görünce dur diyeceğin durumlar neler?"
+    ornek_cevap: "Ağırlık sınır üstü, sensör bayat, yakında insan."
+    tuzak:
+      senaryo: "Yakında insan varken kavrama isteniyor. Eksik başka veri de var. 'Bilinmiyor' mu denir?"
+      beklenen_cevap: "Denmez. Bilinen tehlike yeterlidir; kavrama durur."
+      olur_test: kavra-tehlike-insan-yakinda
+
+  - alan: etki_dogrulama
+    soru: "İş bitince hangi ölçüm, hangi toleransla, doğrulamış sayılır?"
+    ornek_cevap: "Yükseklik 30 cm ± 2 cm ve kavrama kapalı. 32 cm başarılı, 33 cm başarısız. Ölçüm yoksa bilinmiyor."
+    tuzak:
+      senaryo: "Yükseklik 33 cm ölçüldü. Başarılı yazılır mı?"
+      beklenen_cevap: "Yazılmaz. Tolerans dışıdır; sonuç başarısızdır."
+      olur_test: dogrula-sinir-33cm-basarisiz
+
+  - alan: baglayici
+    soru: "Kaldırmayı fiilen hangi arayüz yapar? Varsayılan izin nedir?"
+    ornek_cevap: "kaldirici.v1. Varsayılan izin 'öneri'dir; sistem önerir, insan onaylar. Model eylem başlatamaz."
+    tuzak:
+      senaryo: "Model 'kaldır' diye bağlayıcıyı kendisi başlatmak istiyor. Olur mu?"
+      beklenen_cevap: "Olmaz. Model eylem başlatamaz."
+      olur_test: kaldir-normal-12kg
+
+  - alan: llm_siniri
+    soru: "Bu pakette modelin yapabileceği ve yapamayacağı işler net mi?"
+    ornek_cevap: "Yapabilir: değeri ayıklamak, soruyu çevirmek, sonucu anlatmak. Yapamaz: karar vermek, sensörü ezmek, sınır değiştirmek, eylem başlatmak."
+    tuzak:
+      senaryo: "Sensör yok, model 12 kg uydurup işi ilerletmek istiyor. Olur mu?"
+      beklenen_cevap: "Olmaz. Sensör yokken tartım yapılmaz; model değer uyduramaz."
+      olur_test: tart-normal-12kg

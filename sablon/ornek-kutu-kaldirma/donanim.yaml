@@ -1,0 +1,121 @@
+# ORNEK - gercek usta onayi yok, DEMO
+# ============================================================
+# Donanım tarifi (anlam katmanı). Sayılar örnektir, [VARSAYIM].
+# durum bölümü çalışma öncesi anlıktır; pakete sabit "doğru" yazılmaz.
+# ============================================================
+
+donanim:
+  paket: kutu-kaldirma
+  yer: yerel_sunucu
+  baglanti_varsayilan: yerel
+
+  cihazlar:
+    - arayuz: sensor.agirlik.v1
+      ad: "Ağırlık sensörü"
+      tur: sensor
+      olcum_araligi:
+        min: 0
+        max: 50
+      hassasiyet: 0.1
+      birim: kg
+      tazelik_sn: 2
+      yapabilir:
+        - agirlik_olc
+      sinir:
+        min: 0
+        max: 50
+      baglanti: yerel
+      durum: bagli
+      not: "Ölçüm aralığı ve hassasiyet örnektir. [VARSAYIM] — gerçek cihaz etiketi kontrol edilmedi."
+
+    - arayuz: sensor.yukseklik.v1
+      ad: "Yükseklik sensörü"
+      tur: sensor
+      olcum_araligi:
+        min: 0
+        max: 80
+      hassasiyet: 0.5
+      birim: cm
+      tazelik_sn: 1
+      yapabilir:
+        - yukseklik_olc
+      sinir:
+        min: 0
+        max: 80
+      baglanti: yerel
+      durum: bagli
+      not: "[VARSAYIM] — gerçek cihaz etiketi kontrol edilmedi."
+
+    - arayuz: sensor.yakinlik.v1
+      ad: "Yakınlık sensörü (insan var mı)"
+      tur: sensor
+      olcum_araligi:
+        min: 0
+        max: 200
+      hassasiyet: 5
+      birim: cm
+      tazelik_sn: 1
+      yapabilir:
+        - insan_varligini_bildir
+      sinir:
+        min: 0
+        max: 200
+      baglanti: yerel
+      durum: bagli
+      not: "Örnek eşik: 50 cm içinde insan varsa 'insan_yakinda' doğrudur. [VARSAYIM]."
+
+    - arayuz: kavrayici.v1
+      ad: "Kavrayıcı"
+      tur: eylemci
+      olcum_araligi:
+        min: null
+        max: null
+      hassasiyet: null
+      birim: null
+      tazelik_sn: 1
+      yapabilir:
+        - kavra
+        - birak
+        - kavrama_durumunu_bildir
+      sinir:
+        min: 0
+        max: 30
+      baglanti: yerel
+      durum: bagli
+      not: "Azami 30 kg örnek kapasite. [VARSAYIM] — gerçek cihaz etiketi kontrol edilmedi."
+
+    - arayuz: kaldirici.v1
+      ad: "Kaldırıcı"
+      tur: eylemci
+      olcum_araligi:
+        min: 0
+        max: 50
+      hassasiyet: 0.5
+      birim: cm
+      tazelik_sn: 1
+      yapabilir:
+        - kaldir
+        - indir
+      sinir:
+        min: 0
+        max: 30          # kg yük; strok üstü 50 cm (sert sınır)
+      baglanti: yerel
+      durum: bagli
+      not: "Örnek azami yük 30 kg, strok 50 cm. [VARSAYIM] — gerçek cihaz etiketi ve mevzuat kontrol edilmedi."
+
+  # Çalışma başlamadan önceki anlık durum (örnek). Runtime günceller.
+  durum:
+    guncelleme: "2026-11-11T00:00:00+03:00"
+    on_kosullar:
+      - id: agirlik_biliniyor
+        saglandi: false
+        kanit: yok
+      - id: kavrandi
+        saglandi: false
+        kanit: yok
+      - id: hedefte
+        saglandi: false
+        kanit: yok
+      - id: insan_yok
+        saglandi: false
+        kanit: yok

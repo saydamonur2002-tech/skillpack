@@ -1,0 +1,44 @@
+# ============================================================
+# DONANIM TARİFİ — Modelin okuduğu anlam katmanının bir parçası.
+# Cihazda ne var, ne yapabilir, şu an hangi ön koşullar sağlanıyor.
+# Bağlantı yereldır; bulut varsayılan olarak kapalıdır.
+# Çalıştırıcı bu dosyayı henüz uygulamaz (yalnız sözleşme taslağı).
+# ============================================================
+
+donanim:
+  paket: "<paket_adi>"
+  yer: "<yerel_sunucu | cihaz>"
+  baglanti_varsayilan: yerel
+
+  # Her cihaz bir arayüz kimliğiyle anılır. Aynı arayüzü sunan
+  # başka bir makine veya yazılım takılabilir (çevre değişir, merkez durur).
+  cihazlar:
+    - arayuz: "<ornek: sensor.agirlik.v1>"
+      ad: "<insanın anlayacağı ad>"
+      tur: "<sensor|eylemci|yazilim>"
+      olcum_araligi:
+        min: "<...>"
+        max: "<...>"
+      hassasiyet: "<ornek: 0.1>"
+      birim: "<ornek: kg>"
+      tazelik_sn: "<ornek: 2>"
+      yapabilir:
+        - "<ornek: agirlik_olc>"
+      sinir:
+        min: "<...>"
+        max: "<...>"
+      baglanti: yerel
+      durum: "<bagli|bagli_degil|bilinmiyor>"
+
+  # Anlık durum: hangi ön koşullar şu an sağlanıyor?
+  # Bu bölüm çalışma zamanında güncellenir; pakete sabit "doğru" yazılmaz.
+  # Model burayı okuyarak "şimdi ne yapılabilir"i görür; karar vermez.
+  durum:
+    guncelleme: "<ISO-8601 veya bos>"
+    on_kosullar:
+      - id: "<ornek: agirlik_biliniyor>"
+        saglandi: false
+        kanit: "<sensor:... | kayit | insan | yok>"
+      - id: "<ornek: kavrandi>"
+        saglandi: false
+        kanit: "<sensor:... | kayit | insan | yok>"

@@ -1,0 +1,19 @@
+# ORNEK - gercek usta onayi yok, DEMO
+# ============================================================
+# İşletmeye özel değerler. Sert sınırın dışına çıkamaz.
+# max_agirlik 25 kg, sert sınır örneği 30 kg'nin içindedir.
+# ============================================================
+
+profil:
+  paket: kutu-kaldirma
+  isletme: "<ornek depo — DEMO>"
+  surum: "2026-11-11-demo"
+  degerler:
+    max_agirlik: 25          # kg; sert sınır 30 kg'nin içinde
+    hedef_yukseklik_cm: 30   # cm; doğrulama toleransı ±2 cm
+    dogrulama_tolerans_cm: 2
+  degisiklik_kaydi:
+    - tarih: "2026-11-11"
+      degisen: "max_agirlik: (yok) -> 25"
+      neden: "Örnek ilk kurulum. [VARSAYIM] — gerçek işletme kararı değil."
+      onaylayan: "DEMO — gerçek usta onayı yok"

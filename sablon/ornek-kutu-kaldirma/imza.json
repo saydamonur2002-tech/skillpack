@@ -1,0 +1,11 @@
+{
+  "etiket": "ORNEK - gercek usta onayi yok, DEMO",
+  "surum": "0.1-taslak",
+  "algoritma": "Ed25519",
+  "imza": null,
+  "anahtar_id": null,
+  "onaylayan": null,
+  "dayanak": null,
+  "durum": "imzasiz",
+  "not": "Bu paket bir DEMO örneğidir. Gerçek imza yoktur. İmzasız paket kurulmaz; MCP'ye çıkarılmaz."
+}

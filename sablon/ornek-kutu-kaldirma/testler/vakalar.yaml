@@ -1,0 +1,306 @@
+# ORNEK - gercek usta onayi yok, DEMO
+# ============================================================
+# Her adım için en az bir normal, bir sınır, bir tehlike senaryosu.
+# beklenen boş bırakılmaz; boş beklenti GEÇERSİZDİR ve geçti sayılmaz.
+# Sayılar örnektir. [VARSAYIM]
+# ============================================================
+
+testler:
+  # ---------- tart ----------
+  - id: tart-normal-12kg
+    ad: "Normal kutu, 12 kg, taze sensör"
+    kategori: normal
+    adim: tart
+    girdi:
+      agirlik_kg:
+        deger: 12.0
+        kaynak: sensor.agirlik.v1
+        yas_sn: 1
+    beklenen:
+      sonuc: basarili
+      agirlik_kg: 12.0
+      agirlik_biliniyor: true
+
+  - id: tart-sinir-25kg
+    ad: "Profil azamisinde kutu, 25 kg"
+    kategori: sinir
+    adim: tart
+    girdi:
+      agirlik_kg:
+        deger: 25.0
+        kaynak: sensor.agirlik.v1
+        yas_sn: 1
+    beklenen:
+      sonuc: basarili
+      agirlik_kg: 25.0
+      agirlik_biliniyor: true
+    not: "25 kg profil azamisidir, sert sınırın (30 kg) içindedir. Tartım başarılıdır; sonraki adım da bu değerde ilerleyebilir."
+
+  - id: tart-tehlike-35kg
+    ad: "Sert sınır üstü, 35 kg"
+    kategori: tehlike
+    adim: tart
+    girdi:
+      agirlik_kg:
+        deger: 35.0
+        kaynak: sensor.agirlik.v1
+        yas_sn: 1
+    beklenen:
+      sonuc: dur
+      mesaj_icerir: "sert sınır"
+
+  - id: tart-tehlike-sensor-bayat
+    ad: "Bayat ağırlık sensörü"
+    kategori: tehlike
+    adim: tart
+    girdi:
+      agirlik_kg:
+        deger: 12.0
+        kaynak: sensor.agirlik.v1
+        yas_sn: 10
+    beklenen:
+      sonuc: dur
+      mesaj_icerir: "bayat"
+
+  # ---------- kavra ----------
+  - id: kavra-normal-12kg
+    ad: "12 kg, ağırlık biliniyor, insan yok"
+    kategori: normal
+    adim: kavra
+    girdi:
+      agirlik_kg:
+        deger: 12.0
+        kaynak: "kayit:tart.agirlik_kg"
+        yas_sn: 1
+      agirlik_biliniyor: true
+      insan_yakinda:
+        deger: false
+        kaynak: sensor.yakinlik.v1
+        yas_sn: 0
+    beklenen:
+      sonuc: basarili
+      kavrandi: true
+
+  - id: kavra-sinir-25kg
+    ad: "Profil azamisinde kavrama, 25 kg"
+    kategori: sinir
+    adim: kavra
+    girdi:
+      agirlik_kg:
+        deger: 25.0
+        kaynak: "kayit:tart.agirlik_kg"
+        yas_sn: 1
+      agirlik_biliniyor: true
+      insan_yakinda:
+        deger: false
+        kaynak: sensor.yakinlik.v1
+        yas_sn: 0
+    beklenen:
+      sonuc: basarili
+      kavrandi: true
+
+  - id: kavra-tehlike-insan-yakinda
+    ad: "Yakında insan varken kavrama"
+    kategori: tehlike
+    adim: kavra
+    girdi:
+      agirlik_kg:
+        deger: 12.0
+        kaynak: "kayit:tart.agirlik_kg"
+        yas_sn: 1
+      agirlik_biliniyor: true
+      insan_yakinda:
+        deger: true
+        kaynak: sensor.yakinlik.v1
+        yas_sn: 0
+    beklenen:
+      sonuc: dur
+      mesaj_icerir: "insan"
+      kavrandi: false
+
+  - id: kavra-tehlike-profil-asimi
+    ad: "Profil üstü, 26 kg — kavranmaz"
+    kategori: tehlike
+    adim: kavra
+    girdi:
+      agirlik_kg:
+        deger: 26.0
+        kaynak: "kayit:tart.agirlik_kg"
+        yas_sn: 1
+      agirlik_biliniyor: true
+      insan_yakinda:
+        deger: false
+        kaynak: sensor.yakinlik.v1
+        yas_sn: 0
+    beklenen:
+      sonuc: dur
+      mesaj_icerir: "profil"
+      kavrandi: false
+
+  # ---------- kaldir ----------
+  - id: kaldir-normal-12kg
+    ad: "12 kg, kavranmış, insan yok, hedef 30 cm"
+    kategori: normal
+    adim: kaldir
+    girdi:
+      agirlik_kg:
+        deger: 12.0
+        kaynak: "kayit:tart.agirlik_kg"
+        yas_sn: 1
+      kavrandi: true
+      hedef_yukseklik_cm: 30
+      insan_yakinda:
+        deger: false
+        kaynak: sensor.yakinlik.v1
+        yas_sn: 0
+    beklenen:
+      sonuc: basarili
+      yukseklik_cm:
+        min: 28
+        max: 32
+
+  - id: kaldir-sinir-25kg
+    ad: "Profil azamisinde kaldırma, 25 kg"
+    kategori: sinir
+    adim: kaldir
+    girdi:
+      agirlik_kg:
+        deger: 25.0
+        kaynak: "kayit:tart.agirlik_kg"
+        yas_sn: 1
+      kavrandi: true
+      hedef_yukseklik_cm: 30
+      insan_yakinda:
+        deger: false
+        kaynak: sensor.yakinlik.v1
+        yas_sn: 0
+    beklenen:
+      sonuc: basarili
+      yukseklik_cm:
+        min: 28
+        max: 32
+
+  - id: kaldir-tehlike-insan-yakinda
+    ad: "Yakında insan varken kaldırma"
+    kategori: tehlike
+    adim: kaldir
+    girdi:
+      agirlik_kg:
+        deger: 12.0
+        kaynak: "kayit:tart.agirlik_kg"
+        yas_sn: 1
+      kavrandi: true
+      hedef_yukseklik_cm: 30
+      insan_yakinda:
+        deger: true
+        kaynak: sensor.yakinlik.v1
+        yas_sn: 0
+    beklenen:
+      sonuc: dur
+      mesaj_icerir: "insan"
+
+  - id: kaldir-tehlike-on-kosul-eksik
+    ad: "Kavranmadan kaldırma çağrıldı"
+    kategori: tehlike
+    adim: kaldir
+    girdi:
+      agirlik_kg:
+        deger: 12.0
+        kaynak: "kayit:tart.agirlik_kg"
+        yas_sn: 1
+      kavrandi: false
+      hedef_yukseklik_cm: 30
+      insan_yakinda:
+        deger: false
+        kaynak: sensor.yakinlik.v1
+        yas_sn: 0
+    beklenen:
+      sonuc: dur
+      not: "Ön koşul sağlanmadığı için adım başlamaz."
+
+  # ---------- dogrula ----------
+  - id: dogrula-normal-30cm
+    ad: "Yükseklik 30 cm, kavranmış, taze ölçüm"
+    kategori: normal
+    adim: dogrula
+    girdi:
+      yukseklik_cm:
+        deger: 30.0
+        kaynak: sensor.yukseklik.v1
+        yas_sn: 0
+      kavrandi:
+        deger: true
+        kaynak: kavrayici.v1
+        yas_sn: 0
+      hedef_yukseklik_cm: 30
+      insan_yakinda:
+        deger: false
+        kaynak: sensor.yakinlik.v1
+        yas_sn: 0
+    beklenen:
+      sonuc: basarili
+
+  - id: dogrula-sinir-32cm
+    ad: "Toleransın tam kenarı, 32 cm"
+    kategori: sinir
+    adim: dogrula
+    girdi:
+      yukseklik_cm:
+        deger: 32.0
+        kaynak: sensor.yukseklik.v1
+        yas_sn: 0
+      kavrandi:
+        deger: true
+        kaynak: kavrayici.v1
+        yas_sn: 0
+      hedef_yukseklik_cm: 30
+      insan_yakinda:
+        deger: false
+        kaynak: sensor.yakinlik.v1
+        yas_sn: 0
+    beklenen:
+      sonuc: basarili
+    not: "±2 cm toleransın kenarı hâlâ başarılıdır."
+
+  - id: dogrula-sinir-33cm-basarisiz
+    ad: "Tolerans dışı, 33 cm"
+    kategori: sinir
+    adim: dogrula
+    girdi:
+      yukseklik_cm:
+        deger: 33.0
+        kaynak: sensor.yukseklik.v1
+        yas_sn: 0
+      kavrandi:
+        deger: true
+        kaynak: kavrayici.v1
+        yas_sn: 0
+      hedef_yukseklik_cm: 30
+      insan_yakinda:
+        deger: false
+        kaynak: sensor.yakinlik.v1
+        yas_sn: 0
+    beklenen:
+      sonuc: basarisiz
+
+  - id: dogrula-tehlike-sensor-bayat
+    ad: "Yükseklik sensörü bayat — başarılı yazılmaz"
+    kategori: tehlike
+    adim: dogrula
+    girdi:
+      yukseklik_cm:
+        deger: 30.0
+        kaynak: sensor.yukseklik.v1
+        yas_sn: 8
+      kavrandi:
+        deger: true
+        kaynak: kavrayici.v1
+        yas_sn: 0
+      hedef_yukseklik_cm: 30
+      insan_yakinda:
+        deger: false
+        kaynak: sensor.yakinlik.v1
+        yas_sn: 0
+    beklenen:
+      sonuc: dur
+      mesaj_icerir: "bayat"

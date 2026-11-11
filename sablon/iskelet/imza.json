@@ -1,0 +1,9 @@
+{
+  "surum": "0.1-taslak",
+  "algoritma": "Ed25519",
+  "imza": "<...>",
+  "anahtar_id": "<...>",
+  "onaylayan": "<...>",
+  "dayanak": "<...>",
+  "not": "Yer tutucu. Boş, eksik veya doğrulanamayan imza ile paket kurulmaz. İptal listesindeyse de kurulmaz."
+}

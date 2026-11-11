@@ -2,10 +2,8 @@
 
 ## Adım Şablonu ve Mekanizma (v0.1-taslak)
 
-> Bu bölüm bir **taslaktır**. Şablon boştur; hiçbir değeri gerçek bir uzman onaylamamıştır.
-> Mevcut referans çalıştırıcı (`cli/`) bu şablonun tüm alanlarını henüz uygulamaz; aşağıda "Uygulama durumu"na bakın.
-
-### Temel ilke
+> Bu bölüm bir **taslaktır**. Şablon ve örnek, gerçek bir uzman onayı taşımaz. Örnek paket `DEMO` etiketlidir.
+> Mevcut referans çalıştırıcı (`cli/`) bu alanları henüz uygulamaz; "Uygulama durumu"na bakın. Ayrıntı: [`sablon/README.md`](sablon/README.md), kurulum: [`sablon/KURULUM.md`](sablon/KURULUM.md).
 
 **Model bir şey öğrenmez, sadece çevirir.** Tekniğin bilgisi modelin içinde değil, pakettedir.
 
@@ -13,17 +11,33 @@
 İnsan  ⇄  Yerel LLM (tercüman)  ⇄  MCP (bağlantı)  ⇄  DİKEY TEKNİK PAKETİ (merkez)  ⇄  Uygulamalar/makineler (çevre)
 ```
 
-- **Merkez:** tekniğin adımları, ölçütleri, sınırları, testleri, kökeni.
-- **Çevre:** işi fiilen yapan yazılım ve makineler. Değiştirilebilir; aynı arayüzü sunan her biri takılabilir.
-- **LLM:** insanın söylediğini yapılandırılmış değere çevirir, sonucu anlatır. Karar vermez.
+Ana model (32B) yerel sunucudadır; paketler orada kurulur. Telefon arayüz ve küçük yardımcı model (1,5B–8B) içindir. Bulut yalnız insan onayıyla. LLM karar vermez, sensörü ezmez, sert sınırı değiştirmez, eylem başlatmaz.
 
-### Üç dosya
+### Paket klasörü
 
-| Dosya | Ne tutar | Kim değiştirir |
-|---|---|---|
-| [`sablon/adim.sablon.yaml`](sablon/adim.sablon.yaml) | Tekniğin tek bir adımı: amaç, girdi, ön koşul, tehlike, işlem, etki, doğrulama, bağlayıcı, LLM sınırı, test, köken | Usta / paket yazarı |
-| [`sablon/profil.sablon.yaml`](sablon/profil.sablon.yaml) | İşletmeye özel değerler (örn. azami ağırlık 25 kg) ve değişiklik kaydı | İşletme, onayla |
-| [`sablon/paket.sablon.yaml`](sablon/paket.sablon.yaml) | Adımların sırası, gereken arayüzler, kılavuz, imza | Paket yazarı |
+Boş iskelet: [`sablon/iskelet/`](sablon/iskelet/). Dolu örnek (kutu kaldırma, DEMO): [`sablon/ornek-kutu-kaldirma/`](sablon/ornek-kutu-kaldirma/).
+
+```text
+<paket>/
+├─ paket.yaml                 # kimlik, alan, adımların sırası, gereken arayüzler
+├─ adimlar/                   # her adım ayrı dosya
+├─ kurallar/                  # sert_sinirlar.yaml (değişmez) + tehlike.yaml
+├─ profil.yaml                # işletmeye özel, değişebilir
+├─ donanim.yaml               # cihaz yeteneği + anlık durum (anlam katmanı)
+├─ veri/                      # referans tablolar (CSV); ham müşteri verisi yok
+├─ testler/                   # normal, sınır, tehlike; boş beklenti = geçersiz
+├─ sorular/                   # paketleme oyunu: soru + tuzak senaryosu
+├─ SKILL.md                   # LLM kılavuzu (yalnız çeviri)
+└─ imza.json
+```
+
+`donanim.yaml` modelin okuduğu tariftir: her cihaz bir arayüz kimliğiyle anılır (ör. `sensor.agirlik.v1`, `kaldirici.v1`); tür, ölçüm aralığı, hassasiyet, tazelik, yapabildikleri, sınır, yerel bağlantı ve anlık durumu yazar. `durum` hangi ön koşulların sağlandığını gösterir.
+
+MCP araç tarifi yalnız parametre listesi olamaz: modele **amaç, ön koşul, etki, donanım ve mevcut durum** birlikte verilir. Model bu tarifi okuyup isteği eşler; yürütmez.
+
+### Kurulum, sonra MCP
+
+Paket bir uygulama gibi yerel sunucuya yüklenir. Sıra: imza + iptal, şema, sert sınır / tehlike dolu mu, testler bu cihazda geçer mi, gereken arayüzler `donanim.yaml`'da var mı, profil sert sınırı aşmıyor mu, kayıt + sürüm + geri dönüş. **Ancak bunlar geçtikten sonra** paket MCP'de tek bir araç olarak görünür. Kurulu olmayan paket model tarafından görülmez. Ayrıntı: [`sablon/KURULUM.md`](sablon/KURULUM.md).
 
 ### Bir adım nasıl çalışır
 
@@ -36,37 +50,7 @@
 7. **Doğrula.** Aracın "başardım" demesi yetmez; ölçümle `basarili / basarisiz / bilinmiyor` ayrılır.
 8. **Başarısızsa** tanımlı yol izlenir: tekrar, geri al, dur veya insana sor.
 
-### Profil değişikliği nasıl yapılır
-
-```
-"Kutular artık 25 kg"  →  LLM öneri yazar (max_agirlik: 25)
-                       →  Şema kontrolü (sert sınır içinde mi?)
-                       →  İnsan onayı
-                       →  Testler yeniden koşar
-                       →  Değişiklik kaydına yazılır, profil sürümü artar
-```
-Kod değişmez. Testlerden biri düşerse değişiklik uygulanmaz.
-
-### Dikey işlere nasıl uyarlanır
-
-Şablon aynı kalır; her sektör sadece içini doldurur.
-
-| Alan | Örnek adım | Girdi / sensör | Tehlike kuralı | Bağlayıcı arayüz | Doğrulama |
-|---|---|---|---|---|---|
-| Depo / robotik | Kutu kaldır | ağırlık sensörü, kavrama durumu | ağırlık > azami ⇒ dur | `kaldirici.v1` | yükseklik sensörü ±2 cm |
-| Mutfak | Soğuk mal kabul | saplama termometre, SKT | ambalaj hasarlı ⇒ ret | `kayit_defteri.v1` | teslim fişi notu |
-| Fabrika bakım | Rulman kontrol | ısı, titreşim | ısı ≥ sınır ⇒ dur | `bakim_emri.v1` | ölçüm tekrarı |
-| Telefon | Pil koruma | pil %, sıcaklık, termal durum | sıcaklık ≥ 40 °C ⇒ bulutu kapat | `android_sistem.v1` | sonraki ölçüm |
-| Hastane | Randevu dağıtımı | doluluk, bekleme süresi | acil işaret ⇒ insana | `randevu_sistemi.v1` | atama kaydı |
-| Okul | Kazanım telafi | sınav puanı, devam | — | `not_sistemi.v1` | sonraki ölçme |
-
-Uyarlama sırası:
-1. Tekniği bilen kişiyle işi **küçük adımlara** böl.
-2. Her adım için şablonu doldur; özellikle **tehlike** ve **doğrulama** alanlarını boş bırakma.
-3. Değişen değerleri **profile**, değişmez sınırları **sert_sinir**'a ayır.
-4. Her adıma en az bir normal, bir sınır, bir tehlike testi yaz.
-5. Bağlayıcıyı arayüz adıyla yaz; hangi yazılımın takılacağı sahada seçilir.
-6. Usta onaylamadan paket `DEMO` etiketiyle yüklenir.
+Profil değişikliği: LLM önerir, şema sert sınırı kontrol eder, insan onaylar, testler yeniden koşar. Kod değişmez.
 
 ### Uygulama durumu (dürüst not)
 
@@ -76,9 +60,13 @@ Uyarlama sırası:
 | Kaynak önceliği (sensör > LLM), tazelik kontrolü | **Yok** — şu an LLM argümanı sensör değerini ezebiliyor |
 | Eksik veride önce tehlike kuralı | **Yok** — bilinen tehlike "bilinmiyor"a düşebiliyor |
 | Amaç / ön koşul / etki / doğrulama alanları | **Yok** — bu şablonla tanımlandı |
-| Profil – sert sınır ayrımı, onaylı değişiklik akışı | **Yok** |
+| Profil – sert sınır ayrımı, onaylı değişiklik akışı | **Yok** — yalnız şablonda |
 | Bağlayıcı arayüzleri | **Yok** |
 | Boş beklentili testin reddi | **Yok** — şu an geçiyor sayılıyor |
+| Donanım tarifi ve anlam katmanı (`donanim.yaml`, MCP amaç/ön koşul/etki/durum) | **Yok** — yalnız şablonda |
+| Kurulum kontrolleri ve MCP'den önce kurulum | **Yok** — yalnız [`sablon/KURULUM.md`](sablon/KURULUM.md)'de |
+| `sorular/` paketleme oyunu | **Yok** — yalnız şablonda |
+| Adımların ayrı dosya, kural / profil / veri ayrımı (iskelet biçimi) | **Yok** — yalnız şablonda |
 
 Bu şablon bir **sözleşme taslağıdır**; çalıştırıcının bunu uygulaması sonraki iştir.
 
@@ -159,6 +147,7 @@ Uzun vadeli hedefler: [docs/TEKNIK_PROJE_v0.1.md](docs/TEKNIK_PROJE_v0.1.md) (9 
 | `examples/` | Üç imzalı örnek paket ve güvenilen açık anahtar | 🚧 Örnek (usta onayı yok) |
 | `schemas/` | Şemaların yerini gösterir (`cli/skillpack/schemas/`) | 🚧 MVP alt kümesi |
 | `docs/` | Yöntem belgesi, teknik taslak, tartışma notları | Taslak |
+| `sablon/` | Adım şablonu, boş iskelet, kutu kaldırma örneği (DEMO), kurulum sırası | 🚧 Taslak (çalıştırıcı uygulamıyor) |
 | `apps/hybrid_assistant` | Erken deneme: Flutter + Firebase AI Logic ile telefon pili/ısı asistanı. skillpack biçimini kullanmaz | 🧪 Deneme |
 
 ## Yol haritası (özet)

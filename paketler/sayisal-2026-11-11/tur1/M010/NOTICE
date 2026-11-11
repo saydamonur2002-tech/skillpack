@@ -1,0 +1,10 @@
+Upstream: https://github.com/epfl-lts2/pygsp
+Commit: 4716b12c470c579e3f477f2d1c1d99752c73252d
+License: BSD-3-Clause
+
+Original copyright lines (verbatim):
+Copyright (c) 2014, EPFL LTS2
+
+Original source and reference notices are preserved under upstream/.
+AI-generated standalone adaptation and documentation; no upstream endorsement.
+Project concept and packaging direction belong to the project designer; no personal identity is recorded.

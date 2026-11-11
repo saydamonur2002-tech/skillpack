@@ -1,0 +1,90 @@
+[
+  {
+    "input": {
+      "jd1": 2400000.5,
+      "jd2": 54388.0
+    },
+    "expected_subset": {
+      "angle_rad": 0.40228372400281387
+    },
+    "absolute_tolerance": 2e-13,
+    "origin": "native pinned ERFA eraEra00; first input also literal t_era00 fixture"
+  },
+  {
+    "input": {
+      "jd1": 2451545.0,
+      "jd2": 0.0
+    },
+    "expected_subset": {
+      "angle_rad": 4.894961212823756
+    },
+    "absolute_tolerance": 2e-13,
+    "origin": "native pinned ERFA eraEra00; first input also literal t_era00 fixture"
+  },
+  {
+    "input": {
+      "jd1": 2400000.5,
+      "jd2": 51544.5
+    },
+    "expected_subset": {
+      "angle_rad": 4.894961212823757
+    },
+    "absolute_tolerance": 2e-13,
+    "origin": "native pinned ERFA eraEra00; first input also literal t_era00 fixture"
+  },
+  {
+    "input": {
+      "jd1": 0.0,
+      "jd2": 2451545.0
+    },
+    "expected_subset": {
+      "angle_rad": 4.894961212823756
+    },
+    "absolute_tolerance": 2e-13,
+    "origin": "native pinned ERFA eraEra00; first input also literal t_era00 fixture"
+  },
+  {
+    "input": {
+      "jd1": 2451545.0,
+      "jd2": -0.25
+    },
+    "expected_subset": {
+      "angle_rad": 3.3198643411350495
+    },
+    "absolute_tolerance": 2e-13,
+    "origin": "native pinned ERFA eraEra00; first input also literal t_era00 fixture"
+  },
+  {
+    "input": {
+      "jd1": 2451545.0,
+      "jd2": 10000.1234567
+    },
+    "expected_subset": {
+      "angle_rad": 1.765393412063787
+    },
+    "absolute_tolerance": 2e-13,
+    "origin": "native pinned ERFA eraEra00; first input also literal t_era00 fixture"
+  },
+  {
+    "input": {
+      "jd1": 2451545.0,
+      "jd2": -10000.1234567
+    },
+    "expected_subset": {
+      "angle_rad": 1.7413437064041446
+    },
+    "absolute_tolerance": 2e-13,
+    "origin": "native pinned ERFA eraEra00; first input also literal t_era00 fixture"
+  },
+  {
+    "input": {
+      "jd1": 2400000.5,
+      "jd2": 54388.0
+    },
+    "expected_subset": {
+      "angle_rad": 0.4022837240028158
+    },
+    "absolute_tolerance": 1e-12,
+    "origin": "upstream ERFA t_era00 literal expected value"
+  }
+]

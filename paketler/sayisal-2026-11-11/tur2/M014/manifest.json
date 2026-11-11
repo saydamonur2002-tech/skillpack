@@ -1,0 +1,186 @@
+{
+  "id": "M014",
+  "name": "Cephes regularized incomplete gamma lower and upper tails",
+  "description": "Evaluate regularized incomplete gamma P(shape,x) and Q(shape,x) using the classic 1987 power-series and scaled continued-fraction algorithms. Shape is positive and x nonnegative; outputs are dimensionless.",
+  "version": "1.0.0",
+  "date": "2026-11-11",
+  "tier": "revival",
+  "license": "BSD-3-Clause",
+  "distribution": "public-ok",
+  "source_url": "https://github.com/scipy/scipy",
+  "upstream_commit_or_version": "fcdc3d7b7c1b950d874ac3e890cccde3e2de1c6c",
+  "implementation_kind": "ported-core",
+  "status": "passed-local-tests",
+  "provenance": {
+    "upstream_repository": "https://github.com/scipy/scipy",
+    "commit": "fcdc3d7b7c1b950d874ac3e890cccde3e2de1c6c",
+    "stars_at_mining": 15206,
+    "repository_created_year": 2011,
+    "license_spdx": "BSD-3-Clause",
+    "license_path": "LICENSE.txt",
+    "license_sha256": "90759cc353fb9ceed7110f63207c920264693a9db7a46c90d5b5ff04ab424f62",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2001, 2002 Enthought, Inc.",
+      "Copyright (c) 2003-2012 SciPy Developers.",
+      "Copyright 1985, 1987 by Stephen L. Moshier",
+      " * Copyright 1985, 1987 by Stephen L. Moshier",
+      "  Copyright 1984, 1995, 2000 by Stephen L. Moshier",
+      "Copyright (c) 2003-2016 SciPy Developers."
+    ],
+    "additional_licenses": [
+      {
+        "path": "LICENSES/CEPHES_BSD_PERMISSION.txt",
+        "upstream_url": "https://github.com/scipy/scipy/blob/92d2a8592782ee19a1161d0bf3fc2241ba78bb63/LICENSES_bundled.txt",
+        "commit": "92d2a8592782ee19a1161d0bf3fc2241ba78bb63",
+        "scope": "original LF lines 94-128",
+        "sha256": "c3255036952d180c1e855cb2e50be8c2c528db580a9632a070820887a7997e2a"
+      },
+      {
+        "path": "LICENSES/SCIPY_VALIDATION_LICENSE",
+        "upstream_url": "https://github.com/scipy/scipy/blob/03b1092cf0e0bdebcbe98a44d289208a1e597416/LICENSE.txt",
+        "commit": "03b1092cf0e0bdebcbe98a44d289208a1e597416",
+        "scope": "original LF lines 1-EOF",
+        "sha256": "142b6deb0132be1adba8d9ba9f9027629f5a9573be3a829ed8a53733473ae0a1"
+      }
+    ],
+    "mined_date": "2026-11-11",
+    "timezone": "Europe/Istanbul",
+    "metadata_source": "public GitHub repository API, observed this mining round",
+    "evidence": [
+      {
+        "path": "scipy/special/cephes/igam.c",
+        "original_path": "scipy/special/cephes/igam.c",
+        "url": "https://github.com/scipy/scipy/blob/fcdc3d7b7c1b950d874ac3e890cccde3e2de1c6c/scipy/special/cephes/igam.c",
+        "commit": "fcdc3d7b7c1b950d874ac3e890cccde3e2de1c6c",
+        "sha256": "2e38666d72c04cdc34013cff944d7a6a4ace8cce657df3ef16f9b74e368878b5",
+        "original_full_file_sha256": "f756039d2d968694eb34a11a7634967919a64e13264f97a234b968a4c83d8515",
+        "scope": "original LF lines 86-EOF"
+      },
+      {
+        "path": "igam_documentation_excerpt.txt",
+        "original_path": "scipy/special/cephes/igam.c",
+        "url": "https://github.com/scipy/scipy/blob/fcdc3d7b7c1b950d874ac3e890cccde3e2de1c6c/scipy/special/cephes/igam.c",
+        "commit": "fcdc3d7b7c1b950d874ac3e890cccde3e2de1c6c",
+        "sha256": "ff966978c03d4e434f783c1b24404a1627d93d011db7534254c8ebf737059f22",
+        "original_full_file_sha256": "f756039d2d968694eb34a11a7634967919a64e13264f97a234b968a4c83d8515",
+        "scope": "original LF lines 1-82"
+      },
+      {
+        "path": "secondary/gamma_tests_excerpt.txt",
+        "original_path": "scipy/special/tests/test_basic.py",
+        "url": "https://github.com/scipy/scipy/blob/03b1092cf0e0bdebcbe98a44d289208a1e597416/scipy/special/tests/test_basic.py",
+        "commit": "03b1092cf0e0bdebcbe98a44d289208a1e597416",
+        "sha256": "a24e29e48239bbaaaf7c622a9d130b3933127a94a95355696aa0041b60e67fd3",
+        "original_full_file_sha256": "299245f565438e2de3860b54109c17224f18d9582c07c82cfbc82cf19c78f084",
+        "scope": "original LF lines 1850-1895"
+      },
+      {
+        "path": "secondary/Cephes_BSD_permission.txt",
+        "original_path": "LICENSES_bundled.txt",
+        "url": "https://github.com/scipy/scipy/blob/92d2a8592782ee19a1161d0bf3fc2241ba78bb63/LICENSES_bundled.txt",
+        "commit": "92d2a8592782ee19a1161d0bf3fc2241ba78bb63",
+        "sha256": "c3255036952d180c1e855cb2e50be8c2c528db580a9632a070820887a7997e2a",
+        "original_full_file_sha256": "2ef7ab02d0a5f17837658d11761ef9892c38276714bed3338ed145bd2cf9865b",
+        "scope": "original LF lines 94-128"
+      }
+    ],
+    "reference_values": "Native reference values were produced by the pinned original C body with the documented libm-lgamma/platform shim. Independent published literal anchors are from later v0.19.1 test_basic.py (including P(10,.05)=2.5715803516000736e-20); the distinct source/test/license commits are explicitly recorded. The inverse fixture P(50,11) is honestly labelled a derived forward check."
+  },
+  "inputs": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "shape": {
+        "type": "number",
+        "minimum": 1e-05,
+        "maximum": 1000
+      },
+      "x": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 10000
+      }
+    },
+    "required": [
+      "shape",
+      "x"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "Raw CLI byte limit and POSIX alarm; strict schema, finite values and nesting checks; MCP subprocess killed/reaped after 10 seconds. One active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "numerical_runtime": "Python standard library only"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "tool_name": "skillpack_m014"
+  },
+  "limitations": "Legacy double-precision method, not a modern uniform-asymptotic implementation. Shape 1e-5..1000 and x 0..10000; extreme tails can underflow and subtraction can lose relative tail accuracy. This is a special-function primitive, not a fitted distribution, quantile solver or statistical significance recommendation. No arbitrary precision or blanket digit guarantee.",
+  "port_notes": "Ports the v0.15.1 C igam.c algorithm (source identifies Cephes April 1987), including branch selection, MAXLOG guard, fraction renormalization by 2^52 and series convergence at MACHEP=2^-53. Python math.lgamma substitutes for the separate Cephes lgam implementation; iteration caps are explicit new safety bounds. The old source carries its original copyright but only a platform include and algorithm body are redistributed as compilable evidence; a nonlegal postal-contact line is omitted. Full SciPy BSD text and the separately pinned explicit Cephes BSD author-permission block are preserved. No claim of bit-identical full-Cephes behavior.",
+  "validation": {
+    "pytest_pack_tests_passed": 42,
+    "full_release_tests_passed": 324,
+    "native_C_reference_rerun": true,
+    "original_Fortran_binary_executed": false,
+    "complete_upstream_test_suite_executed": false
+  }
+}

@@ -1,0 +1,9 @@
+Upstream: https://github.com/scipy/scipy
+Commit: 92d2a8592782ee19a1161d0bf3fc2241ba78bb63
+License: BSD-3-Clause
+
+Original copyright notices (verbatim; source comment prefixes retained where present):
+Copyright (c) 2001-2002 Enthought, Inc. 2003-2024, SciPy Developers.
+
+Full source-specific notices remain under upstream/. Additional licenses are in LICENSES/ where applicable. Only required public upstream legal attribution is included; no project-owner identity or contact data is recorded.
+AI-generated standalone adaptation and teaching material; no upstream endorsement or independent certification.

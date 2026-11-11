@@ -127,6 +127,8 @@ MCP destekleyen bir uygulamaya bağlamak için: [cli/README.md](cli/README.md#mc
 
 Üç örnek paket vardır: fabrika (rulman kontrolü), lokanta (soğuk mal kabul), okul (kazanım telafi kararı). Eşik değerleri örnektir; gerçek bir usta onayı taşımazlar ([examples/README.md](examples/README.md)).
 
+Sayısal hesap modülleri ayrı durur: [`paketler/`](paketler/). Her biri `manifest.json` ile çalışan bağımsız bir komut satırı ve MCP aracıdır; bu örneklerin `skillpack.yaml` akışına karışmaz. Ne işe yaradıkları Türkçe olarak [`paketler/README.md`](paketler/README.md) içindedir.
+
 | Belge | İçerik |
 |---|---|
 | [spec/SKILLPACK_v0.1.md](spec/SKILLPACK_v0.1.md) | Standart: paket yapısı, akış profili, modelin sınırı, imza, iptal, uygunluk, MCP bağlaması |
@@ -150,6 +152,7 @@ Uzun vadeli hedefler: [docs/TEKNIK_PROJE_v0.1.md](docs/TEKNIK_PROJE_v0.1.md) (9 
 | `spec/` | skillpack v0.1-taslak spesifikasyonu | 🚧 Taslak |
 | `cli/` | Referans çalıştırıcı (Python): `init`, `validate`, `test`, `keygen`, `sign`, `verify`, `list`, `run`, `ask`, `serve` (MCP), `route-test`; JSON şemaları | 🚧 MVP |
 | `examples/` | Üç imzalı örnek paket ve güvenilen açık anahtar | 🚧 Örnek (usta onayı yok) |
+| `paketler/` | Bağımsız sayısal modüller (M001–M020) ve Türkçe dizin | Sayısal araç |
 | `schemas/` | Şemaların yerini gösterir (`cli/skillpack/schemas/`) | 🚧 MVP alt kümesi |
 | `docs/` | Yöntem belgesi, teknik taslak, tartışma notları | Taslak |
 | `sablon/` | Adım şablonu, boş iskelet, kutu kaldırma örneği (DEMO), kurulum sırası | 🚧 Taslak (çalıştırıcı uygulamıyor) |

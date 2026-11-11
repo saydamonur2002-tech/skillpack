@@ -1,0 +1,157 @@
+{
+  "id": "M004",
+  "name": "Spherical great-circle distance and bearings",
+  "description": "Haversine central angle and spherical great-circle distance, with forward initial/final bearings and an explicit positive sphere radius. This is a spherical model, not a WGS84 ellipsoidal result.",
+  "version": "1.0.0",
+  "date": "2026-11-11",
+  "tier": "revival",
+  "license": "MIT",
+  "distribution": "public-ok",
+  "source_url": "https://github.com/chrisveness/geodesy",
+  "upstream_commit_or_version": "3e9fdd35b71dd86cee12383eccdf000ad6741e9d",
+  "implementation_kind": "ported-core",
+  "status": "tested",
+  "provenance": {
+    "upstream_repository": "https://github.com/chrisveness/geodesy",
+    "commit": "3e9fdd35b71dd86cee12383eccdf000ad6741e9d",
+    "stars_at_mining": 1228,
+    "repository_created_year": 2014,
+    "license_spdx": "MIT",
+    "license_path": "LICENSE",
+    "license_sha256": "3cac8a426b3c52d8c7686ad2d6c599ac8cc86ec69d769c12a050ca7e31e40ff1",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2014 Chris Veness"
+    ],
+    "mined_date": "2026-11-11",
+    "timezone": "Europe/Istanbul",
+    "evidence": [
+      {
+        "path": "latlon-spherical.js",
+        "url": "https://github.com/chrisveness/geodesy/blob/3e9fdd35b71dd86cee12383eccdf000ad6741e9d/latlon-spherical.js",
+        "sha256": "97b8a730869bc33a0ac2b474556c89bc37c93f4fe0a3989b8a76eb06c55f6a6e",
+        "scope": "complete original file"
+      },
+      {
+        "path": "test/latlon-spherical-tests.js",
+        "url": "https://github.com/chrisveness/geodesy/blob/3e9fdd35b71dd86cee12383eccdf000ad6741e9d/test/latlon-spherical-tests.js",
+        "sha256": "c3a38b126242202f1a8bc1a0656fd73e6ecf7e1bd2e0f0f02f353fd730c37e19",
+        "scope": "complete original file"
+      }
+    ],
+    "reference_values": "test/latlon-spherical-tests.js:34-35, 138-144. The fixture rounded values have the same precision here, not invented extra digits."
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "lat1": {
+        "type": "number",
+        "minimum": -90,
+        "maximum": 90
+      },
+      "lon1": {
+        "type": "number",
+        "minimum": -180,
+        "maximum": 180
+      },
+      "lat2": {
+        "type": "number",
+        "minimum": -90,
+        "maximum": 90
+      },
+      "lon2": {
+        "type": "number",
+        "minimum": -180,
+        "maximum": 180
+      },
+      "radius_m": {
+        "type": "number",
+        "exclusiveMinimum": 0,
+        "maximum": 1000000000.0
+      }
+    },
+    "required": [
+      "lat1",
+      "lon1",
+      "lat2",
+      "lon2"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "CLI raw UTF-8 bound and alarm; schema plus finite-value/nesting checks; MCP subprocess killed after 10 seconds; one active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "numerical_runtime": "Python standard library only"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "tool_name": "skillpack_m004"
+  },
+  "limitations": "Decimal-degree coordinates; default radius 6371000 m. Real Earth distances differ from the spherical approximation. Undefined bearings at coincident or exactly antipodal points are null. No geocoding, terrain, route planning or live navigation.",
+  "port_notes": "Ports distanceTo, initialBearingTo and finalBearingTo. Haversine is clamped into [0,1] against floating-point excursions. Undefined coincident/antipodal bearings are explicitly null. The radius is in metres in this adapter.",
+  "verification": {
+    "test_count": 22,
+    "local_tests": 21,
+    "real_mcp_stdio_tests": 1,
+    "status": "passed",
+    "shared_timeout_tests": 2,
+    "suite_total": 261
+  }
+}

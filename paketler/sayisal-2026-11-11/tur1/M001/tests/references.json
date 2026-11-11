@@ -1,0 +1,74 @@
+[
+  {
+    "input": {
+      "x": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "y": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "query": [
+        0,
+        0.5,
+        1,
+        10
+      ]
+    },
+    "expected_subset": {
+      "values": [
+        0,
+        0.5,
+        1,
+        10
+      ]
+    },
+    "absolute_tolerance": 1e-12,
+    "origin": "Pinned upstream test fixture"
+  },
+  {
+    "input": {
+      "x": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "y": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "query": [
+        10,
+        1,
+        0,
+        0.5,
+        1,
+        10
+      ]
+    },
+    "expected_subset": {
+      "values": [
+        10,
+        1,
+        0,
+        0.5,
+        1,
+        10
+      ]
+    },
+    "absolute_tolerance": 1e-12,
+    "origin": "Pinned upstream test fixture"
+  }
+]

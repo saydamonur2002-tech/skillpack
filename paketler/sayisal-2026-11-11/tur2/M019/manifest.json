@@ -1,0 +1,176 @@
+{
+  "id": "M019",
+  "name": "IAU 2000 Earth rotation angle from split UT1 Julian date",
+  "description": "Compute the IAU 2000 Earth Rotation Angle in radians [0,2*pi) and degrees from an explicitly supplied two-part UT1 Julian Date, preserving the original ERFA split-date arithmetic and normalization.",
+  "version": "1.0.0",
+  "date": "2026-11-11",
+  "tier": "revival",
+  "license": "BSD-3-Clause",
+  "distribution": "public-ok",
+  "source_url": "https://github.com/liberfa/erfa",
+  "upstream_commit_or_version": "1a8044cde5b7763295d472a6443387239127c6c8",
+  "implementation_kind": "ported-core",
+  "status": "passed-local-tests",
+  "provenance": {
+    "upstream_repository": "https://github.com/liberfa/erfa",
+    "commit": "1a8044cde5b7763295d472a6443387239127c6c8",
+    "stars_at_mining": 181,
+    "repository_created_year": 2013,
+    "license_spdx": "BSD-3-Clause",
+    "license_path": "LICENSE",
+    "license_sha256": "b1858f9a263f22c438a455a32945da51a31a0ae25a21055da13bb7ed57cc3b51",
+    "copyright_lines_verbatim": [
+      "Copyright (C) 2013-2021, NumFOCUS Foundation.",
+      "**  Copyright (C) 2013-2023, NumFOCUS Foundation."
+    ],
+    "additional_licenses": [],
+    "mined_date": "2026-11-11",
+    "timezone": "Europe/Istanbul",
+    "metadata_source": "public GitHub repository API, observed this mining round",
+    "evidence": [
+      {
+        "path": "src/era00.c",
+        "original_path": "src/era00.c",
+        "url": "https://github.com/liberfa/erfa/blob/1a8044cde5b7763295d472a6443387239127c6c8/src/era00.c",
+        "commit": "1a8044cde5b7763295d472a6443387239127c6c8",
+        "sha256": "91c092c322d070305ba02873005bcb03110d7c26674fbdc7105477c50543ffb5",
+        "original_full_file_sha256": "91c092c322d070305ba02873005bcb03110d7c26674fbdc7105477c50543ffb5",
+        "scope": "original LF lines 1-EOF"
+      },
+      {
+        "path": "src/anp.c",
+        "original_path": "src/anp.c",
+        "url": "https://github.com/liberfa/erfa/blob/1a8044cde5b7763295d472a6443387239127c6c8/src/anp.c",
+        "commit": "1a8044cde5b7763295d472a6443387239127c6c8",
+        "sha256": "41f132914547ce4137edf024bc809fd7dfed3e0f5ff5b38f22313c884e8978e3",
+        "original_full_file_sha256": "41f132914547ce4137edf024bc809fd7dfed3e0f5ff5b38f22313c884e8978e3",
+        "scope": "original LF lines 1-EOF"
+      },
+      {
+        "path": "t_era00_excerpt.c",
+        "original_path": "src/t_erfa_c.c",
+        "url": "https://github.com/liberfa/erfa/blob/1a8044cde5b7763295d472a6443387239127c6c8/src/t_erfa_c.c",
+        "commit": "1a8044cde5b7763295d472a6443387239127c6c8",
+        "sha256": "bde4352a823f8ed4cc16c1c69485f82ede42a2de6182ba197d933210603793f3",
+        "original_full_file_sha256": "8a92d0099c48df31ca566bea881c19497dc295dba58dba7136cc2f8443c31f15",
+        "scope": "original LF lines 3613-3636"
+      },
+      {
+        "path": "src/erfa.h",
+        "original_path": "src/erfa.h",
+        "url": "https://github.com/liberfa/erfa/blob/1a8044cde5b7763295d472a6443387239127c6c8/src/erfa.h",
+        "commit": "1a8044cde5b7763295d472a6443387239127c6c8",
+        "sha256": "9549553b95ca2fbbcdcabcc69d82fb3cdd376c28b03c2793200138ff55727088",
+        "original_full_file_sha256": "9549553b95ca2fbbcdcabcc69d82fb3cdd376c28b03c2793200138ff55727088",
+        "scope": "complete original file"
+      },
+      {
+        "path": "src/erfam.h",
+        "original_path": "src/erfam.h",
+        "url": "https://github.com/liberfa/erfa/blob/1a8044cde5b7763295d472a6443387239127c6c8/src/erfam.h",
+        "commit": "1a8044cde5b7763295d472a6443387239127c6c8",
+        "sha256": "0da6313033aacf9c64533a7e74be49ecda97b4aaa87e134f98287e4ff279886f",
+        "original_full_file_sha256": "0da6313033aacf9c64533a7e74be49ecda97b4aaa87e134f98287e4ff279886f",
+        "scope": "complete original file"
+      }
+    ],
+    "reference_values": "The literal t_era00 fixture is (2400000.5,54388.0) -> 0.4022837240028158102 radians, tolerance 1e-12. Additional split, reversed-part and negative-offset references were generated with the exact pinned original C functions."
+  },
+  "inputs": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "jd1": {
+        "type": "number",
+        "minimum": -100000000.0,
+        "maximum": 100000000.0
+      },
+      "jd2": {
+        "type": "number",
+        "minimum": -100000000.0,
+        "maximum": 100000000.0
+      }
+    },
+    "required": [
+      "jd1",
+      "jd2"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "Raw CLI byte limit and POSIX alarm; strict schema, finite values and nesting checks; MCP subprocess killed/reaped after 10 seconds. One active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "numerical_runtime": "Python standard library only"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "tool_name": "skillpack_m019"
+  },
+  "limitations": "Inputs MUST be UT1, not an assumed UTC timestamp. No UT1-UTC lookup, IERS data, polar motion, sidereal-time model, nutation, observer coordinates or full Earth-orientation transform. The schema only bounds numerical values; it cannot prove a timescale label is correct. Very remote epochs can lose numerical/model accuracy despite being inside the arithmetic bounds.",
+  "port_notes": "Ports eraEra00 with ordering of the two date parts, t=d1+(d2-J2000), fractional parts using C-style fmod, the exact IAU constants and eraAnp normalization. Degrees are a derived convenience output. This is a separate Earth-rotation primitive, not a generic 3D rotation pack and not the earlier solar-position algorithm. Full ERFA source notices remain intact.",
+  "validation": {
+    "pytest_pack_tests_passed": 31,
+    "full_release_tests_passed": 324,
+    "native_C_reference_rerun": true,
+    "original_Fortran_binary_executed": false,
+    "complete_upstream_test_suite_executed": false
+  }
+}

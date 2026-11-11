@@ -1,0 +1,107 @@
+[
+  {
+    "input": {
+      "year": 2003,
+      "month": 6,
+      "day": 1
+    },
+    "expected_subset": {
+      "jd_part1": 2400000.5,
+      "jd_part2": 52791.0,
+      "mjd": 52791.0,
+      "jd": 2452791.5
+    },
+    "absolute_tolerance": 0,
+    "origin": "native pinned ERFA eraCal2jd; 2003-06-01 also literal t_cal2jd fixture"
+  },
+  {
+    "input": {
+      "year": 2000,
+      "month": 1,
+      "day": 1
+    },
+    "expected_subset": {
+      "jd_part1": 2400000.5,
+      "jd_part2": 51544.0,
+      "mjd": 51544.0,
+      "jd": 2451544.5
+    },
+    "absolute_tolerance": 0,
+    "origin": "native pinned ERFA eraCal2jd; 2003-06-01 also literal t_cal2jd fixture"
+  },
+  {
+    "input": {
+      "year": 0,
+      "month": 2,
+      "day": 29
+    },
+    "expected_subset": {
+      "jd_part1": 2400000.5,
+      "jd_part2": -678882.0,
+      "mjd": -678882.0,
+      "jd": 1721118.5
+    },
+    "absolute_tolerance": 0,
+    "origin": "native pinned ERFA eraCal2jd; 2003-06-01 also literal t_cal2jd fixture"
+  },
+  {
+    "input": {
+      "year": -4799,
+      "month": 1,
+      "day": 1
+    },
+    "expected_subset": {
+      "jd_part1": 2400000.5,
+      "jd_part2": -2431739.0,
+      "mjd": -2431739.0,
+      "jd": -31738.5
+    },
+    "absolute_tolerance": 0,
+    "origin": "native pinned ERFA eraCal2jd; 2003-06-01 also literal t_cal2jd fixture"
+  },
+  {
+    "input": {
+      "year": 1900,
+      "month": 3,
+      "day": 1
+    },
+    "expected_subset": {
+      "jd_part1": 2400000.5,
+      "jd_part2": 15079.0,
+      "mjd": 15079.0,
+      "jd": 2415079.5
+    },
+    "absolute_tolerance": 0,
+    "origin": "native pinned ERFA eraCal2jd; 2003-06-01 also literal t_cal2jd fixture"
+  },
+  {
+    "input": {
+      "year": 2000,
+      "month": 2,
+      "day": 29
+    },
+    "expected_subset": {
+      "jd_part1": 2400000.5,
+      "jd_part2": 51603.0,
+      "mjd": 51603.0,
+      "jd": 2451603.5
+    },
+    "absolute_tolerance": 0,
+    "origin": "native pinned ERFA eraCal2jd; 2003-06-01 also literal t_cal2jd fixture"
+  },
+  {
+    "input": {
+      "year": 9999,
+      "month": 12,
+      "day": 31
+    },
+    "expected_subset": {
+      "jd_part1": 2400000.5,
+      "jd_part2": 2973483.0,
+      "mjd": 2973483.0,
+      "jd": 5373483.5
+    },
+    "absolute_tolerance": 0,
+    "origin": "native pinned ERFA eraCal2jd; 2003-06-01 also literal t_cal2jd fixture"
+  }
+]

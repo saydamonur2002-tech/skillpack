@@ -1,0 +1,158 @@
+{
+  "id": "M003",
+  "name": "WGS84 Vincenty inverse geodesic",
+  "description": "Solves the WGS84 ellipsoidal inverse geodesic using Vincenty iteration: surface distance in metres and forward initial/final bearings. Reports non-convergence rather than substituting a spherical answer.",
+  "version": "1.0.0",
+  "date": "2026-11-11",
+  "tier": "revival",
+  "license": "MIT",
+  "distribution": "public-ok",
+  "source_url": "https://github.com/chrisveness/geodesy",
+  "upstream_commit_or_version": "3e9fdd35b71dd86cee12383eccdf000ad6741e9d",
+  "implementation_kind": "ported-core",
+  "status": "tested",
+  "provenance": {
+    "upstream_repository": "https://github.com/chrisveness/geodesy",
+    "commit": "3e9fdd35b71dd86cee12383eccdf000ad6741e9d",
+    "stars_at_mining": 1228,
+    "repository_created_year": 2014,
+    "license_spdx": "MIT",
+    "license_path": "LICENSE",
+    "license_sha256": "3cac8a426b3c52d8c7686ad2d6c599ac8cc86ec69d769c12a050ca7e31e40ff1",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2014 Chris Veness"
+    ],
+    "mined_date": "2026-11-11",
+    "timezone": "Europe/Istanbul",
+    "evidence": [
+      {
+        "path": "latlon-ellipsoidal-vincenty.js",
+        "url": "https://github.com/chrisveness/geodesy/blob/3e9fdd35b71dd86cee12383eccdf000ad6741e9d/latlon-ellipsoidal-vincenty.js",
+        "sha256": "c2cb115d2ce6076de144d4592ff85e01d842b37e4b9e893a279579e8b25e8cf8",
+        "scope": "complete original file"
+      },
+      {
+        "path": "latlon-ellipsoidal.js",
+        "url": "https://github.com/chrisveness/geodesy/blob/3e9fdd35b71dd86cee12383eccdf000ad6741e9d/latlon-ellipsoidal.js",
+        "sha256": "cc6570213065b7f82e3b04e70df278df5c18e43f9ccb86928e62aa109f42aabd",
+        "scope": "complete original file"
+      },
+      {
+        "path": "test/latlon-ellipsoidal-vincenty-tests.js",
+        "url": "https://github.com/chrisveness/geodesy/blob/3e9fdd35b71dd86cee12383eccdf000ad6741e9d/test/latlon-ellipsoidal-vincenty-tests.js",
+        "sha256": "b9e7163e016ca586e1d46b5fc266651a669862c36891e8b9c38aca053850918e",
+        "scope": "complete original file"
+      }
+    ],
+    "reference_values": "test/latlon-ellipsoidal-vincenty-tests.js:22-24, 65-71, 92-100, 103-122, 127-142."
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "lat1": {
+        "type": "number",
+        "minimum": -90,
+        "maximum": 90
+      },
+      "lon1": {
+        "type": "number",
+        "minimum": -180,
+        "maximum": 180
+      },
+      "lat2": {
+        "type": "number",
+        "minimum": -90,
+        "maximum": 90
+      },
+      "lon2": {
+        "type": "number",
+        "minimum": -180,
+        "maximum": 180
+      }
+    },
+    "required": [
+      "lat1",
+      "lon1",
+      "lat2",
+      "lon2"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "CLI raw UTF-8 bound and alarm; schema plus finite-value/nesting checks; MCP subprocess killed after 10 seconds; one active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "numerical_runtime": "Python standard library only"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "tool_name": "skillpack_m003"
+  },
+  "limitations": "WGS84 surface points only; decimal degrees, no altitude, datum conversion or other ellipsoids. Vincenty can fail near antipodes; this returns a structured error. Coincident bearings are null, not JSON NaN. Distance is rounded to millimetres and bearings to 7 decimals as upstream public methods do.",
+  "port_notes": "Port of inverse() and the upstream public distance/bearing rounding, including the equatorial and exactly antipodal branches and 1000-iteration guard. Non-convergence becomes an error instead of upstream public-method NaN. Undefined coincident bearings become null. Longitude difference is normalized to [-180,180); physically coincident poles and equivalent antimeridian representations are explicitly detected.",
+  "verification": {
+    "test_count": 40,
+    "local_tests": 39,
+    "real_mcp_stdio_tests": 1,
+    "status": "passed",
+    "shared_timeout_tests": 2,
+    "suite_total": 261
+  }
+}

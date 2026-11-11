@@ -1,0 +1,159 @@
+{
+  "id": "M002",
+  "name": "Fornberg arbitrary-grid finite-difference weights",
+  "description": "Computes finite-difference weights of every derivative order up to the requested order on distinct, arbitrarily spaced real nodes. Optional sampled values are combined into one derivative estimate.",
+  "version": "1.0.0",
+  "date": "2026-11-11",
+  "tier": "revival",
+  "license": "BSD-3-Clause",
+  "distribution": "public-ok",
+  "source_url": "https://github.com/pbrod/numdifftools",
+  "upstream_commit_or_version": "54ba279ca9915cbd4fa07ccb2f959b82815950f1",
+  "implementation_kind": "ported-core",
+  "status": "tested",
+  "provenance": {
+    "upstream_repository": "https://github.com/pbrod/numdifftools",
+    "commit": "54ba279ca9915cbd4fa07ccb2f959b82815950f1",
+    "stars_at_mining": 283,
+    "repository_created_year": 2014,
+    "license_spdx": "BSD-3-Clause",
+    "license_path": "LICENSE.txt",
+    "license_sha256": "8edc359211fcef86340541a06bf1ad383054b184282a742b98f904d8cf556f87",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2009-2026, Per A. Brodtkorb, John D'Errico"
+    ],
+    "mined_date": "2026-11-11",
+    "timezone": "Europe/Istanbul",
+    "evidence": [
+      {
+        "path": "src/numdifftools/fornberg.py",
+        "url": "https://github.com/pbrod/numdifftools/blob/54ba279ca9915cbd4fa07ccb2f959b82815950f1/src/numdifftools/fornberg.py",
+        "sha256": "4c5852aa17c664f35c88661ed8e17395d605e05da691c1e162cd0cff419ad336",
+        "scope": "complete original file"
+      },
+      {
+        "path": "src/numdifftools/tests/test_fornberg.py",
+        "url": "https://github.com/pbrod/numdifftools/blob/54ba279ca9915cbd4fa07ccb2f959b82815950f1/src/numdifftools/tests/test_fornberg.py",
+        "sha256": "af099b39570039e514ed3476799650de9cd3b290f4b2f78ca507808a9d5f88ca",
+        "scope": "complete original file"
+      }
+    ],
+    "reference_values": "src/numdifftools/tests/test_fornberg.py:50-60 provides the complete five-point derivative coefficient matrix; fornberg.py:22-34 provides additional central weights."
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "nodes": {
+        "type": "array",
+        "items": {
+          "type": "number",
+          "minimum": -1e+100,
+          "maximum": 1e+100
+        },
+        "minItems": 1,
+        "maxItems": 25
+      },
+      "at": {
+        "type": "number",
+        "minimum": -1e+100,
+        "maximum": 1e+100
+      },
+      "order": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 8
+      },
+      "values": {
+        "type": "array",
+        "items": {
+          "type": "number",
+          "minimum": -1e+100,
+          "maximum": 1e+100
+        },
+        "minItems": 1,
+        "maxItems": 25
+      }
+    },
+    "required": [
+      "nodes"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "CLI raw UTF-8 bound and alarm; schema plus finite-value/nesting checks; MCP subprocess killed after 10 seconds; one active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "numerical_runtime": "Python standard library only"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "tool_name": "skillpack_m002"
+  },
+  "limitations": "At most 25 distinct real nodes, derivative order 0..8 and smaller than node count. No function strings, arbitrary code, complex nodes, adaptive step-size selection or trustworthy error bound. Clustered nodes amplify noise and roundoff.",
+  "port_notes": "Scalar-list port of fd_weights_all / _fd_weights_all, preserving the recurrence and update ordering. Only real numbers are supported; SciPy/NumPy are not runtime dependencies.",
+  "verification": {
+    "test_count": 28,
+    "local_tests": 27,
+    "real_mcp_stdio_tests": 1,
+    "status": "passed",
+    "shared_timeout_tests": 2,
+    "suite_total": 261
+  }
+}

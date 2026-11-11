@@ -1,0 +1,11 @@
+Upstream: https://github.com/PyWavelets/pywt
+Commit: 7b9e57ed639e7f87490a5bcb31f7b6c088d19031
+License: MIT
+
+Original copyright lines (verbatim):
+Copyright (c) 2006-2012 Filip Wasilewski <http://en.ig.ma/>
+Copyright (c) 2012-     The PyWavelets Developers <https://github.com/PyWavelets/pywt>
+
+Original source and reference notices are preserved under upstream/.
+AI-generated standalone adaptation and documentation; no upstream endorsement.
+Project concept and packaging direction belong to the project designer; no personal identity is recorded.

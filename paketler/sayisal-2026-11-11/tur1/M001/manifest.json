@@ -1,0 +1,167 @@
+{
+  "id": "M001",
+  "name": "Consistent-end cubic spline and derivatives",
+  "description": "One-dimensional cubic spline with second derivatives fixed by the first/last four-point interpolating cubics; optional natural endpoints. Returns value, first and second derivatives, including explicit polynomial extrapolation.",
+  "version": "1.0.0",
+  "date": "2026-11-11",
+  "tier": "revival",
+  "license": "MIT",
+  "distribution": "public-ok",
+  "source_url": "https://github.com/certik/fortran-utils",
+  "upstream_commit_or_version": "b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88",
+  "implementation_kind": "ported-core",
+  "status": "tested",
+  "provenance": {
+    "upstream_repository": "https://github.com/certik/fortran-utils",
+    "commit": "b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88",
+    "stars_at_mining": 229,
+    "repository_created_year": 2012,
+    "license_spdx": "MIT",
+    "license_path": "LICENSE",
+    "license_sha256": "476e95efa6197b0c3b16e9740d215a3182526777106f77d312f7e47e2796beda",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2012 Ond\u0159ej \u010cert\u00edk"
+    ],
+    "mined_date": "2026-11-11",
+    "timezone": "Europe/Istanbul",
+    "evidence": [
+      {
+        "path": "src/splines.f90",
+        "url": "https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/src/splines.f90",
+        "sha256": "63a2ebb10cbe8a6d382e6f7bb62e5add4207b0fb5d52706173477c6a109bcccf",
+        "scope": "complete original file"
+      },
+      {
+        "path": "tests/splines/test_splines.f90",
+        "url": "https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/tests/splines/test_splines.f90",
+        "sha256": "5d73abffc21ee712d9148543495eff354b7cbe015379583d48cbfc21cc00b96b",
+        "scope": "complete original file"
+      }
+    ],
+    "reference_values": "tests/splines/test_splines.f90:15-27 (linear values and sine tolerance), and the x**2 endpoint/derivative assertions later in that file."
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "x": {
+        "type": "array",
+        "items": {
+          "type": "number",
+          "minimum": -1e+100,
+          "maximum": 1e+100
+        },
+        "minItems": 4,
+        "maxItems": 256
+      },
+      "y": {
+        "type": "array",
+        "items": {
+          "type": "number",
+          "minimum": -1e+100,
+          "maximum": 1e+100
+        },
+        "minItems": 4,
+        "maxItems": 256
+      },
+      "query": {
+        "type": "array",
+        "items": {
+          "type": "number",
+          "minimum": -1e+100,
+          "maximum": 1e+100
+        },
+        "minItems": 1,
+        "maxItems": 512
+      },
+      "boundary": {
+        "enum": [
+          "consistent",
+          "natural"
+        ]
+      }
+    },
+    "required": [
+      "x",
+      "y",
+      "query"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "CLI raw UTF-8 bound and alarm; schema plus finite-value/nesting checks; MCP subprocess killed after 10 seconds; one active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "numerical_runtime": "Python standard library only"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "tool_name": "skillpack_m001"
+  },
+  "limitations": "At least four strictly increasing finite knots, at most 256 knots and 512 query points. No smoothing, uncertainty estimate or multidimensional interpolation. Extrapolation evaluates the outer cubic and can be misleading.",
+  "port_notes": "The endpoint condition and interpolating spline are preserved. Upstream solves a banded coefficient system with LAPACK; this port solves the algebraically equivalent tridiagonal second-derivative system and a scaled four-point endpoint solve. Natural endpoints expose upstream bctype=1 with zero second derivatives. No LAPACK dependency.",
+  "verification": {
+    "test_count": 23,
+    "local_tests": 22,
+    "real_mcp_stdio_tests": 1,
+    "status": "passed",
+    "shared_timeout_tests": 2,
+    "suite_total": 261
+  }
+}

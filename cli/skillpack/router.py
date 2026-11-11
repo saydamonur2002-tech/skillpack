@@ -127,11 +127,12 @@ class OllamaRouter:
             return route
 
     def _select(self, utterance: str, packs: Mapping[str, Pack]) -> str | None:
-        choices = [{"name": name, "title": pack.title} for name, pack in packs.items()]
+        names = sorted(packs)
+        choices = [{"name": name, "title": packs[name].title} for name in names]
         schema = {
             "type": "object",
             "properties": {
-                "skill": {"type": "string", "enum": [*packs, "none"]},
+                "skill": {"type": "string", "enum": [*names, "none"]},
             },
             "required": ["skill"],
         }
@@ -142,15 +143,18 @@ class OllamaRouter:
         user = json.dumps({"utterance": utterance, "skills": choices}, ensure_ascii=False)
         result = self._chat(system, user, schema)
         skill = result.get("skill")
-        return None if skill in (None, "none") else skill
+        return skill if skill in packs else None
 
     def _extract(self, utterance: str, pack: Pack) -> dict[str, Any]:
         inputs = pack.flow["inputs"]
         properties = {}
         for name, spec in inputs.items():
-            prop: dict[str, Any] = {"type": [spec["type"], "null"]}
-            if "choices" in spec:
-                prop["enum"] = [*spec["choices"], None]
+            if spec["type"] in ("number", "integer"):
+                prop: dict[str, Any] = {"type": [spec["type"], "null"]}
+            elif spec["type"] == "bool":
+                prop = {"type": ["boolean", "null"]}
+            else:
+                prop = {"type": ["string", "null"], "enum": [*spec["choices"], None]}
             properties[name] = prop
         schema = {
             "type": "object",
@@ -162,4 +166,10 @@ class OllamaRouter:
             "Do not guess or compute. Use null for anything not stated."
         )
         user = json.dumps({"utterance": utterance, "inputs": list(inputs)}, ensure_ascii=False)
-        return self._chat(system, user, schema)
+        content = self._chat(system, user, schema)
+        # Şema modeli bağlasa da dönen JSON'a güvenilmez: boş ve tanımsız alanlar atılır.
+        return {
+            name: value
+            for name, value in content.items()
+            if name in properties and value is not None
+        }

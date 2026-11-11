@@ -1,0 +1,16 @@
+# ============================================================
+# YEREL PROFİL — Her işletme kendi değerlerini buraya yazar.
+# Adım dosyasındaki 'sert_sinir' dışına çıkamaz.
+# Değişiklik: LLM önerir -> şema kontrol eder -> insan onaylar -> testler koşar.
+# ============================================================
+profil:
+  paket: "<paket_adi>"
+  isletme: "<yer adı>"
+  surum: "<tarih veya numara>"
+  degerler:
+    <degisken>: <deger>              # örn: max_agirlik: 25
+  degisiklik_kaydi:
+    - tarih: "<YYYY-AA-GG>"
+      degisen: "<degisken: eski -> yeni>"
+      neden: "<örn: yeni standart>"
+      onaylayan: "<ad>"

@@ -1,0 +1,85 @@
+# ============================================================
+# SKILLPACK — BOŞ ADIM ŞABLONU (v0.1-taslak)
+# Bir tekniğin TEK bir adımı. Doldurmadan önce hiçbir alan çalışmaz.
+# "<...>" olan her yer işin sahibi (usta) tarafından doldurulur.
+# ============================================================
+
+adim:
+  id: "<kisa_ad>"                 # örn: kaldir, olc, kabul_karari
+  surum: "0.1.0"
+  ad: "<insanın anlayacağı ad>"
+
+  # 1) AMAÇ — Bu adım neyi başarır? (tek cümle, ölçülebilir)
+  amac: "<örn: kutuyu yerden 30 cm kaldırmak>"
+
+  # 2) GİRDİLER — Değer nereden gelir? Öncelik sırası SABİTTİR:
+  #    sensor > kayit > insan > llm   (alttaki üsttekini asla ezemez)
+  girdiler:
+    - ad: "<degisken>"
+      tur: "<number|integer|bool|choice|text>"
+      birim: "<örn: kg, °C>"
+      kaynak: ["<sensor:...>", "insan"]   # izinli kaynaklar, öncelik sırasıyla
+      tazelik_sn: <örn: 60>               # sensör verisi bundan eskiyse KULLANILMAZ
+      sert_sinir: {min: <..>, max: <..>}  # fiziksel/yasal sınır, profil değiştiremez
+      soru: "<eksikse insana sorulacak cümle>"
+
+  # 3) ÖN KOŞULLAR — Hepsi doğru değilse adım BAŞLAMAZ
+  on_kosullar:
+    - kosul: "<ifade, örn: kavrandi == true>"
+      aciklama: "<neden gerekli>"
+      saglanmazsa: "<bekle|sor|dur>"
+
+  # 4) TEHLİKE KURALLARI — Eksik veri olsa bile önce bunlar bakılır
+  #    Bilinen tek bir tehlike yeterlidir; "bilinmiyor"a düşmez.
+  tehlike:
+    - kosul: "<örn: agirlik > max_agirlik>"
+      sonuc: dur
+      mesaj: "<insana gösterilecek uyarı>"
+
+  # 5) KARAR / İŞLEM — Adımın kendisi (hesap, tablo, karar)
+  islem:
+    tur: "<compute|lookup|decide|act>"
+    tanim: {}                        # mevcut flow.yaml dilinde yazılır
+
+  # 6) ETKİ — Adım bitince dünyada ne değişmiş olmalı?
+  etki:
+    - "<örn: kutu_yuksekligi_cm == 30>"
+
+  # 7) DOĞRULAMA — Etki gerçekten oldu mu? Araç "başardım" demesi YETMEZ.
+  dogrulama:
+    olcum: "<sensor:... | insan_onayi>"
+    kosul: "<örn: abs(yukseklik - 30) <= 2>"
+    sure_sn: <örn: 5>
+    sonuclar: [basarili, basarisiz, bilinmiyor]   # üçü ayrı tutulur
+
+  # 8) BAŞARISIZLIKTA — Ne yapılır?
+  basarisizlikta:
+    tekrar: <örn: 1>
+    sonra: "<geri_al|dur|insana_sor>"
+
+  # 9) BAĞLAYICI — Bu adımı hangi yazılım/makine fiilen yapar? (çevre)
+  #    Adım yazılımdan bağımsızdır; burada sadece ARAYÜZ adı geçer.
+  baglayici:
+    arayuz: "<örn: kaldirici.v1>"    # aynı arayüzü sunan her yazılım takılabilir
+    eylem: "<örn: kaldir(yukseklik_cm)>"
+    eylem_izni: "<oneri|insan_onayli|otomatik>"   # varsayılan: oneri
+
+  # 10) LLM SINIRI — Model bu adımda neyi yapabilir?
+  llm:
+    yapabilir: [degeri_ayikla, soruyu_cevir, sonucu_anlat]
+    yapamaz: [karar_vermek, sensoru_ezmek, sert_siniri_degistirmek, eylem_baslatmak]
+
+  # 11) TESTLER — Paket bu senaryoları geçmeden çalışmaz
+  testler:
+    - ad: "<örn: normal kutu>"
+      girdi: {}
+      beklenen: "<sonuc adi>"         # boş beklenti = test GEÇERSİZ
+    - ad: "<örn: sınır üstü kutu>"
+      girdi: {}
+      beklenen: dur
+
+  # 12) KÖKEN — Kim yazdı, kim onayladı, hangi standarda dayanıyor
+  koken:
+    yazan: "<ad / rol>"
+    onaylayan: "<usta ad / rol>"      # boşsa paket 'DEMO' etiketiyle yüklenir
+    dayanak: ["<standart / yönetmelik / iç talimat>"]

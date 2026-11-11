@@ -1,0 +1,30 @@
+# ORNEK - gercek usta onayi yok, DEMO
+# ============================================================
+# Sert sınırlar. Profil bunları genişletemez.
+# Kaynaklar [VARSAYIM] ile işaretlidir; gerçek mevzuat kontrol edilmedi.
+# ============================================================
+
+sert_sinirlar:
+  - id: azami_yuk_kg
+    degisken: agirlik_kg
+    min: 0
+    max: 30
+    birim: kg
+    kaynak: cihaz_etiketi
+    not: "Örnek kaldırıcı kapasitesi 30 kg. [VARSAYIM] — gerçek cihaz etiketi ve mevzuat kontrol edilmedi."
+
+  - id: azami_yukseklik_cm
+    degisken: hedef_yukseklik_cm
+    min: 0
+    max: 50
+    birim: cm
+    kaynak: fizik
+    not: "Örnek kaldırıcı strok üstü 50 cm. [VARSAYIM] — gerçek cihaz etiketi kontrol edilmedi."
+
+  - id: agirlik_olcum_araligi_kg
+    degisken: agirlik_kg
+    min: 0
+    max: 50
+    birim: kg
+    kaynak: cihaz_etiketi
+    not: "Örnek ağırlık sensörünün ölçüm aralığı. [VARSAYIM] — gerçek cihaz etiketi kontrol edilmedi."

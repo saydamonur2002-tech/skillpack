@@ -43,7 +43,6 @@ Bu dosya, 9 Kasım 2026 tarihli taslağın temiz Markdown dönüşümüdür. Anl
 - [11. Yol haritası](#11-yol-haritası)
 - [12. Başarı ölçütleri](#12-başarı-ölçütleri)
 - [13. Riskler ve açık sorular](#13-riskler-ve-açık-sorular)
-- [14. Önerenin kamu görevlisi statüsüne ilişkin not](#14-önerenin-kamu-görevlisi-statüsüne-ilişkin-not)
 - [Ek A. Sözlük](#ek-a-sözlük)
 - [Ek B. Kaynaklar](#ek-b-kaynaklar)
 
@@ -156,7 +155,7 @@ Bu çalışmanın hedeflediği boşluk beş maddeye indirgenebilir. Her biri ayr
 - Merkezi bir pazar yeri işletmek ya da ödeme aracısı olmak. Standart fiyat ve lisans alanı tanımlar; ödeme altyapısı kapsam dışıdır.
 - Ham müşteri ya da hasta verisi paylaşımı. Paket yalnız damıtılmış kurallar ve anonimleştirilmiş örnekler taşır.
 - Klinik teşhis, tıbbi cihaz işlevi ya da düzenlenmiş güvenlik işlevi sertifikasyonu. Sağlık alanında kapsam idari/teknik iş akışlarıyla sınırlıdır.
-- Bir şirket kurmak. Proje açık kaynak / vakıf modeliyle ilerler (bkz. Bölüm 14).
+- Bir şirket kurmak. Proje açık kaynak / vakıf modeliyle ilerler.
 
 ### 2.3 Tasarım hedefleri (üç çerçeve)
 
@@ -683,7 +682,7 @@ Görev düzeyinde ayrıntılı ve "Başlamadı" işaretli plan bu depodaki [ROAD
 
 | Faz | Süre | Kilometre taşları | Çıkış ölçütü |
 |---|---|---|---|
-| F0 — Hazırlık | A0–A2 | Spesifikasyon taslağı v0.1 yayımı; geri bildirim çağrısı; hukuki ön görüş (Bölüm 14) | En az bir dış teknik inceleme; yazılı hukuki görüş alındı |
+| F0 — Hazırlık | A0–A2 | Spesifikasyon taslağı v0.1 yayımı; geri bildirim çağrısı; hukuki ön görüş | En az bir dış teknik inceleme; yazılı hukuki görüş alındı |
 | F1 — Çekirdek | A2–A6 | Şemalar + doğrulayıcı CLI; Sigstore imza/doğrulama; iki dijital örnek paket | Paket uçtan uca imzalanıp başka bir makinede doğrulanıyor |
 | F2 — Yerel çalışma | A5–A9 | Yerel depo + yönlendirici + izin uygulama; telefon istemcisi; öğretme döngüsü prototipi; görev başına verim düzeneği (Bölüm 2.3) | Geliştirici olmayan bir usta, yardımla bir beceriyi paketleyebiliyor |
 | F3 — Fiziksel profil | A8–A12 | `robot_profile` şeması; LeRobotDataset bağlantısı; koli ayırma simülasyon testi | Fiziksel paket simülasyonda kabul testlerini geçiyor |
@@ -735,24 +734,9 @@ Hedef değerler bilinçli olarak sayı içermiyor, çünkü taban ölçümü yok
 - Beceri paketleri için şeffaflık günlüğünü kim işletmeli; kamuya açık Sigstore örneği yeterli mi? `[EKSİK]`
 - Robot politikaları farklı donanımlar arasında ne ölçüde taşınabilir; profil eşleştirme kuralları ne olmalı? `[EKSİK]`
 - Lisans uygulatma olmadan sürdürülebilir bir mikro yaratıcı katkısı mümkün mü? `[EKSİK]`
-- Türkiye'de çalışan bilgisi/ticari sır ve memur katkısı için hukuki çerçeve (Bölüm 14) `[EKSİK]`
+- Türkiye'de çalışan bilgisi ve ticari sır için hukuki çerçeve `[EKSİK]`
 - Sertifikasyonun vakıf için sorumluluk doğurup doğurmadığı; sigorta/sorumluluk sınırı `[EKSİK]`
 - Telefon katmanında hangi model sınıfının pratikte yeterli olduğu `[EKSİK]`
-
----
-
-## 14. Önerenin kamu görevlisi statüsüne ilişkin not
-
-Öneren bir Türk devlet memurudur. 657 sayılı Devlet Memurları Kanunu md.28, memurların tacir veya esnaf sayılmalarını gerektirecek faaliyette bulunmalarını, ticaret ve sanayi müesseselerinde görev almalarını ve özel hukuk tüzel kişilerine ait işyerlerinde çalışmalarını yasaklar `[VERİ]` (657 sayılı DMK (mevzuat.gov.tr, PDF)). Bu nedenle proje şirket olarak değil, açık standart ve açık kaynak katkısı olarak kurgulanmıştır.
-
-Değerlendirilebilecek yollar (hiçbiri kesinleşmiş değildir):
-
-- **Açık kaynak / standart katkısı:** spesifikasyon metni ve referans kod 5846 sayılı FSEK kapsamında eser niteliği taşır; bilgisayar programları FSEK'te ilim ve edebiyat eseri olarak korunur `[VEKİL]` (5846 sayılı FSEK (mevzuat.gov.tr, PDF)). Devlet Personel Başkanlığı görüşlerinde, gizli bilgi içermemek kaydıyla memurun FSEK kapsamında eser üretmesinin md.28'e aykırı olmayacağı değerlendirilmiştir `[VEKİL]` (DPB görüşü: memurun FSEK kapsamında eser üretmesi (AGÜ arşivi, PDF); Görüş: memurların ticari faaliyetleri (ÇŞB arşivi, PDF)).
-- **Telif / lisans geliri:** eser üzerindeki mali hakların lisanslanmasından doğan gelir, ticari faaliyetten farklı değerlendirilebilir. Ancak düzenli bir pazar yeri işletmek, ücretli destek vermek ya da bir şirkette görev almak bu kapsamın dışında kalmalıdır.
-- **Dikkat:** internet üzerinden sunulan hizmetler ve uygulama geliştiriciliğinden elde edilen gelirin ticari kazanç sayılabileceğine dair görüşler de vardır `[VEKİL]` (Görüş: içerik üreticiliği / uygulama geliştiriciliği gelirleri (KTÜ arşivi, PDF)). Görevle bağlantılı eserlerde FSEK md.18 hakları kuruma bağlayabilir. Bu nedenle çalışma mesai dışında, kurum kaynakları ve gizli bilgi kullanılmadan yapılmalıdır.
-- **Vakıf rolü:** vakıf ya da çalışma grubunda gönüllü katkıcı/sürdürücü olmak ile ücretli görev almak farklı değerlendirilebilir. Linux Foundation bir ABD kuruluşu olduğu için, yurt dışı bir vakıfta ücretli görev ayrıca görüş gerektirir.
-
-**Hukuki teyit gerekli.** Yukarıdakiler kamuya açık görüş yazılarının özetidir, hukuki görüş değildir. Herhangi bir gelir, lisans devri ya da vakıf görevinden önce bağlı olunan kurumun personel biriminden ve bir avukattan yazılı görüş alınmalıdır `[EKSİK]`. Bu görüş, yol haritasında F0 fazının çıkış ölçütüdür.
 
 ---
 
@@ -867,11 +851,7 @@ Proje dosyaları: `beceri_standardi/` (`ozet.md`, `veri_tablosu.csv`, `kaynaklar
 | 27 | CNCF (vakıf emsali) |
 | 28 | AB Ticari Sırlar Direktifi 2016/943 |
 | 29 | AB Makine Tüzüğü 2023/1230 |
-| 30 | 657 sayılı Devlet Memurları Kanunu |
 | 31 | 5846 sayılı Fikir ve Sanat Eserleri Kanunu |
-| 32 | DPB görüşü: memur ve FSEK eserleri (AGÜ arşivi) |
-| 33 | Görüş: içerik üreticiliği / uygulama geliştiriciliği (KTÜ arşivi) |
-| 34 | Görüş: memurların ticari faaliyetleri (ÇŞB arşivi) |
 
 ### B.3 Bölüm 2.3 ile eklenen kaynaklar
 

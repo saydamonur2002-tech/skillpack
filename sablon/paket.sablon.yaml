@@ -1,0 +1,12 @@
+# ============================================================
+# DİKEY TEKNİK PAKETİ — adımları sıraya koyan merkez dosya
+# ============================================================
+paket:
+  ad: "<dikey_teknik_adi>"           # örn: kutu-kaldirma, soguk-mal-kabul
+  alan: "<sektör>"                   # örn: depo, mutfak, hastane, okul
+  amac: "<tekniğin bütün amacı>"
+  adimlar: ["<adim_id_1>", "<adim_id_2>", "<adim_id_3>"]
+  profil: "profil.yaml"
+  kilavuz: "SKILL.md"                # LLM'in okuyacağı metin
+  gereken_arayuzler: ["<kaldirici.v1>", "<sensor.agirlik.v1>"]
+  imza: "skillpack.sig.json"

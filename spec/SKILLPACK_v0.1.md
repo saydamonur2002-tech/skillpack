@@ -309,6 +309,20 @@ Kurallar:
 
 Yalnız `SKILL.md` okuyan bir ajan (çalıştırıcısı olmayan) paketi yine kullanabilir; ancak bu durumda belirlenimcilik ve onay güvenceleri geçerli değildir. `SKILL.md` gövdesi bu yüzden modele "kendin karar verme, akışı çalıştırıcıyla yürüt" der.
 
+### 9.1 Ajan yürütme modu (model sıralayıcı) — deneysel öneri
+
+Bazı istemciler akışı belirlenimci çalıştırıcıya bütün olarak vermek yerine bir modelin adım adım yürütmesine izin verir. Bu mod, Bölüm 9'daki "model yalnız seçer ve çıkarır" sınırını genişletir ve aşağıdaki kurallarla güvenceye alınır. **Bu bölüm bir ön ölçüme dayanır** (docs/deney/oyun-akisi-deneyi.md: bir akış, iki model, her koşul tek çalıştırma); kesin kanıt değil, deneysel bir öneridir.
+
+1. **Girdiyi çalıştırıcı kurar.** Her adımın girdisini ve önceki adımların çıktılarının taşınmasını (`$ref`, `$var` ve benzerleri) çalıştırıcı yapar. Model adım girdisi üretmez ve sayı, alan ya da tohum yazamaz. Ölçümde büyük ve iç içe girdiyi elle kurmak küçük modeli (Haiku) 19. adımda başarısız etti (18/19); aynı iş araca verilince iki model de 19/19 tamamladı ve token maliyetleri yaklaşık eşitlendi (~71 bin).
+2. **Model yalnız sırayı ve devam/dur kararını verir.** Modelin görevi sıradaki adımı çağırmak, kontrol özetini okumak ve durmak ya da devam etmek ile bunu insana açıklamaktır.
+3. **Her adım kontrol ve durma koşulu taşır** (Bölüm 6.4). Çalıştırıcı kontrolleri kendisi değerlendirir ve sonucu modele özet olarak verir (geçti/geçmedi, beklenen ve bulunan değer, nedeni).
+4. **Kontrol tutmazsa dur ve sor.** Model değeri değiştirip yeniden denemez; hangi kontrolün neden tutmadığını ve olası düzeltmeleri insana bildirir ve hangisinin uygulanacağını sorar.
+5. **Çalıştırıcı, kontrolü başarısız adımdan sonra sonraki adımı reddetmelidir.** (Ön ölçümdeki yardımcı araç bunu uygulamıyordu; modeller ilerlemeyi seçmedi, ama güvence araca bağlanmadan modelin davranışına bırakılmamalıdır. Bu kural henüz denenmemiştir.)
+6. **Büyük çıktılar modele gösterilmez.** Çıktı eşiğin üstündeyse çalıştırıcı onu dosyaya yazar, modele yalnız boyut ve özet verir.
+7. **İz tamdır.** Her adımın girdisi, çıktısı ve kontrol sonucu Bölüm 7.4'teki izde yer alır; model beyanı iz yerine geçmez.
+
+Sınır: Bu mod Bölüm 7.1'in belirlenimcilik güvencesini bozmaz (adımlar yine çalıştırıcıda çalışır), ama sıralama kararı modele bağlıdır; bu yüzden aynı girdiyle aynı sıranın yürütüleceği, modelsiz çalıştırıcıdaki gibi garanti edilmez.
+
 ## 10. İmza
 
 ### 10.1 Anahtarlar
@@ -399,6 +413,7 @@ Liste düz bir dosya olarak verildiğinde (`--revocations`) onu değiştirebilen
 6. Modeli yalnız Bölüm 9'daki iki iş için kullanır ve modelsiz çalışabilir.
 6a. Kaynak önceliğini, tazelik sınırını ve tehlike kurallarını Bölüm 6.7 ve 7.2'ye göre uygular.
 7. Her sonuçla birlikte izi verir.
+8. Ajan yürütme modunu (Bölüm 9.1) sunuyorsa, 9.1'in 1–7. maddelerini uygular.
 
 ## 13. Kapsam dışı ve bilinen sınırlar
 

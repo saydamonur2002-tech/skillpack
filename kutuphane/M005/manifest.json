@@ -1,0 +1,157 @@
+{
+  "id": "M005",
+  "name": "Mercator rhumb-line distance and constant bearing",
+  "description": "Computes spherical loxodrome distance and constant compass bearing using the Mercator stretch factor, including the east-west limiting case and shortest antimeridian crossing.",
+  "version": "1.0.0",
+  "date": "2026-11-11",
+  "tier": "revival",
+  "license": "MIT",
+  "distribution": "public-ok",
+  "source_url": "https://github.com/chrisveness/geodesy",
+  "upstream_commit_or_version": "3e9fdd35b71dd86cee12383eccdf000ad6741e9d",
+  "implementation_kind": "ported-core",
+  "status": "tested",
+  "provenance": {
+    "upstream_repository": "https://github.com/chrisveness/geodesy",
+    "commit": "3e9fdd35b71dd86cee12383eccdf000ad6741e9d",
+    "stars_at_mining": 1228,
+    "repository_created_year": 2014,
+    "license_spdx": "MIT",
+    "license_path": "LICENSE",
+    "license_sha256": "3cac8a426b3c52d8c7686ad2d6c599ac8cc86ec69d769c12a050ca7e31e40ff1",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2014 Chris Veness"
+    ],
+    "mined_date": "2026-11-11",
+    "timezone": "Europe/Istanbul",
+    "evidence": [
+      {
+        "path": "latlon-spherical.js",
+        "url": "https://github.com/chrisveness/geodesy/blob/3e9fdd35b71dd86cee12383eccdf000ad6741e9d/latlon-spherical.js",
+        "sha256": "97b8a730869bc33a0ac2b474556c89bc37c93f4fe0a3989b8a76eb06c55f6a6e",
+        "scope": "complete original file"
+      },
+      {
+        "path": "test/latlon-spherical-tests.js",
+        "url": "https://github.com/chrisveness/geodesy/blob/3e9fdd35b71dd86cee12383eccdf000ad6741e9d/test/latlon-spherical-tests.js",
+        "sha256": "c3a38b126242202f1a8bc1a0656fd73e6ecf7e1bd2e0f0f02f353fd730c37e19",
+        "scope": "complete original file"
+      }
+    ],
+    "reference_values": "test/latlon-spherical-tests.js:44-45 and 279-290. Distance fixtures are rounded metres; the bearing fixture is rounded to 0.1 degree."
+  },
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "lat1": {
+        "type": "number",
+        "exclusiveMinimum": -90,
+        "exclusiveMaximum": 90
+      },
+      "lon1": {
+        "type": "number",
+        "minimum": -180,
+        "maximum": 180
+      },
+      "lat2": {
+        "type": "number",
+        "exclusiveMinimum": -90,
+        "exclusiveMaximum": 90
+      },
+      "lon2": {
+        "type": "number",
+        "minimum": -180,
+        "maximum": 180
+      },
+      "radius_m": {
+        "type": "number",
+        "exclusiveMinimum": 0,
+        "maximum": 1000000000.0
+      }
+    },
+    "required": [
+      "lat1",
+      "lon1",
+      "lat2",
+      "lon2"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "CLI raw UTF-8 bound and alarm; schema plus finite-value/nesting checks; MCP subprocess killed after 10 seconds; one active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "numerical_runtime": "Python standard library only"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "tool_name": "skillpack_m005"
+  },
+  "limitations": "Spherical model with default 6371000 m radius; latitudes must be strictly between the poles. A rhumb line is generally not a shortest path. Coincident bearing is null. No ellipsoidal loxodrome, magnetic-declination correction or navigation authorization.",
+  "port_notes": "Ports rhumbDistanceTo and rhumbBearingTo with the exact upstream 10e-12 Mercator tolerance. Poles are explicitly rejected rather than relying on non-finite logarithms. Coincident NaN bearing becomes null.",
+  "verification": {
+    "test_count": 24,
+    "local_tests": 23,
+    "real_mcp_stdio_tests": 1,
+    "status": "passed",
+    "shared_timeout_tests": 2,
+    "suite_total": 261
+  }
+}

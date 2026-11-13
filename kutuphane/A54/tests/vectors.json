@@ -1,0 +1,32 @@
+[
+  {
+    "input": {
+      "state": {
+        "ready": false,
+        "enabled": false,
+        "stopped": true,
+        "error": false,
+        "estop_button": 1,
+        "estop_source": 1
+      }
+    },
+    "result": {
+      "state": {
+        "ready": false,
+        "enabled": false,
+        "stopped": true,
+        "error": false,
+        "estop_button": 1,
+        "estop_source": 1
+      }
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "state": {}
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

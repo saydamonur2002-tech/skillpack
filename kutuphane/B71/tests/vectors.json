@@ -1,0 +1,46 @@
+[
+  {
+    "input": {
+      "arguments": {
+        "n": 3
+      },
+      "parameters": [
+        {
+          "name": "n",
+          "in": "query",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      ]
+    },
+    "result": {
+      "valid": true,
+      "errors": []
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "arguments": {},
+      "parameters": [
+        {
+          "name": "n",
+          "in": "path",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "result": {
+      "valid": false,
+      "errors": [
+        "n: required"
+      ]
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

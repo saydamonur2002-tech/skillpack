@@ -1,0 +1,65 @@
+{
+  "id": "A62",
+  "f": "Babylon Health",
+  "n": "simba — matrix similarity",
+  "u": "https://github.com/babylonhealth/simba",
+  "l": "Apache-2.0",
+  "t": "tool: compare_matrices(a, b, metric) → score/error",
+  "p": "tool code; cosine/Jaccard kuralları; examples",
+  "d": "orta",
+  "env": "Python/NumPy; PC/edge",
+  "note": "Hazır embedding değil, verilmiş sayısal matrislerde küçük metrik alt kümesi. Dış modeller/veriler yok; sıfır vektör ve normalizasyon politikası açık olur.",
+  "test": "Identity, ayrık küme, sıfır norm, şekil hatası.",
+  "tier": "revival",
+  "repo": "babylonhealth/simba",
+  "files": [
+    {
+      "path": "simba/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "url": "https://raw.githubusercontent.com/babylonhealth/simba/3a133d492c903024db37ac9e1ef1ac7d5714f788/simba/__init__.py"
+    },
+    {
+      "path": "README.md",
+      "sha256": "eafe677c81faa582887c2a2f762378dce1bef8d8f5561cb7e16885524527ec09",
+      "url": "https://raw.githubusercontent.com/babylonhealth/simba/3a133d492c903024db37ac9e1ef1ac7d5714f788/README.md"
+    },
+    {
+      "path": "simba/core.py",
+      "sha256": "8f97815e3c4d70e2fcacd5cc323f184920f4f561bc41bff296ad3a43ecdb546c",
+      "url": "https://raw.githubusercontent.com/babylonhealth/simba/3a133d492c903024db37ac9e1ef1ac7d5714f788/simba/core.py"
+    },
+    {
+      "path": "simba/similarities/geometry.py",
+      "sha256": "b4ec077294e9e0ae96883d79202fd05a5f1fbe132759a6eb28e570c140b4f238",
+      "url": "https://raw.githubusercontent.com/babylonhealth/simba/3a133d492c903024db37ac9e1ef1ac7d5714f788/simba/similarities/geometry.py"
+    },
+    {
+      "path": "simba/similarities/fuzzy.py",
+      "sha256": "486082c800bfe80983c3f9ca2be2ad2691c34b958454c05c94efc007125f1185",
+      "url": "https://raw.githubusercontent.com/babylonhealth/simba/3a133d492c903024db37ac9e1ef1ac7d5714f788/simba/similarities/fuzzy.py"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/babylonhealth/simba/3a133d492c903024db37ac9e1ef1ac7d5714f788/simba/similarity.py",
+      "ok": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/babylonhealth/simba/3a133d492c903024db37ac9e1ef1ac7d5714f788/simba/__init__.py",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/babylonhealth/simba/3a133d492c903024db37ac9e1ef1ac7d5714f788/README.md",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/babylonhealth/simba/3a133d492c903024db37ac9e1ef1ac7d5714f788/simba/core.py",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "3a133d492c903024db37ac9e1ef1ac7d5714f788",
+  "notice_file": "NOTICE"
+}

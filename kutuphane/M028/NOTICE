@@ -1,0 +1,9 @@
+Upstream: https://github.com/chrisveness/geodesy
+Commit: 3e9fdd35b71dd86cee12383eccdf000ad6741e9d
+License: MIT
+
+Original copyright notices (verbatim; source comment prefixes removed):
+Copyright (c) 2014 Chris Veness
+
+Full source-specific notices remain under upstream/. License files are kept byte-for-byte as published upstream, including any contact lines they contain. Only required public upstream legal attribution is included; no project-owner identity or contact data is recorded.
+Skillpack contributors. AI-generated standalone adaptation and teaching material; no upstream endorsement or independent certification.

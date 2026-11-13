@@ -1,0 +1,3 @@
+Local adaptation and tests created 2026-11-11. Original authors and source notices remain in upstream/.
+Distribution classification: public-ok. This classification is not legal advice or a new permission grant.
+Changes: English only. Pinned lingua-franca 0.4.3 runtime; no time-of-day, date, wall clock or locale inference.

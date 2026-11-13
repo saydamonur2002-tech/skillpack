@@ -1,0 +1,10 @@
+Upstream: https://github.com/mapbox/polyline
+Commit: 5e797bf9cdf46db94bc3290b0e4d39e6db5a51c9
+License: BSD-3-Clause
+
+Original copyright notices (verbatim; source comment prefixes removed):
+Copyright (c), Development Seed
+
+Original author credit (from upstream source comment): parts adapted from an encoder by Mark McClure; decoding adapted from Project-OSRM.
+Full source-specific notices remain under upstream/. Only required public upstream legal attribution is included; no project-owner identity or contact data is recorded.
+AI-generated standalone adaptation and teaching material; no upstream endorsement or independent certification.

@@ -1,0 +1,32 @@
+[
+  {
+    "input": {
+      "raw_centidegrees": -6000,
+      "model_family": "xiaomi-lumi"
+    },
+    "result": {
+      "accepted": true,
+      "temperature_C": -60.0
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "raw_centidegrees": 6001,
+      "model_family": "xiaomi-lumi"
+    },
+    "result": {
+      "accepted": false,
+      "temperature_C": null
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "raw_centidegrees": 10,
+      "model_family": "other"
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

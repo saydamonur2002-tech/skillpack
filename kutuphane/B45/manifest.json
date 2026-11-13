@@ -1,0 +1,128 @@
+{
+  "id": "B45",
+  "name": "OHF read-only temperature grammar",
+  "description": "Uses upstream default read-only TR/EN sentence grammars through Hassil 3.12.1. No entity device lookup or action dispatch. Output is intent recognition only, not a fabricated temperature value.",
+  "version": "0.1.0",
+  "date": "2026-11-11",
+  "tier": "general",
+  "source_url": "https://github.com/OHF-Voice/intents",
+  "upstream_commit_or_version": "583d1bc1f39b16b2b20be39ac3b37820fc233aa5",
+  "license": "CC-BY-4.0",
+  "distribution": "public-ok",
+  "attribution": [
+    "OHF-Voice/intents",
+    "Original copyright and notices preserved in LICENSE, NOTICE and upstream/"
+  ],
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "text": {
+        "type": "string",
+        "maxLength": 100000
+      },
+      "language": {
+        "enum": [
+          "tr",
+          "en"
+        ]
+      }
+    },
+    "required": [
+      "text",
+      "language"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object",
+            "properties": {
+              "matches": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "matches"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "maxLength": 100000
+              },
+              "message": {
+                "type": "string",
+                "maxLength": 100000
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 1048576,
+    "timeout_seconds": 10,
+    "max_array_items": 10000,
+    "enforcement": "CLI input byte bound and JSON Schema array/string bounds enforced. Runtime timeout is enforced for subprocess tools only; other tools require an external 10-second watchdog. No general memory sandbox claimed."
+  },
+  "signature": null,
+  "revocation_url": null,
+  "teaching_path": [
+    "Inspect SOURCE.md and license evidence",
+    "Call the deterministic JSON tool",
+    "Review tests and explain the returned result; never invent missing values"
+  ],
+  "status": "built",
+  "skip_reason": null,
+  "implementation_kind": "runtime-adapter",
+  "tool": "tool/main.py",
+  "dependencies": {
+    "python": ">=3.11",
+    "shared_runtime": "../_vendor",
+    "node": ">=20 for JS-backed tools",
+    "hassil": "3.12.1"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "tool_name": "skillpack_b45",
+    "server_path": "mcp/server.py"
+  }
+}

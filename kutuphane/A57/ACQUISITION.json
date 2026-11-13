@@ -1,0 +1,41 @@
+{
+  "id": "A57",
+  "f": "Willow Garage kökenli ROS / ros-perception",
+  "n": "laser_geometry",
+  "u": "https://github.com/ros-perception/laser_geometry",
+  "l": "BSD-3-Clause",
+  "t": "tool: project_scan(ranges, angle_min, increment) → xy/invalid",
+  "p": "tool code; range kuralları; examples",
+  "d": "orta",
+  "env": "C++/ROS2; PC, bağımsız port mümkün",
+  "note": "Sabit çerçevede 2D scan projeksiyonu seçilir; canlı tf ve tam navigasyon dışarıda. Range sınırı ve geçersiz ölçüm açık işaretlenir.",
+  "test": "0/π/2 açı, out-of-range, NaN/Inf, boş scan.",
+  "tier": "revival",
+  "repo": "ros-perception/laser_geometry",
+  "files": [
+    {
+      "path": "src/laser_geometry.cpp",
+      "sha256": "a2bed7c62083f71019bae6cb10cd960c38fc32037be5e65df14237553a0999cd",
+      "url": "https://raw.githubusercontent.com/ros-perception/laser_geometry/47954dc5454a443b5b0a5ea5bd23315f1bc505ab/src/laser_geometry.cpp"
+    },
+    {
+      "path": "src/laser_geometry/laser_geometry.py",
+      "sha256": "0f1466722401fd9f133519bcac92a9bb9ba21d8e2b8174cbe04f42c7c4bf55ad",
+      "url": "https://raw.githubusercontent.com/ros-perception/laser_geometry/47954dc5454a443b5b0a5ea5bd23315f1bc505ab/src/laser_geometry/laser_geometry.py"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/ros-perception/laser_geometry/47954dc5454a443b5b0a5ea5bd23315f1bc505ab/src/laser_geometry.cpp",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ros-perception/laser_geometry/47954dc5454a443b5b0a5ea5bd23315f1bc505ab/src/laser_geometry/laser_geometry.py",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "47954dc5454a443b5b0a5ea5bd23315f1bc505ab"
+}

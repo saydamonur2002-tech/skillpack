@@ -1,0 +1,29 @@
+[
+  {
+    "input": {
+      "message": {
+        "sensor_id": "s1",
+        "value": 20,
+        "unit": "C",
+        "version": "1"
+      }
+    },
+    "result": {
+      "valid": true
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "message": {
+        "value": 20,
+        "unit": "K",
+        "version": "2"
+      }
+    },
+    "result": {
+      "valid": false
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

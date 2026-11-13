@@ -1,0 +1,54 @@
+{
+  "id": "A44",
+  "f": "Mycroft",
+  "n": "lingua-franca — sayı/süre",
+  "u": "https://github.com/MycroftAI/lingua-franca",
+  "l": "Apache-2.0",
+  "t": "tool: parse_duration_en(text) → seconds/remainder/error",
+  "p": "tool code; dil kuralları; örnekler/testler",
+  "d": "orta",
+  "env": "Python; PC/ev merkezi",
+  "note": "İlk kapsam İngilizce sayı ve süre. Türkçe modül doğrulanmadı; Türkçe desteği var denmez. Saat/tarih kullanılırsa referans zaman giriş olmalı.",
+  "test": "Bileşik süre, tanınmayan birim, negatif/çok büyük değer.",
+  "tier": "revival",
+  "repo": "MycroftAI/lingua-franca",
+  "files": [
+    {
+      "path": "lingua_franca/lang/parse_en.py",
+      "sha256": "5ea18b252731709ef342570f690f93217beb1f0c1741f25246b0381ab3d58ab6",
+      "url": "https://raw.githubusercontent.com/MycroftAI/lingua-franca/5bfd75fe5996fd364102a0eec3f714c9ddc9275c/lingua_franca/lang/parse_en.py"
+    },
+    {
+      "path": "lingua_franca/lang/parse_common.py",
+      "sha256": "4dcecd2e24d4a7c116f01452bf42b3acdbce4eea4d0a84c9e0a909f12c85592a",
+      "url": "https://raw.githubusercontent.com/MycroftAI/lingua-franca/5bfd75fe5996fd364102a0eec3f714c9ddc9275c/lingua_franca/lang/parse_common.py"
+    },
+    {
+      "path": "lingua_franca/lang/common_data_en.py",
+      "sha256": "ccf798a0b804b80ddc28de9636773cdcb7cab69d7b5ca7864f8e11a8cd0201d9",
+      "url": "https://raw.githubusercontent.com/MycroftAI/lingua-franca/5bfd75fe5996fd364102a0eec3f714c9ddc9275c/lingua_franca/lang/common_data_en.py"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/MycroftAI/lingua-franca/5bfd75fe5996fd364102a0eec3f714c9ddc9275c/lingua_franca/lang/parse_en.py",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/MycroftAI/lingua-franca/5bfd75fe5996fd364102a0eec3f714c9ddc9275c/test/test_parse_en.py",
+      "ok": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/MycroftAI/lingua-franca/5bfd75fe5996fd364102a0eec3f714c9ddc9275c/lingua_franca/lang/parse_common.py",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/MycroftAI/lingua-franca/5bfd75fe5996fd364102a0eec3f714c9ddc9275c/lingua_franca/lang/common_data_en.py",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "5bfd75fe5996fd364102a0eec3f714c9ddc9275c"
+}

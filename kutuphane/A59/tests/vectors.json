@@ -1,0 +1,51 @@
+[
+  {
+    "input": {
+      "tokens": [
+        {
+          "kind": "a"
+        },
+        {
+          "kind": "b"
+        }
+      ],
+      "grammar": "Law:\n - id: \"pair\"\n(\n (kind: \"a\")\n (kind: \"b\")\n)"
+    },
+    "result": {
+      "matches": [
+        {
+          "start": 0,
+          "end": 2,
+          "rules": [
+            {
+              "id": "pair"
+            }
+          ]
+        }
+      ]
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "tokens": [
+        {
+          "kind": "z"
+        }
+      ],
+      "grammar": "Law:\n - id: \"a\"\n( (kind: \"a\") )"
+    },
+    "result": {
+      "matches": []
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "tokens": [],
+      "grammar": "Law:\n - callback: \"x\"\n( (kind:\"a\") )"
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

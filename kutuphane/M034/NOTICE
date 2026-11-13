@@ -1,0 +1,16 @@
+Upstream: https://github.com/mapbox/sphericalmercator
+Commit: b77160b53ed07195370f493629cda886ca6095d9
+License: BSD-3-Clause
+
+Original copyright notices (verbatim; source comment prefixes removed):
+Copyright (c) 2011, Development Seed
+
+Additional upstream (polyline simplification in pixel space before drawing (same port as pack M021)): https://github.com/mourner/simplify-js
+Commit: 0777f8ac6f81b15239a4dc80b6d83f956b1b7110
+License: BSD-2-Clause (full text: licenses/simplify-js.LICENSE)
+Original copyright notices (verbatim):
+Copyright (c) 2017, Vladimir Agafonkin
+
+Full source-specific notices remain under upstream/. License files are kept byte-for-byte as published upstream, including any contact lines they contain. Only required public upstream legal attribution is included; no project-owner identity or contact data is recorded.
+Map data is not part of this pack. The separately shipped demo dataset is © OpenStreetMap contributors, ODbL 1.0 (https://www.openstreetmap.org/copyright). tests/fixtures is synthetic Skillpack test data (CC0-1.0), not OpenStreetMap data.
+Skillpack contributors. AI-generated standalone adaptation and teaching material; no upstream endorsement or independent certification.

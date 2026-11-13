@@ -1,0 +1,45 @@
+{
+  "id": "A65",
+  "f": "Pebble / açık PebbleOS",
+  "n": "libutil/circular_buffer.c",
+  "u": "https://github.com/google/pebble/blob/main/src/libutil/circular_buffer.c",
+  "l": "Apache-2.0",
+  "t": "tool: replay_ring_buffer(capacity, operations) → outputs/state/errors",
+  "p": "tool code; mevcut tests/libutil/test_circular_buffer.c",
+  "d": "orta",
+  "env": "C; telefon/PC/MCU",
+  "note": "Küçük assert/math yardımcıları ayrılmalı. Kapasite ve taşma davranışı sözleşmeye yazılır; eşzamanlı erişim güvenliği varsayılmaz.",
+  "test": "Wraparound, dolu/boş tampon, sıfır kapasiteyi ret.",
+  "tier": "revival",
+  "repo": "google/pebble",
+  "files": [
+    {
+      "path": "src/libutil/circular_buffer.c",
+      "sha256": "0e3397f8176ece2c5a289b91b9fc1a43fe3b7f5f7505ee95828f54c0329a7eb1",
+      "url": "https://raw.githubusercontent.com/google/pebble/4051c5bb97377f1215bbd26094c1a157532c55fe/src/libutil/circular_buffer.c"
+    },
+    {
+      "path": "tests/libutil/test_circular_buffer.c",
+      "sha256": "b922c3e12e081b8997f3d916ae42bb48480edf5f21e74027fbcac5c46e4c2285",
+      "url": "https://raw.githubusercontent.com/google/pebble/4051c5bb97377f1215bbd26094c1a157532c55fe/tests/libutil/test_circular_buffer.c"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/google/pebble/4051c5bb97377f1215bbd26094c1a157532c55fe/src/libutil/circular_buffer.c",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/google/pebble/4051c5bb97377f1215bbd26094c1a157532c55fe/src/libutil/circular_buffer.h",
+      "ok": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/google/pebble/4051c5bb97377f1215bbd26094c1a157532c55fe/tests/libutil/test_circular_buffer.c",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "4051c5bb97377f1215bbd26094c1a157532c55fe"
+}

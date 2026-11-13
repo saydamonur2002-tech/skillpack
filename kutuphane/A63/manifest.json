@@ -1,0 +1,125 @@
+{
+  "id": "A63",
+  "name": "Parse explicit ACL inspector",
+  "description": "Explicit bits only; no public/role union, server policy or effective authorization result.",
+  "version": "0.1.0",
+  "date": "2026-11-11",
+  "tier": "revival",
+  "source_url": "https://github.com/parse-community/Parse-SDK-JS/blob/alpha/src/ParseACL.ts",
+  "upstream_commit_or_version": "d374d24871de17d43726108a89469aac6cebcdb1",
+  "license": "Apache-2.0",
+  "distribution": "public-ok",
+  "attribution": [
+    "parse-community/Parse-SDK-JS",
+    "Original copyright and notices preserved in LICENSE, NOTICE and upstream/"
+  ],
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "acl": {
+        "type": "object"
+      },
+      "principal": {
+        "type": "string",
+        "maxLength": 100000
+      }
+    },
+    "required": [
+      "acl",
+      "principal"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object",
+            "properties": {
+              "explicit_read": {
+                "type": "boolean"
+              },
+              "explicit_write": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "explicit_read",
+              "explicit_write"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "maxLength": 100000
+              },
+              "message": {
+                "type": "string",
+                "maxLength": 100000
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 1048576,
+    "timeout_seconds": 10,
+    "max_array_items": 10000,
+    "enforcement": "CLI input byte bound and JSON Schema array/string bounds enforced. Runtime timeout is enforced for subprocess tools only; other tools require an external 10-second watchdog. No general memory sandbox claimed."
+  },
+  "signature": null,
+  "revocation_url": null,
+  "teaching_path": [
+    "Inspect SOURCE.md and license evidence",
+    "Call the deterministic JSON tool",
+    "Review tests and explain the returned result; never invent missing values"
+  ],
+  "status": "built",
+  "skip_reason": null,
+  "implementation_kind": "ported-core",
+  "tool": "tool/main.py",
+  "dependencies": {
+    "python": ">=3.11",
+    "shared_runtime": "../_vendor",
+    "node": ">=20 for JS-backed tools"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "tool_name": "skillpack_a63",
+    "server_path": "mcp/server.py"
+  }
+}

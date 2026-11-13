@@ -1,0 +1,58 @@
+{
+  "id": "B53",
+  "f": "Sensirion",
+  "n": "Embedded SHT — SHT3x decode",
+  "u": "https://github.com/Sensirion/embedded-sht/blob/master/sht3x/sht3x.c",
+  "l": "BSD-3-Clause",
+  "t": "tool: decode_sht3x_frame(bytes) → temperature_mC/humidity_milli/errors",
+  "p": "tool code; fixed-point dönüşüm/CRC rules; examples",
+  "d": "orta",
+  "env": "C; MCU/telefon/PC",
+  "note": "SHT3x ve ortak CRC kodu seçilir. I2C hatası varsa dönüştürme yapılmamalı; upstream hata yolu sertleştirilir. Kalibrasyon ve fiziksel ölçüm doğruluğu ayrı testtir.",
+  "test": "Bozuk CRC, kısa frame, raw sınırları, okuma hatası.",
+  "tier": "general",
+  "repo": "Sensirion/embedded-sht",
+  "files": [
+    {
+      "path": "sht3x/sht3x.c",
+      "sha256": "bfe0d059535f090841e0449d3346d8d739690cd9690fa24e72a0000ef58c0e5a",
+      "url": "https://raw.githubusercontent.com/Sensirion/embedded-sht/94967774f25985bf65356bad3689fec4e8fef2b8/sht3x/sht3x.c"
+    },
+    {
+      "path": "tests/sht3x-test.cpp",
+      "sha256": "b8e73c1ede12a362a36b568cd77f1c356536c9726a6600b5c5e9d8cbeec8f4a4",
+      "url": "https://raw.githubusercontent.com/Sensirion/embedded-sht/94967774f25985bf65356bad3689fec4e8fef2b8/tests/sht3x-test.cpp"
+    },
+    {
+      "path": ".gitmodules",
+      "sha256": "100d738c6537bd36c0db22943924e5f51b1d9c23c7d00f07a5ed864ebb18ee9c",
+      "url": "https://raw.githubusercontent.com/Sensirion/embedded-sht/94967774f25985bf65356bad3689fec4e8fef2b8/.gitmodules"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/Sensirion/embedded-sht/94967774f25985bf65356bad3689fec4e8fef2b8/sht3x/sht3x.c",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Sensirion/embedded-sht/94967774f25985bf65356bad3689fec4e8fef2b8/sensirion_common.c",
+      "ok": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Sensirion/embedded-sht/94967774f25985bf65356bad3689fec4e8fef2b8/sensirion_common.h",
+      "ok": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Sensirion/embedded-sht/94967774f25985bf65356bad3689fec4e8fef2b8/tests/sht3x-test.cpp",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Sensirion/embedded-sht/94967774f25985bf65356bad3689fec4e8fef2b8/.gitmodules",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "94967774f25985bf65356bad3689fec4e8fef2b8"
+}

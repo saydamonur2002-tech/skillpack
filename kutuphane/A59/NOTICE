@@ -1,0 +1,10 @@
+Hmrb
+Copyright 2020 Babylon Partners Limited.
+
+This repository includes software developed
+at Babylon Health (babylonhealth.com).
+
+
+Local adaptation and tests created 2026-11-11. Original authors and source notices remain in upstream/.
+Distribution classification: public-ok. This classification is not legal advice or a new permission grant.
+Changes: Pinned hmrb 1.2.1 runtime, external span matching only. Callbacks prohibited; no clinical data or model. Python regex fallback, not adversarial-regex hardened.

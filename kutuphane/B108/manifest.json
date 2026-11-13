@@ -1,0 +1,136 @@
+{
+  "id": "B108",
+  "name": "putEMG bounded RMS and MAV",
+  "description": "Arithmetic from feature_rms and feature_mav only. Windowing rewritten with explicit full-window start indices (not pandas rolling index semantics). PyEEG imports and other features excluded; no NC dataset bundled.",
+  "version": "0.1.0",
+  "date": "2026-11-11",
+  "tier": "general",
+  "source_url": "https://github.com/biolab-put/putemg_features/blob/master/features.py",
+  "upstream_commit_or_version": "c2ada7c13b468771f93c0ccf96fd0091ed6eb195",
+  "license": "MIT",
+  "distribution": "public-ok",
+  "attribution": [
+    "biolab-put/putemg_features",
+    "Original copyright and notices preserved in LICENSE, NOTICE and upstream/"
+  ],
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "samples": {
+        "type": "array",
+        "items": {
+          "type": "number"
+        },
+        "minItems": 0,
+        "maxItems": 10000
+      },
+      "window": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 10000
+      },
+      "step": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 10000
+      }
+    },
+    "required": [
+      "samples",
+      "window",
+      "step"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object",
+            "properties": {
+              "windows": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            },
+            "required": [
+              "windows"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "maxLength": 100000
+              },
+              "message": {
+                "type": "string",
+                "maxLength": 100000
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 1048576,
+    "timeout_seconds": 10,
+    "max_array_items": 10000,
+    "enforcement": "CLI input byte bound and JSON Schema array/string bounds enforced. Runtime timeout is enforced for subprocess tools only; other tools require an external 10-second watchdog. No general memory sandbox claimed."
+  },
+  "signature": null,
+  "revocation_url": null,
+  "teaching_path": [
+    "Inspect SOURCE.md and license evidence",
+    "Call the deterministic JSON tool",
+    "Review tests and explain the returned result; never invent missing values"
+  ],
+  "status": "built",
+  "skip_reason": null,
+  "implementation_kind": "ported-core",
+  "tool": "tool/main.py",
+  "dependencies": {
+    "python": ">=3.11",
+    "shared_runtime": "../_vendor",
+    "node": ">=20 for JS-backed tools"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "tool_name": "skillpack_b108",
+    "server_path": "mcp/server.py"
+  }
+}

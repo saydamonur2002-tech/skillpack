@@ -1,0 +1,42 @@
+{
+  "id": "B72",
+  "f": "AsyncAPI",
+  "n": "AsyncAPI — mesaj sözleşmesi",
+  "u": "https://github.com/asyncapi/spec",
+  "l": "Apache-2.0",
+  "t": "tool: validate_event(message, fixed_event_schema) → valid/errors",
+  "p": "rules/spec; message examples",
+  "d": "orta",
+  "env": "Yeni offline script + validator; PC/edge",
+  "note": "Dar sensör event payload sözleşmesi. Broker, MQTT yetkisi veya kimlik doğrulama değildir; seçilen schema formatı/sürümü açık olur.",
+  "test": "Eksik sensor_id, yanlış birim, sürüm hatası, desteklenmeyen alan.",
+  "tier": "general",
+  "repo": "asyncapi/spec",
+  "files": [
+    {
+      "path": "spec/asyncapi.md",
+      "sha256": "983a9c0ccb35412d4f6f254ab1ae9ea09a560664b1e41efb0109b12d0cd91869",
+      "url": "https://raw.githubusercontent.com/asyncapi/spec/41662743fe64189858f4076f27d2b1d9da6b3093/spec/asyncapi.md"
+    },
+    {
+      "path": "spec/asyncapi.md",
+      "sha256": "983a9c0ccb35412d4f6f254ab1ae9ea09a560664b1e41efb0109b12d0cd91869",
+      "url": "https://raw.githubusercontent.com/asyncapi/spec/41662743fe64189858f4076f27d2b1d9da6b3093/spec/asyncapi.md"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/asyncapi/spec/41662743fe64189858f4076f27d2b1d9da6b3093/spec/asyncapi.md",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/asyncapi/spec/41662743fe64189858f4076f27d2b1d9da6b3093/spec/asyncapi.md",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "41662743fe64189858f4076f27d2b1d9da6b3093",
+  "notice_file": "NOTICE"
+}

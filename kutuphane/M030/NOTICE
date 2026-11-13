@@ -1,0 +1,16 @@
+Upstream: https://github.com/networkx/networkx
+Commit: 7530809bfa1ea7ed6fdf918a4d1431488953cb1f
+License: BSD-3-Clause
+
+Original copyright notices (verbatim; source comment prefixes removed):
+Copyright (c) 2004-2025, NetworkX Developers
+
+Additional upstream (haversine edge-length formula (distanceTo) used by the shared map-data loader): https://github.com/chrisveness/geodesy
+Commit: 3e9fdd35b71dd86cee12383eccdf000ad6741e9d
+License: MIT (full text: licenses/geodesy.LICENSE)
+Original copyright notices (verbatim):
+Copyright (c) 2014 Chris Veness
+
+Full source-specific notices remain under upstream/. License files are kept byte-for-byte as published upstream, including any contact lines they contain. Only required public upstream legal attribution is included; no project-owner identity or contact data is recorded.
+Map data is not part of this pack. The separately shipped demo dataset is © OpenStreetMap contributors, ODbL 1.0 (https://www.openstreetmap.org/copyright). tests/fixtures is synthetic Skillpack test data (CC0-1.0), not OpenStreetMap data.
+Skillpack contributors. AI-generated standalone adaptation and teaching material; no upstream endorsement or independent certification.

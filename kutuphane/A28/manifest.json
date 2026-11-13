@@ -1,0 +1,144 @@
+{
+  "id": "A28",
+  "name": "AV2 single-trajectory ADE and FDE",
+  "description": "Single unmasked trajectory metric only. Multiple modes, probability ranking and AV2 datasets excluded.",
+  "version": "0.1.0",
+  "date": "2026-11-11",
+  "tier": "revival",
+  "source_url": "https://github.com/argoverse/av2-api/blob/main/src/av2/datasets/motion_forecasting/eval/metrics.py",
+  "upstream_commit_or_version": "b7321d1f71f6ce0ecdd151f4f2b648338c191edd",
+  "license": "MIT",
+  "distribution": "public-ok",
+  "attribution": [
+    "argoverse/av2-api",
+    "Original copyright and notices preserved in LICENSE, NOTICE and upstream/"
+  ],
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "predicted": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "minItems": 1,
+        "maxItems": 10000
+      },
+      "target": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "minItems": 1,
+        "maxItems": 10000
+      }
+    },
+    "required": [
+      "predicted",
+      "target"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object",
+            "properties": {
+              "ADE": {
+                "type": "number"
+              },
+              "FDE": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "ADE",
+              "FDE"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "maxLength": 100000
+              },
+              "message": {
+                "type": "string",
+                "maxLength": 100000
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 1048576,
+    "timeout_seconds": 10,
+    "max_array_items": 10000,
+    "enforcement": "CLI input byte bound and JSON Schema array/string bounds enforced. Runtime timeout is enforced for subprocess tools only; other tools require an external 10-second watchdog. No general memory sandbox claimed."
+  },
+  "signature": null,
+  "revocation_url": null,
+  "teaching_path": [
+    "Inspect SOURCE.md and license evidence",
+    "Call the deterministic JSON tool",
+    "Review tests and explain the returned result; never invent missing values"
+  ],
+  "status": "built",
+  "skip_reason": null,
+  "implementation_kind": "ported-core",
+  "tool": "tool/main.py",
+  "dependencies": {
+    "python": ">=3.11",
+    "shared_runtime": "../_vendor",
+    "node": ">=20 for JS-backed tools"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "tool_name": "skillpack_a28",
+    "server_path": "mcp/server.py"
+  }
+}

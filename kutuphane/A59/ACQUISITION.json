@@ -1,0 +1,51 @@
+{
+  "id": "A59",
+  "f": "Babylon Health; hmrb devamı",
+  "n": "hmrb — attribute grammar",
+  "u": "https://github.com/babylonhealth/hmrb",
+  "l": "Apache-2.0",
+  "t": "tool: match_attribute_sequence(tokens, grammar) → spans/rule_ids",
+  "p": "tool code; grammar rules; examples/tests",
+  "d": "orta",
+  "env": "Python; PC/ev merkezi",
+  "note": "Sabit token özelliklerinde eşleştirme; serbest callback çalıştırma kapalı. Klinik veri veya öğrenilmiş model gerektirmez; successor arşivi de kaynak zincirinde korunur.",
+  "test": "Sıralı/tekrarlı özellik, eşleşmeyen girdi, örtüşen span.",
+  "tier": "revival",
+  "repo": "babylonhealth/hmrb",
+  "files": [
+    {
+      "path": "hmrb/core.py",
+      "sha256": "443eb282c46e1bd183ef8dcc23aa1df9316ae9b0699530b63f613263bf48fffb",
+      "url": "https://raw.githubusercontent.com/babylonhealth/hmrb/a8c5903ac0265e50ca3c4f626f1f7ef78cf07803/hmrb/core.py"
+    },
+    {
+      "path": "tests/test_core.py",
+      "sha256": "15b60518dbae314647d32c7686d541910587adea711fd8643eb24e71efba7bdc",
+      "url": "https://raw.githubusercontent.com/babylonhealth/hmrb/a8c5903ac0265e50ca3c4f626f1f7ef78cf07803/tests/test_core.py"
+    },
+    {
+      "path": "README.md",
+      "sha256": "a25c5d758f18f2d88d7339730537ef9b9facf5fcc0bba80b87a87ecdcc113e41",
+      "url": "https://raw.githubusercontent.com/babylonhealth/hmrb/a8c5903ac0265e50ca3c4f626f1f7ef78cf07803/README.md"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/babylonhealth/hmrb/a8c5903ac0265e50ca3c4f626f1f7ef78cf07803/hmrb/core.py",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/babylonhealth/hmrb/a8c5903ac0265e50ca3c4f626f1f7ef78cf07803/tests/test_core.py",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/babylonhealth/hmrb/a8c5903ac0265e50ca3c4f626f1f7ef78cf07803/README.md",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "a8c5903ac0265e50ca3c4f626f1f7ef78cf07803",
+  "notice_file": "NOTICE"
+}

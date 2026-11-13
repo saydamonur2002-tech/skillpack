@@ -1,0 +1,133 @@
+{
+  "id": "B50",
+  "name": "Xiaomi temperature range filter",
+  "description": "Range rule of selected Xiaomi TemperatureMeasurementCluster only. Declared family gate is not automatic model identification.",
+  "version": "0.1.0",
+  "date": "2026-11-11",
+  "tier": "general",
+  "source_url": "https://github.com/zigpy/zha-device-handlers/blob/master/zhaquirks/xiaomi/__init__.py",
+  "upstream_commit_or_version": "b07fa76876e081d48744968f9fb806e7f1fee0ee",
+  "license": "Apache-2.0",
+  "distribution": "public-ok",
+  "attribution": [
+    "zigpy/zha-device-handlers",
+    "Original copyright and notices preserved in LICENSE, NOTICE and upstream/"
+  ],
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "raw_centidegrees": {
+        "type": "number"
+      },
+      "model_family": {
+        "enum": [
+          "xiaomi-lumi"
+        ]
+      }
+    },
+    "required": [
+      "raw_centidegrees",
+      "model_family"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object",
+            "properties": {
+              "accepted": {
+                "type": "boolean"
+              },
+              "temperature_C": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "accepted",
+              "temperature_C"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "maxLength": 100000
+              },
+              "message": {
+                "type": "string",
+                "maxLength": 100000
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 1048576,
+    "timeout_seconds": 10,
+    "max_array_items": 10000,
+    "enforcement": "CLI input byte bound and JSON Schema array/string bounds enforced. Runtime timeout is enforced for subprocess tools only; other tools require an external 10-second watchdog. No general memory sandbox claimed."
+  },
+  "signature": null,
+  "revocation_url": null,
+  "teaching_path": [
+    "Inspect SOURCE.md and license evidence",
+    "Call the deterministic JSON tool",
+    "Review tests and explain the returned result; never invent missing values"
+  ],
+  "status": "built",
+  "skip_reason": null,
+  "implementation_kind": "ported-core",
+  "tool": "tool/main.py",
+  "dependencies": {
+    "python": ">=3.11",
+    "shared_runtime": "../_vendor",
+    "node": ">=20 for JS-backed tools"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "tool_name": "skillpack_b50",
+    "server_path": "mcp/server.py"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "id": "A28",
+  "f": "Argo AI",
+  "n": "AV2 API — forecasting metrics kodu",
+  "u": "https://github.com/argoverse/av2-api/blob/main/src/av2/datasets/motion_forecasting/eval/metrics.py",
+  "l": "MIT — kod; veri ayrı",
+  "t": "tool: score_trajectory(predicted, target) → ADE/FDE/errors",
+  "p": "tool code; mevcut sentetik unit tests",
+  "d": "orta",
+  "env": "Python + NumPy; PC/edge",
+  "note": "AV2 veri dosyaları pakete konmaz. Yalnız metrikler; yerel sayısal giriş yeterli. Sıra, maske ve çoklu tahmin seçimi sözleşmeye yazılır.",
+  "test": "Aynı rota → 0; bilinen sabit sapma; boş/uyumsuz dizi.",
+  "tier": "revival",
+  "repo": "argoverse/av2-api",
+  "files": [
+    {
+      "path": "src/av2/datasets/motion_forecasting/eval/metrics.py",
+      "sha256": "b761535c9f03e55d5394f8dcbdb139d4524ddd1e3b2c74842b766707515092f7",
+      "url": "https://raw.githubusercontent.com/argoverse/av2-api/b7321d1f71f6ce0ecdd151f4f2b648338c191edd/src/av2/datasets/motion_forecasting/eval/metrics.py"
+    },
+    {
+      "path": "tests/unit/datasets/motion_forecasting/eval/test_metrics.py",
+      "sha256": "2e83096de7b97488a128eb76aa2cc702397394664a6a63eed1036443b4ab4de3",
+      "url": "https://raw.githubusercontent.com/argoverse/av2-api/b7321d1f71f6ce0ecdd151f4f2b648338c191edd/tests/unit/datasets/motion_forecasting/eval/test_metrics.py"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/argoverse/av2-api/b7321d1f71f6ce0ecdd151f4f2b648338c191edd/src/av2/datasets/motion_forecasting/eval/metrics.py",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/argoverse/av2-api/b7321d1f71f6ce0ecdd151f4f2b648338c191edd/tests/unit/datasets/motion_forecasting/eval/test_metrics.py",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "b7321d1f71f6ce0ecdd151f4f2b648338c191edd",
+  "notice_file": "NOTICE"
+}

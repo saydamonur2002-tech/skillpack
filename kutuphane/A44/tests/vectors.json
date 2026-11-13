@@ -1,0 +1,19 @@
+[
+  {
+    "input": {
+      "text": "2 hours 3 minutes"
+    },
+    "result": {
+      "seconds": 7380.0,
+      "remainder": ""
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "text": "banana"
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

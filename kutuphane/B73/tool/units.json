@@ -1,0 +1,14 @@
+{
+  "DEG_C": {
+    "multiplier": 1.0,
+    "offset": 273.15
+  },
+  "DEG_F": {
+    "multiplier": 0.5555555555555556,
+    "offset": 255.37222222222223
+  },
+  "K": {
+    "multiplier": 1.0,
+    "offset": 0.0
+  }
+}

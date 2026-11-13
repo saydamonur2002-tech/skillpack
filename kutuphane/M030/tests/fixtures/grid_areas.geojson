@@ -1,0 +1,67 @@
+{
+"type": "FeatureCollection",
+"metadata": {
+"attribution": "Synthetic Skillpack test fixture (not OpenStreetMap data)",
+"license": "CC0-1.0",
+"layer": "areas"
+},
+"features": [
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/a1",
+"kind": "leisure",
+"category": "park",
+"name": "Örnek Parkı"
+},
+"geometry": {
+"type": "Polygon",
+"coordinates": [
+[
+[
+29.001,
+41.001
+],
+[
+29.002,
+41.001
+],
+[
+29.002,
+41.002
+],
+[
+29.001,
+41.002
+],
+[
+29.001,
+41.001
+]
+]
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/c1",
+"kind": "natural",
+"category": "coastline"
+},
+"geometry": {
+"type": "LineString",
+"coordinates": [
+[
+28.9995,
+40.9995
+],
+[
+28.9995,
+41.0035
+]
+]
+}
+}
+]
+}

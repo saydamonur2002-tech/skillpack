@@ -1,0 +1,10 @@
+{
+  "operation": "project",
+  "points": [
+    {
+      "lat": 85,
+      "lon": -179
+    }
+  ],
+  "zoom": 9
+}

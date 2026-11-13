@@ -1,0 +1,30 @@
+[
+  {
+    "input": {
+      "measuredValue": 2350,
+      "batteryPercentageRemaining": 200
+    },
+    "result": {
+      "temperature_C": 23.5,
+      "battery_percent": 100.0
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "batteryPercentageRemaining": 255
+    },
+    "result": {},
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "batteryPercentageRemaining": 100,
+      "dontDividePercentage": true
+    },
+    "result": {
+      "battery_percent": 100.0
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

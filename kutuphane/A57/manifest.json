@@ -1,0 +1,155 @@
+{
+  "id": "A57",
+  "name": "ROS fixed-frame laser projection",
+  "description": "Range maximum is exclusive to match selected implementation. Null explicitly marks unavailable readings; JSON NaN/Inf rejected. No transforms, network or live scan.",
+  "version": "0.1.0",
+  "date": "2026-11-11",
+  "tier": "revival",
+  "source_url": "https://github.com/ros-perception/laser_geometry",
+  "upstream_commit_or_version": "47954dc5454a443b5b0a5ea5bd23315f1bc505ab",
+  "license": "BSD-3-Clause",
+  "distribution": "public-ok",
+  "attribution": [
+    "ros-perception/laser_geometry",
+    "Original copyright and notices preserved in LICENSE, NOTICE and upstream/"
+  ],
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "ranges": {
+        "type": "array",
+        "items": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "minItems": 0,
+        "maxItems": 10000
+      },
+      "angle_min": {
+        "type": "number"
+      },
+      "angle_increment": {
+        "type": "number"
+      },
+      "range_min": {
+        "type": "number",
+        "minimum": 0
+      },
+      "range_max": {
+        "type": "number",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "ranges",
+      "angle_min",
+      "angle_increment",
+      "range_min",
+      "range_max"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object",
+            "properties": {
+              "invalid_indices": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
+              },
+              "points": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              }
+            },
+            "required": [
+              "invalid_indices",
+              "points"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "maxLength": 100000
+              },
+              "message": {
+                "type": "string",
+                "maxLength": 100000
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 1048576,
+    "timeout_seconds": 10,
+    "max_array_items": 10000,
+    "enforcement": "CLI input byte bound and JSON Schema array/string bounds enforced. Runtime timeout is enforced for subprocess tools only; other tools require an external 10-second watchdog. No general memory sandbox claimed."
+  },
+  "signature": null,
+  "revocation_url": null,
+  "teaching_path": [
+    "Inspect SOURCE.md and license evidence",
+    "Call the deterministic JSON tool",
+    "Review tests and explain the returned result; never invent missing values"
+  ],
+  "status": "built",
+  "skip_reason": null,
+  "implementation_kind": "ported-core",
+  "tool": "tool/main.py",
+  "dependencies": {
+    "python": ">=3.11",
+    "shared_runtime": "../_vendor",
+    "node": ">=20 for JS-backed tools"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "tool_name": "skillpack_a57",
+    "server_path": "mcp/server.py"
+  }
+}

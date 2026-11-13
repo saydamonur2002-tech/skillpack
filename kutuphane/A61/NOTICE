@@ -1,0 +1,14 @@
+CorrSim
+Copyright 2018 Babylon Partners Limited.
+
+This repository includes software developed
+at Babylon Partners (babylonhealth.com).
+
+This software contains code derived from SentEval
+SentEval Copyright (c) 2017-present, Facebook, Inc.
+https://github.com/facebookresearch/SentEval
+
+
+Local adaptation and tests created 2026-11-11. Original authors and source notices remain in upstream/.
+Distribution classification: public-ok. This classification is not legal advice or a new permission grant.
+Changes: Preserves upstream mean-over-word-vectors preprocessing, not plain arbitrary flattened-vector correlation. No embeddings supplied. Constant vectors explicitly rejected.

@@ -1,0 +1,126 @@
+{
+  "id": "A15",
+  "name": "Baxter pinned SDK version compatibility",
+  "description": "Historical settings.py mapping only; does not allow enabling or moving hardware. Version strings must match exactly.",
+  "version": "0.1.0",
+  "date": "2026-11-11",
+  "tier": "revival",
+  "source_url": "https://github.com/RethinkRobotics/baxter_interface/blob/master/src/baxter_interface/robot_enable.py",
+  "upstream_commit_or_version": "aea70d96eb0fb0a99084dcb02d467785dde8fe52",
+  "license": "BSD-3-Clause",
+  "distribution": "public-ok",
+  "attribution": [
+    "RethinkRobotics/baxter_interface",
+    "Original copyright and notices preserved in LICENSE, NOTICE and upstream/"
+  ],
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "sdk": {
+        "type": "string",
+        "maxLength": 100000
+      },
+      "robot": {
+        "type": "string",
+        "maxLength": 100000
+      }
+    },
+    "required": [
+      "sdk",
+      "robot"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object",
+            "properties": {
+              "compatible": {
+                "type": "boolean"
+              },
+              "rule_version": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "compatible",
+              "rule_version"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "maxLength": 100000
+              },
+              "message": {
+                "type": "string",
+                "maxLength": 100000
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 1048576,
+    "timeout_seconds": 10,
+    "max_array_items": 10000,
+    "enforcement": "CLI input byte bound and JSON Schema array/string bounds enforced. Runtime timeout is enforced for subprocess tools only; other tools require an external 10-second watchdog. No general memory sandbox claimed."
+  },
+  "signature": null,
+  "revocation_url": null,
+  "teaching_path": [
+    "Inspect SOURCE.md and license evidence",
+    "Call the deterministic JSON tool",
+    "Review tests and explain the returned result; never invent missing values"
+  ],
+  "status": "built",
+  "skip_reason": null,
+  "implementation_kind": "ported-core",
+  "tool": "tool/main.py",
+  "dependencies": {
+    "python": ">=3.11",
+    "shared_runtime": "../_vendor",
+    "node": ">=20 for JS-backed tools"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "tool_name": "skillpack_a15",
+    "server_path": "mcp/server.py"
+  }
+}

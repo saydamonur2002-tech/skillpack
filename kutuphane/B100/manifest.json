@@ -1,0 +1,134 @@
+{
+  "id": "B100",
+  "name": "pvlib SPA solar position",
+  "description": "Pinned pvlib 0.16.1 SPA numpy implementation, geometric elevation and azimuth. Pressure/altitude defaults; no weather source, forecast or measured sunlight. Known-answer tolerance 0.01 degrees.",
+  "version": "0.1.0",
+  "date": "2026-11-11",
+  "tier": "general",
+  "source_url": "https://github.com/pvlib/pvlib-python",
+  "upstream_commit_or_version": "c5de586d73bbb8875a4e87468894e7b34871a575",
+  "license": "BSD-3-Clause",
+  "distribution": "public-ok",
+  "attribution": [
+    "pvlib/pvlib-python",
+    "Original copyright and notices preserved in LICENSE, NOTICE and upstream/"
+  ],
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "latitude": {
+        "type": "number",
+        "minimum": -90,
+        "maximum": 90
+      },
+      "longitude": {
+        "type": "number",
+        "minimum": -180,
+        "maximum": 180
+      },
+      "time": {
+        "type": "string",
+        "maxLength": 100000
+      }
+    },
+    "required": [
+      "latitude",
+      "longitude",
+      "time"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object",
+            "properties": {
+              "azimuth_deg": {
+                "type": "number"
+              },
+              "elevation_deg": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "azimuth_deg",
+              "elevation_deg"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "maxLength": 100000
+              },
+              "message": {
+                "type": "string",
+                "maxLength": 100000
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 1048576,
+    "timeout_seconds": 10,
+    "max_array_items": 10000,
+    "enforcement": "CLI input byte bound and JSON Schema array/string bounds enforced. Runtime timeout is enforced for subprocess tools only; other tools require an external 10-second watchdog. No general memory sandbox claimed."
+  },
+  "signature": null,
+  "revocation_url": null,
+  "teaching_path": [
+    "Inspect SOURCE.md and license evidence",
+    "Call the deterministic JSON tool",
+    "Review tests and explain the returned result; never invent missing values"
+  ],
+  "status": "built",
+  "skip_reason": null,
+  "implementation_kind": "runtime-adapter",
+  "tool": "tool/main.py",
+  "dependencies": {
+    "python": ">=3.11",
+    "shared_runtime": "../_vendor",
+    "node": ">=20 for JS-backed tools",
+    "pvlib": "0.16.1"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "tool_name": "skillpack_b100",
+    "server_path": "mcp/server.py"
+  }
+}

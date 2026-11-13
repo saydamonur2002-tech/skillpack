@@ -1,0 +1,41 @@
+{
+  "id": "A64",
+  "f": "Pebble / açık PebbleOS",
+  "n": "libutil/crc32.c",
+  "u": "https://github.com/google/pebble/blob/main/src/libutil/crc32.c",
+  "l": "Apache-2.0",
+  "t": "tool: crc32(bytes) → uint32",
+  "p": "tool code; mevcut tests/libutil/test_crc32.c",
+  "d": "düşük",
+  "env": "C; telefon/PC/MCU",
+  "note": "Bütün firmware değil, küçük hesap modülü. CRC veri bozulması kontrolüdür; imza veya kimlik doğrulama değildir.",
+  "test": "123456789 → 0xCBF43926; boş ve parçalı veri.",
+  "tier": "revival",
+  "repo": "google/pebble",
+  "files": [
+    {
+      "path": "src/libutil/crc32.c",
+      "sha256": "0639848f5f49de476d44710ee43dbf26bebea2d95c162e026b69066c595fd410",
+      "url": "https://raw.githubusercontent.com/google/pebble/4051c5bb97377f1215bbd26094c1a157532c55fe/src/libutil/crc32.c"
+    },
+    {
+      "path": "tests/libutil/test_crc32.c",
+      "sha256": "5e4c4993e8dbfa5ad8b8d8181dfa0ced92c969f2a4a60d56242529c7e1c9b857",
+      "url": "https://raw.githubusercontent.com/google/pebble/4051c5bb97377f1215bbd26094c1a157532c55fe/tests/libutil/test_crc32.c"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/google/pebble/4051c5bb97377f1215bbd26094c1a157532c55fe/src/libutil/crc32.c",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/google/pebble/4051c5bb97377f1215bbd26094c1a157532c55fe/tests/libutil/test_crc32.c",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "4051c5bb97377f1215bbd26094c1a157532c55fe"
+}

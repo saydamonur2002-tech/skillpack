@@ -1,0 +1,10 @@
+Upstream: https://github.com/manuelbieh/geolib
+Commit: eb7b6ed767616ef40cd953d4e6f1444f39d10364
+License: MIT
+
+Original copyright notices (verbatim; source comment prefixes removed):
+Copyright (c) 2011-2014 Manuel Bieh
+
+Full source-specific notices remain under upstream/. License files are kept byte-for-byte as published upstream, including any contact lines they contain. Only required public upstream legal attribution is included; no project-owner identity or contact data is recorded.
+Map data is not part of this pack. The separately shipped demo dataset is © OpenStreetMap contributors, ODbL 1.0 (https://www.openstreetmap.org/copyright). tests/fixtures is synthetic Skillpack test data (CC0-1.0), not OpenStreetMap data.
+Skillpack contributors. AI-generated standalone adaptation and teaching material; no upstream endorsement or independent certification.

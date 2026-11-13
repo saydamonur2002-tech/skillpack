@@ -1,0 +1,32 @@
+{
+  "id": "B71",
+  "f": "OpenAPI Initiative",
+  "n": "OpenAPI — parametre sözleşmesi",
+  "u": "https://github.com/OAI/OpenAPI-Specification",
+  "l": "Apache-2.0",
+  "t": "tool: check_tool_arguments(args, selected_parameter_schema) → errors",
+  "p": "rules/spec; şema examples; test senaryosu temeli",
+  "d": "orta",
+  "env": "Yeni offline script + JSON validator; PC/telefon",
+  "note": "Tek sürüm ve yalnız parametre alt kümesi; tam OpenAPI uygulaması diye sunulmaz. Belirli dış API verisi/erişim hakkı sağlamaz; istek göndermez.",
+  "test": "Required/type/enum/range; desteklenmeyen özellikte açık ret.",
+  "tier": "general",
+  "repo": "OAI/OpenAPI-Specification",
+  "files": [
+    {
+      "path": "versions/3.1.0.md",
+      "sha256": "ee99bcc50c7610f4876ce77b2f746036d4095e0909968bb6839259f955bac022",
+      "url": "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/4f86429f134f7e48b6351563549b4502fc69de52/versions/3.1.0.md"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/4f86429f134f7e48b6351563549b4502fc69de52/versions/3.1.0.md",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "4f86429f134f7e48b6351563549b4502fc69de52"
+}

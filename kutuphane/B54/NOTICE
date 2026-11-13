@@ -1,0 +1,3 @@
+Local adaptation and tests created 2026-11-11. Original authors and source notices remain in upstream/.
+Distribution classification: public-ok. This classification is not legal advice or a new permission grant.
+Changes: New Linux sysfs implementation of the mobile API result contract. Probe reads capacity/status only. Battery health, cycle count and remaining runtime excluded. Live values vary; pure run(snapshot) is deterministic.

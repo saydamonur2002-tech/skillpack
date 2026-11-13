@@ -1,0 +1,64 @@
+{
+  "id": "B45",
+  "f": "OHF-Voice",
+  "n": "Intents — Türkçe/İngilizce grammar",
+  "u": "https://github.com/OHF-Voice/intents",
+  "l": "CC-BY-4.0",
+  "t": "tool: match_home_command(text, entity_list) → intent/slots/unknown",
+  "p": "rules; examples; beklenen intent testleri; isteğe bağlı eğitim alt kümesi",
+  "d": "orta",
+  "env": "Hassil ile PC/ev merkezi; telefon portu",
+  "note": "Türkçe _common.yaml doğrulandı; bütün intentlerin Türkçe kapsamı varsayılmaz. Yalnız okunur komutlar seçilir. Eşleşme cihaz eylemi izni değildir.",
+  "test": "Türkçe ekler, aynı adlı iki cihaz, bilinmeyen oda, olumsuzlama.",
+  "tier": "general",
+  "repo": "OHF-Voice/intents",
+  "files": [
+    {
+      "path": "sentences/tr/_common.yaml",
+      "sha256": "3e9d1c3aab42a72dfe6aa3b557ef63889c10e0708336d1626384ac0f7949655b",
+      "url": "https://raw.githubusercontent.com/OHF-Voice/intents/583d1bc1f39b16b2b20be39ac3b37820fc233aa5/sentences/tr/_common.yaml"
+    },
+    {
+      "path": "sentences/tr/HassClimateGetTemperature/default.yaml",
+      "sha256": "e4342ec0414f0d04c72edd348aaeb7869f4c248c90a9f4d26dc43d2902bee148",
+      "url": "https://raw.githubusercontent.com/OHF-Voice/intents/583d1bc1f39b16b2b20be39ac3b37820fc233aa5/sentences/tr/HassClimateGetTemperature/default.yaml"
+    },
+    {
+      "path": "tests/tr/HassClimateGetTemperature/default.yaml",
+      "sha256": "b5c9394625d994cefc21ade13fcbfd3d5375b3e300cc223cdfb46859dd297566",
+      "url": "https://raw.githubusercontent.com/OHF-Voice/intents/583d1bc1f39b16b2b20be39ac3b37820fc233aa5/tests/tr/HassClimateGetTemperature/default.yaml"
+    },
+    {
+      "path": "sentences/en/HassClimateGetTemperature/default.yaml",
+      "sha256": "21315ffca6fbc6a68e5abadf4d1a61dca0719e83af0a72467160e70005aee677",
+      "url": "https://raw.githubusercontent.com/OHF-Voice/intents/583d1bc1f39b16b2b20be39ac3b37820fc233aa5/sentences/en/HassClimateGetTemperature/default.yaml"
+    },
+    {
+      "path": "tests/en/HassClimateGetTemperature/default.yaml",
+      "sha256": "151bb87d014ca346e3a6a9b438db8e3628a2ed5d17ecf7233a2d1279160f7edf",
+      "url": "https://raw.githubusercontent.com/OHF-Voice/intents/583d1bc1f39b16b2b20be39ac3b37820fc233aa5/tests/en/HassClimateGetTemperature/default.yaml"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/OHF-Voice/intents/583d1bc1f39b16b2b20be39ac3b37820fc233aa5/sentences/tr/_common.yaml",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/OHF-Voice/intents/583d1bc1f39b16b2b20be39ac3b37820fc233aa5/sentences/tr/homeassistant_HassGetState.yaml",
+      "ok": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/OHF-Voice/intents/583d1bc1f39b16b2b20be39ac3b37820fc233aa5/sentences/en/homeassistant_HassGetState.yaml",
+      "ok": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/OHF-Voice/intents/583d1bc1f39b16b2b20be39ac3b37820fc233aa5/tests/tr/homeassistant_HassGetState.yaml",
+      "ok": false
+    }
+  ],
+  "license_files": [
+    "LICENSE.md"
+  ],
+  "revision": "583d1bc1f39b16b2b20be39ac3b37820fc233aa5"
+}

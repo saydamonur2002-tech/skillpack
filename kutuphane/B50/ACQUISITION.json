@@ -1,0 +1,32 @@
+{
+  "id": "B50",
+  "f": "zigpy / ZHA topluluğu",
+  "n": "ZHA Xiaomi TemperatureMeasurementCluster",
+  "u": "https://github.com/zigpy/zha-device-handlers/blob/master/zhaquirks/xiaomi/__init__.py",
+  "l": "Apache-2.0",
+  "t": "tool: validate_lumi_temperature(raw_centidegrees, model) → value/rejected",
+  "p": "tool code; model/range rules",
+  "d": "düşük",
+  "env": "Küçük Python port; PC/edge",
+  "note": "Seçilmiş Xiaomi sınıfının -6000..6000 centidegree filtresi; bütün cihazlara uygulanmaz. Salt fonksiyon olarak ayırıp düşürülen veriyi açıklamalı ret yapar.",
+  "test": "-6000/6000 sınırı, bir alt/üst, yanlış model, eksik ölçüm.",
+  "tier": "general",
+  "repo": "zigpy/zha-device-handlers",
+  "files": [
+    {
+      "path": "zhaquirks/xiaomi/__init__.py",
+      "sha256": "062a6857c46a21a9f81b9a89fd90b409fc6e56bd1a99257eec689ab9b4d81e1f",
+      "url": "https://raw.githubusercontent.com/zigpy/zha-device-handlers/b07fa76876e081d48744968f9fb806e7f1fee0ee/zhaquirks/xiaomi/__init__.py"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/zigpy/zha-device-handlers/b07fa76876e081d48744968f9fb806e7f1fee0ee/zhaquirks/xiaomi/__init__.py",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE.md"
+  ],
+  "revision": "b07fa76876e081d48744968f9fb806e7f1fee0ee"
+}

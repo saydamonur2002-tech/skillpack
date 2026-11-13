@@ -1,0 +1,7 @@
+{
+  "python": "3.13.5 (main, Aug 10 2026, 12:06:59) [GCC 14.2.0]",
+  "platform": "Linux-6.12.113+-x86_64-with-glibc2.41",
+  "architecture": "x86_64",
+  "sdk": "mcp==1.30.0",
+  "transport": "stdio"
+}

@@ -1,0 +1,33 @@
+[
+  {
+    "input": {
+      "ranges": [
+        1,
+        1,
+        null,
+        10
+      ],
+      "angle_min": 0,
+      "angle_increment": 1.5707963267948966,
+      "range_min": 0,
+      "range_max": 10
+    },
+    "result": {
+      "points": [
+        [
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "invalid_indices": [
+        2,
+        3
+      ]
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

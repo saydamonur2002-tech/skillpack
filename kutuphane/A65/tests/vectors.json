@@ -1,0 +1,69 @@
+[
+  {
+    "input": {
+      "capacity": 3,
+      "operations": [
+        {
+          "op": "write",
+          "data": [
+            1,
+            2
+          ]
+        },
+        {
+          "op": "read",
+          "count": 1
+        },
+        {
+          "op": "write",
+          "data": [
+            3,
+            4
+          ]
+        },
+        {
+          "op": "read",
+          "count": 3
+        }
+      ]
+    },
+    "result": {
+      "reads": [
+        [
+          1
+        ],
+        [
+          2,
+          3,
+          4
+        ]
+      ],
+      "remaining": []
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "capacity": 0,
+      "operations": []
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "capacity": 1,
+      "operations": [
+        {
+          "op": "write",
+          "data": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

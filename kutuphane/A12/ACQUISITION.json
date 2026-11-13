@@ -1,0 +1,45 @@
+{
+  "id": "A12",
+  "f": "Snips / Sonos",
+  "n": "nlu-benchmark — etiketli metin",
+  "u": "https://github.com/sonos/nlu-benchmark",
+  "l": "CC0-1.0",
+  "t": "tool: score_intents(predictions, labels) → accuracy/confusions",
+  "p": "examples; etiketli test girdileri",
+  "d": "düşük",
+  "env": "Yeni küçük script; PC/telefon",
+  "note": "Veri niyet tanıma motoru değildir; deterministik scorer yazılır. Kaynak atıf istiyor; veri ve sürüm belirtilir. Ses/model eklenmez.",
+  "test": "Doğru/yanlış/eksik tahmin ve geçersiz etiket.",
+  "tier": "revival",
+  "repo": "sonos/nlu-benchmark",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "1b9d7e36688231152b789a0d1a323d028fc9387e72e7de84abcdc718181f965b",
+      "url": "https://raw.githubusercontent.com/sonos/nlu-benchmark/b86ac7f1577868c42158d0dec77db50956046696/README.md"
+    },
+    {
+      "path": "2016-12-built-in-intents/benchmark_data.json",
+      "sha256": "e3f6ba7b7ab0e8d1a5959a8c8ecb4fc566a281f4ebd34fdf1160929c630d299f",
+      "url": "https://raw.githubusercontent.com/sonos/nlu-benchmark/b86ac7f1577868c42158d0dec77db50956046696/2016-12-built-in-intents/benchmark_data.json"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/sonos/nlu-benchmark/b86ac7f1577868c42158d0dec77db50956046696/README.md",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/sonos/nlu-benchmark/b86ac7f1577868c42158d0dec77db50956046696/2017-06-custom-intent-engines/AskUbuntuCorpus.json",
+      "ok": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/sonos/nlu-benchmark/b86ac7f1577868c42158d0dec77db50956046696/2016-12-built-in-intents/benchmark_data.json",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "b86ac7f1577868c42158d0dec77db50956046696"
+}

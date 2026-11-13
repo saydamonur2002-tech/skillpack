@@ -1,0 +1,37 @@
+[
+  {
+    "input": {
+      "hex": "00000003616263"
+    },
+    "result": {
+      "payload_hex": "616263",
+      "length": 3
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "hex": "00000000"
+    },
+    "result": {
+      "payload_hex": "",
+      "length": 0
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "hex": "0000"
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "hex": "00010000",
+      "max_len": 8
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

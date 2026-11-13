@@ -1,0 +1,68 @@
+{
+  "id": "A61",
+  "f": "Babylon Health",
+  "n": "corrsim — sayısal korelasyon",
+  "u": "https://github.com/babylonhealth/corrsim",
+  "l": "Apache-2.0",
+  "t": "tool: compare_vectors(a, b, method) → correlation/error",
+  "p": "tool code; sayısal yöntemler; examples",
+  "d": "orta",
+  "env": "Python/NumPy; PC/edge",
+  "note": "Yalnız verilen vektörlerde Pearson/Spearman alt kümesi. STS verisi, hazır embedding ve dış modeller dahil değil; benzerlik doğruluk değildir.",
+  "test": "Aynı/ters vektör, sabit dizi, NaN, boyut farkı.",
+  "tier": "revival",
+  "repo": "babylonhealth/corrsim",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "881e805cbfcb1746a84ab75b7db13094fa72e958e48a1f9d8020c20933aed346",
+      "url": "https://raw.githubusercontent.com/babylonhealth/corrsim/1d172055d0009d0f4f0c5ad7d6a3d1045da01889/README.md"
+    },
+    {
+      "path": "similarity/correlation.py",
+      "sha256": "ee94b32fab4150bafa391e3a726a3f7775a3733937b297fe0bbdbab2867f8003",
+      "url": "https://raw.githubusercontent.com/babylonhealth/corrsim/1d172055d0009d0f4f0c5ad7d6a3d1045da01889/similarity/correlation.py"
+    },
+    {
+      "path": "similarity/baseline.py",
+      "sha256": "2c6e7af3b29bf1a74982e127399cab558f30d9f09df5459cea5201ec9fc2a999",
+      "url": "https://raw.githubusercontent.com/babylonhealth/corrsim/1d172055d0009d0f4f0c5ad7d6a3d1045da01889/similarity/baseline.py"
+    },
+    {
+      "path": "LICENSE_SentEval",
+      "sha256": "0d9e8a308e5afe17319634f9d52b1ddbe3744a263c3b5c85898122029727c79a",
+      "url": "https://raw.githubusercontent.com/babylonhealth/corrsim/1d172055d0009d0f4f0c5ad7d6a3d1045da01889/LICENSE_SentEval"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/babylonhealth/corrsim/1d172055d0009d0f4f0c5ad7d6a3d1045da01889/corrsim/correlation.py",
+      "ok": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/babylonhealth/corrsim/1d172055d0009d0f4f0c5ad7d6a3d1045da01889/corrsim/__init__.py",
+      "ok": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/babylonhealth/corrsim/1d172055d0009d0f4f0c5ad7d6a3d1045da01889/README.md",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/babylonhealth/corrsim/1d172055d0009d0f4f0c5ad7d6a3d1045da01889/similarity/correlation.py",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/babylonhealth/corrsim/1d172055d0009d0f4f0c5ad7d6a3d1045da01889/similarity/baseline.py",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/babylonhealth/corrsim/1d172055d0009d0f4f0c5ad7d6a3d1045da01889/LICENSE_SentEval",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "1d172055d0009d0f4f0c5ad7d6a3d1045da01889",
+  "notice_file": "NOTICE"
+}

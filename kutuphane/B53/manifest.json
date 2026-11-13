@@ -1,0 +1,124 @@
+{
+  "id": "B53",
+  "name": "Sensirion SHT3x CRC-checked fixed-point decoder",
+  "description": "Preserves upstream /65536 fixed-point arithmetic, not the datasheet /65535 floating approximation. Read errors abort before conversion. CRC-8 polynomial 0x31, init 0xff. No I2C operations.",
+  "version": "0.1.0",
+  "date": "2026-11-11",
+  "tier": "general",
+  "source_url": "https://github.com/Sensirion/embedded-sht/blob/master/sht3x/sht3x.c",
+  "upstream_commit_or_version": "94967774f25985bf65356bad3689fec4e8fef2b8",
+  "license": "BSD-3-Clause",
+  "distribution": "public-ok",
+  "attribution": [
+    "Sensirion/embedded-sht",
+    "Original copyright and notices preserved in LICENSE, NOTICE and upstream/"
+  ],
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "hex": {
+        "type": "string",
+        "maxLength": 100000
+      },
+      "read_error": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "hex"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object",
+            "properties": {
+              "humidity_milli_percent": {
+                "type": "number"
+              },
+              "temperature_mC": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "humidity_milli_percent",
+              "temperature_mC"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "maxLength": 100000
+              },
+              "message": {
+                "type": "string",
+                "maxLength": 100000
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 1048576,
+    "timeout_seconds": 10,
+    "max_array_items": 10000,
+    "enforcement": "CLI input byte bound and JSON Schema array/string bounds enforced. Runtime timeout is enforced for subprocess tools only; other tools require an external 10-second watchdog. No general memory sandbox claimed."
+  },
+  "signature": null,
+  "revocation_url": null,
+  "teaching_path": [
+    "Inspect SOURCE.md and license evidence",
+    "Call the deterministic JSON tool",
+    "Review tests and explain the returned result; never invent missing values"
+  ],
+  "status": "built",
+  "skip_reason": null,
+  "implementation_kind": "ported-core",
+  "tool": "tool/main.py",
+  "dependencies": {
+    "python": ">=3.11",
+    "shared_runtime": "../_vendor",
+    "node": ">=20 for JS-backed tools"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "tool_name": "skillpack_b53",
+    "server_path": "mcp/server.py"
+  }
+}

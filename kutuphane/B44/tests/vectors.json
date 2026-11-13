@@ -1,0 +1,38 @@
+[
+  {
+    "input": {
+      "value": 0,
+      "from": "C",
+      "to": "F"
+    },
+    "result": {
+      "value": 32.0,
+      "unit": "F",
+      "is_delta": false
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "value": 10,
+      "from": "C",
+      "to": "F",
+      "is_delta": true
+    },
+    "result": {
+      "value": 18.0,
+      "unit": "F",
+      "is_delta": true
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "value": -1,
+      "from": "K",
+      "to": "C"
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

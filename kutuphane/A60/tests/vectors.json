@@ -1,0 +1,40 @@
+[
+  {
+    "input": {
+      "template": {
+        "params": {
+          "x": {
+            "type": "integer"
+          }
+        },
+        "hydrated": {
+          "value": "{{{x}}}"
+        }
+      },
+      "values": {
+        "x": 3
+      }
+    },
+    "result": {
+      "json": {
+        "value": 3
+      }
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "template": {
+        "params": {
+          "x": {
+            "type": "integer"
+          }
+        },
+        "hydrated": {}
+      },
+      "values": {}
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

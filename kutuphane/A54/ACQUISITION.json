@@ -1,0 +1,32 @@
+{
+  "id": "A54",
+  "f": "Özgün Rethink Robotics",
+  "n": "baxter_common — AssemblyState.msg",
+  "u": "https://github.com/RethinkRobotics/baxter_common/blob/master/baxter_core_msgs/msg/AssemblyState.msg",
+  "l": "BSD-3-Clause",
+  "t": "tool: validate_assembly_state(json) → flags/errors",
+  "p": "rules; telemetry şeması/örnekleri",
+  "d": "düşük",
+  "env": "Yeni JSON script; telefon/PC",
+  "note": "Yalnız mesaj tanımı. Mesh ve robot modelleri dahil değil. ready/enabled bitleri motoru çalıştırma yetkisi sayılmaz.",
+  "test": "Alan tipleri, enum sınırı, eksik durum.",
+  "tier": "revival",
+  "repo": "RethinkRobotics/baxter_common",
+  "files": [
+    {
+      "path": "baxter_core_msgs/msg/AssemblyState.msg",
+      "sha256": "be3a21b68dfd7b7d8aefc10edf2320d6c4948a7387a58709f619191cc198e3f2",
+      "url": "https://raw.githubusercontent.com/RethinkRobotics/baxter_common/6c4b0f375fe4e356a3b12df26ef7c0d5e58df86e/baxter_core_msgs/msg/AssemblyState.msg"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/RethinkRobotics/baxter_common/6c4b0f375fe4e356a3b12df26ef7c0d5e58df86e/baxter_core_msgs/msg/AssemblyState.msg",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "6c4b0f375fe4e356a3b12df26ef7c0d5e58df86e"
+}

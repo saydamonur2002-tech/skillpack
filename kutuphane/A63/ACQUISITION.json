@@ -1,0 +1,33 @@
+{
+  "id": "A63",
+  "f": "Parse hizmeti kökeni / Parse topluluğu",
+  "n": "Parse SDK JS — ParseACL.ts",
+  "u": "https://github.com/parse-community/Parse-SDK-JS/blob/alpha/src/ParseACL.ts",
+  "l": "Apache-2.0",
+  "t": "tool: inspect_acl(acl_json, principal) → explicit_bits/errors",
+  "p": "tool code; ACL alan kuralları; examples",
+  "d": "orta",
+  "env": "TypeScript/JS; PC/telefon",
+  "note": "Salt ACL yapısını ve açık bitleri inceler. Public/role/CLP ve sunucu politikaları birleşmeden etkili erişim izni hesaplandı denmez; gerçek kullanıcı verisi kullanılmaz.",
+  "test": "Public/user/role girdisi, bozuk boolean, eksik principal.",
+  "tier": "revival",
+  "repo": "parse-community/Parse-SDK-JS",
+  "files": [
+    {
+      "path": "src/ParseACL.ts",
+      "sha256": "dc09e2af44b14c0385013c39efcbfbd543f3ef15b7d7cc92c7e516c97826e72f",
+      "url": "https://raw.githubusercontent.com/parse-community/Parse-SDK-JS/d374d24871de17d43726108a89469aac6cebcdb1/src/ParseACL.ts"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/parse-community/Parse-SDK-JS/d374d24871de17d43726108a89469aac6cebcdb1/src/ParseACL.ts",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "d374d24871de17d43726108a89469aac6cebcdb1",
+  "notice_file": "NOTICE"
+}

@@ -1,0 +1,33 @@
+[
+  {
+    "input": {
+      "predictions": [
+        "a",
+        "b"
+      ],
+      "labels": [
+        "a",
+        "a"
+      ]
+    },
+    "result": {
+      "count": 2,
+      "correct": 1,
+      "accuracy": 0.5,
+      "confusions": {
+        "a -> b": 1
+      }
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "predictions": [
+        "a"
+      ],
+      "labels": []
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

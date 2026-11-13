@@ -1,0 +1,64 @@
+[
+  {
+    "input": {
+      "events": [
+        {
+          "time": 0,
+          "motion": "on"
+        },
+        {
+          "time": 1,
+          "motion": "off"
+        },
+        {
+          "time": 3,
+          "motion": "on"
+        },
+        {
+          "time": 5,
+          "motion": "off"
+        }
+      ],
+      "wait_seconds": 4,
+      "until": 10
+    },
+    "result": {
+      "planned_actions": [
+        {
+          "time": 0,
+          "action": "turn_on"
+        },
+        {
+          "time": 3,
+          "action": "turn_on"
+        },
+        {
+          "time": 9,
+          "action": "turn_off"
+        }
+      ]
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "events": [
+        {
+          "time": 0,
+          "motion": "on"
+        }
+      ],
+      "wait_seconds": 5,
+      "until": 100
+    },
+    "result": {
+      "planned_actions": [
+        {
+          "time": 0,
+          "action": "turn_on"
+        }
+      ]
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "input": {
+      "level": 0,
+      "state": "discharging"
+    },
+    "result": {
+      "supported": true,
+      "level": 0,
+      "state": "discharging"
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "level": 100,
+      "state": "full"
+    },
+    "result": {
+      "supported": true,
+      "level": 100,
+      "state": "full"
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "level": null
+    },
+    "result": {
+      "supported": false,
+      "level": null,
+      "state": "unknown"
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "level": 101
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

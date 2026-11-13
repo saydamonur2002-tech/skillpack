@@ -1,0 +1,135 @@
+{
+  "id": "B73",
+  "name": "QUDT Celsius Fahrenheit Kelvin conversion",
+  "description": "Only selected C/F/K conversion relations, normalized to SI affine coefficients. Original QUDT multiplier/offset semantics verified before conversion. No full RDF ontology or dimension inference.",
+  "version": "0.1.0",
+  "date": "2026-11-11",
+  "tier": "general",
+  "source_url": "https://github.com/qudt/qudt-public-repo",
+  "upstream_commit_or_version": "ee31c598eeee7cde08f8a792a473e120f52daeea",
+  "license": "CC-BY-4.0",
+  "distribution": "public-ok",
+  "attribution": [
+    "qudt/qudt-public-repo",
+    "Original copyright and notices preserved in LICENSE, NOTICE and upstream/"
+  ],
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "number"
+      },
+      "source_unit": {
+        "enum": [
+          "DEG_C",
+          "DEG_F",
+          "K"
+        ]
+      },
+      "target_unit": {
+        "enum": [
+          "DEG_C",
+          "DEG_F",
+          "K"
+        ]
+      },
+      "is_delta": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "value",
+      "source_unit",
+      "target_unit"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "maxLength": 100000
+              },
+              "message": {
+                "type": "string",
+                "maxLength": 100000
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 1048576,
+    "timeout_seconds": 10,
+    "max_array_items": 10000,
+    "enforcement": "CLI input byte bound and JSON Schema array/string bounds enforced. Runtime timeout is enforced for subprocess tools only; other tools require an external 10-second watchdog. No general memory sandbox claimed."
+  },
+  "signature": null,
+  "revocation_url": null,
+  "teaching_path": [
+    "Inspect SOURCE.md and license evidence",
+    "Call the deterministic JSON tool",
+    "Review tests and explain the returned result; never invent missing values"
+  ],
+  "status": "built",
+  "skip_reason": null,
+  "implementation_kind": "data-rule",
+  "tool": "tool/main.py",
+  "dependencies": {
+    "python": ">=3.11",
+    "shared_runtime": "../_vendor",
+    "node": ">=20 for JS-backed tools"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "tool_name": "skillpack_b73",
+    "server_path": "mcp/server.py"
+  }
+}

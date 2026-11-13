@@ -1,0 +1,63 @@
+{
+  "id": "A4",
+  "f": "Ninja Sphere",
+  "n": "go-daikin-ac — durum okuma",
+  "u": "https://github.com/ninjasphere/go-daikin-ac",
+  "l": "MIT",
+  "t": "tool: parse_daikin_status(response) → sensor_fields/errors",
+  "p": "tool code; alan kuralları; emulator örneği",
+  "d": "orta",
+  "env": "Go; PC/ev merkezi",
+  "note": "Yalnız yerel durum yanıtı ayrıştırılır; ayar yazma yok. README WIP ve gerçek donanımda denenmedi diyor; çalışan cihaz desteği diye sunulmaz.",
+  "test": "Eksik alan, bozuk yanıt, emulator çıktısı.",
+  "tier": "revival",
+  "repo": "ninjasphere/go-daikin-ac",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "d1f49e4aa3a930cc12cf25d8a9492fb412c390b34f4252b9c248f6b87c15d02e",
+      "url": "https://raw.githubusercontent.com/ninjasphere/go-daikin-ac/0d10d6d291ae5b701ce03b88258ea8bd23139b32/README.md"
+    },
+    {
+      "path": "baseDaikin.go",
+      "sha256": "14ff338407113c7c2eae68667f0795dbe6404d5e7e043c1d0bf9586a4aa29d3f",
+      "url": "https://raw.githubusercontent.com/ninjasphere/go-daikin-ac/0d10d6d291ae5b701ce03b88258ea8bd23139b32/baseDaikin.go"
+    },
+    {
+      "path": "model.go",
+      "sha256": "adccdb4abe305c992f50521d00517f1aa77d8d9261cfff9ae9fe346e71fc330d",
+      "url": "https://raw.githubusercontent.com/ninjasphere/go-daikin-ac/0d10d6d291ae5b701ce03b88258ea8bd23139b32/model.go"
+    },
+    {
+      "path": "emulator/emulator.go",
+      "sha256": "7ed132ce70513c45f0be7e804e63cedbc44134925ad2a3d8f978e04d30a33bb6",
+      "url": "https://raw.githubusercontent.com/ninjasphere/go-daikin-ac/0d10d6d291ae5b701ce03b88258ea8bd23139b32/emulator/emulator.go"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/ninjasphere/go-daikin-ac/0d10d6d291ae5b701ce03b88258ea8bd23139b32/daikin.go",
+      "ok": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ninjasphere/go-daikin-ac/0d10d6d291ae5b701ce03b88258ea8bd23139b32/README.md",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ninjasphere/go-daikin-ac/0d10d6d291ae5b701ce03b88258ea8bd23139b32/baseDaikin.go",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ninjasphere/go-daikin-ac/0d10d6d291ae5b701ce03b88258ea8bd23139b32/model.go",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ninjasphere/go-daikin-ac/0d10d6d291ae5b701ce03b88258ea8bd23139b32/emulator/emulator.go",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "0d10d6d291ae5b701ce03b88258ea8bd23139b32"
+}

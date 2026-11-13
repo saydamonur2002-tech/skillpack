@@ -1,0 +1,23 @@
+[
+  {
+    "input": {
+      "latitude": 39.742476,
+      "longitude": -105.1786,
+      "time": "2003-10-17T12:30:30-07:00"
+    },
+    "result": {
+      "elevation_deg": 39.87205,
+      "azimuth_deg": 194.34024
+    },
+    "provenance": "SPA reference location/time from upstream solarposition tests; altitude defaults to 0, geometric elevation tolerance 0.01 degrees."
+  },
+  {
+    "input": {
+      "latitude": 0,
+      "longitude": 0,
+      "time": "2024-01-01T00:00:00"
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

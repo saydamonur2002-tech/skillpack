@@ -1,0 +1,12 @@
+{
+  "operation": "nearby",
+  "dataset": "grid",
+  "center": {
+    "lat": 41.001,
+    "lon": 29.001
+  },
+  "radius_m": 300,
+  "categories": [
+    "pharmacy"
+  ]
+}

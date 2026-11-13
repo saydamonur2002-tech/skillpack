@@ -1,0 +1,47 @@
+{
+  "id": "A42",
+  "f": "Babylon Health",
+  "n": "lit-fhir — R4 typed JSON",
+  "u": "https://github.com/babylonhealth/lit-fhir",
+  "l": "Apache-2.0",
+  "t": "tool: parse_fhir_r4(json) → typed_json/structural_errors",
+  "p": "tool code; FHIR tip/alan kuralları; examples",
+  "d": "yüksek",
+  "env": "Scala/JVM; PC",
+  "note": "R4/4.0.1 yapısal parse/roundtrip; tam profil, terminoloji veya klinik doğruluk validatorü değildir. SNOMED ve dış sözlükler dahil edilmez.",
+  "test": "Yanlış tür, resourceType, roundtrip; yalnız sentetik kayıt.",
+  "tier": "revival",
+  "repo": "babylonhealth/lit-fhir",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "b3b2e34a1b6d9d2dcce3abffaf7b47d07b143e9719c7aee30d35a9f1f890ba85",
+      "url": "https://raw.githubusercontent.com/babylonhealth/lit-fhir/9791e0aef2552507f465e6326ed60e66a277f1f9/README.md"
+    },
+    {
+      "path": "build.sbt",
+      "sha256": "df69d41de93934f08d5bbaa15faf3ec33098d3648af2026b5d1b29b982eb85dd",
+      "url": "https://raw.githubusercontent.com/babylonhealth/lit-fhir/9791e0aef2552507f465e6326ed60e66a277f1f9/build.sbt"
+    },
+    {
+      "path": "hl7/src/main/scala/com/babylonhealth/lit/hl7/model/Patient.scala",
+      "sha256": "15f07b29e133c80ea823e27cb49892eb9284d6565f577769a4e73789bf2936d0",
+      "url": "https://raw.githubusercontent.com/babylonhealth/lit-fhir/9791e0aef2552507f465e6326ed60e66a277f1f9/hl7/src/main/scala/com/babylonhealth/lit/hl7/model/Patient.scala"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/babylonhealth/lit-fhir/9791e0aef2552507f465e6326ed60e66a277f1f9/README.md",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/babylonhealth/lit-fhir/9791e0aef2552507f465e6326ed60e66a277f1f9/build.sbt",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "9791e0aef2552507f465e6326ed60e66a277f1f9",
+  "notice_file": "NOTICE"
+}

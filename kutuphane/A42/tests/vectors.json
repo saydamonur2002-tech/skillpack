@@ -1,0 +1,37 @@
+[
+  {
+    "input": {
+      "resource": {
+        "resourceType": "Patient",
+        "active": true
+      }
+    },
+    "result": {
+      "resource": {
+        "resourceType": "Patient",
+        "active": true
+      },
+      "scope": "Patient scalar subset only"
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "resource": {
+        "resourceType": "Observation"
+      }
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "resource": {
+        "resourceType": "Patient",
+        "active": 1
+      }
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

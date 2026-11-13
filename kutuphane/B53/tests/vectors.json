@@ -1,0 +1,37 @@
+[
+  {
+    "input": {
+      "hex": "000081000081"
+    },
+    "result": {
+      "temperature_mC": -45000,
+      "humidity_milli_percent": 0
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "hex": "ffffacffffac"
+    },
+    "result": {
+      "temperature_mC": 129997,
+      "humidity_milli_percent": 99998
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "hex": "000000000000"
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "hex": "000081000081",
+      "read_error": true
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

@@ -1,0 +1,30 @@
+[
+  {
+    "input": {
+      "memory_total": 100,
+      "memory_available": 25,
+      "disk_total": 100,
+      "disk_free": 50,
+      "cpu_busy_delta": 1,
+      "cpu_total_delta": 4
+    },
+    "result": {
+      "memory_used_percent": 75.0,
+      "disk_used_percent": 50.0,
+      "cpu_percent": 25.0
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "memory_total": 1,
+      "memory_available": 2,
+      "disk_total": 1,
+      "disk_free": 0,
+      "cpu_busy_delta": 0,
+      "cpu_total_delta": 1
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

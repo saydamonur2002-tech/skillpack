@@ -1,0 +1,71 @@
+[
+  {
+    "input": {
+      "samples": [
+        1,
+        -1
+      ],
+      "window": 2,
+      "step": 1
+    },
+    "result": {
+      "windows": [
+        {
+          "start": 0,
+          "RMS": 1.0,
+          "MAV": 1.0
+        }
+      ]
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "samples": [
+        0,
+        0,
+        0
+      ],
+      "window": 2,
+      "step": 1
+    },
+    "result": {
+      "windows": [
+        {
+          "start": 0,
+          "RMS": 0.0,
+          "MAV": 0.0
+        },
+        {
+          "start": 1,
+          "RMS": 0.0,
+          "MAV": 0.0
+        }
+      ]
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "samples": [
+        1
+      ],
+      "window": 2,
+      "step": 1
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "samples": [
+        1,
+        2
+      ],
+      "window": 2,
+      "step": 0
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

@@ -1,0 +1,41 @@
+{
+  "id": "A15",
+  "f": "Özgün Rethink Robotics",
+  "n": "Baxter Interface — sürüm kontrolü",
+  "u": "https://github.com/RethinkRobotics/baxter_interface/blob/master/src/baxter_interface/robot_enable.py",
+  "l": "BSD-3-Clause",
+  "t": "tool: check_sdk_version(sdk, robot) → compatible/reason",
+  "p": "tool code; settings.py sürüm kuralları",
+  "d": "orta",
+  "env": "Python; PC, bağımsız port",
+  "note": "Yalnız version_check ve settings sabitleri. Enable/reset/motion kodu alınmaz; uyumluluk sonucu hareket izni değildir.",
+  "test": "Desteklenen/desteklenmeyen/eksik sürüm.",
+  "tier": "revival",
+  "repo": "RethinkRobotics/baxter_interface",
+  "files": [
+    {
+      "path": "src/baxter_interface/robot_enable.py",
+      "sha256": "4b8e888a334c1639cf53d26196cfbb16e4e6a4454e862ea1d19a1fa7820dfcac",
+      "url": "https://raw.githubusercontent.com/RethinkRobotics/baxter_interface/aea70d96eb0fb0a99084dcb02d467785dde8fe52/src/baxter_interface/robot_enable.py"
+    },
+    {
+      "path": "src/baxter_interface/settings.py",
+      "sha256": "ecf7c6e4073ed731198a562b6cb7ecaae49c80b9594f3e2dfeef108ea4868bc0",
+      "url": "https://raw.githubusercontent.com/RethinkRobotics/baxter_interface/aea70d96eb0fb0a99084dcb02d467785dde8fe52/src/baxter_interface/settings.py"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/RethinkRobotics/baxter_interface/aea70d96eb0fb0a99084dcb02d467785dde8fe52/src/baxter_interface/robot_enable.py",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/RethinkRobotics/baxter_interface/aea70d96eb0fb0a99084dcb02d467785dde8fe52/src/baxter_interface/settings.py",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "aea70d96eb0fb0a99084dcb02d467785dde8fe52"
+}

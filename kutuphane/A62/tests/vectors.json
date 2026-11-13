@@ -1,0 +1,60 @@
+[
+  {
+    "input": {
+      "a": [
+        [
+          1,
+          0
+        ]
+      ],
+      "b": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "result": {
+      "cosine": 0.0
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "a": [
+        [
+          1,
+          2
+        ]
+      ],
+      "b": [
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    "result": {
+      "cosine": 1.0
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "a": [
+        [
+          0,
+          0
+        ]
+      ],
+      "b": [
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

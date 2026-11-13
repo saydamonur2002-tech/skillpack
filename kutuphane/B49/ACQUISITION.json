@@ -1,0 +1,32 @@
+{
+  "id": "B49",
+  "f": "Koenkk / Zigbee topluluğu",
+  "n": "zigbee-herdsman-converters — temperature/battery",
+  "u": "https://github.com/Koenkk/zigbee-herdsman-converters/blob/master/src/converters/fromZigbee.ts",
+  "l": "MIT",
+  "t": "tool: decode_zigbee_measurement(fields, model_meta) → temperature/battery/errors",
+  "p": "tool code; alan ölçekleri; model kuralları",
+  "d": "orta",
+  "env": "TypeScript/JS; ev merkezi/PC",
+  "note": "Yalnız salt-okunur temperature/battery dönüştürücüleri. Pil 200→100 ölçeği ve model istisnaları açık olur; bu kod tüm Zigbee standardı değildir.",
+  "test": "2350→23.5°C; pil 200→100; 255/bilinmeyen; model istisnası.",
+  "tier": "general",
+  "repo": "Koenkk/zigbee-herdsman-converters",
+  "files": [
+    {
+      "path": "src/converters/fromZigbee.ts",
+      "sha256": "a04ba5f429f4e04808b05327248f867b88b98229af7ac37a10ff589e507a9dc2",
+      "url": "https://raw.githubusercontent.com/Koenkk/zigbee-herdsman-converters/f46c6d88f0eaceaf25dca7dba0dda797d2dc281e/src/converters/fromZigbee.ts"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/Koenkk/zigbee-herdsman-converters/f46c6d88f0eaceaf25dca7dba0dda797d2dc281e/src/converters/fromZigbee.ts",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "f46c6d88f0eaceaf25dca7dba0dda797d2dc281e"
+}

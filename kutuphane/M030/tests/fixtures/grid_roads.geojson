@@ -1,0 +1,314 @@
+{
+"type": "FeatureCollection",
+"metadata": {
+"attribution": "Synthetic Skillpack test fixture (not OpenStreetMap data)",
+"license": "CC0-1.0",
+"layer": "roads"
+},
+"features": [
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/ew0",
+"highway": "residential",
+"name": "Birinci Sokak"
+},
+"geometry": {
+"type": "LineString",
+"coordinates": [
+[
+29.0,
+41.0
+],
+[
+29.001,
+41.0
+],
+[
+29.002,
+41.0
+],
+[
+29.003,
+41.0
+]
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/ew1",
+"highway": "residential",
+"name": "İkinci Sokak",
+"oneway": "yes"
+},
+"geometry": {
+"type": "LineString",
+"coordinates": [
+[
+29.0,
+41.001
+],
+[
+29.001,
+41.001
+],
+[
+29.002,
+41.001
+],
+[
+29.003,
+41.001
+]
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/ew2",
+"highway": "secondary",
+"name": "Üçüncü Cadde"
+},
+"geometry": {
+"type": "LineString",
+"coordinates": [
+[
+29.0,
+41.002
+],
+[
+29.001,
+41.002
+],
+[
+29.002,
+41.002
+],
+[
+29.003,
+41.002
+]
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/ew3",
+"highway": "residential",
+"name": "Dördüncü Sokak"
+},
+"geometry": {
+"type": "LineString",
+"coordinates": [
+[
+29.0,
+41.003
+],
+[
+29.001,
+41.003
+],
+[
+29.002,
+41.003
+],
+[
+29.003,
+41.003
+]
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/ns0",
+"highway": "residential",
+"name": "Çınar Yolu"
+},
+"geometry": {
+"type": "LineString",
+"coordinates": [
+[
+29.0,
+41.0
+],
+[
+29.0,
+41.001
+],
+[
+29.0,
+41.002
+],
+[
+29.0,
+41.003
+]
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/ns1",
+"highway": "residential",
+"name": "Şehit Sokak"
+},
+"geometry": {
+"type": "LineString",
+"coordinates": [
+[
+29.001,
+41.0
+],
+[
+29.001,
+41.001
+],
+[
+29.001,
+41.002
+],
+[
+29.001,
+41.003
+]
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/ns2",
+"highway": "residential",
+"name": "Gül Caddesi"
+},
+"geometry": {
+"type": "LineString",
+"coordinates": [
+[
+29.002,
+41.0
+],
+[
+29.002,
+41.001
+],
+[
+29.002,
+41.002
+],
+[
+29.002,
+41.003
+]
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/ns3",
+"highway": "residential",
+"name": "Ihlamur Sokak",
+"oneway": "-1"
+},
+"geometry": {
+"type": "LineString",
+"coordinates": [
+[
+29.003,
+41.0
+],
+[
+29.003,
+41.001
+],
+[
+29.003,
+41.002
+],
+[
+29.003,
+41.003
+]
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/fw1",
+"highway": "footway"
+},
+"geometry": {
+"type": "LineString",
+"coordinates": [
+[
+29.0,
+41.0
+],
+[
+29.001,
+41.001
+],
+[
+29.002,
+41.002
+],
+[
+29.003,
+41.003
+]
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/priv",
+"highway": "service",
+"access": "private"
+},
+"geometry": {
+"type": "LineString",
+"coordinates": [
+[
+29.0,
+41.003
+],
+[
+29.0,
+41.004
+]
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/island",
+"highway": "residential",
+"name": "Ada Sokak"
+},
+"geometry": {
+"type": "LineString",
+"coordinates": [
+[
+29.006,
+41.0
+],
+[
+29.006,
+41.001
+]
+]
+}
+}
+]
+}

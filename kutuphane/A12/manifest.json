@@ -1,0 +1,144 @@
+{
+  "id": "A12",
+  "name": "Snips intent benchmark scorer",
+  "description": "New deterministic scorer, not an intent recognizer. Labels are explicit inputs; no training or judge model. For slot scoring, serialize canonical intent+slot labels before exact-match comparison. Source fixture coverage is stated in SOURCE.md.",
+  "version": "0.1.0",
+  "date": "2026-11-11",
+  "tier": "revival",
+  "source_url": "https://github.com/sonos/nlu-benchmark",
+  "upstream_commit_or_version": "b86ac7f1577868c42158d0dec77db50956046696",
+  "license": "CC0-1.0",
+  "distribution": "public-ok",
+  "attribution": [
+    "sonos/nlu-benchmark",
+    "Original copyright and notices preserved in LICENSE, NOTICE and upstream/"
+  ],
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "predictions": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "maxLength": 100000
+        },
+        "minItems": 1,
+        "maxItems": 10000
+      },
+      "labels": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "maxLength": 100000
+        },
+        "minItems": 1,
+        "maxItems": 10000
+      }
+    },
+    "required": [
+      "predictions",
+      "labels"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object",
+            "properties": {
+              "accuracy": {
+                "type": "number"
+              },
+              "confusions": {
+                "type": "object"
+              },
+              "correct": {
+                "type": "number"
+              },
+              "count": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "accuracy",
+              "confusions",
+              "correct",
+              "count"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "maxLength": 100000
+              },
+              "message": {
+                "type": "string",
+                "maxLength": 100000
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 1048576,
+    "timeout_seconds": 10,
+    "max_array_items": 10000,
+    "enforcement": "CLI input byte bound and JSON Schema array/string bounds enforced. Runtime timeout is enforced for subprocess tools only; other tools require an external 10-second watchdog. No general memory sandbox claimed."
+  },
+  "signature": null,
+  "revocation_url": null,
+  "teaching_path": [
+    "Inspect SOURCE.md and license evidence",
+    "Call the deterministic JSON tool",
+    "Review tests and explain the returned result; never invent missing values"
+  ],
+  "status": "built",
+  "skip_reason": null,
+  "implementation_kind": "new-data-adapter",
+  "tool": "tool/main.py",
+  "dependencies": {
+    "python": ">=3.11",
+    "shared_runtime": "../_vendor",
+    "node": ">=20 for JS-backed tools"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "tool_name": "skillpack_a12",
+    "server_path": "mcp/server.py"
+  }
+}

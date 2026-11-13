@@ -1,0 +1,50 @@
+{
+  "id": "A6",
+  "f": "Mycroft",
+  "n": "Adapt",
+  "u": "https://github.com/MycroftAI/adapt",
+  "l": "Apache-2.0",
+  "t": "tool: match_intent(text, vocabulary, grammar) → candidates/unknown",
+  "p": "tool code; sözlük/intent kuralları; örnekler",
+  "d": "orta",
+  "env": "Python; PC/ev merkezi",
+  "note": "Sabit sözlük ve intent gereksinimleriyle dar komut kümesi. Sabit sıralama ve belirsizlikte ret eklenir; genel dil anlama iddiası yok.",
+  "test": "Eksik zorunlu alan, çakışan niyet, bilinmeyen cümle.",
+  "tier": "revival",
+  "repo": "MycroftAI/adapt",
+  "files": [
+    {
+      "path": "adapt/intent.py",
+      "sha256": "88d6adc6d27cc8c7c84ab65aeec22e79f0aece9bc6b8c1b7272accfb3f9afd17",
+      "url": "https://raw.githubusercontent.com/MycroftAI/adapt/06b98f8d5e525601a763103ad572b8ae615655a5/adapt/intent.py"
+    },
+    {
+      "path": "adapt/engine.py",
+      "sha256": "2bb34ce2b21bfce3348b9ae14b07b3a7238e87448e2a4d0db02c010e7ff4bfa7",
+      "url": "https://raw.githubusercontent.com/MycroftAI/adapt/06b98f8d5e525601a763103ad572b8ae615655a5/adapt/engine.py"
+    },
+    {
+      "path": "test/IntentTest.py",
+      "sha256": "6757c712c004ab68cd16dec4818b0e867c4fcaf6cb9f145e9135a40f2ee09696",
+      "url": "https://raw.githubusercontent.com/MycroftAI/adapt/06b98f8d5e525601a763103ad572b8ae615655a5/test/IntentTest.py"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/MycroftAI/adapt/06b98f8d5e525601a763103ad572b8ae615655a5/adapt/intent.py",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/MycroftAI/adapt/06b98f8d5e525601a763103ad572b8ae615655a5/adapt/engine.py",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/MycroftAI/adapt/06b98f8d5e525601a763103ad572b8ae615655a5/test/IntentTest.py",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE.md"
+  ],
+  "revision": "06b98f8d5e525601a763103ad572b8ae615655a5"
+}

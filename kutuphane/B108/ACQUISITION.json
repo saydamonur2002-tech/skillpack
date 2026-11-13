@@ -1,0 +1,41 @@
+{
+  "id": "B108",
+  "f": "PUT biolab",
+  "n": "putemg_features — yalnız RMS/MAV",
+  "u": "https://github.com/biolab-put/putemg_features/blob/master/features.py",
+  "l": "MIT — seçilen RMS/MAV; PyEEG dahil değil",
+  "t": "tool: emg_features(samples, window, step) → RMS/MAV/errors",
+  "p": "tool code; sayısal rules; examples",
+  "d": "orta",
+  "env": "NumPy veya küçük bağımsız script; PC/edge",
+  "note": "Datasetin NC koşulu kodu kapsamaz. Yalnız RMS/MAV aritmetiği çıkarılır; PyEEG importu/ApEn/SampEn ve dinamik globals çağrısı alınmaz. Pencereleme bağımsız güvenli kodla yazılır; hazır jest sınıflandırıcı değildir.",
+  "test": "[1,-1]→RMS=1/MAV=1; sıfır, kısa pencere, step≤0, NaN.",
+  "tier": "general",
+  "repo": "biolab-put/putemg_features",
+  "files": [
+    {
+      "path": "features.py",
+      "sha256": "111b9c3c153c648f68036233479e6404da80b573ea87166b5679b745478f7b8e",
+      "url": "https://raw.githubusercontent.com/biolab-put/putemg_features/c2ada7c13b468771f93c0ccf96fd0091ed6eb195/features.py"
+    },
+    {
+      "path": "README.md",
+      "sha256": "076d58e7e7e28183d3fc0459daa0c0305d977350513199d78230323fafa3d6e0",
+      "url": "https://raw.githubusercontent.com/biolab-put/putemg_features/c2ada7c13b468771f93c0ccf96fd0091ed6eb195/README.md"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/biolab-put/putemg_features/c2ada7c13b468771f93c0ccf96fd0091ed6eb195/features.py",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/biolab-put/putemg_features/c2ada7c13b468771f93c0ccf96fd0091ed6eb195/README.md",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "c2ada7c13b468771f93c0ccf96fd0091ed6eb195"
+}

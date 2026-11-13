@@ -1,0 +1,41 @@
+{
+  "id": "B61",
+  "f": "psutil",
+  "n": "Salt-okunur sistem snapshot",
+  "u": "https://github.com/giampaolo/psutil",
+  "l": "BSD-3-Clause",
+  "t": "tool: system_snapshot(interval) → cpu/memory/disk/errors",
+  "p": "tool code; examples; ölçüm API kuralları",
+  "d": "düşük",
+  "env": "Python/native wheel; Linux/Windows/macOS PC",
+  "note": "Canlı ölçüm değişir; deterministik olan okuma/hesap sözleşmesidir, girdi snapshot ile test edilir. Süreç sonlandırma yok; CPU yüzdesi FPS veya darboğaz kanıtı değildir.",
+  "test": "Mock snapshot, izin reddi, desteklenmeyen sensör, örnekleme aralığı.",
+  "tier": "general",
+  "repo": "giampaolo/psutil",
+  "files": [
+    {
+      "path": "psutil/__init__.py",
+      "sha256": "551ab587c0e3a34617279b2b417d898734e06bf802f2e31c2c33359a8dd7bc4a",
+      "url": "https://raw.githubusercontent.com/giampaolo/psutil/42a7b5963698393a37cbde60d5aac3c63f56bb03/psutil/__init__.py"
+    },
+    {
+      "path": "psutil/_common.py",
+      "sha256": "b93fb452298b474433466202b82138e2d2566394fd25cba4efa9b3376cfdf8d6",
+      "url": "https://raw.githubusercontent.com/giampaolo/psutil/42a7b5963698393a37cbde60d5aac3c63f56bb03/psutil/_common.py"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/giampaolo/psutil/42a7b5963698393a37cbde60d5aac3c63f56bb03/psutil/__init__.py",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/giampaolo/psutil/42a7b5963698393a37cbde60d5aac3c63f56bb03/psutil/_common.py",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "42a7b5963698393a37cbde60d5aac3c63f56bb03"
+}

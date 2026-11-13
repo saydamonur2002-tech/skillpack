@@ -1,0 +1,32 @@
+{
+  "id": "B46",
+  "f": "Home Assistant",
+  "n": "Core motion_light blueprint",
+  "u": "https://github.com/home-assistant/core/blob/dev/homeassistant/components/automation/blueprints/motion_light.yaml",
+  "l": "Apache-2.0 — yalnız Core dosyası",
+  "t": "tool: replay_motion_light(events, wait_seconds) → planned_actions",
+  "p": "rules; YAML örneği; durum makinesi",
+  "d": "orta",
+  "env": "Yeni replay script; telefon/PC",
+  "note": "restart, motion off ve gecikme davranışını salt simülasyona çevirir. Canlı lamba çalıştırmaz. Topluluk blueprintlerinin tamamı bu lisans kapsamında değil.",
+  "test": "Gecikmede yeniden hareket, off gelmemesi, 0/3600 saniye sınırı.",
+  "tier": "general",
+  "repo": "home-assistant/core",
+  "files": [
+    {
+      "path": "homeassistant/components/automation/blueprints/motion_light.yaml",
+      "sha256": "e07ac35fae7270131f118da767b036e7f7776672077691d9fbcd026e5a7e3f9c",
+      "url": "https://raw.githubusercontent.com/home-assistant/core/d9115f3e0492aa94b06edb439ab1ebcd594b4738/homeassistant/components/automation/blueprints/motion_light.yaml"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/home-assistant/core/d9115f3e0492aa94b06edb439ab1ebcd594b4738/homeassistant/components/automation/blueprints/motion_light.yaml",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE.md"
+  ],
+  "revision": "d9115f3e0492aa94b06edb439ab1ebcd594b4738"
+}

@@ -1,0 +1,278 @@
+{
+  "id": "M030",
+  "name": "Offline road routing (A*/Dijkstra) with distance, time and street list",
+  "description": "Shortest or fastest route between two points (optionally through up to 8 via points) on a local road dataset, for car, walking or bike, using A* or Dijkstra. Returns distance, free-flow travel time, the street-by-street segments and a GeoJSON LineString ready for the map renderer. Answers \"Kadıköy iskelesinden Moda'ya en kısa yol\".",
+  "version": "1.0.0",
+  "date": "2026-11-12",
+  "tier": "revival",
+  "family": "map",
+  "license": "BSD-3-Clause",
+  "distribution": "public-ok",
+  "source_url": "https://github.com/networkx/networkx",
+  "upstream_commit_or_version": "7530809bfa1ea7ed6fdf918a4d1431488953cb1f",
+  "implementation_kind": "ported-core",
+  "status": "passed-local-tests",
+  "provenance": {
+    "upstream_repository": "https://github.com/networkx/networkx",
+    "commit": "7530809bfa1ea7ed6fdf918a4d1431488953cb1f",
+    "stars_at_mining": 17391,
+    "repository_created_year": 2010,
+    "license_spdx": "BSD-3-Clause",
+    "license_path": "LICENSE.txt",
+    "license_sha256": "3cf7c3a179d817b23b8b8568211769fefdf93797d207d984b8b2fa24d0220b33",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2004-2025, NetworkX Developers"
+    ],
+    "license_check": "GitHub API license field: NOASSERTION; the actual license file was read and identified as BSD-3-Clause",
+    "additional_licenses": [
+      {
+        "role": "haversine edge-length formula (distanceTo) used by the shared map-data loader",
+        "upstream_repository": "https://github.com/chrisveness/geodesy",
+        "commit": "3e9fdd35b71dd86cee12383eccdf000ad6741e9d",
+        "stars_at_mining": 1228,
+        "repository_created_year": 2014,
+        "license_spdx": "MIT",
+        "path": "licenses/geodesy.LICENSE",
+        "sha256": "3cac8a426b3c52d8c7686ad2d6c599ac8cc86ec69d769c12a050ca7e31e40ff1",
+        "copyright_lines_verbatim": [
+          "Copyright (c) 2014 Chris Veness"
+        ],
+        "license_check": "GitHub API license field: MIT, matching the actual license file",
+        "evidence": [
+          {
+            "path": "geodesy/latlon-spherical.js",
+            "original_path": "latlon-spherical.js",
+            "url": "https://github.com/chrisveness/geodesy/blob/3e9fdd35b71dd86cee12383eccdf000ad6741e9d/latlon-spherical.js",
+            "commit": "3e9fdd35b71dd86cee12383eccdf000ad6741e9d",
+            "sha256": "97b8a730869bc33a0ac2b474556c89bc37c93f4fe0a3989b8a76eb06c55f6a6e",
+            "original_full_file_sha256": "97b8a730869bc33a0ac2b474556c89bc37c93f4fe0a3989b8a76eb06c55f6a6e",
+            "scope": "complete original file",
+            "repository": "https://github.com/chrisveness/geodesy"
+          }
+        ]
+      }
+    ],
+    "mined_date": "2026-11-12",
+    "timezone": "Europe/Istanbul",
+    "metadata_source": "public GitHub repository API (license field and created_at), observed this round; actual license file inspected",
+    "evidence": [
+      {
+        "path": "networkx/algorithms/shortest_paths/astar.py",
+        "original_path": "networkx/algorithms/shortest_paths/astar.py",
+        "url": "https://github.com/networkx/networkx/blob/7530809bfa1ea7ed6fdf918a4d1431488953cb1f/networkx/algorithms/shortest_paths/astar.py",
+        "commit": "7530809bfa1ea7ed6fdf918a4d1431488953cb1f",
+        "sha256": "d2912760dcc6ed9f3acd6ab215ed0e2fc1d39503bd3f08c3001cbfca90b7d3f0",
+        "original_full_file_sha256": "d2912760dcc6ed9f3acd6ab215ed0e2fc1d39503bd3f08c3001cbfca90b7d3f0",
+        "scope": "complete original file",
+        "repository": "https://github.com/networkx/networkx"
+      },
+      {
+        "path": "networkx/algorithms/shortest_paths/weighted.py",
+        "original_path": "networkx/algorithms/shortest_paths/weighted.py",
+        "url": "https://github.com/networkx/networkx/blob/7530809bfa1ea7ed6fdf918a4d1431488953cb1f/networkx/algorithms/shortest_paths/weighted.py",
+        "commit": "7530809bfa1ea7ed6fdf918a4d1431488953cb1f",
+        "sha256": "3e9840a7b3e637daa95b390bb9d78f21582fc9287f4860e2e4685d40de62b9f9",
+        "original_full_file_sha256": "3e9840a7b3e637daa95b390bb9d78f21582fc9287f4860e2e4685d40de62b9f9",
+        "scope": "complete original file",
+        "repository": "https://github.com/networkx/networkx"
+      }
+    ],
+    "reference_values": "Fixture graphs are synthetic (CC0). Expected vertex paths, distances and durations were produced by the installed networkx 3.6.1 (astar_path or dijkstra_path) on a DiGraph built from the same Skillpack graph builder; the harness checks that the installed astar.py and weighted.py are byte-identical to the pinned upstream copies under upstream/. Graph construction is shared code, so only the search is independently compared.",
+    "release_pin": "release networkx-3.6.1"
+  },
+  "inputs": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "operation": {
+        "const": "route"
+      },
+      "dataset": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 96,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,95}$",
+        "description": "Dataset name (no folders), e.g. demo_kadikoy or my_pois.csv"
+      },
+      "origin": {
+        "type": "object",
+        "properties": {
+          "lat": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90
+          },
+          "lon": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180
+          }
+        },
+        "required": [
+          "lat",
+          "lon"
+        ],
+        "additionalProperties": false
+      },
+      "destination": {
+        "type": "object",
+        "properties": {
+          "lat": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90
+          },
+          "lon": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180
+          }
+        },
+        "required": [
+          "lat",
+          "lon"
+        ],
+        "additionalProperties": false
+      },
+      "via": {
+        "type": "array",
+        "maxItems": 8,
+        "items": {
+          "type": "object",
+          "properties": {
+            "lat": {
+              "type": "number",
+              "minimum": -90,
+              "maximum": 90
+            },
+            "lon": {
+              "type": "number",
+              "minimum": -180,
+              "maximum": 180
+            }
+          },
+          "required": [
+            "lat",
+            "lon"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "profile": {
+        "enum": [
+          "car",
+          "walk",
+          "bike"
+        ],
+        "description": "car (default), walk or bike"
+      },
+      "optimize": {
+        "enum": [
+          "time",
+          "distance"
+        ]
+      },
+      "algorithm": {
+        "enum": [
+          "astar",
+          "dijkstra"
+        ]
+      },
+      "max_snap_m": {
+        "type": "number",
+        "minimum": 1,
+        "maximum": 5000
+      }
+    },
+    "required": [
+      "operation",
+      "dataset",
+      "origin",
+      "destination"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "Raw CLI byte limit and POSIX alarm; strict schema, finite values and nesting checks; MCP subprocess killed/reaped after 10 seconds. One active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "numerical_runtime": "Python standard library only"
+  },
+  "data": {
+    "reads": "local files by dataset name from SKILLPACK_MAP_DATA or ../map_data",
+    "writes": "nothing",
+    "network": "none"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "tool_name": "skillpack_m030",
+    "read_only": true,
+    "instructions": "Local offline map tool. The dataset is a file NAME inside the folder the user configured (SKILLPACK_MAP_DATA); never invent coordinates or names. Results come from the local data and code; explain them, state data limits (no live traffic) and ask the human to confirm before acting on them. Credit OpenStreetMap contributors when showing OSM-derived data."
+  },
+  "limitations": "Routing uses only the local road file: free-flow speeds by road class (car: motorway 90 ... residential 25, living street 10, service 15 km/h, or a numeric maxspeed tag), walking 5 km/h (steps 3), cycling 15 km/h (5 on footways that allow bicycles). One-way tags and roundabouts are respected for car and bike, ignored for walking; access=no/private roads are excluded. There is no live or historic traffic, no turn restrictions or turn costs, no traffic lights, ferries, public transport, elevation or time-of-day rules. Vertices are joined only where lines share an identical coordinate (7 decimals), as in OSM-derived exports; bridges/tunnels without shared nodes are not connected. Points are snapped to the nearest routable vertex (straight-line, default limit 300 m), which can be on the wrong side of a barrier. The whole file is read on every call; files above roughly 20 MB may not finish within the 10-second limit. Vertex numbers in the output are internal to one dataset load.",
+  "port_notes": "The search is a port of networkx 3.6.1 astar_path (counter tie-break, enqueued/explored bookkeeping, skip of stale queue entries); Dijkstra is the same function with a zero heuristic, as in upstream. The heuristic is straight-line haversine distance (divided by the fastest edge speed in the graph when optimizing time), so it never overestimates and A* returns an optimal path. Graph building, snapping, profiles and segment grouping are Skillpack code in tool/mapdata.py and tool/main.py, documented in SKILL.md.",
+  "validation": {
+    "pytest_pack_tests_passed": 37,
+    "full_release_tests_passed": 571,
+    "upstream_reference_rerun": true,
+    "upstream_rerun_runtime": "python",
+    "complete_upstream_test_suite_executed": false
+  }
+}

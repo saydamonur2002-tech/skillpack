@@ -1,0 +1,3 @@
+Local adaptation and tests created 2026-11-11. Original authors and source notices remain in upstream/.
+Distribution classification: public-ok. This classification is not legal advice or a new permission grant.
+Changes: Range maximum is exclusive to match selected implementation. Null explicitly marks unavailable readings; JSON NaN/Inf rejected. No transforms, network or live scan.

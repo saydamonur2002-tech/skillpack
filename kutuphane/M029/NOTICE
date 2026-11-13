@@ -1,0 +1,9 @@
+Upstream: https://github.com/mapbox/tilebelt
+Commit: 8ff60ad70ccecc4d305f5ac4da2a1f0bc4d46959
+License: MIT
+
+Original copyright notices (verbatim; source comment prefixes removed):
+Copyright (c) 2014 Morgan Herlocker
+
+Full source-specific notices remain under upstream/. License files are kept byte-for-byte as published upstream, including any contact lines they contain. Only required public upstream legal attribution is included; no project-owner identity or contact data is recorded.
+Skillpack contributors. AI-generated standalone adaptation and teaching material; no upstream endorsement or independent certification.

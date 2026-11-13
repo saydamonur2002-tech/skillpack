@@ -1,0 +1,40 @@
+[
+  {
+    "input": {
+      "acl": {
+        "*": {
+          "read": true
+        }
+      },
+      "principal": "*"
+    },
+    "result": {
+      "explicit_read": true,
+      "explicit_write": false
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "acl": {
+        "u": {
+          "read": 1
+        }
+      },
+      "principal": "u"
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "acl": {},
+      "principal": "x"
+    },
+    "result": {
+      "explicit_read": false,
+      "explicit_write": false
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

@@ -1,0 +1,36 @@
+[
+  {
+    "input": {
+      "value": 0,
+      "source_unit": "DEG_C",
+      "target_unit": "K"
+    },
+    "result": {
+      "value": 273.15
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "value": 32,
+      "source_unit": "DEG_F",
+      "target_unit": "DEG_C"
+    },
+    "result": {
+      "value": 0.0
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "value": 10,
+      "source_unit": "DEG_C",
+      "target_unit": "DEG_F",
+      "is_delta": true
+    },
+    "result": {
+      "value": 18.0
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

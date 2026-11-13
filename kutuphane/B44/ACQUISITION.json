@@ -1,0 +1,32 @@
+{
+  "id": "B44",
+  "f": "Home Assistant",
+  "n": "Core — TemperatureConverter",
+  "u": "https://github.com/home-assistant/core/blob/dev/homeassistant/util/unit_conversion.py",
+  "l": "Apache-2.0",
+  "t": "tool: convert_temperature(value, from, to, is_delta) → value/error",
+  "p": "tool code; birim kuralları",
+  "d": "düşük",
+  "env": "Python alt kümesi; telefon/PC/edge",
+  "note": "Bütün Core değil C/F/K dönüştürücü. Mutlak sıcaklık ve sıcaklık farkı farklı ele alınır; HA sabitleri/hata sınıfı küçük bağımsız sözleşmeye taşınır.",
+  "test": "0°C→32°F; delta 10°C→18°F; null/bilinmeyen birim.",
+  "tier": "general",
+  "repo": "home-assistant/core",
+  "files": [
+    {
+      "path": "homeassistant/util/unit_conversion.py",
+      "sha256": "cef97b3984e2182470074d3e0c01e8e7b8c35a4c9c29473dce52e96bec9baa62",
+      "url": "https://raw.githubusercontent.com/home-assistant/core/d9115f3e0492aa94b06edb439ab1ebcd594b4738/homeassistant/util/unit_conversion.py"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/home-assistant/core/d9115f3e0492aa94b06edb439ab1ebcd594b4738/homeassistant/util/unit_conversion.py",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE.md"
+  ],
+  "revision": "d9115f3e0492aa94b06edb439ab1ebcd594b4738"
+}

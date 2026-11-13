@@ -1,0 +1,24 @@
+[
+  {
+    "input": {
+      "text": "Sıcaklık kaç derece?",
+      "language": "tr"
+    },
+    "result": {
+      "matches": [
+        "HassClimateGetTemperature"
+      ]
+    },
+    "provenance": "Upstream tests/tr/HassClimateGetTemperature/default.yaml lines 13-20."
+  },
+  {
+    "input": {
+      "text": "banana",
+      "language": "tr"
+    },
+    "result": {
+      "matches": []
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

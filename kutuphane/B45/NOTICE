@@ -1,0 +1,3 @@
+Local adaptation and tests created 2026-11-11. Original authors and source notices remain in upstream/.
+Distribution classification: public-ok. This classification is not legal advice or a new permission grant.
+Changes: Uses upstream default read-only TR/EN sentence grammars through Hassil 3.12.1. No entity device lookup or action dispatch. Output is intent recognition only, not a fabricated temperature value.

@@ -1,0 +1,36 @@
+{
+  "id": "B54",
+  "f": "Flutter community",
+  "n": "battery_plus",
+  "u": "https://github.com/fluttercommunity/plus_plugins/tree/main/packages/battery_plus/battery_plus",
+  "l": "BSD-3-Clause — paket LICENSE",
+  "t": "tool: read_battery() → level/state/supported/error",
+  "p": "tool code; examples; platform hata sözleşmesi",
+  "d": "orta",
+  "env": "Flutter/Dart + native köprü; telefon/PC",
+  "note": "Gerçek yerel API değeri; pil sağlığı, kesin kalan süre veya döngü sayısı vaat etmez. İşletim sistemi/platform farkları ve Flutter derleme bağımlılıkları var.",
+  "test": "Mock yüzde 0/100, null/hata, charging/full; ayrıca gerçek cihaz.",
+  "tier": "general",
+  "repo": "fluttercommunity/plus_plugins",
+  "files": [
+    {
+      "path": "packages/battery_plus/battery_plus/lib/battery_plus.dart",
+      "sha256": "276e5f788573d85798a11fa8538d524b82ce2b8aaf43bc5ac2ed559c9b245548",
+      "url": "https://raw.githubusercontent.com/fluttercommunity/plus_plugins/907994b0e52c2c11ae2f2ccc08d0658e1c73dbaf/packages/battery_plus/battery_plus/lib/battery_plus.dart"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/fluttercommunity/plus_plugins/907994b0e52c2c11ae2f2ccc08d0658e1c73dbaf/packages/battery_plus/battery_plus/lib/battery_plus.dart",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/fluttercommunity/plus_plugins/907994b0e52c2c11ae2f2ccc08d0658e1c73dbaf/packages/battery_plus/battery_plus/linux/battery_plus_plugin.cc",
+      "ok": false
+    }
+  ],
+  "license_files": [
+    "packages/battery_plus/battery_plus/LICENSE"
+  ],
+  "revision": "907994b0e52c2c11ae2f2ccc08d0658e1c73dbaf"
+}

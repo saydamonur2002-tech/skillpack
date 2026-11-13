@@ -1,0 +1,8 @@
+Copyright 2016-2025 AsyncAPI Initiative
+
+This product includes software developed at
+AsyncAPI Initiative (http://www.asyncapi.com/).
+
+Local adaptation and tests created 2026-11-11. Original authors and source notices remain in upstream/.
+Distribution classification: public-ok. This classification is not legal advice or a new permission grant.
+Changes: New example payload schema following the AsyncAPI message payload concept; not an AsyncAPI document validator, broker, MQTT permission check or authentication.

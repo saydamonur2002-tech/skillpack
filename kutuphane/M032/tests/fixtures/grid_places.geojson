@@ -1,0 +1,206 @@
+{
+"type": "FeatureCollection",
+"metadata": {
+"attribution": "Synthetic Skillpack test fixture (not OpenStreetMap data)",
+"license": "CC0-1.0",
+"layer": "places"
+},
+"features": [
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/p0",
+"name": "Merkez Eczanesi",
+"kind": "amenity",
+"category": "pharmacy",
+"addr:street": "Birinci Sokak"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [
+29.0005,
+41.0002
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/p1",
+"name": "Gül Eczanesi",
+"kind": "amenity",
+"category": "pharmacy"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [
+29.0022,
+41.0029
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/p2",
+"name": "Şifa Eczanesi",
+"kind": "amenity",
+"category": "pharmacy"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [
+29.003,
+41.0
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/p3",
+"name": "Köşe Kafe",
+"kind": "amenity",
+"category": "cafe",
+"opening_hours": "Mo-Su 08:00-22:00"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [
+29.0011,
+41.001
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/p4",
+"name": "Çınar Kafe",
+"kind": "amenity",
+"category": "cafe"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [
+29.0,
+41.0025
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/p5",
+"name": "Deniz İskelesi",
+"kind": "amenity",
+"category": "ferry_terminal"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [
+29.0,
+41.0
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/p6",
+"name": "Yıldız Market",
+"kind": "shop",
+"category": "supermarket"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [
+29.0015,
+41.0005
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/p7",
+"name": "İstasyon",
+"kind": "railway",
+"category": "station"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [
+29.003,
+41.003
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/p8",
+"name": "Örnek Mahallesi",
+"kind": "place",
+"category": "quarter"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [
+29.0015,
+41.0015
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/p9",
+"name": "Gül Caddesi",
+"kind": "highway",
+"category": "street",
+"highway": "residential"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [
+29.002,
+41.0015
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/p10",
+"name": "Birinci Sokak",
+"kind": "highway",
+"category": "street",
+"highway": "residential"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [
+29.0015,
+41.0
+]
+}
+},
+{
+"type": "Feature",
+"properties": {
+"osm_id": "syn/p11",
+"name": "Merkez Eczanesi",
+"kind": "amenity",
+"category": "pharmacy"
+},
+"geometry": {
+"type": "Point",
+"coordinates": [
+29.003,
+41.001
+]
+}
+}
+]
+}

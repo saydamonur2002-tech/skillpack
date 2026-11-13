@@ -1,0 +1,59 @@
+{
+  "id": "B73",
+  "f": "QUDT",
+  "n": "Sıcaklık birimi alt sözlüğü",
+  "u": "https://github.com/qudt/qudt-public-repo",
+  "l": "CC-BY-4.0",
+  "t": "tool: convert_unit(value, source_unit, target_unit) → value/dimension_error",
+  "p": "rules/data; birim kimliği ve dönüşüm ilişkileri",
+  "d": "orta",
+  "env": "Yeni küçük script + JSON alt sözlük; telefon/PC/MCU",
+  "note": "Bütün RDF ontolojisi değil C/F/K alt kümesi. Boyut, multiplier/offset, mutlak değer/delta ve yuvarlama kuralları taşınır; atıf korunur.",
+  "test": "C↔K roundtrip, boyut uyumsuzluğu, bilinmeyen birim.",
+  "tier": "general",
+  "repo": "qudt/qudt-public-repo",
+  "files": [
+    {
+      "path": "src/main/rdf/community/extensions/loop3d/VOCAB_QUDT-LOOP3D-UNITS.ttl",
+      "sha256": "c64a77e52e9e71d4682088977e8948ef5db316259d8a3e1451c73129dfe45e9b",
+      "url": "https://raw.githubusercontent.com/qudt/qudt-public-repo/ee31c598eeee7cde08f8a792a473e120f52daeea/src/main/rdf/community/extensions/loop3d/VOCAB_QUDT-LOOP3D-UNITS.ttl"
+    },
+    {
+      "path": "src/main/rdf/community/extensions/propulsion/VOCAB_QUDT-PROPULSION-UNITS.ttl",
+      "sha256": "f27433b6d6e9e6037f8059a7028e79187a898c4435fb253b079e90a3adc2bbe6",
+      "url": "https://raw.githubusercontent.com/qudt/qudt-public-repo/ee31c598eeee7cde08f8a792a473e120f52daeea/src/main/rdf/community/extensions/propulsion/VOCAB_QUDT-PROPULSION-UNITS.ttl"
+    },
+    {
+      "path": "src/main/rdf/vocab/systems/VOCAB_QUDT-SYSTEM-OF-UNITS-ALL.ttl",
+      "sha256": "108437871eb9aec8c8531e56e5f80739a8b6ea0fee465d38bbe2b45a5a53d57d",
+      "url": "https://raw.githubusercontent.com/qudt/qudt-public-repo/ee31c598eeee7cde08f8a792a473e120f52daeea/src/main/rdf/vocab/systems/VOCAB_QUDT-SYSTEM-OF-UNITS-ALL.ttl"
+    },
+    {
+      "path": "src/main/rdf/vocab/unit/VOCAB_QUDT-UNITS-ALL.ttl",
+      "sha256": "f79b1ea3fe01d488ed99f922ddbee814557c8535b73a9f6ea4d70057cd296a5f",
+      "url": "https://raw.githubusercontent.com/qudt/qudt-public-repo/ee31c598eeee7cde08f8a792a473e120f52daeea/src/main/rdf/vocab/unit/VOCAB_QUDT-UNITS-ALL.ttl"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/qudt/qudt-public-repo/ee31c598eeee7cde08f8a792a473e120f52daeea/vocab/unit/VOCAB_QUDT-UNITS-ALL.ttl",
+      "ok": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/qudt/qudt-public-repo/ee31c598eeee7cde08f8a792a473e120f52daeea/src/main/rdf/community/extensions/loop3d/VOCAB_QUDT-LOOP3D-UNITS.ttl",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/qudt/qudt-public-repo/ee31c598eeee7cde08f8a792a473e120f52daeea/src/main/rdf/community/extensions/propulsion/VOCAB_QUDT-PROPULSION-UNITS.ttl",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/qudt/qudt-public-repo/ee31c598eeee7cde08f8a792a473e120f52daeea/src/main/rdf/vocab/systems/VOCAB_QUDT-SYSTEM-OF-UNITS-ALL.ttl",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "ee31c598eeee7cde08f8a792a473e120f52daeea"
+}

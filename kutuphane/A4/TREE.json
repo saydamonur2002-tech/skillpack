@@ -1,0 +1,16 @@
+[
+  "LICENSE",
+  "README.md",
+  "_example/discover.go",
+  "_example/emulator.go",
+  "_example/example.go",
+  "_example/proxy.go",
+  "baseDaikin.go",
+  "discovery.go",
+  "emulator/emulator.go",
+  "enum.go",
+  "http.go",
+  "model.go",
+  "proxy/proxy.go",
+  "wirelessAC.go"
+]

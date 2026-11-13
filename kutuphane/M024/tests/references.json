@@ -1,0 +1,394 @@
+[
+ {
+  "input": {
+   "operation": "encode",
+   "coordinates": [
+    [
+     38.5,
+     -120.2
+    ],
+    [
+     40.7,
+     -120.95
+    ],
+    [
+     43.252,
+     -126.453
+    ]
+   ]
+  },
+  "expected_subset": {
+   "operation": "encode",
+   "precision": 5,
+   "encoded": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+   "point_count": 3
+  },
+  "absolute_tolerance": 0.0,
+  "origin": "upstream test/polyline.test.js literal; encodes example to _p~iF~ps|U_ulLnnqC_mqNvxq`@"
+ },
+ {
+  "input": {
+   "operation": "decode",
+   "encoded": "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+  },
+  "expected_subset": {
+   "operation": "decode",
+   "precision": 5,
+   "coordinates": [
+    [
+     38.5,
+     -120.2
+    ],
+    [
+     40.7,
+     -120.95
+    ],
+    [
+     43.252,
+     -126.453
+    ]
+   ],
+   "point_count": 3
+  },
+  "absolute_tolerance": 0.0,
+  "origin": "upstream test/polyline.test.js literal; decodes to example"
+ },
+ {
+  "input": {
+   "operation": "decode",
+   "encoded": "_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI",
+   "precision": 6
+  },
+  "expected_subset": {
+   "operation": "decode",
+   "precision": 6,
+   "coordinates": [
+    [
+     38.5,
+     -120.2
+    ],
+    [
+     40.7,
+     -120.95
+    ],
+    [
+     43.252,
+     -126.453
+    ]
+   ],
+   "point_count": 3
+  },
+  "absolute_tolerance": 0.0,
+  "origin": "upstream test/polyline.test.js literal; custom precision 6"
+ },
+ {
+  "input": {
+   "operation": "decode",
+   "encoded": "mAnFC@CH",
+   "precision": 0
+  },
+  "expected_subset": {
+   "operation": "decode",
+   "precision": 0,
+   "coordinates": [
+    [
+     39,
+     -120
+    ],
+    [
+     41,
+     -121
+    ],
+    [
+     43,
+     -126
+    ]
+   ],
+   "point_count": 3
+  },
+  "absolute_tolerance": 0.0,
+  "origin": "upstream test/polyline.test.js literal; precision 0"
+ },
+ {
+  "input": {
+   "operation": "encode",
+   "coordinates": [
+    [
+     38.5,
+     -120.2
+    ],
+    [
+     40.7,
+     -120.95
+    ],
+    [
+     43.252,
+     -126.453
+    ]
+   ],
+   "precision": 6
+  },
+  "expected_subset": {
+   "operation": "encode",
+   "precision": 6,
+   "encoded": "_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI",
+   "point_count": 3
+  },
+  "absolute_tolerance": 0.0,
+  "origin": "upstream test/polyline.test.js literal; encode precision 6"
+ },
+ {
+  "input": {
+   "operation": "encode",
+   "coordinates": [
+    [
+     38.5,
+     -120.2
+    ],
+    [
+     40.7,
+     -120.95
+    ],
+    [
+     43.252,
+     -126.453
+    ]
+   ],
+   "precision": 0
+  },
+  "expected_subset": {
+   "operation": "encode",
+   "precision": 0,
+   "encoded": "mAnFC@CH",
+   "point_count": 3
+  },
+  "absolute_tolerance": 0.0,
+  "origin": "upstream test/polyline.test.js literal; encode precision 0"
+ },
+ {
+  "input": {
+   "operation": "encode",
+   "coordinates": [
+    [
+     38.5,
+     -120.2,
+     0
+    ],
+    [
+     40.7,
+     -120.95,
+     0
+    ],
+    [
+     43.252,
+     -126.453,
+     0
+    ]
+   ]
+  },
+  "expected_subset": {
+   "operation": "encode",
+   "precision": 5,
+   "encoded": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+   "point_count": 3
+  },
+  "absolute_tolerance": 0.0,
+  "origin": "upstream test/polyline.test.js literal; third coordinate ignored"
+ },
+ {
+  "input": {
+   "operation": "encode",
+   "coordinates": [
+    [
+     0,
+     6e-06
+    ],
+    [
+     0,
+     2e-06
+    ]
+   ]
+  },
+  "expected_subset": {
+   "operation": "encode",
+   "precision": 5,
+   "encoded": "?A?@",
+   "point_count": 2
+  },
+  "absolute_tolerance": 0.0,
+  "origin": "upstream test/polyline.test.js literal; proper rounding ?A?@"
+ },
+ {
+  "input": {
+   "operation": "encode",
+   "coordinates": [
+    [
+     36.05322,
+     -112.084004
+    ],
+    [
+     36.053573,
+     -112.083914
+    ],
+    [
+     36.053845,
+     -112.083965
+    ]
+   ]
+  },
+  "expected_subset": {
+   "operation": "encode",
+   "precision": 5,
+   "encoded": "ss`{E~kbkTeAQw@J",
+   "point_count": 3
+  },
+  "absolute_tolerance": 0.0,
+  "origin": "upstream test/polyline.test.js literal; negative rounding ss`{E~kbkTeAQw@J"
+ },
+ {
+  "input": {
+   "operation": "encode",
+   "coordinates": []
+  },
+  "expected_subset": {
+   "operation": "encode",
+   "precision": 5,
+   "encoded": "",
+   "point_count": 0
+  },
+  "absolute_tolerance": 0.0,
+  "origin": "upstream test/polyline.test.js literal; empty array encodes to empty string"
+ },
+ {
+  "input": {
+   "operation": "decode",
+   "encoded": ""
+  },
+  "expected_subset": {
+   "operation": "decode",
+   "precision": 5,
+   "coordinates": [],
+   "point_count": 0
+  },
+  "absolute_tolerance": 0.0,
+  "origin": "upstream test/polyline.test.js literal; empty string decodes to empty array"
+ },
+ {
+  "input": {
+   "operation": "decode",
+   "encoded": "_chxEn`zvN\\\\]]"
+  },
+  "expected_subset": {
+   "operation": "decode",
+   "precision": 5,
+   "coordinates": [
+    [
+     35.6,
+     -82.55
+    ],
+    [
+     35.59985,
+     -82.55015
+    ],
+    [
+     35.6,
+     -82.55
+    ]
+   ],
+   "point_count": 3
+  },
+  "absolute_tolerance": 0.0,
+  "origin": "upstream test/polyline.test.js literal; identity decode/encode string with backslashes; expected generated by pinned upstream src/polyline.js in Node"
+ },
+ {
+  "input": {
+   "operation": "encode",
+   "coordinates": [
+    [
+     179.1234567895121,
+     -179.1245965456112
+    ]
+   ],
+   "precision": 13
+  },
+  "expected_subset": {
+   "operation": "encode",
+   "precision": 13,
+   "encoded": "ad{bckqfydB~mxfnrfgydB",
+   "point_count": 1
+  },
+  "absolute_tolerance": 0.0,
+  "origin": "upstream test/polyline.test.js literal; high precision identity input; expected generated by pinned upstream src/polyline.js in Node"
+ },
+ {
+  "input": {
+   "operation": "encode",
+   "coordinates": [
+    [
+     35.6,
+     -82.55
+    ],
+    [
+     35.59985,
+     -82.55015
+    ],
+    [
+     35.6,
+     -82.55
+    ]
+   ]
+  },
+  "expected_subset": {
+   "operation": "encode",
+   "precision": 5,
+   "encoded": "_chxEn`zvN\\\\]]",
+   "point_count": 3
+  },
+  "absolute_tolerance": 0.0,
+  "origin": "upstream test/polyline.test.js literal; slashes identity input; expected generated by pinned upstream src/polyline.js in Node"
+ },
+ {
+  "input": {
+   "operation": "encode",
+   "coordinates": [
+    [
+     -107.3741825,
+     0
+    ]
+   ],
+   "precision": 7
+  },
+  "expected_subset": {
+   "operation": "encode",
+   "precision": 7,
+   "encoded": "`_____A?",
+   "point_count": 1
+  },
+  "absolute_tolerance": 0.0,
+  "origin": "upstream test/polyline.test.js literal; negative values input; expected generated by pinned upstream src/polyline.js in Node"
+ },
+ {
+  "input": {
+   "operation": "decode",
+   "encoded": "_ibE_seK_seK_seK",
+   "precision": 5
+  },
+  "expected_subset": {
+   "operation": "decode",
+   "precision": 5,
+   "coordinates": [
+    [
+     1,
+     2
+    ],
+    [
+     3,
+     4
+    ]
+   ],
+   "point_count": 2
+  },
+  "absolute_tolerance": 0.0,
+  "origin": "supplementary; expected generated by pinned upstream src/polyline.js in Node"
+ }
+]

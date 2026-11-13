@@ -1,0 +1,3 @@
+Local adaptation and tests created 2026-11-11. Original authors and source notices remain in upstream/.
+Distribution classification: public-ok. This classification is not legal advice or a new permission grant.
+Changes: CSV format validator for 14 joint columns plus both gripper columns; recorder and playback code are not executed. Input time units seconds, joints radians. Preserves both gripper columns and accepts joint ordering within each arm.

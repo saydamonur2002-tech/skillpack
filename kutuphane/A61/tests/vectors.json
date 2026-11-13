@@ -1,0 +1,44 @@
+[
+  {
+    "input": {
+      "a": [
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "b": [
+        [
+          3,
+          2,
+          1
+        ]
+      ],
+      "method": "pearson"
+    },
+    "result": {
+      "correlation": -1.0
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "a": [
+        [
+          1,
+          1
+        ]
+      ],
+      "b": [
+        [
+          1,
+          2
+        ]
+      ],
+      "method": "spearman"
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

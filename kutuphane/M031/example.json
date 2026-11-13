@@ -1,0 +1,28 @@
+{
+  "operation": "matrix",
+  "dataset": "grid",
+  "origins": [
+    {
+      "lat": 41.0,
+      "lon": 29.0
+    },
+    {
+      "lat": 41.001,
+      "lon": 29.003
+    }
+  ],
+  "destinations": [
+    {
+      "lat": 41.003,
+      "lon": 29.003
+    },
+    {
+      "lat": 41.001,
+      "lon": 29.0
+    },
+    {
+      "lat": 41.002,
+      "lon": 29.002
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "input": {
+      "csv": "time,left_s0\n0,0"
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "csv": "time,left_s0,left_s1,left_e0,left_e1,left_w0,left_w1,left_w2,left_gripper,right_s0,right_s1,right_e0,right_e1,right_w0,right_w1,right_w2,right_gripper\n0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n"
+    },
+    "result": {
+      "rows": 1,
+      "fields": [
+        "time",
+        "left_s0",
+        "left_s1",
+        "left_e0",
+        "left_e1",
+        "left_w0",
+        "left_w1",
+        "left_w2",
+        "left_gripper",
+        "right_s0",
+        "right_s1",
+        "right_e0",
+        "right_e1",
+        "right_w0",
+        "right_w1",
+        "right_w2",
+        "right_gripper"
+      ]
+    },
+    "provenance": "Exact header layout from src/baxter_examples/recorder.py record(), synthetic zero row."
+  },
+  {
+    "input": {
+      "csv": "time,left_s0,left_s1,left_e0,left_e1,left_w0,left_w1,left_w2,left_gripper,right_s0,right_s1,right_e0,right_e1,right_w0,right_w1,right_w2,right_gripper\n0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"
+    },
+    "error": true,
+    "provenance": "Hand-calculated synthetic known-answer vector."
+  }
+]

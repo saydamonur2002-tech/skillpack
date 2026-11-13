@@ -1,0 +1,9 @@
+Upstream: https://github.com/sunng87/node-geohash
+Commit: 88847b0ce0696bc138c1083830cf7d2a39076801
+License: MIT
+
+Original copyright notices (verbatim; source comment prefixes removed):
+* Copyright (c) 2011, Sun Ning.
+
+Full source-specific notices remain under upstream/. Only required public upstream legal attribution is included; no project-owner identity or contact data is recorded.
+AI-generated standalone adaptation and teaching material; no upstream endorsement or independent certification.

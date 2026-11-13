@@ -1,0 +1,20 @@
+# A/B paketlerinin ve ortak MCP katmanının sabit sürümleri (test edilen ortam: Python 3.13, Linux)
+mcp==1.30.0
+jsonschema==4.26.0
+pytest==9.2.0
+numpy==2.5.4
+scipy==1.18.1
+pandas==3.1.1
+pvlib==0.16.1
+python-dateutil==4.0.0
+six==1.17.0
+addict==2.4.0
+PyYAML==6.0.3
+hassil==3.12.1
+unicode-rbnf==2.4.1
+lingua-franca==0.4.3
+adapt-parser==1.0.0
+hmrb==1.2.1
+protobuf==3.19.3
+pytz==2026.6
+tzdata==2026.6

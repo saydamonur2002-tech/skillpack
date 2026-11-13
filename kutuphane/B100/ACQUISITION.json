@@ -1,0 +1,41 @@
+{
+  "id": "B100",
+  "f": "pvlib topluluğu",
+  "n": "pvlib-python — solar position",
+  "u": "https://github.com/pvlib/pvlib-python",
+  "l": "BSD-3-Clause — ana kod",
+  "t": "tool: solar_position(lat, lon, zoned_time) → elevation/azimuth",
+  "p": "tool code; examples/tests; sayısal kurallar",
+  "d": "orta",
+  "env": "Python/NumPy; PC/ev merkezi",
+  "note": "Dış meteoroloji verisi gerektirmeyen dar hesap seçilir. Zaman dilimi, yöntem ve tolerans sabitlenir; hesap ölçüm veya hava tahmini değildir.",
+  "test": "Bilinen referans örnekleri, gece, koordinat sınırı, zone eksikliği.",
+  "tier": "general",
+  "repo": "pvlib/pvlib-python",
+  "files": [
+    {
+      "path": "pvlib/solarposition.py",
+      "sha256": "023d67fb3c1fbd88549b1ba00d3decb9254fbd407afab036011abd9d81e2a136",
+      "url": "https://raw.githubusercontent.com/pvlib/pvlib-python/c5de586d73bbb8875a4e87468894e7b34871a575/pvlib/solarposition.py"
+    },
+    {
+      "path": "tests/test_solarposition.py",
+      "sha256": "e343f4b569d48e7995a67c0dd6b03bdaac18ef15b3dfcde0a9f9bb0db18d5314",
+      "url": "https://raw.githubusercontent.com/pvlib/pvlib-python/c5de586d73bbb8875a4e87468894e7b34871a575/tests/test_solarposition.py"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/pvlib/pvlib-python/c5de586d73bbb8875a4e87468894e7b34871a575/pvlib/solarposition.py",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/pvlib/pvlib-python/c5de586d73bbb8875a4e87468894e7b34871a575/tests/test_solarposition.py",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "c5de586d73bbb8875a4e87468894e7b34871a575"
+}

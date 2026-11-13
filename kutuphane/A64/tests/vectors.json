@@ -1,0 +1,36 @@
+[
+  {
+    "input": {
+      "hex": "313233343536373839"
+    },
+    "result": {
+      "crc32": 3421780262
+    },
+    "provenance": "CRC-32/ISO-HDLC check vector: 123456789 -> CBF43926; upstream test file retained."
+  },
+  {
+    "input": {
+      "hex": ""
+    },
+    "result": {
+      "crc32": 0
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "hex": "xx"
+    },
+    "error": true,
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "hex": "00"
+    },
+    "result": {
+      "crc32": 3523407757
+    },
+    "provenance": "CRC-32 IEEE single zero-byte known answer."
+  }
+]

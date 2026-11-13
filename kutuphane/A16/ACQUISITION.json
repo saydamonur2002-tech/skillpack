@@ -1,0 +1,32 @@
+{
+  "id": "A16",
+  "f": "Özgün Rethink Robotics",
+  "n": "Baxter Examples — joint_recorder formatı",
+  "u": "https://github.com/RethinkRobotics/baxter_examples/blob/master/scripts/joint_recorder.py",
+  "l": "BSD-3-Clause",
+  "t": "tool: validate_joint_trace(csv) → fields/timing/errors",
+  "p": "tool code/format örneği; alan kuralları",
+  "d": "orta",
+  "env": "Yeni CSV validator; PC/telefon",
+  "note": "Kaydedici robotu enable edebiliyor; aynen çalıştırılmaz. Yalnız CSV formatı çıkarılır, giriş sentetik/kaydedilmiş olur; playback ve motor bağlantısı yok.",
+  "test": "Eksik eklem alanı, artmayan zaman, NaN, bozuk satır.",
+  "tier": "revival",
+  "repo": "RethinkRobotics/baxter_examples",
+  "files": [
+    {
+      "path": "scripts/joint_recorder.py",
+      "sha256": "aeade8cf4629c85a00cbc431014fa49cd7ee26e35b18dbf88fd896282b5b7bab",
+      "url": "https://raw.githubusercontent.com/RethinkRobotics/baxter_examples/033756294b59f038869d97e59b5d9b28fe64d9e5/scripts/joint_recorder.py"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/RethinkRobotics/baxter_examples/033756294b59f038869d97e59b5d9b28fe64d9e5/scripts/joint_recorder.py",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "033756294b59f038869d97e59b5d9b28fe64d9e5"
+}

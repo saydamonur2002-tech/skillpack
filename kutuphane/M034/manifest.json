@@ -1,0 +1,308 @@
+{
+  "id": "M034",
+  "name": "Static map renderer: GeoJSON to SVG (with optional offline road basemap)",
+  "description": "Draw points, routes, isochrones and polygons as a self-contained SVG map in Web Mercator (no tiles, no network), optionally over the roads, parks, water and coastline of a local dataset, with labels, A/B markers, scale bar, north arrow and OpenStreetMap attribution. Returns the SVG text and the GeoJSON; can also save both to the configured output folder. Also converts lon/lat to web-map pixels and back.",
+  "version": "1.0.0",
+  "date": "2026-11-12",
+  "tier": "revival",
+  "family": "map",
+  "license": "BSD-3-Clause",
+  "distribution": "public-ok",
+  "source_url": "https://github.com/mapbox/sphericalmercator",
+  "upstream_commit_or_version": "b77160b53ed07195370f493629cda886ca6095d9",
+  "implementation_kind": "ported-core",
+  "status": "passed-local-tests",
+  "provenance": {
+    "upstream_repository": "https://github.com/mapbox/sphericalmercator",
+    "commit": "b77160b53ed07195370f493629cda886ca6095d9",
+    "stars_at_mining": 289,
+    "repository_created_year": 2011,
+    "license_spdx": "BSD-3-Clause",
+    "license_path": "LICENSE.md",
+    "license_sha256": "c067766ef9e35becb0f0aa4548a40b81c853d30e57260e188b022b62f03c5ecf",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2011, Development Seed"
+    ],
+    "license_check": "GitHub API license field: BSD-3-Clause, matching the actual license file",
+    "additional_licenses": [
+      {
+        "role": "polyline simplification in pixel space before drawing (same port as pack M021)",
+        "upstream_repository": "https://github.com/mourner/simplify-js",
+        "commit": "0777f8ac6f81b15239a4dc80b6d83f956b1b7110",
+        "stars_at_mining": 2390,
+        "repository_created_year": 2012,
+        "license_spdx": "BSD-2-Clause",
+        "path": "licenses/simplify-js.LICENSE",
+        "sha256": "a901a67db860508f95e4915c58dff092eec045b8b852d06aa0e12c7f40536d07",
+        "copyright_lines_verbatim": [
+          "Copyright (c) 2017, Vladimir Agafonkin"
+        ],
+        "license_check": "GitHub API license field: BSD-2-Clause, matching the actual license file",
+        "evidence": [
+          {
+            "path": "simplify-js/simplify.js",
+            "original_path": "simplify.js",
+            "url": "https://github.com/mourner/simplify-js/blob/0777f8ac6f81b15239a4dc80b6d83f956b1b7110/simplify.js",
+            "commit": "0777f8ac6f81b15239a4dc80b6d83f956b1b7110",
+            "sha256": "e4c7a1a8a141d47103eb82c64eb5286b483ed0efae28ecd238f6232b6d0b7b85",
+            "original_full_file_sha256": "e4c7a1a8a141d47103eb82c64eb5286b483ed0efae28ecd238f6232b6d0b7b85",
+            "scope": "complete original file",
+            "repository": "https://github.com/mourner/simplify-js"
+          }
+        ]
+      }
+    ],
+    "mined_date": "2026-11-12",
+    "timezone": "Europe/Istanbul",
+    "metadata_source": "public GitHub repository API (license field and created_at), observed this round; actual license file inspected",
+    "evidence": [
+      {
+        "path": "sphericalmercator.js",
+        "original_path": "sphericalmercator.js",
+        "url": "https://github.com/mapbox/sphericalmercator/blob/b77160b53ed07195370f493629cda886ca6095d9/sphericalmercator.js",
+        "commit": "b77160b53ed07195370f493629cda886ca6095d9",
+        "sha256": "60a8eda9867308f634b7da11065b19217260bc4efe1751f2de553528579abf30",
+        "original_full_file_sha256": "60a8eda9867308f634b7da11065b19217260bc4efe1751f2de553528579abf30",
+        "scope": "complete original file",
+        "repository": "https://github.com/mapbox/sphericalmercator"
+      },
+      {
+        "path": "test/sphericalmercator.test.js",
+        "original_path": "test/sphericalmercator.test.js",
+        "url": "https://github.com/mapbox/sphericalmercator/blob/b77160b53ed07195370f493629cda886ca6095d9/test/sphericalmercator.test.js",
+        "commit": "b77160b53ed07195370f493629cda886ca6095d9",
+        "sha256": "eb86da546182542399d4c2e7307f0ed2865e0a5df2f4873112659ca3d03bc718",
+        "original_full_file_sha256": "eb86da546182542399d4c2e7307f0ed2865e0a5df2f4873112659ca3d03bc718",
+        "scope": "complete original file",
+        "repository": "https://github.com/mapbox/sphericalmercator"
+      },
+      {
+        "path": "package.json",
+        "original_path": "package.json",
+        "url": "https://github.com/mapbox/sphericalmercator/blob/b77160b53ed07195370f493629cda886ca6095d9/package.json",
+        "commit": "b77160b53ed07195370f493629cda886ca6095d9",
+        "sha256": "ef59513eae83f049dc6f4b797e9f06f6df2365794cd292f65b9ae9dc3d3544d5",
+        "original_full_file_sha256": "ef59513eae83f049dc6f4b797e9f06f6df2365794cd292f65b9ae9dc3d3544d5",
+        "scope": "complete original file",
+        "repository": "https://github.com/mapbox/sphericalmercator"
+      }
+    ],
+    "reference_values": "px and ll inputs and their literal expectations are from upstream test/sphericalmercator.test.js. All full outputs were generated by executing pinned upstream sphericalmercator.js in Node, not this port; supplementary cases are labelled. The SVG renderer has no upstream counterpart and is covered by structural, determinism, escaping and file-safety tests.",
+    "release_pin": "tag v1.1.0"
+  },
+  "inputs": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "operation": {
+        "enum": [
+          "render",
+          "project",
+          "unproject"
+        ]
+      },
+      "features": {
+        "description": "GeoJSON FeatureCollection, Feature, bare geometry or an array of Features (validated in code). Styling via properties: kind (route, isochrone, start, end, via, poi, center), name/label, stroke, stroke-width, fill, fill-opacity, marker-color, marker-symbol.",
+        "type": [
+          "object",
+          "array"
+        ]
+      },
+      "basemap": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 96,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,95}$",
+        "description": "Dataset name (no folders), e.g. demo_kadikoy or my_pois.csv"
+      },
+      "bbox": {
+        "type": "array",
+        "minItems": 4,
+        "maxItems": 4,
+        "prefixItems": [
+          {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180
+          },
+          {
+            "type": "number",
+            "minimum": -85.05,
+            "maximum": 85.05
+          },
+          {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180
+          },
+          {
+            "type": "number",
+            "minimum": -85.05,
+            "maximum": 85.05
+          }
+        ],
+        "items": {
+          "type": "number"
+        }
+      },
+      "width": {
+        "type": "integer",
+        "minimum": 200,
+        "maximum": 2000
+      },
+      "height": {
+        "type": "integer",
+        "minimum": 200,
+        "maximum": 2000
+      },
+      "padding": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 200
+      },
+      "title": {
+        "type": "string",
+        "maxLength": 120
+      },
+      "save_name": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_-]{1,64}$"
+      },
+      "include_geojson": {
+        "type": "boolean"
+      },
+      "points": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1000,
+        "items": {
+          "type": "object",
+          "properties": {
+            "lat": {
+              "type": "number",
+              "minimum": -85.05,
+              "maximum": 85.05
+            },
+            "lon": {
+              "type": "number",
+              "minimum": -180,
+              "maximum": 180
+            }
+          },
+          "required": [
+            "lat",
+            "lon"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "pixels": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1000,
+        "items": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number",
+            "minimum": -10000000000.0,
+            "maximum": 10000000000.0
+          }
+        }
+      },
+      "zoom": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 28
+      }
+    },
+    "required": [
+      "operation"
+    ],
+    "additionalProperties": false
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "Raw CLI byte limit and POSIX alarm; strict schema, finite values and nesting checks; MCP subprocess killed/reaped after 10 seconds. One active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "numerical_runtime": "Python standard library only"
+  },
+  "data": {
+    "reads": "local files by dataset name from SKILLPACK_MAP_DATA or ../map_data",
+    "writes": "optional: <save_name>.svg and <save_name>.geojson into SKILLPACK_MAP_OUTPUT when save_name is given; never overwrites",
+    "network": "none"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "tool_name": "skillpack_m034",
+    "read_only": false,
+    "instructions": "Local offline map tool. The dataset is a file NAME inside the folder the user configured (SKILLPACK_MAP_DATA); never invent coordinates or names. Results come from the local data and code; explain them, state data limits (no live traffic) and ask the human to confirm before acting on them. Credit OpenStreetMap contributors when showing OSM-derived data. Rendering may write files only when save_name is given and the user configured SKILLPACK_MAP_OUTPUT."
+  },
+  "limitations": "A static schematic map, not a tiled web map: no satellite or aerial imagery, terrain, buildings, street view, live traffic or interactive panning. The basemap draws roads, parks/water areas and coastline from the local dataset only; open sea is not filled, so coasts appear as lines. Very large views drop footways/service roads (more than 3500 roads) and refuse SVGs above 900 kB. Labels are drawn without collision avoidance. Fit-to-view uses a fractional zoom up to 19.5. Saving writes only two new files named by save_name into SKILLPACK_MAP_OUTPUT and refuses to overwrite.",
+  "port_notes": "Projection is a port of sphericalmercator v1.1.0 px and ll (256-pixel tiles), including the separate integer-zoom branch with cached per-zoom constants and Math.round, the sin clamp at plus/minus 0.9999 and the upper clamp at the world size. Polylines are simplified in pixel space with the simplify-js port from M021 (tolerance 0.7 px basemap, 0.4 px features). Fit-to-view, styling, labels, scale bar and file saving are Skillpack code; render always uses the fractional branch.",
+  "validation": {
+    "pytest_pack_tests_passed": 35,
+    "full_release_tests_passed": 571,
+    "upstream_reference_rerun": true,
+    "upstream_rerun_runtime": "node",
+    "complete_upstream_test_suite_executed": false
+  }
+}

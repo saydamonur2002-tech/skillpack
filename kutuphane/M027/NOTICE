@@ -1,0 +1,9 @@
+Upstream: https://github.com/mapbox/geojson-area
+Commit: a0bd3750d88382b18bafc3dbfce619de1d377667
+License: BSD-2-Clause
+
+Original copyright notices (verbatim; source comment prefixes removed):
+Copyright 2005-2013 OpenLayers Contributors. All rights reserved. See
+
+Full source-specific notices remain under upstream/. License files are kept byte-for-byte as published upstream, including any contact lines they contain. Only required public upstream legal attribution is included; no project-owner identity or contact data is recorded.
+Skillpack contributors. AI-generated standalone adaptation and teaching material; no upstream endorsement or independent certification.

@@ -1,0 +1,32 @@
+{
+  "id": "A50",
+  "f": "Ninja Sphere",
+  "n": "go-castv2 — PacketStream",
+  "u": "https://github.com/ninjasphere/go-castv2/blob/master/PacketStream.go",
+  "l": "MIT — yalnız bu Go kodu",
+  "t": "tool: decode_cast_frame(bytes, max_len) → payload/error",
+  "p": "tool code; framing kuralları",
+  "d": "orta",
+  "env": "Go; PC/edge portu",
+  "note": "Yalnız uzunluk önekli çerçeve; .proto dosyaları bu seçime dahil değil. Sınırsız ayırma, kısa okuma ve log.Fatal düzeltilmeli; cihaz komutu göndermez.",
+  "test": "Parçalı başlık, kesik payload, sıfır ve aşırı uzunluk.",
+  "tier": "revival",
+  "repo": "ninjasphere/go-castv2",
+  "files": [
+    {
+      "path": "PacketStream.go",
+      "sha256": "0548e43e17bd7c63d872630e6370e6145b14b13339f9ca1431c2d8fb43778579",
+      "url": "https://raw.githubusercontent.com/ninjasphere/go-castv2/c628dcf318eee67f396e13d6a8ec53d2925c93e3/PacketStream.go"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/ninjasphere/go-castv2/c628dcf318eee67f396e13d6a8ec53d2925c93e3/PacketStream.go",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "c628dcf318eee67f396e13d6a8ec53d2925c93e3"
+}

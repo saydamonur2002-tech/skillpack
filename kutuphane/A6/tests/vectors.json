@@ -1,0 +1,48 @@
+[
+  {
+    "input": {
+      "text": "read battery",
+      "vocabulary": {
+        "Read": [
+          "read"
+        ],
+        "Item": [
+          "battery"
+        ]
+      },
+      "required": [
+        "Read",
+        "Item"
+      ]
+    },
+    "result": {
+      "matches": [
+        {
+          "intent": "FixedIntent",
+          "slots": {
+            "Read": "read",
+            "Item": "battery"
+          }
+        }
+      ]
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  },
+  {
+    "input": {
+      "text": "banana",
+      "vocabulary": {
+        "Read": [
+          "read"
+        ]
+      },
+      "required": [
+        "Read"
+      ]
+    },
+    "result": {
+      "matches": []
+    },
+    "provenance": "Synthetic known-answer vector, hand calculated."
+  }
+]

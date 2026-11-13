@@ -1,0 +1,52 @@
+{
+  "id": "A60",
+  "f": "Babylon Health",
+  "n": "fhir-hydrant — JSON template",
+  "u": "https://github.com/babylonhealth/fhir-hydrant",
+  "l": "Apache-2.0",
+  "t": "tool: hydrate_template(template, values) → json/errors",
+  "p": "tool code; template kuralları; examples/tests",
+  "d": "yüksek",
+  "env": "Scala/JVM; PC",
+  "note": "Dar hydrate/dehydrate dönüşümü. README Maven bağlantısı tamamlanmamış; kaynak derlemesi gerekir. Dış terminoloji ve gerçek kayıtlar alınmaz; dönüşüm klinik onay değildir.",
+  "test": "Eksik değişken, yanlış tip, roundtrip, bilinmeyen alan.",
+  "tier": "revival",
+  "repo": "babylonhealth/fhir-hydrant",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "ff265b51d52ce9c9a02aab528153d6b8506a38223c70701488e42e251b492994",
+      "url": "https://raw.githubusercontent.com/babylonhealth/fhir-hydrant/0f1651136958d3f50dc48fd6bcb3058838b6b9e4/README.md"
+    },
+    {
+      "path": "build.sbt",
+      "sha256": "34ba6c86ebc3dc50adbb7b3977034823de4ebccbb4b7a9cc9015aa6fd4f35f82",
+      "url": "https://raw.githubusercontent.com/babylonhealth/fhir-hydrant/0f1651136958d3f50dc48fd6bcb3058838b6b9e4/build.sbt"
+    },
+    {
+      "path": "docs/templates.md",
+      "sha256": "253ebcaa0fc848c89a07b855e5dbc442b0105166cf6abfc0b356f50e2e777012",
+      "url": "https://raw.githubusercontent.com/babylonhealth/fhir-hydrant/0f1651136958d3f50dc48fd6bcb3058838b6b9e4/docs/templates.md"
+    },
+    {
+      "path": "docs/hydration.md",
+      "sha256": "bef04f6883f63829fc883b6d02fd0bd65990cae29314a88bef438d54e154c406",
+      "url": "https://raw.githubusercontent.com/babylonhealth/fhir-hydrant/0f1651136958d3f50dc48fd6bcb3058838b6b9e4/docs/hydration.md"
+    }
+  ],
+  "attempts": [
+    {
+      "url": "https://raw.githubusercontent.com/babylonhealth/fhir-hydrant/0f1651136958d3f50dc48fd6bcb3058838b6b9e4/README.md",
+      "ok": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/babylonhealth/fhir-hydrant/0f1651136958d3f50dc48fd6bcb3058838b6b9e4/build.sbt",
+      "ok": true
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "revision": "0f1651136958d3f50dc48fd6bcb3058838b6b9e4",
+  "notice_file": "NOTICE"
+}

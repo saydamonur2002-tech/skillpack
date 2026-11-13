@@ -1,6 +1,6 @@
 # Sayısal modüller
 
-Burada **20 bağımsız hesap aracı** vardır. İki grup birbirinin yerine geçmez: ilk grup M001–M010, ikinci grup M011–M020.
+Burada **20 bağımsız hesap aracı** ve 3 küçük beceri paketi (tablonun sonunda) vardır. İki grup birbirinin yerine geçmez: ilk grup M001–M010, ikinci grup M011–M020.
 
 Bunlar `manifest.json` ile çalışan komut satırı ve stdio MCP araçlarıdır. `examples/` altındaki `skillpack.yaml` akış paketleriyle aynı biçimde değildir; o çalıştırıcı bunları paket olarak yüklemez.
 
@@ -28,6 +28,9 @@ Her modülün yanında sade bir `ACIKLAMA.md` durur. Lisans metinleri ve kaynak 
 | [M018 — Takvim tarihini Jülyen güne çevirme](sayisal-2026-11-11/tur2/M018/ACIKLAMA.md) | Gregoryen takvim gününü, saat olmadan gece yarısı kabul ederek, Jülyen gün ve değiştirilmiş Jülyen gün sayılarına çevirir. | [ERFA](https://github.com/liberfa/erfa) | BSD-3-Clause | Grup 324 geçti · kayıt 28 |
 | [M019 — Dünya dönüş açısını hesaplama](sayisal-2026-11-11/tur2/M019/ACIKLAMA.md) | UT1 zaman ölçeğindeki iki parçalı Jülyen tarihten Dünya’nın dönüş açısını IAU 2000 modeline göre hesaplar. | [ERFA](https://github.com/liberfa/erfa) | BSD-3-Clause | Grup 324 geçti · kayıt 31 |
 | [M020 — Astronomik eksen dönüşümünü hesaplama](sayisal-2026-11-11/tur2/M020/ACIKLAMA.md) | TT zaman ölçeğindeki iki parçalı Jülyen tarihten gök eksenlerinin başlangıç farkı ve presesyon matrisini hesaplar. | [ERFA](https://github.com/liberfa/erfa) | BSD-3-Clause | Grup 324 geçti · kayıt 27 |
+| [idna-encode — Alan adını ASCII'ye çevirme](beceri-paketleri-2026-11-13/idna-encode/ACIKLAMA.md) | Unicode alan adını IDNA 2008 ile punycode'a çevirir. | [idna](https://github.com/kjd/idna) | BSD-3-Clause | 2 test geçti |
+| [chain-runner — Paketleri art arda çalıştırma](beceri-paketleri-2026-11-13/chain-runner/ACIKLAMA.md) | Paketleri sırayla çalıştırır, çıktıyı sonrakine aktarır. | Özgün (oturum üretimi) | Apache-2.0 | 1 test geçti |
+| [skillpack-orchestrator — Paket iskelet/doğrulama/ZIP](beceri-paketleri-2026-11-13/skillpack-orchestrator/ACIKLAMA.md) | Paket iskeleti kurar, temel denetler, deterministik ZIP üretir. | Özgün (oturum üretimi) | Apache-2.0 | 1 test geçti |
 
 ## Test sütunu ne demek?
 

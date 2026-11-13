@@ -1,0 +1,9 @@
+{
+  "name": "idna-encode",
+  "source": "idna==3.20",
+  "function": "idna.encode",
+  "truth_level": "sozlesme",
+  "license": "BSD-3-Clause (see references/LICENSE.txt)",
+  "version": "0.1.0",
+  "notes": "Self-tests only; no independent oracle in this example pack"
+}

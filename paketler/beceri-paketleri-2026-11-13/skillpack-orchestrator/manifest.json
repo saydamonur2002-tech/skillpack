@@ -1,0 +1,9 @@
+{
+  "name": "skillpack-orchestrator",
+  "source": "local skillpack-orchestrator skill",
+  "function": "operator (scaffold / validate / zip)",
+  "truth_level": "sozlesme",
+  "license": "Apache-2.0",
+  "version": "0.1.0",
+  "notes": "Operator skillpack. Entry point scripts/main.py accepts command via stdin JSON."
+}

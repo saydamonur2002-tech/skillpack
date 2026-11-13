@@ -1,0 +1,9 @@
+{
+  "name": "chain-runner",
+  "source": "session-produced operator",
+  "function": "sequential skillpack executor",
+  "truth_level": "sozlesme",
+  "license": "Apache-2.0",
+  "version": "0.1.0",
+  "notes": "Runs ordered packs. Data flows previous→next unless step specifies input or from."
+}

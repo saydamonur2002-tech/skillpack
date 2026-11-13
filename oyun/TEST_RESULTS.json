@@ -1,0 +1,58 @@
+{
+ "date": "2026-11-12",
+ "python": "Python 3.13.5",
+ "node": "v24.22.1",
+ "totals": {
+  "passed": 386
+ },
+ "by_group": {
+  "G001": {
+   "passed": 26
+  },
+  "G002": {
+   "passed": 28
+  },
+  "G003": {
+   "passed": 26
+  },
+  "G004": {
+   "passed": 25
+  },
+  "G005": {
+   "passed": 25
+  },
+  "G006": {
+   "passed": 27
+  },
+  "G007": {
+   "passed": 23
+  },
+  "G008": {
+   "passed": 22
+  },
+  "G009": {
+   "passed": 22
+  },
+  "G010": {
+   "passed": 24
+  },
+  "G011": {
+   "passed": 35
+  },
+  "G012": {
+   "passed": 24
+  },
+  "test_flow_e2e": {
+   "passed": 5
+  },
+  "test_mcp_stdio": {
+   "passed": 38
+  },
+  "test_release_audit": {
+   "passed": 30
+  },
+  "test_upstream_references": {
+   "passed": 6
+  }
+ }
+}

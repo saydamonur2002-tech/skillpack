@@ -1,0 +1,32 @@
+{
+  "operation": "save",
+  "state": {
+    "seed": 2026,
+    "time_s": 12.5,
+    "player": {
+      "x": 19.5,
+      "y": 17.25,
+      "yaw": 0.0,
+      "v": 3.14159,
+      "health": 100
+    },
+    "money": 135,
+    "inventory": {
+      "snack": 1
+    },
+    "wanted": {
+      "stars": 1,
+      "heat": 55.0,
+      "seconds_unseen": 4
+    },
+    "missions": {
+      "A": "done",
+      "B": "active"
+    },
+    "active_mission": "B",
+    "cash_taken": [
+      0,
+      2
+    ]
+  }
+}

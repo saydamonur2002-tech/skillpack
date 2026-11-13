@@ -1,0 +1,17 @@
+{
+  "operation": "simulate",
+  "behavior": "seek",
+  "vehicle": {
+    "x": 0,
+    "y": 0,
+    "max_speed": 4,
+    "max_force": 20
+  },
+  "target": {
+    "x": 10,
+    "y": 5
+  },
+  "dt_s": 0.05,
+  "steps": 60,
+  "record_every": 10
+}

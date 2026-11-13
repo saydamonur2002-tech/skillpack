@@ -1,0 +1,315 @@
+{
+  "id": "G007",
+  "name": "Wanted level (0-5 stars) and police response rules",
+  "description": "Turns crimes into 'heat' and heat into 0-5 wanted stars, decays heat only after the player has been out of police sight for a star-dependent cooldown, lets a paint shop clear the level when police are not watching, and maps stars to police units, police speed factor and search radius. Returns a timeline for a list of events and the full rule table for the game.",
+  "version": "1.0.0",
+  "date": "2026-11-12",
+  "tier": "game",
+  "family": "game-2d-city",
+  "category": "game rules",
+  "license": "MIT",
+  "distribution": "public-ok",
+  "author": "Skillpack contributors",
+  "source_url": "local:original/G007",
+  "upstream_commit_or_version": "original-1.0.0",
+  "implementation_kind": "original-example-rule",
+  "status": "tested-awaiting-usta-approval",
+  "provenance": {
+    "upstream_repository": null,
+    "source_kind": "original",
+    "commit": "original-1.0.0",
+    "version": "1.0.0",
+    "license_spdx": "MIT",
+    "license_path": "LICENSE",
+    "license_sha256": "e5c37fd312001c3fa6540a36c04939b62f856dcd3d1b148b7e43fc8d65e8558a",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2026 Skillpack contributors"
+    ],
+    "license_check": "Original code written for this pack; MIT",
+    "evidence": [],
+    "primary_role": "original rule table and code",
+    "additional_licenses": [],
+    "mined_date": "2026-11-12",
+    "timezone": "Europe/Istanbul",
+    "reference_values": "tests/references.json cases were derived by hand from the default table (each origin shows the arithmetic)."
+  },
+  "region": {
+    "scope": "global",
+    "applies_to": "any locale; no country-specific rules",
+    "notes": "Game rules are illustrative defaults, not real-world rules."
+  },
+  "audit": {
+    "principle": "code decides, model explains, craftsman (usta) approves",
+    "code_decides": true,
+    "model_explains": true,
+    "usta_approval": {
+      "status": "pending",
+      "approved_by": null,
+      "role": "game designer (difficulty)",
+      "what_to_check": "the heat per crime, the star thresholds, cooldowns and police numbers: is escaping 1-2 stars easy and 5 stars hard but possible?"
+    },
+    "external_audit": {
+      "status": "not-yet",
+      "notes": "Local tests only; no independent audit has been performed."
+    }
+  },
+  "inputs": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "operation"
+    ],
+    "properties": {
+      "operation": {
+        "enum": [
+          "simulate",
+          "rules"
+        ]
+      },
+      "state": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "stars": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "heat": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10000
+          },
+          "seconds_unseen": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1000000.0
+          }
+        }
+      },
+      "events": {
+        "type": "array",
+        "maxItems": 2000,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "steal_car",
+                "hit_vehicle",
+                "hit_pedestrian",
+                "hit_police",
+                "run_red_light",
+                "tick",
+                "seen_by_police",
+                "paint_shop",
+                "busted",
+                "wasted"
+              ]
+            },
+            "witnessed": {
+              "type": "boolean"
+            },
+            "dt": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 3600
+            }
+          }
+        }
+      },
+      "rules": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "heat": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "steal_car": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000
+              },
+              "hit_vehicle": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000
+              },
+              "hit_pedestrian": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000
+              },
+              "hit_police": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000
+              },
+              "run_red_light": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000
+              }
+            }
+          },
+          "witness_multiplier": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "star_thresholds": {
+            "type": "array",
+            "minItems": 5,
+            "maxItems": 5,
+            "items": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 10000
+            }
+          },
+          "cooldown_s": {
+            "type": "array",
+            "minItems": 6,
+            "maxItems": 6,
+            "items": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 600
+            }
+          },
+          "decay_per_s": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1000
+          },
+          "paint_shop_min_unseen_s": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 600
+          },
+          "police_units": {
+            "type": "array",
+            "minItems": 6,
+            "maxItems": 6,
+            "items": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 20
+            }
+          },
+          "police_speed_factor": {
+            "type": "array",
+            "minItems": 6,
+            "maxItems": 6,
+            "items": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 3
+            }
+          },
+          "search_radius_tiles": {
+            "type": "array",
+            "minItems": 6,
+            "maxItems": 6,
+            "items": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 200
+            }
+          },
+          "max_heat": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 10000
+          }
+        }
+      }
+    }
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "Raw CLI byte limit and POSIX alarm; strict schema, finite values and nesting checks; MCP subprocess killed/reaped after the timeout. One active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "runtime": "Python standard library plus jsonschema (schema check) only"
+  },
+  "data": {
+    "reads": "nothing",
+    "writes": "nothing",
+    "network": "none",
+    "telemetry": "none",
+    "logging": "none; input contents are never logged or echoed in errors"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "server_name": "aranma-seviyesi",
+    "tool_name": "skillpack_g007",
+    "read_only": true,
+    "instructions": "One local deterministic tool. Explain its result and limits; the code decides, a human (usta) approves consequential use. No network access."
+  },
+  "limitations": "Illustrative game-design defaults, not tuned by playtesting. Stars rise immediately with heat and fall only through out-of-sight decay or reset events. No separate police, army or helicopter tiers. Line-of-sight is decided by the game runtime (distance within search radius), not here.",
+  "port_notes": "Original rules by Skillpack contributors, inspired by the general wanted-level idea of open-world games; no game code or data was copied. stars = number of thresholds reached; on decay stars = min(stars, level(heat)). Decay only counts the part of a tick that lies after the cooldown.",
+  "flow_role": "Step 5 (aranma kuralları): fix the rule table and replay a sample chase to confirm stars rise and fall as intended; the rules object goes into the HTML (G012), whose runtime applies the same rules each frame."
+}

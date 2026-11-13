@@ -1,0 +1,39 @@
+{
+  "operation": "apply",
+  "wallet": {
+    "money": 200
+  },
+  "transactions": [
+    {
+      "type": "earn",
+      "amount": 100,
+      "reason": "mission A"
+    },
+    {
+      "type": "buy",
+      "item": "repair_kit",
+      "qty": 2
+    },
+    {
+      "type": "buy",
+      "item": "snack"
+    },
+    {
+      "type": "sell",
+      "item": "repair_kit"
+    },
+    {
+      "type": "use",
+      "item": "repair_kit"
+    },
+    {
+      "type": "earn",
+      "amount": 75,
+      "reason": "cash pickup"
+    },
+    {
+      "type": "buy",
+      "item": "paint_job"
+    }
+  ]
+}

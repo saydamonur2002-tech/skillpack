@@ -1,0 +1,127 @@
+[
+ {
+  "input": {
+   "operation": "apply",
+   "wallet": {
+    "money": 200
+   },
+   "transactions": [
+    {
+     "type": "earn",
+     "amount": 100,
+     "reason": "mission A"
+    },
+    {
+     "type": "buy",
+     "item": "repair_kit",
+     "qty": 2
+    },
+    {
+     "type": "buy",
+     "item": "snack"
+    },
+    {
+     "type": "sell",
+     "item": "repair_kit"
+    },
+    {
+     "type": "use",
+     "item": "repair_kit"
+    },
+    {
+     "type": "earn",
+     "amount": 75,
+     "reason": "cash pickup"
+    },
+    {
+     "type": "buy",
+     "item": "paint_job"
+    }
+   ]
+  },
+  "expected_subset": {
+   "committed": true,
+   "money": 135,
+   "inventory": {},
+   "rejected": 2,
+   "ledger": [
+    {
+     "balance_after": 300
+    },
+    {
+     "balance_after": 0,
+     "delta": -300
+    },
+    {
+     "status": "rejected",
+     "reason": "insufficient money"
+    },
+    {
+     "balance_after": 60
+    },
+    {
+     "effect": "repair vehicle +50"
+    },
+    {
+     "balance_after": 135
+    },
+    {
+     "status": "rejected",
+     "reason": "insufficient money"
+    }
+   ]
+  },
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 0.0,
+  "origin": "hand-derived: 200+100=300; 2x150 -> 0; snack 20 > 0 rejected; sell 1 at 60 -> 60; use the last kit; +75 -> 135; paint job 500 > 135 rejected"
+ },
+ {
+  "input": {
+   "operation": "apply",
+   "wallet": {
+    "money": 1000
+   },
+   "inventory": {
+    "snack": 4
+   },
+   "mode": "all_or_nothing",
+   "transactions": [
+    {
+     "type": "buy",
+     "item": "paint_job"
+    },
+    {
+     "type": "buy",
+     "item": "snack",
+     "qty": 2
+    }
+   ]
+  },
+  "expected_subset": {
+   "committed": false,
+   "money": 1000,
+   "inventory": {
+    "snack": 4
+   }
+  },
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 0.0,
+  "origin": "hand-derived: 4+2 snacks exceed max 5, so the whole batch is rolled back"
+ },
+ {
+  "input": {
+   "operation": "catalog"
+  },
+  "expected_subset": {
+   "catalog": {
+    "paint_job": {
+     "price": 500,
+     "stored": false
+    }
+   }
+  },
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 0.0,
+  "origin": "default catalog as written in SKILL.md"
+ }
+]

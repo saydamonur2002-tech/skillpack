@@ -1,0 +1,22 @@
+{
+  "operation": "simulate",
+  "state": {
+    "x": 0,
+    "y": 0,
+    "yaw": 0,
+    "v": 0
+  },
+  "controls": [
+    {
+      "acceleration": 2.0,
+      "steer_deg": 0,
+      "repeat": 20
+    },
+    {
+      "acceleration": 0,
+      "steer_deg": 15,
+      "repeat": 20
+    }
+  ],
+  "record_every": 10
+}

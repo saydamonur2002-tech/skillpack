@@ -1,0 +1,11 @@
+Skillpack G011 (ses-efekti) — Procedural sound effects with ZzFX (horn, crash, siren, pickup, cash, mission, wasted, engine)
+
+Primary upstream (ZZFX.buildSamples synthesis (oscillator shapes, envelope, slide, pitch jump, repeat, noise, modulation, bit crush, delay, tremolo, biquad filter) and README example sounds): https://github.com/KilledByAPixel/ZzFX
+Pinned: ac5a4727a44e5506a12f7340087e0b889cfd69dc (1.4.0)
+License: MIT (full text: licenses/ZzFX.LICENSE)
+Original copyright notices (verbatim):
+Copyright (c) 2019 Frank Force
+
+Full upstream license texts are kept byte-for-byte under licenses/ and upstream/. No project-owner identity or contact data is recorded.
+
+Skillpack contributors. AI-generated standalone adaptation and teaching material; no upstream endorsement or independent certification is implied.

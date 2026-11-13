@@ -1,0 +1,270 @@
+{
+  "id": "G009",
+  "name": "Game economy: wallet, shop catalog and inventory ledger",
+  "description": "Applies earn, spend, buy, sell, pickup, use and drop transactions to an integer wallet and an item inventory with per-item limits, either one by one (rejected ones are skipped with a reason) or all-or-nothing, and returns the ledger with the balance after each step and the effects the game must apply (repair, health, clear wanted level).",
+  "version": "1.0.0",
+  "date": "2026-11-12",
+  "tier": "game",
+  "family": "game-2d-city",
+  "category": "game rules",
+  "license": "MIT",
+  "distribution": "public-ok",
+  "author": "Skillpack contributors",
+  "source_url": "local:original/G009",
+  "upstream_commit_or_version": "original-1.0.0",
+  "implementation_kind": "original-example-rule",
+  "status": "tested-awaiting-usta-approval",
+  "provenance": {
+    "upstream_repository": null,
+    "source_kind": "original",
+    "commit": "original-1.0.0",
+    "version": "1.0.0",
+    "license_spdx": "MIT",
+    "license_path": "LICENSE",
+    "license_sha256": "e5c37fd312001c3fa6540a36c04939b62f856dcd3d1b148b7e43fc8d65e8558a",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2026 Skillpack contributors"
+    ],
+    "license_check": "Original code written for this pack; MIT",
+    "evidence": [],
+    "primary_role": "original rule table and code",
+    "additional_licenses": [],
+    "mined_date": "2026-11-12",
+    "timezone": "Europe/Istanbul",
+    "reference_values": "tests/references.json cases were derived by hand (arithmetic in each origin)."
+  },
+  "region": {
+    "scope": "global",
+    "applies_to": "any locale; no country-specific rules",
+    "notes": "Game rules are illustrative defaults, not real-world rules."
+  },
+  "audit": {
+    "principle": "code decides, model explains, craftsman (usta) approves",
+    "code_decides": true,
+    "model_explains": true,
+    "usta_approval": {
+      "status": "pending",
+      "approved_by": null,
+      "role": "game designer (economy)",
+      "what_to_check": "that prices, sell values and mission rewards keep the player motivated (a paint job should cost about two missions)."
+    },
+    "external_audit": {
+      "status": "not-yet",
+      "notes": "Local tests only; no independent audit has been performed."
+    }
+  },
+  "inputs": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "operation"
+    ],
+    "$defs": {
+      "item": {
+        "type": "string",
+        "pattern": "^[a-z0-9_]{1,32}$"
+      }
+    },
+    "properties": {
+      "operation": {
+        "enum": [
+          "apply",
+          "catalog"
+        ]
+      },
+      "wallet": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "money": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          }
+        }
+      },
+      "inventory": {
+        "type": "object",
+        "maxProperties": 32,
+        "propertyNames": {
+          "pattern": "^[a-z0-9_]{1,32}$"
+        },
+        "additionalProperties": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000
+        }
+      },
+      "catalog": {
+        "type": "object",
+        "maxProperties": 32,
+        "propertyNames": {
+          "pattern": "^[a-z0-9_]{1,32}$"
+        },
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "price",
+            "sell",
+            "max",
+            "stored",
+            "effect"
+          ],
+          "properties": {
+            "price": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000
+            },
+            "sell": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000
+            },
+            "max": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000
+            },
+            "stored": {
+              "type": "boolean"
+            },
+            "effect": {
+              "type": "string",
+              "maxLength": 80
+            }
+          }
+        }
+      },
+      "mode": {
+        "enum": [
+          "per_transaction",
+          "all_or_nothing"
+        ]
+      },
+      "transactions": {
+        "type": "array",
+        "maxItems": 2000,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "earn",
+                "spend",
+                "buy",
+                "sell",
+                "pickup",
+                "use",
+                "drop"
+              ]
+            },
+            "amount": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000
+            },
+            "item": {
+              "$ref": "#/$defs/item"
+            },
+            "qty": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "reason": {
+              "type": "string",
+              "maxLength": 80
+            }
+          }
+        }
+      }
+    }
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "Raw CLI byte limit and POSIX alarm; strict schema, finite values and nesting checks; MCP subprocess killed/reaped after the timeout. One active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "runtime": "Python standard library plus jsonschema (schema check) only"
+  },
+  "data": {
+    "reads": "nothing",
+    "writes": "nothing",
+    "network": "none",
+    "telemetry": "none",
+    "logging": "none; input contents are never logged or echoed in errors"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "server_name": "ekonomi-envanter",
+    "tool_name": "skillpack_g009",
+    "read_only": true,
+    "instructions": "One local deterministic tool. Explain its result and limits; the code decides, a human (usta) approves consequential use. No network access."
+  },
+  "limitations": "Single currency, integer amounts, no interest, theft or taxes. Effects are labels for the game to apply; this tool does not change health or wanted level itself. Illustrative prices.",
+  "port_notes": "Original ledger by Skillpack contributors. Checks run before any change; all_or_nothing stops at the first rejection and returns the starting wallet and inventory. Money is capped at 1e9.",
+  "flow_role": "Step 7 (ekonomi): set the starting money and shop catalog, replay mission rewards and a few purchases to check prices make sense; the catalog and start money go into the HTML (G012)."
+}

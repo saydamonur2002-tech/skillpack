@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>__TITLE__</title>
+<!--
+Built by the Skillpack G012 HTML builder from skill outputs (G001-G011). Single self-contained file: no network, no external files, no telemetry.
+Game runtime: Copyright (c) 2026 Skillpack contributors, MIT License.
+Embedded: MainLoop.js 1.0.4 (build/mainloop.min.js, leading comment removed) and ZzFXMicro 1.4.0 (ZzFXMicro.min.js), both MIT; notices below.
+__NOTICES__
+-->
+<style>
+html,body{margin:0;height:100%;background:#111;color:#eee;font-family:sans-serif;overflow:hidden}
+#game{display:block;width:100vw;height:100vh}
+#help{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.82);padding:18px 24px;border-radius:10px;max-width:440px;line-height:1.5}
+#help h1{font-size:20px;margin:0 0 8px}
+#pad{position:fixed;bottom:12px;left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none}
+#pad div{pointer-events:auto}
+#pad button{width:64px;height:64px;margin:4px;font-size:24px;border-radius:12px;border:0;background:rgba(255,255,255,.18);color:#fff}
+@media (pointer:coarse){#pad{display:flex}}
+</style>
+</head>
+<body>
+<canvas id="game"></canvas>
+<div id="help"><h1>__TITLE__</h1>
+<b>Ok tuşları / WASD</b>: sür, fren, geri &nbsp; <b>Boşluk</b>: el freni<br>
+<b>F</b>: duran bir arabanın yanında araba çal &nbsp; <b>H</b>: korna<br>
+<b>Mavi nokta</b>: boyacı (aranma silinir), <b>E</b>: tamir &nbsp; <b>Sarı halka</b>: görev hedefi<br>
+<b>K</b>: kaydet &nbsp; <b>L</b>: yükle &nbsp; <b>P</b>: duraklat<br>
+Başlamak için bir tuşa bas.</div>
+<div id="pad"><div><button data-key="ArrowLeft">◀</button><button data-key="ArrowRight">▶</button></div>
+<div><button data-key="KeyF">F</button><button data-key="ArrowDown">▼</button><button data-key="ArrowUp">▲</button></div></div>
+<script type="application/json" id="game-config">__CONFIG__</script>
+<script>
+__MAINLOOP__
+</script>
+<script>
+window.__makeSfx=function(){try{
+__ZZFX__
+;return function(name){var s=window.__GAME__.config.sounds[name];if(s)zzfx.apply(null,s);};}catch(e){return function(){};}};
+</script>
+<script>
+__RUNTIME__
+</script>
+</body>
+</html>

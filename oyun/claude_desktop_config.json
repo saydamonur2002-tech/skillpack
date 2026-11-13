@@ -1,0 +1,76 @@
+{
+  "mcpServers": {
+    "oyun-dongusu": {
+      "command": "/MUTLAK/YOL/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/game_pack_2026-11-12/G001/mcp/server.py"
+      ]
+    },
+    "sehir-haritasi": {
+      "command": "/MUTLAK/YOL/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/game_pack_2026-11-12/G002/mcp/server.py"
+      ]
+    },
+    "arac-fizigi": {
+      "command": "/MUTLAK/YOL/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/game_pack_2026-11-12/G003/mcp/server.py"
+      ]
+    },
+    "carpisma-testi": {
+      "command": "/MUTLAK/YOL/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/game_pack_2026-11-12/G004/mcp/server.py"
+      ]
+    },
+    "yol-bulma": {
+      "command": "/MUTLAK/YOL/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/game_pack_2026-11-12/G005/mcp/server.py"
+      ]
+    },
+    "npc-yonlendirme": {
+      "command": "/MUTLAK/YOL/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/game_pack_2026-11-12/G006/mcp/server.py"
+      ]
+    },
+    "aranma-seviyesi": {
+      "command": "/MUTLAK/YOL/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/game_pack_2026-11-12/G007/mcp/server.py"
+      ]
+    },
+    "gorev-sistemi": {
+      "command": "/MUTLAK/YOL/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/game_pack_2026-11-12/G008/mcp/server.py"
+      ]
+    },
+    "ekonomi-envanter": {
+      "command": "/MUTLAK/YOL/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/game_pack_2026-11-12/G009/mcp/server.py"
+      ]
+    },
+    "kayit-yukle": {
+      "command": "/MUTLAK/YOL/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/game_pack_2026-11-12/G010/mcp/server.py"
+      ]
+    },
+    "ses-efekti": {
+      "command": "/MUTLAK/YOL/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/game_pack_2026-11-12/G011/mcp/server.py"
+      ]
+    },
+    "html-oyun-uret": {
+      "command": "/MUTLAK/YOL/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/game_pack_2026-11-12/G012/mcp/server.py"
+      ]
+    }
+  }
+}

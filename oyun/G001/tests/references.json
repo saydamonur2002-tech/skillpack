@@ -1,0 +1,3246 @@
+[
+ {
+  "input": {
+   "operation": "schedule",
+   "frame_timestamps_ms": [
+    0.0,
+    16.666666666666668,
+    33.333333333333336,
+    50.0,
+    66.66666666666667,
+    83.33333333333334,
+    100.0,
+    116.66666666666667,
+    133.33333333333334,
+    150.0,
+    166.66666666666669,
+    183.33333333333334,
+    200.0,
+    216.66666666666669,
+    233.33333333333334,
+    250.00000000000003,
+    266.6666666666667,
+    283.33333333333337,
+    300.0,
+    316.6666666666667,
+    333.33333333333337,
+    350.0,
+    366.6666666666667,
+    383.33333333333337,
+    400.0,
+    416.6666666666667,
+    433.33333333333337,
+    450.00000000000006,
+    466.6666666666667,
+    483.33333333333337
+   ]
+  },
+  "expected_subset": {
+   "frames": [
+    {
+     "t": 0,
+     "ran": true,
+     "updates": 0,
+     "alpha": 1,
+     "fps": 60,
+     "panic": false,
+     "start": true
+    },
+    {
+     "t": 16.666666666666668,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 33.333333333333336,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 50,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.9999999999999998,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 66.66666666666667,
+     "ran": true,
+     "updates": 2,
+     "alpha": 0,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 83.33333333333334,
+     "ran": true,
+     "updates": 1,
+     "alpha": 2.1316282072803005e-16,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 100,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.9999999999999996,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 116.66666666666667,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999996,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 133.33333333333334,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999996,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 150,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999987,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 166.66666666666669,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999996,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 183.33333333333334,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999987,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 200,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999979,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 216.66666666666669,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999987,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 233.33333333333334,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999979,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 250.00000000000003,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999987,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 266.6666666666667,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999979,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 283.33333333333337,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999987,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 300,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999961,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 316.6666666666667,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.999999999999997,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 333.33333333333337,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999979,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 350,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999953,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 366.6666666666667,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999961,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 383.33333333333337,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.999999999999997,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 400,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999944,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 416.6666666666667,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999953,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 433.33333333333337,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999961,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 450.00000000000006,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.999999999999997,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 466.6666666666667,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999944,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 483.33333333333337,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999953,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    }
+   ],
+   "total_updates": 28,
+   "simulated_ms": 466.6666666666667,
+   "discarded_ms": 0,
+   "panic_frames": 0
+  },
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 1e-12,
+  "origin": "steady 60 Hz display, default 1000/60 ms step; expected generated by executing pinned upstream MainLoop.js 3ddadf0ab902"
+ },
+ {
+  "input": {
+   "operation": "schedule",
+   "timestep_ms": 10,
+   "frame_timestamps_ms": [
+    100.0,
+    133.3,
+    166.6,
+    199.89999999999998,
+    233.2,
+    266.5,
+    299.79999999999995,
+    333.09999999999997,
+    366.4,
+    399.7,
+    433.0,
+    466.29999999999995,
+    499.59999999999997,
+    532.9,
+    566.1999999999999,
+    599.5,
+    632.8,
+    666.0999999999999,
+    699.4,
+    732.6999999999999,
+    766.0,
+    799.3,
+    832.5999999999999,
+    865.9,
+    899.1999999999999,
+    932.4999999999999,
+    965.8,
+    999.0999999999999,
+    1032.3999999999999,
+    1065.6999999999998,
+    1099.0,
+    1132.3,
+    1165.6,
+    1198.8999999999999,
+    1232.1999999999998,
+    1265.5,
+    1298.8,
+    1332.1,
+    1365.3999999999999,
+    1398.6999999999998
+   ]
+  },
+  "expected_subset": {
+   "frames": [
+    {
+     "t": 100,
+     "ran": true,
+     "updates": 0,
+     "alpha": 1,
+     "fps": 60,
+     "panic": false,
+     "start": true
+    },
+    {
+     "t": 133.3,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.3300000000000011,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 166.6,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.6599999999999995,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 199.89999999999998,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.9899999999999978,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 233.2,
+     "ran": true,
+     "updates": 4,
+     "alpha": 0.31999999999999884,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 266.5,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.65,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 299.79999999999995,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.9799999999999954,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 333.09999999999997,
+     "ran": true,
+     "updates": 4,
+     "alpha": 0.3099999999999966,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 366.4,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.6399999999999977,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 399.7,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.9699999999999989,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 433,
+     "ran": true,
+     "updates": 4,
+     "alpha": 0.3,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 466.29999999999995,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.6299999999999955,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 499.59999999999997,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.9599999999999966,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 532.9,
+     "ran": true,
+     "updates": 4,
+     "alpha": 0.2899999999999977,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 566.1999999999999,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.6199999999999932,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 599.5,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.95,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 632.8,
+     "ran": true,
+     "updates": 4,
+     "alpha": 0.2799999999999955,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 666.0999999999999,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.6099999999999909,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 699.4,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.9399999999999977,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 732.6999999999999,
+     "ran": true,
+     "updates": 4,
+     "alpha": 0.2699999999999932,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 766,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.6,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 799.3,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.9299999999999955,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 832.5999999999999,
+     "ran": true,
+     "updates": 4,
+     "alpha": 0.2599999999999909,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 865.9,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.5899999999999977,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 899.1999999999999,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.9199999999999932,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 932.4999999999999,
+     "ran": true,
+     "updates": 4,
+     "alpha": 0.24999999999998862,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 965.8,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.5799999999999954,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 999.0999999999999,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.9099999999999909,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1032.3999999999999,
+     "ran": true,
+     "updates": 4,
+     "alpha": 0.23999999999998636,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1065.6999999999998,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.5699999999999819,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1099,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.9,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1132.3,
+     "ran": true,
+     "updates": 4,
+     "alpha": 0.22999999999999546,
+     "fps": 32.15518744551002,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1165.6,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.559999999999991,
+     "fps": 32.15518744551002,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1198.8999999999999,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.8899999999999864,
+     "fps": 32.15518744551002,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1232.1999999999998,
+     "ran": true,
+     "updates": 4,
+     "alpha": 0.21999999999998182,
+     "fps": 32.15518744551002,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1265.5,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.55,
+     "fps": 32.15518744551002,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1298.8,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.8799999999999955,
+     "fps": 32.15518744551002,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1332.1,
+     "ran": true,
+     "updates": 4,
+     "alpha": 0.20999999999999092,
+     "fps": 32.15518744551002,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1365.3999999999999,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.5399999999999864,
+     "fps": 32.15518744551002,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1398.6999999999998,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.8699999999999818,
+     "fps": 32.15518744551002,
+     "panic": false,
+     "start": false
+    }
+   ],
+   "total_updates": 129,
+   "simulated_ms": 1290,
+   "discarded_ms": 0,
+   "panic_frames": 0
+  },
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 1e-12,
+  "origin": "slow 30 Hz display with 10 ms physics step (several updates per frame); expected generated by executing pinned upstream MainLoop.js 3ddadf0ab902"
+ },
+ {
+  "input": {
+   "operation": "schedule",
+   "frame_timestamps_ms": [
+    0,
+    7,
+    14,
+    21,
+    28,
+    35,
+    42,
+    49,
+    56,
+    63,
+    70,
+    77,
+    84,
+    91,
+    98,
+    105,
+    112,
+    119,
+    126,
+    133,
+    140,
+    147,
+    154,
+    161,
+    168,
+    175,
+    182,
+    189,
+    196,
+    203,
+    210,
+    217,
+    224,
+    231,
+    238,
+    245,
+    252,
+    259,
+    266,
+    273,
+    280,
+    287,
+    294,
+    301,
+    308,
+    315,
+    322,
+    329,
+    336,
+    343,
+    350,
+    357,
+    364,
+    371,
+    378,
+    385,
+    392,
+    399,
+    406,
+    413,
+    420,
+    427,
+    434,
+    441,
+    448,
+    455,
+    462,
+    469,
+    476,
+    483,
+    490,
+    497,
+    504,
+    511,
+    518,
+    525,
+    532,
+    539,
+    546,
+    553,
+    560,
+    567,
+    574,
+    581,
+    588,
+    595,
+    602,
+    609,
+    616,
+    623,
+    630,
+    637,
+    644,
+    651,
+    658,
+    665,
+    672,
+    679,
+    686,
+    693,
+    700,
+    707,
+    714,
+    721,
+    728,
+    735,
+    742,
+    749,
+    756,
+    763,
+    770,
+    777,
+    784,
+    791,
+    798,
+    805,
+    812,
+    819,
+    826,
+    833,
+    840,
+    847,
+    854,
+    861,
+    868,
+    875,
+    882,
+    889,
+    896,
+    903,
+    910,
+    917,
+    924,
+    931,
+    938,
+    945,
+    952,
+    959,
+    966,
+    973,
+    980,
+    987,
+    994,
+    1001,
+    1008,
+    1015,
+    1022,
+    1029,
+    1036,
+    1043,
+    1050,
+    1057,
+    1064,
+    1071,
+    1078,
+    1085,
+    1092,
+    1099,
+    1106,
+    1113,
+    1120,
+    1127,
+    1134,
+    1141,
+    1148,
+    1155,
+    1162,
+    1169,
+    1176,
+    1183,
+    1190,
+    1197,
+    1204,
+    1211,
+    1218,
+    1225,
+    1232,
+    1239,
+    1246,
+    1253,
+    1260,
+    1267,
+    1274,
+    1281,
+    1288,
+    1295,
+    1302,
+    1309,
+    1316,
+    1323,
+    1330,
+    1337,
+    1344,
+    1351,
+    1358,
+    1365,
+    1372,
+    1379,
+    1386,
+    1393,
+    1400,
+    1405,
+    1410
+   ]
+  },
+  "expected_subset": {
+   "frames": [
+    {
+     "t": 0,
+     "ran": true,
+     "updates": 0,
+     "alpha": 1,
+     "fps": 60,
+     "panic": false,
+     "start": true
+    },
+    {
+     "t": 7,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.42,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 14,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.84,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 21,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.2599999999999999,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 28,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.6799999999999998,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 35,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.09999999999999985,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 42,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.5199999999999998,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 49,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.9399999999999998,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 56,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.35999999999999976,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 63,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.7799999999999997,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 70,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.1999999999999997,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 77,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.6199999999999997,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 84,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.03999999999999964,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 91,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.45999999999999963,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 98,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.8799999999999996,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 105,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.29999999999999954,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 112,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.7199999999999995,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 119,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.13999999999999949,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 126,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.5599999999999995,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 133,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.9799999999999994,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 140,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.3999999999999994,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 147,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.8199999999999994,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 154,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.23999999999999935,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 161,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.6599999999999994,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 168,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.07999999999999928,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 175,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.4999999999999993,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 182,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.9199999999999993,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 189,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.3399999999999992,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 196,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.7599999999999991,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 203,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.17999999999999913,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 210,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.5999999999999991,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 217,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.019999999999999074,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 224,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.43999999999999906,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 231,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.859999999999999,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 238,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.27999999999999897,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 245,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.699999999999999,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 252,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.11999999999999893,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 259,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.5399999999999989,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 266,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.9599999999999989,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 273,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.37999999999999884,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 280,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.7999999999999988,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 287,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.21999999999999878,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 294,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.6399999999999988,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 301,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.059999999999998714,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 308,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.4799999999999987,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 315,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.8999999999999987,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 322,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.3199999999999986,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 329,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.7399999999999985,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 336,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.15999999999999856,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 343,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.5799999999999985,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 350,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.9999999999999986,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 357,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.4199999999999985,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 364,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.8399999999999984,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 371,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.2599999999999984,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 378,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.6799999999999984,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 385,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.09999999999999835,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 392,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.5199999999999984,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 399,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.9399999999999983,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 406,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.35999999999999827,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 413,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.7799999999999983,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 420,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.1999999999999982,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 427,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.6199999999999982,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 434,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.03999999999999815,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 441,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.45999999999999813,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 448,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.8799999999999981,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 455,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.29999999999999805,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 462,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.719999999999998,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 469,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.139999999999998,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 476,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.5599999999999979,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 483,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.979999999999998,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 490,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.3999999999999979,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 497,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.8199999999999978,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 504,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.23999999999999785,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 511,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.6599999999999978,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 518,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.0799999999999978,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 525,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.4999999999999978,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 532,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.9199999999999977,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 539,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.3399999999999977,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 546,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.7599999999999977,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 553,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.17999999999999763,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 560,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.5999999999999976,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 567,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.019999999999997582,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 574,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.43999999999999756,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 581,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.8599999999999975,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 588,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.2799999999999975,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 595,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.6999999999999975,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 602,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.11999999999999743,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 609,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.5399999999999974,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 616,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.9599999999999974,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 623,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.37999999999999734,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 630,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.7999999999999973,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 637,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.21999999999999728,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 644,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.6399999999999972,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 651,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.05999999999999722,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 658,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.4799999999999972,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 665,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.8999999999999971,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 672,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.3199999999999971,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 679,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.7399999999999971,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 686,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.1599999999999971,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 693,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.5799999999999971,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 700,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.999999999999997,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 707,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.419999999999997,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 714,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.839999999999997,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 721,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.2599999999999969,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 728,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.6799999999999969,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 735,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.09999999999999687,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 742,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.5199999999999968,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 749,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.9399999999999968,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 756,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.35999999999999677,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 763,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.7799999999999967,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 770,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.1999999999999967,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 777,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.6199999999999967,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 784,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.039999999999996656,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 791,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.45999999999999663,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 798,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.8799999999999966,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 805,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.29999999999999655,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 812,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.7199999999999965,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 819,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.13999999999999652,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 826,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.5599999999999965,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 833,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.9799999999999964,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 840,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.3999999999999964,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 847,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.8199999999999964,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 854,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.23999999999999636,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 861,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.6599999999999964,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 868,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.0799999999999963,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 875,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.4999999999999963,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 882,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.9199999999999963,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 889,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.3399999999999962,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 896,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.7599999999999962,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 903,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.17999999999999616,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 910,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.5999999999999961,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 917,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.01999999999999609,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 924,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.43999999999999606,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 931,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.859999999999996,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 938,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.279999999999996,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 945,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.699999999999996,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 952,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.11999999999999594,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 959,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.5399999999999959,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 966,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.9599999999999959,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 973,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.37999999999999584,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 980,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.7999999999999958,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 987,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.21999999999999578,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 994,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.6399999999999958,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1001,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.05999999999999573,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1008,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.4799999999999957,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1015,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.8999999999999957,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1022,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.3199999999999956,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1029,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.7399999999999957,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1036,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.1599999999999956,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1043,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.5799999999999955,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1050,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.9999999999999956,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1057,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.4199999999999955,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1064,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.8399999999999954,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1071,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.25999999999999546,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1078,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.6799999999999954,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1085,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.09999999999999537,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1092,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.5199999999999954,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1099,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.9399999999999953,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1106,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.35999999999999527,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1113,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.7799999999999953,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1120,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.19999999999999524,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1127,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.6199999999999952,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1134,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.039999999999995164,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1141,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.45999999999999514,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1148,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.8799999999999951,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1155,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.29999999999999505,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1162,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.7199999999999951,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1169,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.13999999999999502,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1176,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.559999999999995,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1183,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.979999999999995,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1190,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.3999999999999949,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1197,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.8199999999999948,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1204,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.23999999999999486,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1211,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.6599999999999948,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1218,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.07999999999999481,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1225,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.4999999999999948,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1232,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.9199999999999947,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1239,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.3399999999999947,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1246,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.7599999999999947,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1253,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.17999999999999466,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1260,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.5999999999999946,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1267,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.0199999999999946,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1274,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.43999999999999456,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1281,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.8599999999999945,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1288,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.27999999999999453,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1295,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.6999999999999945,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1302,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.11999999999999444,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1309,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.5399999999999944,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1316,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.9599999999999944,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1323,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.37999999999999434,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1330,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.7999999999999944,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1337,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.2199999999999943,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1344,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.6399999999999942,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1351,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.05999999999999424,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1358,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.4799999999999942,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1365,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.8999999999999941,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1372,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.3199999999999942,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1379,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.7399999999999941,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1386,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.1599999999999941,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1393,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.5799999999999941,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1400,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.999999999999994,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1405,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.299999999999994,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 1410,
+     "ran": true,
+     "updates": 0,
+     "alpha": 0.599999999999994,
+     "fps": 133.67232767232767,
+     "panic": false,
+     "start": false
+    }
+   ],
+   "total_updates": 84,
+   "simulated_ms": 1400,
+   "discarded_ms": 0,
+   "panic_frames": 0
+  },
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 1e-12,
+  "origin": "fast 144 Hz-like frames then a 0 to many-update spike, fps average updates after 1 s; expected generated by executing pinned upstream MainLoop.js 3ddadf0ab902"
+ },
+ {
+  "input": {
+   "operation": "schedule",
+   "timestep_ms": 1,
+   "frame_timestamps_ms": [
+    0,
+    16,
+    400,
+    416,
+    432
+   ],
+   "discard_on_panic": true
+  },
+  "expected_subset": {
+   "frames": [
+    {
+     "t": 0,
+     "ran": true,
+     "updates": 0,
+     "alpha": 1,
+     "fps": 60,
+     "panic": false,
+     "start": true
+    },
+    {
+     "t": 16,
+     "ran": true,
+     "updates": 16,
+     "alpha": 0,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 400,
+     "ran": true,
+     "updates": 240,
+     "alpha": 144,
+     "fps": 60,
+     "panic": true,
+     "start": false
+    },
+    {
+     "t": 416,
+     "ran": true,
+     "updates": 16,
+     "alpha": 0,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 432,
+     "ran": true,
+     "updates": 16,
+     "alpha": 0,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    }
+   ],
+   "total_updates": 288,
+   "simulated_ms": 288,
+   "discarded_ms": 144,
+   "panic_frames": 1
+  },
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 1e-12,
+  "origin": "tab-switch stall forces panic (240-update cap) and frame delta is discarded; expected generated by executing pinned upstream MainLoop.js 3ddadf0ab902"
+ },
+ {
+  "input": {
+   "operation": "schedule",
+   "timestep_ms": 1,
+   "frame_timestamps_ms": [
+    0,
+    16,
+    400,
+    416,
+    432
+   ],
+   "discard_on_panic": false
+  },
+  "expected_subset": {
+   "frames": [
+    {
+     "t": 0,
+     "ran": true,
+     "updates": 0,
+     "alpha": 1,
+     "fps": 60,
+     "panic": false,
+     "start": true
+    },
+    {
+     "t": 16,
+     "ran": true,
+     "updates": 16,
+     "alpha": 0,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 400,
+     "ran": true,
+     "updates": 240,
+     "alpha": 144,
+     "fps": 60,
+     "panic": true,
+     "start": false
+    },
+    {
+     "t": 416,
+     "ran": true,
+     "updates": 160,
+     "alpha": 0,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 432,
+     "ran": true,
+     "updates": 16,
+     "alpha": 0,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    }
+   ],
+   "total_updates": 432,
+   "simulated_ms": 432,
+   "discarded_ms": 0,
+   "panic_frames": 1
+  },
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 1e-12,
+  "origin": "same stall without discarding: backlog carries over; expected generated by executing pinned upstream MainLoop.js 3ddadf0ab902"
+ },
+ {
+  "input": {
+   "operation": "schedule",
+   "max_fps": 30,
+   "frame_timestamps_ms": [
+    0.0,
+    8.333333333333334,
+    16.666666666666668,
+    25.0,
+    33.333333333333336,
+    41.66666666666667,
+    50.0,
+    58.333333333333336,
+    66.66666666666667,
+    75.0,
+    83.33333333333334,
+    91.66666666666667,
+    100.0,
+    108.33333333333334,
+    116.66666666666667,
+    125.00000000000001,
+    133.33333333333334,
+    141.66666666666669,
+    150.0,
+    158.33333333333334,
+    166.66666666666669,
+    175.0,
+    183.33333333333334,
+    191.66666666666669,
+    200.0,
+    208.33333333333334,
+    216.66666666666669,
+    225.00000000000003,
+    233.33333333333334,
+    241.66666666666669
+   ]
+  },
+  "expected_subset": {
+   "frames": [
+    {
+     "t": 0,
+     "ran": true,
+     "updates": 0,
+     "alpha": 1,
+     "fps": 60,
+     "panic": false,
+     "start": true
+    },
+    {
+     "t": 8.333333333333334,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 16.666666666666668,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 25,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 33.333333333333336,
+     "ran": true,
+     "updates": 2,
+     "alpha": 0,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 41.66666666666667,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 50,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 58.333333333333336,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 66.66666666666667,
+     "ran": true,
+     "updates": 2,
+     "alpha": 0,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 75,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 83.33333333333334,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 91.66666666666667,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 100,
+     "ran": true,
+     "updates": 1,
+     "alpha": 0.9999999999999996,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 108.33333333333334,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 116.66666666666667,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 125.00000000000001,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 133.33333333333334,
+     "ran": true,
+     "updates": 2,
+     "alpha": 0.9999999999999996,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 141.66666666666669,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 150,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 158.33333333333334,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 166.66666666666669,
+     "ran": true,
+     "updates": 2,
+     "alpha": 0.9999999999999996,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 175,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 183.33333333333334,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 191.66666666666669,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 200,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 208.33333333333334,
+     "ran": true,
+     "updates": 3,
+     "alpha": 0.4999999999999984,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 216.66666666666669,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 225.00000000000003,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 233.33333333333334,
+     "ran": false,
+     "updates": 0,
+     "alpha": null,
+     "fps": null,
+     "panic": false,
+     "start": false
+    },
+    {
+     "t": 241.66666666666669,
+     "ran": true,
+     "updates": 2,
+     "alpha": 0.49999999999999883,
+     "fps": 60,
+     "panic": false,
+     "start": false
+    }
+   ],
+   "total_updates": 14,
+   "simulated_ms": 233.33333333333334,
+   "discarded_ms": 0,
+   "panic_frames": 0
+  },
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 1e-12,
+  "origin": "120 Hz display capped at 30 fps via setMaxAllowedFPS; expected generated by executing pinned upstream MainLoop.js 3ddadf0ab902"
+ }
+]

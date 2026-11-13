@@ -1,0 +1,79 @@
+[
+ {
+  "input": {
+   "operation": "save",
+   "state": {
+    "seed": 2026,
+    "time_s": 12.5,
+    "player": {
+     "x": 19.5,
+     "y": 17.25,
+     "yaw": 0.0,
+     "v": 3.14159,
+     "health": 100
+    },
+    "money": 135,
+    "inventory": {
+     "snack": 1
+    },
+    "wanted": {
+     "stars": 1,
+     "heat": 55.0,
+     "seconds_unseen": 4
+    },
+    "missions": {
+     "A": "done",
+     "B": "active"
+    },
+    "active_mission": "B",
+    "cash_taken": [
+     0,
+     2
+    ]
+   }
+  },
+  "expected_subset": {
+   "canonical_state": "{\"active_mission\":\"B\",\"cash_taken\":[0,2],\"inventory\":{\"snack\":1},\"missions\":{\"A\":\"done\",\"B\":\"active\"},\"money\":135,\"player\":{\"health\":100,\"v\":3.142,\"x\":19.5,\"y\":17.25,\"yaw\":0},\"seed\":2026,\"time_s\":12.5,\"wanted\":{\"heat\":55,\"seconds_unseen\":4,\"stars\":1}}",
+   "bytes": 251
+  },
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 0.0,
+  "origin": "hand-written canonical form: keys sorted, no spaces, 3.14159 -> 3.142, 0.0 -> 0, 55.0 -> 55"
+ },
+ {
+  "input": {
+   "operation": "checksum",
+   "text": ""
+  },
+  "expected_subset": {
+   "checksum": "fnv1a32:811c9dc5"
+  },
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 0.0,
+  "origin": "FNV-1a 32 offset basis for the empty string (published FNV test vector)"
+ },
+ {
+  "input": {
+   "operation": "checksum",
+   "text": "a"
+  },
+  "expected_subset": {
+   "checksum": "fnv1a32:e40c292c"
+  },
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 0.0,
+  "origin": "FNV-1a 32 of 'a' (published FNV test vector)"
+ },
+ {
+  "input": {
+   "operation": "checksum",
+   "text": "foobar"
+  },
+  "expected_subset": {
+   "checksum": "fnv1a32:bf9cf968"
+  },
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 0.0,
+  "origin": "FNV-1a 32 of 'foobar' (published FNV test vector)"
+ }
+]

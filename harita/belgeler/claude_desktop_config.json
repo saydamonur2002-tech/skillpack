@@ -1,0 +1,110 @@
+{
+  "mcpServers": {
+    "mesafe-vincenty": {
+      "command": "/MUTLAK/YOL/map_packs_2026-11-12/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/map_packs_2026-11-12/M003/mcp/server.py"
+      ]
+    },
+    "mesafe-buyuk-daire": {
+      "command": "/MUTLAK/YOL/map_packs_2026-11-12/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/map_packs_2026-11-12/M004/mcp/server.py"
+      ]
+    },
+    "loksodrom": {
+      "command": "/MUTLAK/YOL/map_packs_2026-11-12/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/map_packs_2026-11-12/M005/mcp/server.py"
+      ]
+    },
+    "cizgi-sadelestir": {
+      "command": "/MUTLAK/YOL/map_packs_2026-11-12/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/map_packs_2026-11-12/M021/mcp/server.py"
+      ]
+    },
+    "polyline-kodla": {
+      "command": "/MUTLAK/YOL/map_packs_2026-11-12/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/map_packs_2026-11-12/M024/mcp/server.py"
+      ]
+    },
+    "geohash": {
+      "command": "/MUTLAK/YOL/map_packs_2026-11-12/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/map_packs_2026-11-12/M025/mcp/server.py"
+      ]
+    },
+    "poligon-icinde-mi": {
+      "command": "/MUTLAK/YOL/map_packs_2026-11-12/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/map_packs_2026-11-12/M026/mcp/server.py"
+      ]
+    },
+    "alan-hesapla": {
+      "command": "/MUTLAK/YOL/map_packs_2026-11-12/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/map_packs_2026-11-12/M027/mcp/server.py"
+      ]
+    },
+    "yon-ve-varis-noktasi": {
+      "command": "/MUTLAK/YOL/map_packs_2026-11-12/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/map_packs_2026-11-12/M028/mcp/server.py"
+      ]
+    },
+    "harita-karosu": {
+      "command": "/MUTLAK/YOL/map_packs_2026-11-12/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/map_packs_2026-11-12/M029/mcp/server.py"
+      ]
+    },
+    "rota": {
+      "command": "/MUTLAK/YOL/map_packs_2026-11-12/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/map_packs_2026-11-12/M030/mcp/server.py"
+      ],
+      "env": {
+        "SKILLPACK_MAP_DATA": "/MUTLAK/YOL/map_packs_2026-11-12/map_data"
+      }
+    },
+    "sure-matrisi-izokron": {
+      "command": "/MUTLAK/YOL/map_packs_2026-11-12/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/map_packs_2026-11-12/M031/mcp/server.py"
+      ],
+      "env": {
+        "SKILLPACK_MAP_DATA": "/MUTLAK/YOL/map_packs_2026-11-12/map_data"
+      }
+    },
+    "yer-ara": {
+      "command": "/MUTLAK/YOL/map_packs_2026-11-12/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/map_packs_2026-11-12/M032/mcp/server.py"
+      ],
+      "env": {
+        "SKILLPACK_MAP_DATA": "/MUTLAK/YOL/map_packs_2026-11-12/map_data"
+      }
+    },
+    "yakindakiler": {
+      "command": "/MUTLAK/YOL/map_packs_2026-11-12/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/map_packs_2026-11-12/M033/mcp/server.py"
+      ],
+      "env": {
+        "SKILLPACK_MAP_DATA": "/MUTLAK/YOL/map_packs_2026-11-12/map_data"
+      }
+    },
+    "harita-ciz": {
+      "command": "/MUTLAK/YOL/map_packs_2026-11-12/.venv/bin/python",
+      "args": [
+        "/MUTLAK/YOL/map_packs_2026-11-12/M034/mcp/server.py"
+      ],
+      "env": {
+        "SKILLPACK_MAP_DATA": "/MUTLAK/YOL/map_packs_2026-11-12/map_data",
+        "SKILLPACK_MAP_OUTPUT": "/MUTLAK/YOL/harita_cikti"
+      }
+    }
+  }
+}

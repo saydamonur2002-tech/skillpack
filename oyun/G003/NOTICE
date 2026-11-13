@@ -1,0 +1,11 @@
+Skillpack G003 (arac-fizigi) — 2D vehicle kinematics (kinematic bicycle model: accelerate, brake, steer)
+
+Primary upstream (State.update() kinematic bicycle model and angle_mod() wrap): https://github.com/AtsushiSakai/PythonRobotics
+Pinned: ef64608ceb0012f2a0b3d532fddc80243e807cfa (master@2026-11-10)
+License: MIT (full text: licenses/PythonRobotics.LICENSE)
+Original copyright notices (verbatim):
+Copyright (c) 2016 - now Atsushi Sakai and other contributors:
+
+Full upstream license texts are kept byte-for-byte under licenses/ and upstream/. No project-owner identity or contact data is recorded.
+
+Skillpack contributors. AI-generated standalone adaptation and teaching material; no upstream endorsement or independent certification is implied.

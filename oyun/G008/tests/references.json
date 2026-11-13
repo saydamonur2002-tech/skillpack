@@ -1,0 +1,214 @@
+[
+ {
+  "input": {
+   "operation": "simulate",
+   "missions": [
+    {
+     "id": "A",
+     "title": "Meet the contact",
+     "type": "goto",
+     "target": [
+      5,
+      5
+     ],
+     "reward": 100
+    },
+    {
+     "id": "B",
+     "title": "Deliver the package",
+     "type": "deliver",
+     "pickup": [
+      1,
+      1
+     ],
+     "target": [
+      8,
+      1
+     ],
+     "reward": 250,
+     "requires": [
+      "A"
+     ]
+    },
+    {
+     "id": "C",
+     "title": "Lose the police",
+     "type": "escape",
+     "reward": 300,
+     "requires": [
+      "B"
+     ]
+    }
+   ],
+   "events": [
+    {
+     "type": "position",
+     "x": 5,
+     "y": 4.5
+    },
+    {
+     "type": "position",
+     "x": 1.5,
+     "y": 2
+    },
+    {
+     "type": "tick",
+     "dt": 10
+    },
+    {
+     "type": "position",
+     "x": 8.5,
+     "y": 1.5
+    },
+    {
+     "type": "position",
+     "x": 9,
+     "y": 3,
+     "stars": 2
+    },
+    {
+     "type": "position",
+     "x": 12,
+     "y": 3,
+     "stars": 0
+    }
+   ]
+  },
+  "expected_subset": {
+   "statuses": {
+    "A": "done",
+    "B": "done",
+    "C": "done"
+   },
+   "money_earned": 650,
+   "all_done": true,
+   "active": null,
+   "log": [
+    {
+     "mission": "A",
+     "status": "active"
+    },
+    {
+     "mission": "A",
+     "status": "done",
+     "reward": 100
+    },
+    {
+     "mission": "B",
+     "status": "active"
+    },
+    {
+     "mission": "B",
+     "status": "picked_up"
+    },
+    {
+     "mission": "B",
+     "status": "done",
+     "reward": 250
+    },
+    {
+     "mission": "C",
+     "status": "active"
+    },
+    {
+     "mission": "C",
+     "status": "done",
+     "reward": 300
+    }
+   ]
+  },
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 0.0,
+  "origin": "hand-derived: (5,4.5) is 1.118 from tile centre (5.5,5.5) <= 1.5; pickup centre (1.5,1.5) 0.5 away; target centre (8.5,1.5) reached; stars 2 then 0 completes escape; 100+250+300=650"
+ },
+ {
+  "input": {
+   "operation": "validate",
+   "missions": [
+    {
+     "id": "A",
+     "type": "goto",
+     "target": [
+      1,
+      1
+     ],
+     "requires": [
+      "B"
+     ]
+    },
+    {
+     "id": "B",
+     "type": "goto",
+     "target": [
+      2,
+      2
+     ],
+     "requires": [
+      "A"
+     ]
+    },
+    {
+     "id": "C",
+     "type": "deliver",
+     "target": [
+      3,
+      3
+     ]
+    }
+   ]
+  },
+  "expected_subset": {
+   "valid": false,
+   "issues": [
+    "C: deliver needs pickup",
+    "dependency cycle among: A, B"
+   ],
+   "order": [
+    "C"
+   ]
+  },
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 0.0,
+  "origin": "hand-derived: A and B require each other; C lacks a pickup"
+ },
+ {
+  "input": {
+   "operation": "simulate",
+   "missions": [
+    {
+     "id": "T",
+     "type": "goto",
+     "target": [
+      10,
+      10
+     ],
+     "time_limit_s": 5,
+     "reward": 50
+    }
+   ],
+   "events": [
+    {
+     "type": "tick",
+     "dt": 6
+    },
+    {
+     "type": "position",
+     "x": 10.5,
+     "y": 10.5
+    }
+   ]
+  },
+  "expected_subset": {
+   "statuses": {
+    "T": "done"
+   },
+   "failures": {
+    "T": 1
+   },
+   "money_earned": 50
+  },
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 0.0,
+  "origin": "hand-derived: 6 s > 5 s limit fails once and restarts; then the target is reached"
+ }
+]

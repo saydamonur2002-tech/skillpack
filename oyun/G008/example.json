@@ -1,0 +1,74 @@
+{
+  "operation": "simulate",
+  "missions": [
+    {
+      "id": "A",
+      "title": "Meet the contact",
+      "type": "goto",
+      "target": [
+        5,
+        5
+      ],
+      "reward": 100
+    },
+    {
+      "id": "B",
+      "title": "Deliver the package",
+      "type": "deliver",
+      "pickup": [
+        1,
+        1
+      ],
+      "target": [
+        8,
+        1
+      ],
+      "reward": 250,
+      "requires": [
+        "A"
+      ]
+    },
+    {
+      "id": "C",
+      "title": "Lose the police",
+      "type": "escape",
+      "reward": 300,
+      "requires": [
+        "B"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "type": "position",
+      "x": 5,
+      "y": 4.5
+    },
+    {
+      "type": "position",
+      "x": 1.5,
+      "y": 2
+    },
+    {
+      "type": "tick",
+      "dt": 10
+    },
+    {
+      "type": "position",
+      "x": 8.5,
+      "y": 1.5
+    },
+    {
+      "type": "position",
+      "x": 9,
+      "y": 3,
+      "stars": 2
+    },
+    {
+      "type": "position",
+      "x": 12,
+      "y": 3,
+      "stars": 0
+    }
+  ]
+}

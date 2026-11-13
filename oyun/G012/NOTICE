@@ -1,0 +1,14 @@
+Skillpack G012 (html-oyun-uret) — Self-contained HTML5 canvas game builder (top-down city driving game)
+
+Original work. Copyright (c) 2026 Skillpack contributors
+License: MIT (LICENSE)
+
+Embedded component (build/mainloop.min.js embedded in the HTML as the real-time loop (leading comment replaced by the full notice)): https://github.com/IceCreamYou/MainLoop.js @ 3ddadf0ab902da96af7077be40206ac27ba1b1d3
+License: MIT (licenses/MainLoop.js.LICENSE)
+Copyright (C) 2016 Isaac Sukin
+
+Embedded component (ZzFXMicro.min.js embedded in the HTML to play sound parameters): https://github.com/KilledByAPixel/ZzFX @ ac5a4727a44e5506a12f7340087e0b889cfd69dc
+License: MIT (licenses/ZzFX.LICENSE)
+Copyright (c) 2019 Frank Force
+
+Skillpack contributors. AI-generated standalone adaptation and teaching material; no upstream endorsement or independent certification is implied.

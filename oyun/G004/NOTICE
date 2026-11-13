@@ -1,0 +1,11 @@
+Skillpack G004 (carpisma-testi) — 2D collision detection and push-out vector (SAT.js: circles, boxes, convex polygons)
+
+Primary upstream (testCircleCircle, testPolygonCircle, testCirclePolygon, testPolygonPolygon, isSeparatingAxis, voronoiRegion, Polygon._recalc and Box.toPolygon): https://github.com/jriecken/sat-js
+Pinned: 20e612681d1f9eabc9ea34dc98c4d27f985ffec6 (0.9.0)
+License: MIT (full text: licenses/SAT.js.LICENSE)
+Original copyright notices (verbatim):
+Copyright (C) 2012 - 2015 by Jim Riecken
+
+Full upstream license texts are kept byte-for-byte under licenses/ and upstream/. No project-owner identity or contact data is recorded.
+
+Skillpack contributors. AI-generated standalone adaptation and teaching material; no upstream endorsement or independent certification is implied.

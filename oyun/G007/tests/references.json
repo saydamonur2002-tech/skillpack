@@ -1,0 +1,162 @@
+[
+ {
+  "input": {
+   "operation": "simulate",
+   "events": [
+    {
+     "type": "steal_car"
+    },
+    {
+     "type": "hit_pedestrian",
+     "witnessed": true
+    },
+    {
+     "type": "tick",
+     "dt": 5
+    },
+    {
+     "type": "tick",
+     "dt": 10
+    },
+    {
+     "type": "seen_by_police"
+    },
+    {
+     "type": "paint_shop"
+    },
+    {
+     "type": "tick",
+     "dt": 4
+    },
+    {
+     "type": "paint_shop"
+    }
+   ]
+  },
+  "expected_subset": {
+   "timeline": [
+    {
+     "stars": 0,
+     "heat": 15
+    },
+    {
+     "stars": 2,
+     "heat": 85,
+     "police_units": 2
+    },
+    {
+     "stars": 2,
+     "heat": 85,
+     "note": "no decay"
+    },
+    {
+     "stars": 1,
+     "heat": 55,
+     "note": "decay 3 s",
+     "police_units": 1
+    },
+    {
+     "stars": 1,
+     "seconds_unseen": 0
+    },
+    {
+     "stars": 1,
+     "note": "rejected: police are watching"
+    },
+    {
+     "stars": 1,
+     "heat": 55
+    },
+    {
+     "stars": 0,
+     "heat": 0,
+     "note": "cleared"
+    }
+   ]
+  },
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 0.0,
+  "origin": "hand-derived: 15 heat (0 stars); +35x2 witnessed = 85 (2 stars); unseen 5 s < 12 s cooldown; unseen 15 s -> 3 s of decay x10 = 55 -> 1 star; paint shop refused while seen, accepted after 4 s unseen"
+ },
+ {
+  "input": {
+   "operation": "simulate",
+   "state": {
+    "stars": 0,
+    "heat": 0
+   },
+   "events": [
+    {
+     "type": "hit_police",
+     "witnessed": true
+    },
+    {
+     "type": "hit_police",
+     "witnessed": true
+    },
+    {
+     "type": "hit_police",
+     "witnessed": true
+    },
+    {
+     "type": "busted"
+    }
+   ]
+  },
+  "expected_subset": {
+   "timeline": [
+    {
+     "stars": 3,
+     "heat": 120,
+     "police_units": 3
+    },
+    {
+     "stars": 4,
+     "heat": 240,
+     "police_units": 5,
+     "police_speed_factor": 1.15
+    },
+    {
+     "stars": 5,
+     "heat": 360,
+     "police_units": 7,
+     "police_speed_factor": 1.25
+    },
+    {
+     "stars": 0,
+     "heat": 0
+    }
+   ]
+  },
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 0.0,
+  "origin": "hand-derived: 60x2=120 meets 3 thresholds (3 stars); 240 meets 4 (20,60,120,200); 360 meets all 5; busted resets"
+ },
+ {
+  "input": {
+   "operation": "rules"
+  },
+  "expected_subset": {
+   "rules": {
+    "star_thresholds": [
+     20,
+     60,
+     120,
+     200,
+     320
+    ],
+    "police_units": [
+     0,
+     1,
+     2,
+     3,
+     5,
+     7
+    ]
+   }
+  },
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 0.0,
+  "origin": "default rule table as written in SKILL.md"
+ }
+]

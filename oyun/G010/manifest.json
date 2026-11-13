@@ -1,0 +1,371 @@
+{
+  "id": "G010",
+  "name": "Save and load game state (versioned JSON envelope with FNV-1a checksum)",
+  "description": "Saves the city game state (player car, money, inventory, wanted level, missions, picked-up cash) as a versioned envelope with a canonical JSON form (sorted keys, numbers rounded to 3 decimals) and an FNV-1a 32-bit checksum, and loads it back, refusing saves of another format or version and reporting damaged or edited saves. The browser game writes the same envelope to localStorage.",
+  "version": "1.0.0",
+  "date": "2026-11-12",
+  "tier": "game",
+  "family": "game-2d-city",
+  "category": "game persistence",
+  "license": "MIT",
+  "distribution": "public-ok",
+  "author": "Skillpack contributors",
+  "source_url": "local:original/G010",
+  "upstream_commit_or_version": "original-1.0.0",
+  "implementation_kind": "original-algorithm",
+  "status": "tested-awaiting-usta-approval",
+  "provenance": {
+    "upstream_repository": null,
+    "source_kind": "original",
+    "commit": "original-1.0.0",
+    "version": "1.0.0",
+    "license_spdx": "MIT",
+    "license_path": "LICENSE",
+    "license_sha256": "e5c37fd312001c3fa6540a36c04939b62f856dcd3d1b148b7e43fc8d65e8558a",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2026 Skillpack contributors"
+    ],
+    "license_check": "Original code written for this pack; MIT",
+    "evidence": [],
+    "primary_role": "original rule table and code",
+    "additional_licenses": [],
+    "mined_date": "2026-11-12",
+    "timezone": "Europe/Istanbul",
+    "reference_values": "FNV-1a cases are published test vectors (empty string, 'a', 'foobar'); the canonical form case was written by hand from the rules."
+  },
+  "region": {
+    "scope": "global",
+    "applies_to": "any locale; no country-specific rules",
+    "notes": "Game rules are illustrative defaults, not real-world rules."
+  },
+  "audit": {
+    "principle": "code decides, model explains, craftsman (usta) approves",
+    "code_decides": true,
+    "model_explains": true,
+    "usta_approval": {
+      "status": "pending",
+      "approved_by": null,
+      "role": "game programmer",
+      "what_to_check": "that every field the game needs to resume is in the state and that an old save is refused politely rather than crashing."
+    },
+    "external_audit": {
+      "status": "not-yet",
+      "notes": "Local tests only; no independent audit has been performed."
+    }
+  },
+  "inputs": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "operation"
+    ],
+    "$defs": {
+      "state": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "seed",
+          "time_s",
+          "player",
+          "money",
+          "inventory",
+          "wanted",
+          "missions"
+        ],
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "time_s": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10000000.0
+          },
+          "player": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "x",
+              "y",
+              "yaw",
+              "v",
+              "health"
+            ],
+            "properties": {
+              "x": {
+                "type": "number",
+                "minimum": -1000000.0,
+                "maximum": 1000000.0
+              },
+              "y": {
+                "type": "number",
+                "minimum": -1000000.0,
+                "maximum": 1000000.0
+              },
+              "yaw": {
+                "type": "number",
+                "minimum": -100,
+                "maximum": 100
+              },
+              "v": {
+                "type": "number",
+                "minimum": -500,
+                "maximum": 500
+              },
+              "health": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              }
+            }
+          },
+          "money": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "inventory": {
+            "type": "object",
+            "maxProperties": 32,
+            "propertyNames": {
+              "pattern": "^[a-z0-9_]{1,32}$"
+            },
+            "additionalProperties": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000
+            }
+          },
+          "wanted": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "stars",
+              "heat"
+            ],
+            "properties": {
+              "stars": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 5
+              },
+              "heat": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 10000
+              },
+              "seconds_unseen": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 10000000.0
+              }
+            }
+          },
+          "missions": {
+            "type": "object",
+            "maxProperties": 50,
+            "propertyNames": {
+              "pattern": "^[A-Za-z0-9_-]{1,32}$"
+            },
+            "additionalProperties": {
+              "enum": [
+                "locked",
+                "available",
+                "active",
+                "done",
+                "failed"
+              ]
+            }
+          },
+          "active_mission": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 32
+          },
+          "cash_taken": {
+            "type": "array",
+            "maxItems": 50,
+            "items": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 49
+            }
+          }
+        }
+      }
+    },
+    "properties": {
+      "operation": {
+        "enum": [
+          "save",
+          "load",
+          "checksum"
+        ]
+      },
+      "state": {
+        "$ref": "#/$defs/state"
+      },
+      "envelope": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "format",
+          "version",
+          "checksum",
+          "state"
+        ],
+        "properties": {
+          "format": {
+            "type": "string",
+            "maxLength": 40
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "checksum": {
+            "type": "string",
+            "maxLength": 20
+          },
+          "state": {
+            "$ref": "#/$defs/state"
+          }
+        }
+      },
+      "text": {
+        "type": "string",
+        "maxLength": 60000
+      }
+    },
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "operation": {
+              "const": "save"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "state"
+          ]
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "operation": {
+              "const": "load"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "envelope"
+          ]
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "operation": {
+              "const": "checksum"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "text"
+          ]
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "Raw CLI byte limit and POSIX alarm; strict schema, finite values and nesting checks; MCP subprocess killed/reaped after the timeout. One active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "runtime": "Python standard library plus jsonschema (schema check) only"
+  },
+  "data": {
+    "reads": "nothing",
+    "writes": "nothing",
+    "network": "none",
+    "telemetry": "none",
+    "logging": "none; input contents are never logged or echoed in errors"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "server_name": "kayit-yukle",
+    "tool_name": "skillpack_g010",
+    "read_only": true,
+    "instructions": "One local deterministic tool. Explain its result and limits; the code decides, a human (usta) approves consequential use. No network access."
+  },
+  "limitations": "The checksum detects accidental damage and casual edits, not tampering by a determined player (FNV-1a is not cryptographic). Only format version 1 exists; there is no migration yet. Numbers are rounded to 3 decimals on save.",
+  "port_notes": "Original format by Skillpack contributors. FNV-1a 32 (Fowler-Noll-Vo; offset basis 2166136261, prime 16777619) over the UTF-8 bytes of the canonical JSON. Rounding uses floor(x*1000+0.5)/1000 in both Python and JavaScript, and integral values are written as integers, so Python json and JavaScript JSON.stringify produce the same text.",
+  "flow_role": "Step 10 (kayıt biçimi): save the starting state of the game to fix the save format; the end-to-end test saves from the browser runtime and loads it with this tool to prove both sides agree."
+}

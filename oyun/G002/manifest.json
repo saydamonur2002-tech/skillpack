@@ -1,0 +1,209 @@
+{
+  "id": "G002",
+  "name": "Top-down tile city generator (roads, sidewalks, buildings, parks, points of interest)",
+  "description": "Generates a repeatable 2D tile city from a seed: a grid of two-lane roads with edge ring roads, city blocks with a sidewalk ring and either a building or a park inside, plus a player spawn, police station, paint shop, mission landmarks, cash pickups, suggested pedestrian and traffic route requests, walk/drive cost tables and collision-check pairs for the spawn. Same seed, same city.",
+  "version": "1.0.0",
+  "date": "2026-11-12",
+  "tier": "game",
+  "family": "game-2d-city",
+  "category": "game world",
+  "license": "MIT",
+  "distribution": "public-ok",
+  "author": "Skillpack contributors",
+  "source_url": "local:original/G002",
+  "upstream_commit_or_version": "original-1.0.0",
+  "implementation_kind": "original-algorithm",
+  "status": "tested-awaiting-usta-approval",
+  "provenance": {
+    "upstream_repository": null,
+    "source_kind": "original",
+    "commit": "original-1.0.0",
+    "version": "1.0.0",
+    "license_spdx": "MIT",
+    "license_path": "LICENSE",
+    "license_sha256": "e5c37fd312001c3fa6540a36c04939b62f856dcd3d1b148b7e43fc8d65e8558a",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2026 Skillpack contributors"
+    ],
+    "license_check": "Original code written for this pack; MIT",
+    "evidence": [],
+    "primary_role": "original rule table and code",
+    "additional_licenses": [],
+    "mined_date": "2026-11-12",
+    "timezone": "Europe/Istanbul",
+    "reference_values": "tests/references.json holds frozen golden outputs of this original generator (regression only, not an external truth). Independent checks: the xorshift32 first output for seed 1 is 270369 (published sequence), and invariant tests check edge roads, block rings, connectivity, point placement and determinism."
+  },
+  "region": {
+    "scope": "global",
+    "applies_to": "any locale; no country-specific rules",
+    "notes": "Game rules are illustrative defaults, not real-world rules."
+  },
+  "audit": {
+    "principle": "code decides, model explains, craftsman (usta) approves",
+    "code_decides": true,
+    "model_explains": true,
+    "usta_approval": {
+      "status": "pending",
+      "approved_by": null,
+      "role": "level designer",
+      "what_to_check": "that the city size, block size and park share give a fun drive (not too empty, not a maze) and that landmarks are spread out."
+    },
+    "external_audit": {
+      "status": "not-yet",
+      "notes": "Local tests only; no independent audit has been performed."
+    }
+  },
+  "inputs": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "operation",
+      "seed",
+      "width",
+      "height"
+    ],
+    "properties": {
+      "operation": {
+        "enum": [
+          "generate"
+        ]
+      },
+      "seed": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 4294967295
+      },
+      "width": {
+        "type": "integer",
+        "minimum": 12,
+        "maximum": 96
+      },
+      "height": {
+        "type": "integer",
+        "minimum": 12,
+        "maximum": 96
+      },
+      "road_width": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 3
+      },
+      "block_min": {
+        "type": "integer",
+        "minimum": 3,
+        "maximum": 12
+      },
+      "block_max": {
+        "type": "integer",
+        "minimum": 3,
+        "maximum": 16
+      },
+      "park_ratio": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      },
+      "landmarks": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 12
+      },
+      "cash_pickups": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 20
+      },
+      "ped_routes": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 32
+      },
+      "traffic_routes": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 32
+      }
+    }
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "Raw CLI byte limit and POSIX alarm; strict schema, finite values and nesting checks; MCP subprocess killed/reaped after the timeout. One active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "runtime": "Python standard library plus jsonschema (schema check) only"
+  },
+  "data": {
+    "reads": "nothing",
+    "writes": "nothing",
+    "network": "none",
+    "telemetry": "none",
+    "logging": "none; input contents are never logged or echoed in errors"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "server_name": "sehir-haritasi",
+    "tool_name": "skillpack_g002",
+    "read_only": true,
+    "instructions": "One local deterministic tool. Explain its result and limits; the code decides, a human (usta) approves consequential use. No network access."
+  },
+  "limitations": "Manhattan grid only (no curved roads, highways, rivers or bridges). The last block on each axis absorbs leftover space and can exceed block_max. One building per block. Points are placed by the seeded generator and are not guaranteed to be interesting; the designer may change the seed. Modulo bias in randint is accepted (game use only).",
+  "port_notes": "Original algorithm by Skillpack contributors. Random numbers come from xorshift32 (G. Marsaglia, 'Xorshift RNGs', J. Stat. Software 8(14), 2003; shift triple 13,17,5) seeded with the given seed (0 replaced by 0x9E3779B9). Axis split: edge road, then blocks of random width, final road on the far edge. Road connectivity is verified by flood fill and reported.",
+  "flow_role": "Step 1 (harita): the first call of the flow; every later step reads its tiles and points."
+}

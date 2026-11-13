@@ -1,0 +1,909 @@
+{
+ "format": "skillpack-flow-1",
+ "name": "oyun-kur",
+ "title_tr": "GTA benzeri 2D şehir oyunu kurulum akışı",
+ "principle": "Kod karar verir, model açıklar, usta onaylar. Model oyunu bu akışla BİR KEZ kurar; oyun index.html içinde kendi başına döner (gerçek zamanlı döngü tarayıcıda, modelde değil).",
+ "skill_independent": "Bu dosya hangi becerinin hangi sırayla, hangi girdiyle çağrılacağını ve her adımdan sonra neyin kontrol edileceğini tanımlar. Adımlar beceri kimliğiyle (G001-G012) ve sözleşmeyle (girdi/çıktı alanları) bağlanır; aynı sözleşmeyi sağlayan başka bir beceri takılabilir.",
+ "resolvers": {
+  "$var": "variables içinden değer",
+  "$ref": "önceki adımın çıktısından nokta yolu (adim.result.alan.0)",
+  "$tile_center_x / $tile_center_y": "karo [x,y] -> merkez x+0.5 / y+0.5",
+  "$pluck": "{from, field}: listedeki ya da sözlükteki her öğeden bir alan",
+  "$concat": "listeleri uç uca ekle",
+  "$range": "{start, step, count}: sayı dizisi"
+ },
+ "variables": {
+  "title": "Mini Şehir",
+  "seed": 2026,
+  "width": 40,
+  "height": 30,
+  "timestep_ms": 16.6667,
+  "dt_s": 0.0166667,
+  "start_money": 200,
+  "cash_amount": 50,
+  "vehicle": {
+   "wheelbase_m": 0.9,
+   "max_steer_deg": 35,
+   "accel": 7.0,
+   "brake": 12.0,
+   "reverse_accel": 4.0,
+   "drag": 0.25,
+   "max_v": 11.0,
+   "min_v": -4.0,
+   "offroad_factor": 0.55,
+   "radius": 0.38
+  },
+  "npc": {
+   "ped_max_speed": 1.1,
+   "ped_max_force": 6.0,
+   "traffic_max_speed": 3.5,
+   "traffic_max_force": 8.0,
+   "police_max_speed": 10.0,
+   "police_max_force": 30.0,
+   "flee_panic_distance": 3.0,
+   "arrive_deceleration": 2.0,
+   "prediction_factor": 1.0
+  }
+ },
+ "steps": [
+  {
+   "id": "harita",
+   "skill": "G002",
+   "purpose_tr": "Tohumdan şehir haritası üret (yollar, kaldırımlar, binalar, parklar, önemli noktalar).",
+   "input": {
+    "operation": "generate",
+    "seed": {
+     "$var": "seed"
+    },
+    "width": {
+     "$var": "width"
+    },
+    "height": {
+     "$var": "height"
+    },
+    "landmarks": 6,
+    "cash_pickups": 5,
+    "ped_routes": 8,
+    "traffic_routes": 5
+   },
+   "checks": [
+    {
+     "path": "result.road_connected",
+     "op": "==",
+     "value": true,
+     "why_tr": "Bütün yollar birbirine bağlı olmalı."
+    },
+    {
+     "path": "result.counts.B",
+     "op": ">=",
+     "value": 50,
+     "why_tr": "Şehirde yeterince bina olmalı."
+    }
+   ],
+   "stop_and_ask_tr": "Harita bağlı değil ya da çok boşsa: kullanıcıya başka bir tohum (seed) ya da boyut öner, ustaya sor."
+  },
+  {
+   "id": "yaya_rotalari",
+   "skill": "G005",
+   "purpose_tr": "Yayalar için kaldırım/park rotalarını A* ile bir kez hesapla.",
+   "input": {
+    "operation": "find_path",
+    "grid": {
+     "$ref": "harita.result.tiles"
+    },
+    "costs": {
+     "$ref": "harita.result.walk_costs"
+    },
+    "diagonal": "never",
+    "queries": {
+     "$ref": "harita.result.ped_route_pairs"
+    }
+   },
+   "checks": [
+    {
+     "path": "result.found_all",
+     "op": "==",
+     "value": true,
+     "why_tr": "Her yaya rotası bulunmalı."
+    }
+   ],
+   "stop_and_ask_tr": "Rota bulunamadıysa haritada kapalı alan vardır: tohumu değiştir."
+  },
+  {
+   "id": "trafik_rotalari",
+   "skill": "G005",
+   "purpose_tr": "Trafik araçları için yalnız yol karolarında rota hesapla.",
+   "input": {
+    "operation": "find_path",
+    "grid": {
+     "$ref": "harita.result.tiles"
+    },
+    "costs": {
+     "$ref": "harita.result.drive_costs"
+    },
+    "diagonal": "never",
+    "queries": {
+     "$ref": "harita.result.traffic_route_pairs"
+    }
+   },
+   "checks": [
+    {
+     "path": "result.found_all",
+     "op": "==",
+     "value": true,
+     "why_tr": "Her trafik rotası yol üzerinde olmalı."
+    }
+   ],
+   "stop_and_ask_tr": "Yol ağı kopuksa dur ve haritayı yeniden üret."
+  },
+  {
+   "id": "arac_ayari",
+   "skill": "G003",
+   "purpose_tr": "Oyuncu arabasını test sürüşüyle doğrula: 3 sn gaz, sonra tam direksiyon.",
+   "input": {
+    "operation": "simulate",
+    "state": {
+     "x": 0,
+     "y": 0,
+     "yaw": 0,
+     "v": 0
+    },
+    "params": {
+     "wheelbase_m": {
+      "$var": "vehicle.wheelbase_m"
+     },
+     "max_steer_deg": {
+      "$var": "vehicle.max_steer_deg"
+     },
+     "dt_s": {
+      "$var": "dt_s"
+     }
+    },
+    "controls": [
+     {
+      "acceleration": {
+       "$var": "vehicle.accel"
+      },
+      "steer_deg": 0,
+      "repeat": 180
+     },
+     {
+      "acceleration": 0,
+      "steer_deg": {
+       "$var": "vehicle.max_steer_deg"
+      },
+      "repeat": 60
+     }
+    ],
+    "speed_limits": {
+     "min_v": {
+      "$var": "vehicle.min_v"
+     },
+     "max_v": {
+      "$var": "vehicle.max_v"
+     }
+    },
+    "record_every": 60
+   },
+   "checks": [
+    {
+     "path": "result.final.v",
+     "op": "==",
+     "value": {
+      "$var": "vehicle.max_v"
+     },
+     "why_tr": "Araba 3 saniyede azami hıza ulaşmalı."
+    },
+    {
+     "path": "result.max_abs_speed",
+     "op": "<=",
+     "value": {
+      "$var": "vehicle.max_v"
+     },
+     "why_tr": "Hız sınırı aşılmamalı."
+    }
+   ],
+   "stop_and_ask_tr": "Araba azami hıza ulaşmıyorsa ivmeyi ya da hız sınırını ustayla birlikte ayarla."
+  },
+  {
+   "id": "polis_yakalar",
+   "skill": "G006",
+   "purpose_tr": "1 yıldızlı polis (hız x0.85) yavaş giden oyuncuyu yakalayabilmeli.",
+   "input": {
+    "operation": "simulate",
+    "behavior": "pursuit",
+    "vehicle": {
+     "x": 0,
+     "y": 0,
+     "max_speed": 8.5,
+     "max_force": {
+      "$var": "npc.police_max_force"
+     }
+    },
+    "evader": {
+     "x": 12,
+     "y": 6,
+     "vx": 5,
+     "vy": 0
+    },
+    "dt_s": {
+     "$var": "dt_s"
+    },
+    "steps": 600,
+    "record_every": 120,
+    "catch_radius": 1
+   },
+   "checks": [
+    {
+     "path": "result.caught",
+     "op": "==",
+     "value": true,
+     "why_tr": "Polis yavaş oyuncuyu yakalayabilmeli."
+    }
+   ],
+   "stop_and_ask_tr": "Polis hiç yakalayamıyorsa polis hızını artır."
+  },
+  {
+   "id": "polis_kacis",
+   "skill": "G006",
+   "purpose_tr": "Tam hızla giden oyuncu 1 yıldızlı polisten kaçabilmeli.",
+   "input": {
+    "operation": "simulate",
+    "behavior": "pursuit",
+    "vehicle": {
+     "x": 0,
+     "y": 0,
+     "max_speed": 8.5,
+     "max_force": {
+      "$var": "npc.police_max_force"
+     }
+    },
+    "evader": {
+     "x": 12,
+     "y": 6,
+     "vx": {
+      "$var": "vehicle.max_v"
+     },
+     "vy": 0
+    },
+    "dt_s": {
+     "$var": "dt_s"
+    },
+    "steps": 600,
+    "record_every": 120,
+    "catch_radius": 1
+   },
+   "checks": [
+    {
+     "path": "result.caught",
+     "op": "==",
+     "value": false,
+     "why_tr": "Kaçış mümkün olmalı."
+    }
+   ],
+   "stop_and_ask_tr": "Kaçmak imkânsızsa polis hızını düşür ya da araba hızını artır."
+  },
+  {
+   "id": "yaya_durus",
+   "skill": "G006",
+   "purpose_tr": "Yaya bir ara noktaya varınca yavaşlayıp durmalı (arrive).",
+   "input": {
+    "operation": "simulate",
+    "behavior": "arrive",
+    "vehicle": {
+     "x": 0,
+     "y": 0,
+     "max_speed": {
+      "$var": "npc.ped_max_speed"
+     },
+     "max_force": {
+      "$var": "npc.ped_max_force"
+     }
+    },
+    "target": {
+     "x": 3,
+     "y": 2
+    },
+    "params": {
+     "deceleration": {
+      "$var": "npc.arrive_deceleration"
+     }
+    },
+    "dt_s": {
+     "$var": "dt_s"
+    },
+    "steps": 900,
+    "record_every": 300
+   },
+   "checks": [
+    {
+     "path": "result.final.speed",
+     "op": "<",
+     "value": 0.05,
+     "why_tr": "Yaya hedefte durmalı."
+    }
+   ],
+   "stop_and_ask_tr": "Yaya duramıyorsa yavaşlama katsayısını ayarla."
+  },
+  {
+   "id": "aranma",
+   "skill": "G007",
+   "purpose_tr": "Aranma kurallarını sabitle ve örnek bir kovalamaca oynat.",
+   "input": {
+    "operation": "simulate",
+    "events": [
+     {
+      "type": "hit_pedestrian",
+      "witnessed": true
+     },
+     {
+      "type": "tick",
+      "dt": 5
+     },
+     {
+      "type": "tick",
+      "dt": 20
+     },
+     {
+      "type": "paint_shop"
+     }
+    ]
+   },
+   "checks": [
+    {
+     "path": "result.timeline.0.stars",
+     "op": ">=",
+     "value": 1,
+     "why_tr": "Görülen bir suç yıldız vermeli."
+    },
+    {
+     "path": "result.final.stars",
+     "op": "==",
+     "value": 0,
+     "why_tr": "Boyacı yıldızları silebilmeli."
+    }
+   ],
+   "stop_and_ask_tr": "Yıldızlar artmıyor ya da hiç düşmüyorsa kural tablosunu ustaya göster."
+  },
+  {
+   "id": "gorev_dogrula",
+   "skill": "G008",
+   "purpose_tr": "Görev zincirini harita noktalarından kur ve doğrula.",
+   "input": {
+    "operation": "validate",
+    "missions": [
+     {
+      "id": "M1",
+      "title": "Muhbirle buluş",
+      "briefing": "Sarı halkaya git.",
+      "type": "goto",
+      "target": {
+       "$ref": "harita.result.mission_targets.0"
+      },
+      "reward": 150
+     },
+     {
+      "id": "M2",
+      "title": "Paketi teslim et",
+      "briefing": "Paketi al ve 2 dakika içinde teslim et.",
+      "type": "deliver",
+      "pickup": {
+       "$ref": "harita.result.mission_targets.1"
+      },
+      "target": {
+       "$ref": "harita.result.mission_targets.2"
+      },
+      "time_limit_s": 120,
+      "reward": 300,
+      "requires": [
+       "M1"
+      ]
+     },
+     {
+      "id": "M3",
+      "title": "Sokaktaki parayı topla",
+      "briefing": "Yoldaki 2 yeşil parayı topla.",
+      "type": "collect",
+      "count": 2,
+      "reward": 200,
+      "requires": [
+       "M2"
+      ]
+     },
+     {
+      "id": "M4",
+      "title": "Polisten kurtul",
+      "briefing": "Aranma yıldızı al, sonra polisi atlat (ya da boyacıya git).",
+      "type": "escape",
+      "reward": 400,
+      "requires": [
+       "M3"
+      ]
+     },
+     {
+      "id": "M5",
+      "title": "Son iş",
+      "briefing": "Son buluşma noktasına git.",
+      "type": "goto",
+      "target": {
+       "$ref": "harita.result.mission_targets.3"
+      },
+      "reward": 600,
+      "requires": [
+       "M4"
+      ]
+     }
+    ]
+   },
+   "checks": [
+    {
+     "path": "result.valid",
+     "op": "==",
+     "value": true,
+     "why_tr": "Görev zinciri geçerli olmalı."
+    },
+    {
+     "path": "result.order",
+     "op": "len==",
+     "value": 5
+    }
+   ],
+   "stop_and_ask_tr": "Zincir geçersizse sorunları (issues) kullanıcıya göster ve görevleri düzelt."
+  },
+  {
+   "id": "gorev_erisim",
+   "skill": "G005",
+   "purpose_tr": "Doğuş noktasından her görev hedefine arabayla gidilebildiğini kanıtla.",
+   "input": {
+    "operation": "find_path",
+    "grid": {
+     "$ref": "harita.result.tiles"
+    },
+    "costs": {
+     "$ref": "harita.result.drive_costs"
+    },
+    "queries": [
+     {
+      "start": {
+       "$ref": "harita.result.points.spawn.tile"
+      },
+      "end": {
+       "$ref": "harita.result.mission_targets.0"
+      }
+     },
+     {
+      "start": {
+       "$ref": "harita.result.points.spawn.tile"
+      },
+      "end": {
+       "$ref": "harita.result.mission_targets.1"
+      }
+     },
+     {
+      "start": {
+       "$ref": "harita.result.points.spawn.tile"
+      },
+      "end": {
+       "$ref": "harita.result.mission_targets.2"
+      }
+     },
+     {
+      "start": {
+       "$ref": "harita.result.points.spawn.tile"
+      },
+      "end": {
+       "$ref": "harita.result.mission_targets.3"
+      }
+     }
+    ]
+   },
+   "checks": [
+    {
+     "path": "result.found_all",
+     "op": "==",
+     "value": true,
+     "why_tr": "Her hedefe yol olmalı."
+    }
+   ],
+   "stop_and_ask_tr": "Ulaşılamayan hedef varsa o görevin hedefini değiştir."
+  },
+  {
+   "id": "gorev_prova",
+   "skill": "G008",
+   "purpose_tr": "Görevleri senaryolu bir oyunla baştan sona oynat.",
+   "input": {
+    "operation": "simulate",
+    "missions": {
+     "$ref": "gorev_dogrula.result.missions"
+    },
+    "events": [
+     {
+      "type": "position",
+      "x": {
+       "$tile_center_x": "harita.result.mission_targets.0"
+      },
+      "y": {
+       "$tile_center_y": "harita.result.mission_targets.0"
+      }
+     },
+     {
+      "type": "position",
+      "x": {
+       "$tile_center_x": "harita.result.mission_targets.1"
+      },
+      "y": {
+       "$tile_center_y": "harita.result.mission_targets.1"
+      }
+     },
+     {
+      "type": "tick",
+      "dt": 30
+     },
+     {
+      "type": "position",
+      "x": {
+       "$tile_center_x": "harita.result.mission_targets.2"
+      },
+      "y": {
+       "$tile_center_y": "harita.result.mission_targets.2"
+      }
+     },
+     {
+      "type": "collect"
+     },
+     {
+      "type": "collect"
+     },
+     {
+      "type": "position",
+      "x": 1,
+      "y": 1,
+      "stars": 2
+     },
+     {
+      "type": "position",
+      "x": 1,
+      "y": 1,
+      "stars": 0
+     },
+     {
+      "type": "position",
+      "x": {
+       "$tile_center_x": "harita.result.mission_targets.3"
+      },
+      "y": {
+       "$tile_center_y": "harita.result.mission_targets.3"
+      }
+     }
+    ]
+   },
+   "checks": [
+    {
+     "path": "result.all_done",
+     "op": "==",
+     "value": true,
+     "why_tr": "Bütün görevler bitirilebilmeli."
+    }
+   ],
+   "stop_and_ask_tr": "Bir görev bitmiyorsa logu oku ve görevi düzelt."
+  },
+  {
+   "id": "katalog",
+   "skill": "G009",
+   "purpose_tr": "Dükkân kataloğunu al (boya, tamir seti).",
+   "input": {
+    "operation": "catalog"
+   },
+   "checks": [
+    {
+     "path": "result.catalog.paint_job.price",
+     "op": ">",
+     "value": 0
+    }
+   ],
+   "stop_and_ask_tr": "Katalog boşsa dur."
+  },
+  {
+   "id": "ekonomi_prova",
+   "skill": "G009",
+   "purpose_tr": "Görev ödülleriyle bir boya parası birikiyor mu kontrol et.",
+   "input": {
+    "operation": "apply",
+    "wallet": {
+     "money": {
+      "$var": "start_money"
+     }
+    },
+    "transactions": {
+     "$concat": [
+      {
+       "$ref": "gorev_prova.result.transactions"
+      },
+      [
+       {
+        "type": "buy",
+        "item": "paint_job"
+       },
+       {
+        "type": "buy",
+        "item": "repair_kit"
+       }
+      ]
+     ]
+    }
+   },
+   "checks": [
+    {
+     "path": "result.rejected",
+     "op": "==",
+     "value": 0,
+     "why_tr": "Görev ödülleri boya ve tamir için yetmeli."
+    }
+   ],
+   "stop_and_ask_tr": "Para yetmiyorsa ödülleri ya da fiyatları ustayla ayarla."
+  },
+  {
+   "id": "sesler",
+   "skill": "G011",
+   "purpose_tr": "Olay sesleri bankasını üret ve patlama (clipping) olmadığını kontrol et.",
+   "input": {
+    "operation": "bank",
+    "names": [
+     "horn",
+     "crash",
+     "siren",
+     "pickup",
+     "cash",
+     "mission_complete",
+     "wasted"
+    ]
+   },
+   "checks": [
+    {
+     "path": "result.any_clipping",
+     "op": "==",
+     "value": false
+    },
+    {
+     "path": "result.longest_s",
+     "op": "<=",
+     "value": 2.0
+    }
+   ],
+   "stop_and_ask_tr": "Ses bozuksa ses parametresini değiştir."
+  },
+  {
+   "id": "dongu",
+   "skill": "G001",
+   "purpose_tr": "60 Hz ekranda her karede 1 fizik adımı çalıştığını kanıtla.",
+   "input": {
+    "operation": "schedule",
+    "timestep_ms": {
+     "$var": "timestep_ms"
+    },
+    "frame_timestamps_ms": {
+     "$range": {
+      "start": 0,
+      "step": 16.6667,
+      "count": 121
+     }
+    },
+    "include_frames": false
+   },
+   "checks": [
+    {
+     "path": "result.panic_frames",
+     "op": "==",
+     "value": 0
+    },
+    {
+     "path": "result.max_updates_in_one_frame",
+     "op": "<=",
+     "value": 2
+    }
+   ],
+   "stop_and_ask_tr": "Panik varsa fizik adımını büyüt."
+  },
+  {
+   "id": "dongu_takilma",
+   "skill": "G001",
+   "purpose_tr": "Sekme değişimi gibi uzun bir takılmada birikmiş zamanın atıldığını kanıtla.",
+   "input": {
+    "operation": "schedule",
+    "timestep_ms": {
+     "$var": "timestep_ms"
+    },
+    "frame_timestamps_ms": [
+     0,
+     16.6667,
+     6000,
+     6016.6667
+    ],
+    "discard_on_panic": true,
+    "include_frames": false
+   },
+   "checks": [
+    {
+     "path": "result.panic_frames",
+     "op": "==",
+     "value": 1
+    },
+    {
+     "path": "result.discarded_ms",
+     "op": ">",
+     "value": 0
+    }
+   ],
+   "stop_and_ask_tr": "Takılma yönetilmiyorsa dur."
+  },
+  {
+   "id": "kayit",
+   "skill": "G010",
+   "purpose_tr": "Başlangıç durumunu kaydet; kayıt biçimini sabitle.",
+   "input": {
+    "operation": "save",
+    "state": {
+     "seed": {
+      "$var": "seed"
+     },
+     "time_s": 0,
+     "player": {
+      "x": {
+       "$ref": "harita.result.points.spawn.x"
+      },
+      "y": {
+       "$ref": "harita.result.points.spawn.y"
+      },
+      "yaw": 0,
+      "v": 0,
+      "health": 100
+     },
+     "money": {
+      "$var": "start_money"
+     },
+     "inventory": {},
+     "wanted": {
+      "stars": 0,
+      "heat": 0,
+      "seconds_unseen": 0
+     },
+     "missions": {},
+     "active_mission": null,
+     "cash_taken": []
+    }
+   },
+   "checks": [
+    {
+     "path": "result.bytes",
+     "op": "<",
+     "value": 4096
+    }
+   ],
+   "stop_and_ask_tr": "Kayıt çok büyükse durumu küçült."
+  },
+  {
+   "id": "carpisma",
+   "skill": "G004",
+   "purpose_tr": "Doğuş noktasındaki araba hiçbir binanın içinde olmamalı.",
+   "input": {
+    "operation": "test",
+    "pairs": {
+     "$ref": "harita.result.spawn_collision_pairs"
+    }
+   },
+   "checks": [
+    {
+     "path": "result.colliding",
+     "op": "==",
+     "value": 0,
+     "why_tr": "Araba binanın içinde doğmamalı."
+    }
+   ],
+   "stop_and_ask_tr": "Çakışma varsa tohumu değiştir."
+  },
+  {
+   "id": "html",
+   "skill": "G012",
+   "purpose_tr": "Bütün çıktıları tek, internetsiz index.html oyununa dönüştür.",
+   "input": {
+    "operation": "build",
+    "title": {
+     "$var": "title"
+    },
+    "map": {
+     "width": {
+      "$ref": "harita.result.width"
+     },
+     "height": {
+      "$ref": "harita.result.height"
+     },
+     "seed": {
+      "$ref": "harita.result.seed"
+     },
+     "tiles": {
+      "$ref": "harita.result.tiles"
+     },
+     "points": {
+      "$ref": "harita.result.points"
+     }
+    },
+    "routes": {
+     "pedestrians": {
+      "$pluck": {
+       "from": "yaya_rotalari.result.results",
+       "field": "path"
+      }
+     },
+     "traffic": {
+      "$pluck": {
+       "from": "trafik_rotalari.result.results",
+       "field": "path"
+      }
+     }
+    },
+    "vehicle": {
+     "$var": "vehicle"
+    },
+    "npc": {
+     "$var": "npc"
+    },
+    "wanted_rules": {
+     "$ref": "aranma.result.rules"
+    },
+    "missions": {
+     "$ref": "gorev_dogrula.result.missions"
+    },
+    "mission_order": {
+     "$ref": "gorev_dogrula.result.order"
+    },
+    "economy": {
+     "start_money": {
+      "$var": "start_money"
+     },
+     "cash_amount": {
+      "$var": "cash_amount"
+     },
+     "catalog": {
+      "$ref": "katalog.result.catalog"
+     }
+    },
+    "sounds": {
+     "$pluck": {
+      "from": "sesler.result.sounds",
+      "field": "params"
+     }
+    },
+    "loop": {
+     "timestep_ms": {
+      "$var": "timestep_ms"
+     }
+    }
+   },
+   "checks": [
+    {
+     "path": "result.self_contained.loads_external_resources",
+     "op": "==",
+     "value": false
+    },
+    {
+     "path": "result.self_contained.urls_found",
+     "op": "len==",
+     "value": 0
+    },
+    {
+     "path": "result.bytes",
+     "op": "<",
+     "value": 200000
+    }
+   ],
+   "stop_and_ask_tr": "HTML dış bağlantı içeriyorsa ya da çok büyükse dur."
+  }
+ ],
+ "after_tr": [
+  "result.html -> index.html olarak yaz.",
+  "Bağımsızlık kontrolü: dosyada http(s):// ya da dış kaynak yükleme olmamalı.",
+  "JavaScript sözdizimi: her <script> bloğu node --check ile denetlenir (Node varsa).",
+  "Başsız (headless) deneme: oyun 10 saniye gaz basılı oynatılır; araba hareket etmeli, hata çıkmamalı.",
+  "Usta onayı: index.html'i oynayıp kontrol, görev ve polis dengesini onaylar (durum: bekliyor)."
+ ]
+}

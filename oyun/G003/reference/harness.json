@@ -1,0 +1,7 @@
+{
+  "runner": "python",
+  "script": "upstream_harness.py",
+  "python_requirements": [
+    "numpy"
+  ]
+}

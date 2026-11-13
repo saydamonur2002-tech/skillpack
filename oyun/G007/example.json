@@ -1,0 +1,33 @@
+{
+  "operation": "simulate",
+  "events": [
+    {
+      "type": "steal_car"
+    },
+    {
+      "type": "hit_pedestrian",
+      "witnessed": true
+    },
+    {
+      "type": "tick",
+      "dt": 5
+    },
+    {
+      "type": "tick",
+      "dt": 10
+    },
+    {
+      "type": "seen_by_police"
+    },
+    {
+      "type": "paint_shop"
+    },
+    {
+      "type": "tick",
+      "dt": 4
+    },
+    {
+      "type": "paint_shop"
+    }
+  ]
+}

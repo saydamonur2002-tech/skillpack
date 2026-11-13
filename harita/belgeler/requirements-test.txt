@@ -1,0 +1,4 @@
+jsonschema==4.26.0
+mcp==1.30.0
+pytest==9.2.0
+networkx==3.6.1

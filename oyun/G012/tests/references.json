@@ -1,0 +1,1857 @@
+[
+ {
+  "input": {
+   "operation": "build",
+   "title": "Mini Şehir",
+   "map": {
+    "width": 40,
+    "height": 30,
+    "seed": 2026,
+    "tiles": [
+     "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+     "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+     "RRSSSSRRSSSSSSSRRSSSSSSRRSSSSSSSRRSSSSRR",
+     "RRSBBSRRSBBBBBSRRSBBBBSRRSBBBBBSRRSBBSRR",
+     "RRSBBSRRSBBBBBSRRSBBBBSRRSBBBBBSRRSBBSRR",
+     "RRSBBSRRSBBBBBSRRSBBBBSRRSBBBBBSRRSBBSRR",
+     "RRSBBSRRSBBBBBSRRSBBBBSRRSBBBBBSRRSBBSRR",
+     "RRSSSSRRSSSSSSSRRSSSSSSRRSSSSSSSRRSSSSRR",
+     "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+     "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+     "RRSSSSRRSSSSSSSRRSSSSSSRRSSSSSSSRRSSSSRR",
+     "RRSBBSRRSBBBBBSRRSPPPPSRRSBBBBBSRRSBBSRR",
+     "RRSBBSRRSBBBBBSRRSPPPPSRRSBBBBBSRRSBBSRR",
+     "RRSBBSRRSBBBBBSRRSPPPPSRRSBBBBBSRRSBBSRR",
+     "RRSBBSRRSBBBBBSRRSPPPPSRRSBBBBBSRRSBBSRR",
+     "RRSBBSRRSBBBBBSRRSPPPPSRRSBBBBBSRRSBBSRR",
+     "RRSSSSRRSSSSSSSRRSSSSSSRRSSSSSSSRRSSSSRR",
+     "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+     "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+     "RRSSSSRRSSSSSSSRRSSSSSSRRSSSSSSSRRSSSSRR",
+     "RRSBBSRRSBBBBBSRRSBBBBSRRSPPPPPSRRSBBSRR",
+     "RRSBBSRRSBBBBBSRRSBBBBSRRSPPPPPSRRSBBSRR",
+     "RRSBBSRRSBBBBBSRRSBBBBSRRSPPPPPSRRSBBSRR",
+     "RRSBBSRRSBBBBBSRRSBBBBSRRSPPPPPSRRSBBSRR",
+     "RRSBBSRRSBBBBBSRRSBBBBSRRSPPPPPSRRSBBSRR",
+     "RRSBBSRRSBBBBBSRRSBBBBSRRSPPPPPSRRSBBSRR",
+     "RRSBBSRRSBBBBBSRRSBBBBSRRSPPPPPSRRSBBSRR",
+     "RRSSSSRRSSSSSSSRRSSSSSSRRSSSSSSSRRSSSSRR",
+     "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+     "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"
+    ],
+    "points": {
+     "spawn": {
+      "kind": "spawn",
+      "tile": [
+       19,
+       17
+      ],
+      "x": 19.5,
+      "y": 17.5,
+      "road_access": [
+       19,
+       17
+      ]
+     },
+     "police_station": {
+      "kind": "police_station",
+      "tile": [
+       14,
+       4
+      ],
+      "x": 14.5,
+      "y": 4.5,
+      "road_access": [
+       15,
+       4
+      ]
+     },
+     "paint_shop": {
+      "kind": "paint_shop",
+      "tile": [
+       8,
+       6
+      ],
+      "x": 8.5,
+      "y": 6.5,
+      "road_access": [
+       7,
+       6
+      ]
+     },
+     "landmarks": [
+      {
+       "kind": "landmark",
+       "tile": [
+        11,
+        19
+       ],
+       "x": 11.5,
+       "y": 19.5,
+       "road_access": [
+        11,
+        18
+       ]
+      },
+      {
+       "kind": "landmark",
+       "tile": [
+        14,
+        16
+       ],
+       "x": 14.5,
+       "y": 16.5,
+       "road_access": [
+        15,
+        16
+       ]
+      },
+      {
+       "kind": "landmark",
+       "tile": [
+        8,
+        2
+       ],
+       "x": 8.5,
+       "y": 2.5,
+       "road_access": [
+        7,
+        2
+       ]
+      },
+      {
+       "kind": "landmark",
+       "tile": [
+        37,
+        5
+       ],
+       "x": 37.5,
+       "y": 5.5,
+       "road_access": [
+        38,
+        5
+       ]
+      },
+      {
+       "kind": "landmark",
+       "tile": [
+        8,
+        12
+       ],
+       "x": 8.5,
+       "y": 12.5,
+       "road_access": [
+        7,
+        12
+       ]
+      },
+      {
+       "kind": "landmark",
+       "tile": [
+        27,
+        27
+       ],
+       "x": 27.5,
+       "y": 27.5,
+       "road_access": [
+        27,
+        28
+       ]
+      }
+     ],
+     "cash": [
+      {
+       "kind": "cash",
+       "tile": [
+        27,
+        17
+       ],
+       "x": 27.5,
+       "y": 17.5,
+       "road_access": [
+        27,
+        17
+       ]
+      },
+      {
+       "kind": "cash",
+       "tile": [
+        9,
+        1
+       ],
+       "x": 9.5,
+       "y": 1.5,
+       "road_access": [
+        9,
+        1
+       ]
+      },
+      {
+       "kind": "cash",
+       "tile": [
+        4,
+        1
+       ],
+       "x": 4.5,
+       "y": 1.5,
+       "road_access": [
+        4,
+        1
+       ]
+      },
+      {
+       "kind": "cash",
+       "tile": [
+        15,
+        12
+       ],
+       "x": 15.5,
+       "y": 12.5,
+       "road_access": [
+        15,
+        12
+       ]
+      },
+      {
+       "kind": "cash",
+       "tile": [
+        39,
+        0
+       ],
+       "x": 39.5,
+       "y": 0.5,
+       "road_access": [
+        39,
+        0
+       ]
+      }
+     ]
+    }
+   },
+   "routes": {
+    "pedestrians": [
+     [
+      [
+       35,
+       19
+      ],
+      [
+       34,
+       19
+      ],
+      [
+       33,
+       19
+      ],
+      [
+       32,
+       19
+      ],
+      [
+       31,
+       19
+      ],
+      [
+       30,
+       19
+      ],
+      [
+       29,
+       19
+      ],
+      [
+       28,
+       19
+      ],
+      [
+       27,
+       19
+      ],
+      [
+       26,
+       19
+      ],
+      [
+       25,
+       19
+      ],
+      [
+       24,
+       19
+      ],
+      [
+       23,
+       19
+      ],
+      [
+       22,
+       19
+      ],
+      [
+       21,
+       19
+      ],
+      [
+       20,
+       19
+      ],
+      [
+       19,
+       19
+      ],
+      [
+       18,
+       19
+      ],
+      [
+       17,
+       19
+      ],
+      [
+       16,
+       19
+      ],
+      [
+       15,
+       19
+      ],
+      [
+       14,
+       19
+      ],
+      [
+       13,
+       19
+      ],
+      [
+       12,
+       19
+      ],
+      [
+       11,
+       19
+      ],
+      [
+       10,
+       19
+      ],
+      [
+       9,
+       19
+      ],
+      [
+       8,
+       19
+      ],
+      [
+       8,
+       18
+      ],
+      [
+       8,
+       17
+      ],
+      [
+       8,
+       16
+      ],
+      [
+       8,
+       15
+      ],
+      [
+       7,
+       15
+      ],
+      [
+       6,
+       15
+      ],
+      [
+       5,
+       15
+      ]
+     ],
+     [
+      [
+       10,
+       2
+      ],
+      [
+       9,
+       2
+      ],
+      [
+       8,
+       2
+      ],
+      [
+       8,
+       3
+      ],
+      [
+       8,
+       4
+      ],
+      [
+       8,
+       5
+      ],
+      [
+       8,
+       6
+      ],
+      [
+       8,
+       7
+      ],
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       9
+      ],
+      [
+       8,
+       10
+      ],
+      [
+       8,
+       11
+      ],
+      [
+       8,
+       12
+      ],
+      [
+       8,
+       13
+      ],
+      [
+       8,
+       14
+      ],
+      [
+       8,
+       15
+      ],
+      [
+       8,
+       16
+      ],
+      [
+       8,
+       17
+      ],
+      [
+       8,
+       18
+      ],
+      [
+       8,
+       19
+      ],
+      [
+       8,
+       20
+      ],
+      [
+       8,
+       21
+      ],
+      [
+       7,
+       21
+      ],
+      [
+       6,
+       21
+      ],
+      [
+       5,
+       21
+      ]
+     ],
+     [
+      [
+       3,
+       16
+      ],
+      [
+       4,
+       16
+      ],
+      [
+       5,
+       16
+      ],
+      [
+       6,
+       16
+      ],
+      [
+       7,
+       16
+      ],
+      [
+       8,
+       16
+      ],
+      [
+       9,
+       16
+      ],
+      [
+       10,
+       16
+      ],
+      [
+       11,
+       16
+      ],
+      [
+       12,
+       16
+      ],
+      [
+       13,
+       16
+      ],
+      [
+       14,
+       16
+      ],
+      [
+       14,
+       15
+      ],
+      [
+       14,
+       14
+      ],
+      [
+       14,
+       13
+      ],
+      [
+       14,
+       12
+      ],
+      [
+       14,
+       11
+      ],
+      [
+       15,
+       11
+      ],
+      [
+       16,
+       11
+      ],
+      [
+       17,
+       11
+      ]
+     ],
+     [
+      [
+       18,
+       14
+      ],
+      [
+       19,
+       14
+      ],
+      [
+       20,
+       14
+      ],
+      [
+       21,
+       14
+      ],
+      [
+       22,
+       14
+      ],
+      [
+       22,
+       15
+      ],
+      [
+       22,
+       16
+      ],
+      [
+       22,
+       17
+      ],
+      [
+       22,
+       18
+      ],
+      [
+       22,
+       19
+      ],
+      [
+       22,
+       20
+      ],
+      [
+       22,
+       21
+      ],
+      [
+       22,
+       22
+      ],
+      [
+       22,
+       23
+      ],
+      [
+       22,
+       24
+      ],
+      [
+       22,
+       25
+      ],
+      [
+       22,
+       26
+      ]
+     ],
+     [
+      [
+       22,
+       7
+      ],
+      [
+       21,
+       7
+      ],
+      [
+       20,
+       7
+      ],
+      [
+       19,
+       7
+      ],
+      [
+       18,
+       7
+      ],
+      [
+       17,
+       7
+      ],
+      [
+       17,
+       8
+      ],
+      [
+       17,
+       9
+      ],
+      [
+       17,
+       10
+      ],
+      [
+       17,
+       11
+      ],
+      [
+       17,
+       12
+      ],
+      [
+       17,
+       13
+      ],
+      [
+       17,
+       14
+      ],
+      [
+       17,
+       15
+      ],
+      [
+       17,
+       16
+      ],
+      [
+       17,
+       17
+      ],
+      [
+       17,
+       18
+      ],
+      [
+       17,
+       19
+      ],
+      [
+       17,
+       20
+      ],
+      [
+       17,
+       21
+      ],
+      [
+       17,
+       22
+      ],
+      [
+       17,
+       23
+      ],
+      [
+       17,
+       24
+      ],
+      [
+       17,
+       25
+      ],
+      [
+       17,
+       26
+      ],
+      [
+       17,
+       27
+      ],
+      [
+       16,
+       27
+      ],
+      [
+       15,
+       27
+      ],
+      [
+       14,
+       27
+      ],
+      [
+       13,
+       27
+      ],
+      [
+       12,
+       27
+      ],
+      [
+       11,
+       27
+      ],
+      [
+       10,
+       27
+      ],
+      [
+       9,
+       27
+      ],
+      [
+       8,
+       27
+      ],
+      [
+       7,
+       27
+      ],
+      [
+       6,
+       27
+      ],
+      [
+       5,
+       27
+      ]
+     ],
+     [
+      [
+       14,
+       4
+      ],
+      [
+       14,
+       5
+      ],
+      [
+       14,
+       6
+      ],
+      [
+       14,
+       7
+      ],
+      [
+       15,
+       7
+      ],
+      [
+       16,
+       7
+      ],
+      [
+       17,
+       7
+      ],
+      [
+       18,
+       7
+      ],
+      [
+       19,
+       7
+      ],
+      [
+       20,
+       7
+      ],
+      [
+       20,
+       8
+      ],
+      [
+       20,
+       9
+      ],
+      [
+       20,
+       10
+      ]
+     ],
+     [
+      [
+       5,
+       20
+      ],
+      [
+       5,
+       19
+      ],
+      [
+       5,
+       18
+      ],
+      [
+       5,
+       17
+      ],
+      [
+       5,
+       16
+      ],
+      [
+       5,
+       15
+      ],
+      [
+       5,
+       14
+      ],
+      [
+       5,
+       13
+      ],
+      [
+       5,
+       12
+      ],
+      [
+       5,
+       11
+      ],
+      [
+       5,
+       10
+      ],
+      [
+       6,
+       10
+      ],
+      [
+       7,
+       10
+      ],
+      [
+       8,
+       10
+      ],
+      [
+       9,
+       10
+      ],
+      [
+       10,
+       10
+      ],
+      [
+       11,
+       10
+      ],
+      [
+       12,
+       10
+      ],
+      [
+       13,
+       10
+      ],
+      [
+       14,
+       10
+      ],
+      [
+       15,
+       10
+      ],
+      [
+       16,
+       10
+      ],
+      [
+       17,
+       10
+      ],
+      [
+       18,
+       10
+      ],
+      [
+       19,
+       10
+      ],
+      [
+       20,
+       10
+      ],
+      [
+       21,
+       10
+      ],
+      [
+       22,
+       10
+      ],
+      [
+       23,
+       10
+      ],
+      [
+       24,
+       10
+      ],
+      [
+       25,
+       10
+      ],
+      [
+       26,
+       10
+      ],
+      [
+       27,
+       10
+      ],
+      [
+       28,
+       10
+      ],
+      [
+       29,
+       10
+      ],
+      [
+       30,
+       10
+      ],
+      [
+       31,
+       10
+      ]
+     ],
+     [
+      [
+       29,
+       25
+      ],
+      [
+       29,
+       24
+      ],
+      [
+       29,
+       23
+      ],
+      [
+       29,
+       22
+      ],
+      [
+       29,
+       21
+      ],
+      [
+       29,
+       20
+      ],
+      [
+       29,
+       19
+      ],
+      [
+       28,
+       19
+      ],
+      [
+       27,
+       19
+      ],
+      [
+       26,
+       19
+      ],
+      [
+       25,
+       19
+      ],
+      [
+       24,
+       19
+      ],
+      [
+       23,
+       19
+      ],
+      [
+       22,
+       19
+      ],
+      [
+       21,
+       19
+      ],
+      [
+       20,
+       19
+      ],
+      [
+       19,
+       19
+      ],
+      [
+       18,
+       19
+      ],
+      [
+       17,
+       19
+      ],
+      [
+       17,
+       18
+      ],
+      [
+       17,
+       17
+      ],
+      [
+       17,
+       16
+      ],
+      [
+       17,
+       15
+      ],
+      [
+       16,
+       15
+      ],
+      [
+       15,
+       15
+      ],
+      [
+       14,
+       15
+      ]
+     ]
+    ],
+    "traffic": [
+     [
+      [
+       0,
+       8
+      ],
+      [
+       1,
+       8
+      ],
+      [
+       2,
+       8
+      ],
+      [
+       3,
+       8
+      ],
+      [
+       4,
+       8
+      ],
+      [
+       5,
+       8
+      ],
+      [
+       6,
+       8
+      ],
+      [
+       7,
+       8
+      ],
+      [
+       8,
+       8
+      ],
+      [
+       9,
+       8
+      ],
+      [
+       10,
+       8
+      ],
+      [
+       11,
+       8
+      ],
+      [
+       12,
+       8
+      ],
+      [
+       13,
+       8
+      ],
+      [
+       14,
+       8
+      ],
+      [
+       15,
+       8
+      ],
+      [
+       15,
+       9
+      ],
+      [
+       15,
+       10
+      ],
+      [
+       15,
+       11
+      ],
+      [
+       15,
+       12
+      ],
+      [
+       15,
+       13
+      ],
+      [
+       15,
+       14
+      ],
+      [
+       15,
+       15
+      ],
+      [
+       15,
+       16
+      ],
+      [
+       15,
+       17
+      ]
+     ],
+     [
+      [
+       38,
+       17
+      ],
+      [
+       38,
+       18
+      ],
+      [
+       38,
+       19
+      ],
+      [
+       38,
+       20
+      ],
+      [
+       38,
+       21
+      ],
+      [
+       38,
+       22
+      ],
+      [
+       38,
+       23
+      ],
+      [
+       38,
+       24
+      ],
+      [
+       38,
+       25
+      ],
+      [
+       38,
+       26
+      ],
+      [
+       38,
+       27
+      ],
+      [
+       38,
+       28
+      ],
+      [
+       37,
+       28
+      ],
+      [
+       36,
+       28
+      ],
+      [
+       35,
+       28
+      ],
+      [
+       34,
+       28
+      ],
+      [
+       33,
+       28
+      ],
+      [
+       32,
+       28
+      ],
+      [
+       31,
+       28
+      ],
+      [
+       30,
+       28
+      ],
+      [
+       29,
+       28
+      ],
+      [
+       28,
+       28
+      ],
+      [
+       27,
+       28
+      ],
+      [
+       26,
+       28
+      ],
+      [
+       25,
+       28
+      ],
+      [
+       24,
+       28
+      ],
+      [
+       23,
+       28
+      ],
+      [
+       22,
+       28
+      ],
+      [
+       21,
+       28
+      ],
+      [
+       20,
+       28
+      ],
+      [
+       19,
+       28
+      ],
+      [
+       18,
+       28
+      ],
+      [
+       17,
+       28
+      ],
+      [
+       16,
+       28
+      ],
+      [
+       15,
+       28
+      ],
+      [
+       14,
+       28
+      ],
+      [
+       13,
+       28
+      ],
+      [
+       12,
+       28
+      ],
+      [
+       11,
+       28
+      ],
+      [
+       10,
+       28
+      ],
+      [
+       9,
+       28
+      ],
+      [
+       8,
+       28
+      ],
+      [
+       7,
+       28
+      ],
+      [
+       6,
+       28
+      ]
+     ],
+     [
+      [
+       38,
+       8
+      ],
+      [
+       37,
+       8
+      ],
+      [
+       36,
+       8
+      ],
+      [
+       35,
+       8
+      ],
+      [
+       34,
+       8
+      ],
+      [
+       33,
+       8
+      ],
+      [
+       32,
+       8
+      ]
+     ],
+     [
+      [
+       32,
+       17
+      ],
+      [
+       32,
+       16
+      ],
+      [
+       32,
+       15
+      ],
+      [
+       32,
+       14
+      ],
+      [
+       32,
+       13
+      ],
+      [
+       32,
+       12
+      ],
+      [
+       32,
+       11
+      ],
+      [
+       32,
+       10
+      ],
+      [
+       32,
+       9
+      ],
+      [
+       32,
+       8
+      ],
+      [
+       33,
+       8
+      ],
+      [
+       34,
+       8
+      ],
+      [
+       35,
+       8
+      ],
+      [
+       36,
+       8
+      ],
+      [
+       37,
+       8
+      ],
+      [
+       38,
+       8
+      ]
+     ]
+    ]
+   },
+   "vehicle": {
+    "wheelbase_m": 0.9,
+    "max_steer_deg": 35,
+    "accel": 7.0,
+    "brake": 12.0,
+    "reverse_accel": 4.0,
+    "drag": 0.25,
+    "max_v": 11.0,
+    "min_v": -4.0,
+    "offroad_factor": 0.55,
+    "radius": 0.38
+   },
+   "npc": {
+    "ped_max_speed": 1.1,
+    "ped_max_force": 6.0,
+    "traffic_max_speed": 3.5,
+    "traffic_max_force": 8.0,
+    "police_max_speed": 10.0,
+    "police_max_force": 30.0,
+    "flee_panic_distance": 3.0,
+    "arrive_deceleration": 2.0,
+    "prediction_factor": 1.0
+   },
+   "wanted_rules": {
+    "heat": {
+     "steal_car": 15,
+     "hit_vehicle": 10,
+     "hit_pedestrian": 35,
+     "hit_police": 60,
+     "run_red_light": 5
+    },
+    "witness_multiplier": 2,
+    "star_thresholds": [
+     20,
+     60,
+     120,
+     200,
+     320
+    ],
+    "cooldown_s": [
+     0,
+     8,
+     12,
+     16,
+     20,
+     25
+    ],
+    "decay_per_s": 10,
+    "paint_shop_min_unseen_s": 3,
+    "police_units": [
+     0,
+     1,
+     2,
+     3,
+     5,
+     7
+    ],
+    "police_speed_factor": [
+     0,
+     0.85,
+     0.95,
+     1.05,
+     1.15,
+     1.25
+    ],
+    "search_radius_tiles": [
+     0,
+     8,
+     12,
+     16,
+     20,
+     26
+    ],
+    "max_heat": 400
+   },
+   "missions": [
+    {
+     "id": "M1",
+     "title": "Muhbirle buluş",
+     "briefing": "Sarı halkaya git.",
+     "type": "goto",
+     "target": [
+      11,
+      18
+     ],
+     "reward": 150
+    },
+    {
+     "id": "M2",
+     "title": "Paketi teslim et",
+     "briefing": "Paketi al ve 2 dakika içinde teslim et.",
+     "type": "deliver",
+     "pickup": [
+      15,
+      16
+     ],
+     "target": [
+      7,
+      2
+     ],
+     "time_limit_s": 120,
+     "reward": 300,
+     "requires": [
+      "M1"
+     ]
+    },
+    {
+     "id": "M3",
+     "title": "Sokaktaki parayı topla",
+     "briefing": "Yoldaki 2 yeşil parayı topla.",
+     "type": "collect",
+     "count": 2,
+     "reward": 200,
+     "requires": [
+      "M2"
+     ]
+    },
+    {
+     "id": "M4",
+     "title": "Polisten kurtul",
+     "briefing": "Aranma yıldızı al, sonra polisi atlat (ya da boyacıya git).",
+     "type": "escape",
+     "reward": 400,
+     "requires": [
+      "M3"
+     ]
+    },
+    {
+     "id": "M5",
+     "title": "Son iş",
+     "briefing": "Son buluşma noktasına git.",
+     "type": "goto",
+     "target": [
+      38,
+      5
+     ],
+     "reward": 600,
+     "requires": [
+      "M4"
+     ]
+    }
+   ],
+   "mission_order": [
+    "M1",
+    "M2",
+    "M3",
+    "M4",
+    "M5"
+   ],
+   "economy": {
+    "start_money": 200,
+    "cash_amount": 50,
+    "catalog": {
+     "repair_kit": {
+      "price": 150,
+      "sell": 60,
+      "max": 3,
+      "stored": true,
+      "effect": "repair vehicle +50"
+     },
+     "snack": {
+      "price": 20,
+      "sell": 0,
+      "max": 5,
+      "stored": true,
+      "effect": "health +25"
+     },
+     "fuel_can": {
+      "price": 40,
+      "sell": 10,
+      "max": 2,
+      "stored": true,
+      "effect": "refuel"
+     },
+     "paint_job": {
+      "price": 500,
+      "sell": 0,
+      "max": 0,
+      "stored": false,
+      "effect": "clear wanted level (paint shop, see G007)"
+     },
+     "package": {
+      "price": 0,
+      "sell": 0,
+      "max": 1,
+      "stored": true,
+      "effect": "mission item"
+     }
+    }
+   },
+   "sounds": {
+    "horn": [
+     0.8,
+     0.02,
+     415,
+     0.01,
+     0.22,
+     0.06,
+     5,
+     0.6,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0.9,
+     0.02,
+     0,
+     0
+    ],
+    "crash": [
+     0.8,
+     0.1,
+     90,
+     0.005,
+     0.08,
+     0.45,
+     4,
+     2.2,
+     -2,
+     0,
+     0,
+     0,
+     0,
+     1.6,
+     0,
+     0.2,
+     0,
+     0.6,
+     0.06,
+     0,
+     0
+    ],
+    "siren": [
+     0.5,
+     0,
+     700,
+     0.05,
+     1.1,
+     0.1,
+     0,
+     1,
+     4,
+     0,
+     0,
+     0,
+     0.35,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ],
+    "pickup": [
+     1,
+     0.05,
+     1675,
+     0,
+     0.06,
+     0.24,
+     1,
+     1.82,
+     0,
+     0,
+     837,
+     0.06,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ],
+    "cash": [
+     1,
+     0.05,
+     1400,
+     0.01,
+     0.04,
+     0.18,
+     1,
+     1.5,
+     0,
+     0,
+     600,
+     0.04,
+     0.09,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ],
+    "mission_complete": [
+     1,
+     0.02,
+     523,
+     0.02,
+     0.3,
+     0.4,
+     1,
+     1.2,
+     0,
+     0,
+     262,
+     0.12,
+     0.24,
+     0,
+     0,
+     0,
+     0.08,
+     1,
+     0.05,
+     0,
+     0
+    ],
+    "wasted": [
+     1,
+     0.05,
+     925,
+     0.04,
+     0.3,
+     0.6,
+     1,
+     0.3,
+     0,
+     6.27,
+     -184,
+     0.09,
+     0.17,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ]
+   },
+   "loop": {
+    "timestep_ms": 16.6667
+   },
+   "include_html": true
+  },
+  "expected_subset": {
+   "filename": "index.html",
+   "self_contained": {
+    "loads_external_resources": false,
+    "urls_found": []
+   },
+   "summary": {
+    "map": "40x30",
+    "pedestrians": 8,
+    "traffic": 4,
+    "missions": 5,
+    "sounds": [
+     "cash",
+     "crash",
+     "horn",
+     "mission_complete",
+     "pickup",
+     "siren",
+     "wasted"
+    ]
+   }
+  },
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 0.0,
+  "origin": "structural expectations for the flow example (map 40x30, 8 pedestrian and 4 traffic routes, 5 missions, 7 sounds); behaviour is checked end to end in tests/test_flow_e2e.py"
+ }
+]

@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-12",
+  "python": "3.13",
+  "command": "python -m pytest",
+  "total": 571,
+  "passed": 571,
+  "skipped": 0,
+  "failed": 0,
+  "per_pack": {
+    "M003": 39,
+    "M004": 21,
+    "M005": 23,
+    "M021": 28,
+    "M024": 37,
+    "M025": 34,
+    "M026": 33,
+    "M027": 34,
+    "M028": 35,
+    "M029": 40,
+    "M030": 37,
+    "M031": 32,
+    "M032": 35,
+    "M033": 31,
+    "M034": 35
+  },
+  "cross_pack": {
+    "test_demo_end_to_end": 3,
+    "test_mcp_stdio": 34,
+    "test_release_audit": 28,
+    "test_upstream_references": 12
+  },
+  "new_pack_tests": 312,
+  "reused_pack_tests": 182
+}

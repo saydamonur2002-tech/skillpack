@@ -1,0 +1,745 @@
+{
+  "id": "G012",
+  "name": "Self-contained HTML5 canvas game builder (top-down city driving game)",
+  "description": "Assembles the outputs of the other game skills (map, routes, car parameters, NPC/police parameters, wanted rules, missions, economy, sounds, loop step) into ONE offline HTML file with a canvas game: drive a car around the city, pedestrians and traffic follow precomputed routes, police pursue by wanted level, missions, cash, paint shop, sounds, save/load and touch buttons. The real-time loop runs in the browser (MainLoop.js); the model is not needed while playing.",
+  "version": "1.0.0",
+  "date": "2026-11-12",
+  "tier": "game",
+  "family": "game-2d-city",
+  "category": "game build",
+  "license": "MIT",
+  "distribution": "public-ok",
+  "author": "Skillpack contributors",
+  "source_url": "local:original/G012",
+  "upstream_commit_or_version": "original-1.0.0",
+  "implementation_kind": "original-algorithm",
+  "status": "tested-awaiting-usta-approval",
+  "provenance": {
+    "upstream_repository": null,
+    "source_kind": "original",
+    "commit": "original-1.0.0",
+    "version": "1.0.0",
+    "license_spdx": "MIT",
+    "license_path": "LICENSE",
+    "license_sha256": "e5c37fd312001c3fa6540a36c04939b62f856dcd3d1b148b7e43fc8d65e8558a",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2026 Skillpack contributors"
+    ],
+    "license_check": "Original code written for this pack; MIT",
+    "evidence": [],
+    "primary_role": "original rule table and code",
+    "additional_licenses": [
+      {
+        "upstream_repository": "https://github.com/IceCreamYou/MainLoop.js",
+        "source_kind": "github",
+        "commit": "3ddadf0ab902da96af7077be40206ac27ba1b1d3",
+        "license_spdx": "MIT",
+        "license_path": "licenses/MainLoop.js.LICENSE",
+        "license_sha256": "cc1792d6ce1bd8e03ed5c88fc1a3976334c864da8cee3ba677539e9ffa97e6f4",
+        "copyright_lines_verbatim": [
+          "Copyright (C) 2016 Isaac Sukin"
+        ],
+        "evidence": [
+          {
+            "path": "MainLoop.js/build/mainloop.min.js",
+            "original_path": "build/mainloop.min.js",
+            "url": "https://github.com/IceCreamYou/MainLoop.js/blob/3ddadf0ab902da96af7077be40206ac27ba1b1d3/build/mainloop.min.js",
+            "sha256": "234a0ee563b7beeb5c527435c28d689575b16aa3f4b51c4973d65830d8f85b58",
+            "scope": "complete original file"
+          }
+        ],
+        "role": "build/mainloop.min.js embedded in the HTML as the real-time loop (leading comment replaced by the full notice)"
+      },
+      {
+        "upstream_repository": "https://github.com/KilledByAPixel/ZzFX",
+        "source_kind": "github",
+        "commit": "ac5a4727a44e5506a12f7340087e0b889cfd69dc",
+        "license_spdx": "MIT",
+        "license_path": "licenses/ZzFX.LICENSE",
+        "license_sha256": "3cc22a9ed0b1dd02189c1b6f4edb14847623f043589cc78b24ab839ef09b6e36",
+        "copyright_lines_verbatim": [
+          "Copyright (c) 2019 Frank Force"
+        ],
+        "evidence": [
+          {
+            "path": "ZzFX/ZzFXMicro.min.js",
+            "original_path": "ZzFXMicro.min.js",
+            "url": "https://github.com/KilledByAPixel/ZzFX/blob/ac5a4727a44e5506a12f7340087e0b889cfd69dc/ZzFXMicro.min.js",
+            "sha256": "7f4b89afa67b3029d1462108a02582e7858bf9d76a04e6d7081db418a11bf150",
+            "scope": "complete original file"
+          }
+        ],
+        "role": "ZzFXMicro.min.js embedded in the HTML to play sound parameters"
+      }
+    ],
+    "mined_date": "2026-11-12",
+    "timezone": "Europe/Istanbul",
+    "reference_values": "Original builder; references are structural (self-contained check, embedded parts, summary counts). Behaviour is checked end to end: the flow runner builds a game and Node.js runs it headless and compares the runtime formulas with G003, G004, G006 and G010."
+  },
+  "region": {
+    "scope": "global",
+    "applies_to": "any locale; no country-specific rules",
+    "notes": "Game rules are illustrative defaults, not real-world rules."
+  },
+  "audit": {
+    "principle": "code decides, model explains, craftsman (usta) approves",
+    "code_decides": true,
+    "model_explains": true,
+    "usta_approval": {
+      "status": "pending",
+      "approved_by": null,
+      "role": "game designer and a playtester",
+      "what_to_check": "by playing the generated index.html: controls feel right, missions are clear, police are fair, and nothing breaks on a phone."
+    },
+    "external_audit": {
+      "status": "not-yet",
+      "notes": "Local tests only; no independent audit has been performed."
+    }
+  },
+  "inputs": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "operation",
+      "title",
+      "map",
+      "routes",
+      "wanted_rules",
+      "missions",
+      "mission_order",
+      "economy"
+    ],
+    "$defs": {
+      "tile": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "items": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 127
+        }
+      },
+      "point": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "tile",
+          "x",
+          "y"
+        ],
+        "properties": {
+          "tile": {
+            "$ref": "#/$defs/tile"
+          },
+          "x": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 128
+          },
+          "y": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 128
+          },
+          "road_access": {
+            "$ref": "#/$defs/tile"
+          },
+          "kind": {
+            "type": "string",
+            "maxLength": 20
+          }
+        }
+      },
+      "point_ra": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "tile",
+          "x",
+          "y",
+          "road_access"
+        ],
+        "properties": {
+          "tile": {
+            "$ref": "#/$defs/tile"
+          },
+          "x": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 128
+          },
+          "y": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 128
+          },
+          "road_access": {
+            "$ref": "#/$defs/tile"
+          },
+          "kind": {
+            "type": "string",
+            "maxLength": 20
+          }
+        }
+      },
+      "route": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 400,
+        "items": {
+          "$ref": "#/$defs/tile"
+        }
+      }
+    },
+    "properties": {
+      "operation": {
+        "enum": [
+          "build"
+        ]
+      },
+      "title": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 60
+      },
+      "map": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "width",
+          "height",
+          "tiles",
+          "points"
+        ],
+        "properties": {
+          "width": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 96
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 96
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "tiles": {
+            "type": "array",
+            "minItems": 12,
+            "maxItems": 96,
+            "items": {
+              "type": "string",
+              "minLength": 12,
+              "maxLength": 96
+            }
+          },
+          "points": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+              "spawn",
+              "police_station",
+              "paint_shop",
+              "cash"
+            ],
+            "properties": {
+              "spawn": {
+                "$ref": "#/$defs/point"
+              },
+              "police_station": {
+                "$ref": "#/$defs/point_ra"
+              },
+              "paint_shop": {
+                "$ref": "#/$defs/point_ra"
+              },
+              "cash": {
+                "type": "array",
+                "maxItems": 20,
+                "items": {
+                  "$ref": "#/$defs/point"
+                }
+              },
+              "landmarks": {
+                "type": "array",
+                "maxItems": 12,
+                "items": {
+                  "$ref": "#/$defs/point"
+                }
+              }
+            }
+          }
+        }
+      },
+      "routes": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "pedestrians",
+          "traffic"
+        ],
+        "properties": {
+          "pedestrians": {
+            "type": "array",
+            "maxItems": 32,
+            "items": {
+              "$ref": "#/$defs/route"
+            }
+          },
+          "traffic": {
+            "type": "array",
+            "maxItems": 32,
+            "items": {
+              "$ref": "#/$defs/route"
+            }
+          }
+        }
+      },
+      "vehicle": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "wheelbase_m": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 20
+          },
+          "max_steer_deg": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 80
+          },
+          "accel": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "brake": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 200
+          },
+          "reverse_accel": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "drag": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10
+          },
+          "max_v": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 200
+          },
+          "min_v": {
+            "type": "number",
+            "minimum": -100,
+            "maximum": 0
+          },
+          "offroad_factor": {
+            "type": "number",
+            "minimum": 0.05,
+            "maximum": 1
+          },
+          "radius": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 0.49
+          }
+        }
+      },
+      "npc": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ped_max_speed": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1000
+          },
+          "ped_max_force": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1000
+          },
+          "traffic_max_speed": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1000
+          },
+          "traffic_max_force": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1000
+          },
+          "police_max_speed": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1000
+          },
+          "police_max_force": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1000
+          },
+          "flee_panic_distance": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1000
+          },
+          "prediction_factor": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1000
+          },
+          "arrive_deceleration": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "maximum": 1000
+          }
+        }
+      },
+      "wanted_rules": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "heat",
+          "witness_multiplier",
+          "star_thresholds",
+          "cooldown_s",
+          "decay_per_s",
+          "paint_shop_min_unseen_s",
+          "police_units",
+          "police_speed_factor",
+          "search_radius_tiles",
+          "max_heat"
+        ],
+        "properties": {
+          "heat": {
+            "type": "object",
+            "required": [
+              "steal_car",
+              "hit_vehicle",
+              "hit_pedestrian",
+              "hit_police"
+            ],
+            "additionalProperties": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1000
+            }
+          },
+          "witness_multiplier": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "star_thresholds": {
+            "type": "array",
+            "minItems": 5,
+            "maxItems": 5,
+            "items": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 10000
+            }
+          },
+          "cooldown_s": {
+            "type": "array",
+            "minItems": 6,
+            "maxItems": 6,
+            "items": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 600
+            }
+          },
+          "decay_per_s": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1000
+          },
+          "paint_shop_min_unseen_s": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 600
+          },
+          "police_units": {
+            "type": "array",
+            "minItems": 6,
+            "maxItems": 6,
+            "items": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 20
+            }
+          },
+          "police_speed_factor": {
+            "type": "array",
+            "minItems": 6,
+            "maxItems": 6,
+            "items": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 3
+            }
+          },
+          "search_radius_tiles": {
+            "type": "array",
+            "minItems": 6,
+            "maxItems": 6,
+            "items": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 200
+            }
+          },
+          "max_heat": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 10000
+          }
+        }
+      },
+      "missions": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 50,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "type"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,32}$"
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 80
+            },
+            "briefing": {
+              "type": "string",
+              "maxLength": 240
+            },
+            "type": {
+              "enum": [
+                "goto",
+                "deliver",
+                "escape",
+                "collect"
+              ]
+            },
+            "target": {
+              "$ref": "#/$defs/tile"
+            },
+            "pickup": {
+              "$ref": "#/$defs/tile"
+            },
+            "radius": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 20
+            },
+            "time_limit_s": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 3600
+            },
+            "reward": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "requires": {
+              "type": "array",
+              "maxItems": 10,
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]{1,32}$"
+              }
+            }
+          }
+        }
+      },
+      "mission_order": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 50,
+        "uniqueItems": true,
+        "items": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,32}$"
+        }
+      },
+      "economy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "catalog"
+        ],
+        "properties": {
+          "start_money": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "cash_amount": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100000
+          },
+          "catalog": {
+            "type": "object",
+            "maxProperties": 32,
+            "additionalProperties": {
+              "type": "object",
+              "required": [
+                "price"
+              ],
+              "properties": {
+                "price": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000000
+                }
+              }
+            }
+          }
+        }
+      },
+      "sounds": {
+        "type": "object",
+        "maxProperties": 16,
+        "propertyNames": {
+          "pattern": "^[a-z_]{1,24}$"
+        },
+        "additionalProperties": {
+          "type": "array",
+          "minItems": 21,
+          "maxItems": 21,
+          "items": {
+            "type": "number",
+            "minimum": -100000,
+            "maximum": 100000
+          }
+        }
+      },
+      "loop": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "timestep_ms": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 100
+          }
+        }
+      },
+      "tile_px": {
+        "type": "integer",
+        "minimum": 8,
+        "maximum": 96
+      },
+      "include_html": {
+        "type": "boolean"
+      }
+    }
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "Raw CLI byte limit and POSIX alarm; strict schema, finite values and nesting checks; MCP subprocess killed/reaped after the timeout. One active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "runtime": "Python standard library plus jsonschema (schema check) only"
+  },
+  "data": {
+    "reads": "nothing",
+    "writes": "nothing",
+    "network": "none",
+    "telemetry": "none",
+    "logging": "none; input contents are never logged or echoed in errors"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "server_name": "html-oyun-uret",
+    "tool_name": "skillpack_g012",
+    "read_only": true,
+    "instructions": "One local deterministic tool. Explain its result and limits; the code decides, a human (usta) approves consequential use. No network access."
+  },
+  "limitations": "Simple 2D graphics (coloured tiles and rectangles), no textures, no on-foot mode, no weapons, no multiplayer. NPC steering ignores walls except for push-out, so police can get stuck on corners. Real-time behaviour depends on the browser; audio starts only after the first key or touch (browser rule). Input max 64 KB, so maps above about 96x96 tiles do not fit.",
+  "port_notes": "Original builder and game runtime by Skillpack contributors. Embedded third-party code: MainLoop.js build/mainloop.min.js (MIT, leading comment with an author URL replaced by the full MIT notice in an HTML comment so the file has no URLs) and ZzFXMicro.min.js (MIT, wrapped in a function so the AudioContext is created only after a user gesture). The configuration JSON is embedded with <, > and & escaped. The runtime implements the formulas of G003 (car), G004 (circle vs box), G006 (seek/arrive/flee/pursuit), G007 (wanted), G008 (missions), G009 (integer money) and G010 (save envelope); tests/test_flow_e2e.py compares them with the Python tools.",
+  "flow_role": "Step 12 (HTML üret): the last skill call; the runner writes result.html to index.html, then verifies it (no external URLs, JavaScript syntax, a headless run of the game loop)."
+}

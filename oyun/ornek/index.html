@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Mini Şehir</title>
+<!--
+Built by the Skillpack G012 HTML builder from skill outputs (G001-G011). Single self-contained file: no network, no external files, no telemetry.
+Game runtime: Copyright (c) 2026 Skillpack contributors, MIT License.
+Embedded: MainLoop.js 1.0.4 (build/mainloop.min.js, leading comment removed) and ZzFXMicro 1.4.0 (ZzFXMicro.min.js), both MIT; notices below.
+MainLoop.js - Copyright (C) 2016 Isaac Sukin - MIT License.
+ZzFX - Copyright (c) 2019 Frank Force - MIT License.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<style>
+html,body{margin:0;height:100%;background:#111;color:#eee;font-family:sans-serif;overflow:hidden}
+#game{display:block;width:100vw;height:100vh}
+#help{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.82);padding:18px 24px;border-radius:10px;max-width:440px;line-height:1.5}
+#help h1{font-size:20px;margin:0 0 8px}
+#pad{position:fixed;bottom:12px;left:12px;right:12px;display:none;justify-content:space-between;pointer-events:none}
+#pad div{pointer-events:auto}
+#pad button{width:64px;height:64px;margin:4px;font-size:24px;border-radius:12px;border:0;background:rgba(255,255,255,.18);color:#fff}
+@media (pointer:coarse){#pad{display:flex}}
+</style>
+</head>
+<body>
+<canvas id="game"></canvas>
+<div id="help"><h1>Mini Şehir</h1>
+<b>Ok tuşları / WASD</b>: sür, fren, geri &nbsp; <b>Boşluk</b>: el freni<br>
+<b>F</b>: duran bir arabanın yanında araba çal &nbsp; <b>H</b>: korna<br>
+<b>Mavi nokta</b>: boyacı (aranma silinir), <b>E</b>: tamir &nbsp; <b>Sarı halka</b>: görev hedefi<br>
+<b>K</b>: kaydet &nbsp; <b>L</b>: yükle &nbsp; <b>P</b>: duraklat<br>
+Başlamak için bir tuşa bas.</div>
+<div id="pad"><div><button data-key="ArrowLeft">◀</button><button data-key="ArrowRight">▶</button></div>
+<div><button data-key="KeyF">F</button><button data-key="ArrowDown">▼</button><button data-key="ArrowUp">▲</button></div></div>
+<script type="application/json" id="game-config">{"title":"Mini Şehir","map":{"width":40,"height":30,"tiles":["RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR","RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR","RRSSSSRRSSSSSSSRRSSSSSSRRSSSSSSSRRSSSSRR","RRSBBSRRSBBBBBSRRSBBBBSRRSBBBBBSRRSBBSRR","RRSBBSRRSBBBBBSRRSBBBBSRRSBBBBBSRRSBBSRR","RRSBBSRRSBBBBBSRRSBBBBSRRSBBBBBSRRSBBSRR","RRSBBSRRSBBBBBSRRSBBBBSRRSBBBBBSRRSBBSRR","RRSSSSRRSSSSSSSRRSSSSSSRRSSSSSSSRRSSSSRR","RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR","RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR","RRSSSSRRSSSSSSSRRSSSSSSRRSSSSSSSRRSSSSRR","RRSBBSRRSBBBBBSRRSPPPPSRRSBBBBBSRRSBBSRR","RRSBBSRRSBBBBBSRRSPPPPSRRSBBBBBSRRSBBSRR","RRSBBSRRSBBBBBSRRSPPPPSRRSBBBBBSRRSBBSRR","RRSBBSRRSBBBBBSRRSPPPPSRRSBBBBBSRRSBBSRR","RRSBBSRRSBBBBBSRRSPPPPSRRSBBBBBSRRSBBSRR","RRSSSSRRSSSSSSSRRSSSSSSRRSSSSSSSRRSSSSRR","RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR","RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR","RRSSSSRRSSSSSSSRRSSSSSSRRSSSSSSSRRSSSSRR","RRSBBSRRSBBBBBSRRSBBBBSRRSPPPPPSRRSBBSRR","RRSBBSRRSBBBBBSRRSBBBBSRRSPPPPPSRRSBBSRR","RRSBBSRRSBBBBBSRRSBBBBSRRSPPPPPSRRSBBSRR","RRSBBSRRSBBBBBSRRSBBBBSRRSPPPPPSRRSBBSRR","RRSBBSRRSBBBBBSRRSBBBBSRRSPPPPPSRRSBBSRR","RRSBBSRRSBBBBBSRRSBBBBSRRSPPPPPSRRSBBSRR","RRSBBSRRSBBBBBSRRSBBBBSRRSPPPPPSRRSBBSRR","RRSSSSRRSSSSSSSRRSSSSSSRRSSSSSSSRRSSSSRR","RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR","RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"],"seed":2026,"points":{"spawn":{"kind":"spawn","tile":[19,17],"x":19.5,"y":17.5,"road_access":[19,17]},"police_station":{"kind":"police_station","tile":[14,4],"x":14.5,"y":4.5,"road_access":[15,4]},"paint_shop":{"kind":"paint_shop","tile":[8,6],"x":8.5,"y":6.5,"road_access":[7,6]},"landmarks":[{"kind":"landmark","tile":[11,19],"x":11.5,"y":19.5,"road_access":[11,18]},{"kind":"landmark","tile":[14,16],"x":14.5,"y":16.5,"road_access":[15,16]},{"kind":"landmark","tile":[8,2],"x":8.5,"y":2.5,"road_access":[7,2]},{"kind":"landmark","tile":[37,5],"x":37.5,"y":5.5,"road_access":[38,5]},{"kind":"landmark","tile":[8,12],"x":8.5,"y":12.5,"road_access":[7,12]},{"kind":"landmark","tile":[27,27],"x":27.5,"y":27.5,"road_access":[27,28]}],"cash":[{"kind":"cash","tile":[27,17],"x":27.5,"y":17.5,"road_access":[27,17]},{"kind":"cash","tile":[9,1],"x":9.5,"y":1.5,"road_access":[9,1]},{"kind":"cash","tile":[4,1],"x":4.5,"y":1.5,"road_access":[4,1]},{"kind":"cash","tile":[15,12],"x":15.5,"y":12.5,"road_access":[15,12]},{"kind":"cash","tile":[39,0],"x":39.5,"y":0.5,"road_access":[39,0]}]}},"routes":{"pedestrians":[[[35,19],[34,19],[33,19],[32,19],[31,19],[30,19],[29,19],[28,19],[27,19],[26,19],[25,19],[24,19],[23,19],[22,19],[21,19],[20,19],[19,19],[18,19],[17,19],[16,19],[15,19],[14,19],[13,19],[12,19],[11,19],[10,19],[9,19],[8,19],[8,18],[8,17],[8,16],[8,15],[7,15],[6,15],[5,15]],[[10,2],[9,2],[8,2],[8,3],[8,4],[8,5],[8,6],[8,7],[8,8],[8,9],[8,10],[8,11],[8,12],[8,13],[8,14],[8,15],[8,16],[8,17],[8,18],[8,19],[8,20],[8,21],[7,21],[6,21],[5,21]],[[3,16],[4,16],[5,16],[6,16],[7,16],[8,16],[9,16],[10,16],[11,16],[12,16],[13,16],[14,16],[14,15],[14,14],[14,13],[14,12],[14,11],[15,11],[16,11],[17,11]],[[18,14],[19,14],[20,14],[21,14],[22,14],[22,15],[22,16],[22,17],[22,18],[22,19],[22,20],[22,21],[22,22],[22,23],[22,24],[22,25],[22,26]],[[22,7],[21,7],[20,7],[19,7],[18,7],[17,7],[17,8],[17,9],[17,10],[17,11],[17,12],[17,13],[17,14],[17,15],[17,16],[17,17],[17,18],[17,19],[17,20],[17,21],[17,22],[17,23],[17,24],[17,25],[17,26],[17,27],[16,27],[15,27],[14,27],[13,27],[12,27],[11,27],[10,27],[9,27],[8,27],[7,27],[6,27],[5,27]],[[14,4],[14,5],[14,6],[14,7],[15,7],[16,7],[17,7],[18,7],[19,7],[20,7],[20,8],[20,9],[20,10]],[[5,20],[5,19],[5,18],[5,17],[5,16],[5,15],[5,14],[5,13],[5,12],[5,11],[5,10],[6,10],[7,10],[8,10],[9,10],[10,10],[11,10],[12,10],[13,10],[14,10],[15,10],[16,10],[17,10],[18,10],[19,10],[20,10],[21,10],[22,10],[23,10],[24,10],[25,10],[26,10],[27,10],[28,10],[29,10],[30,10],[31,10]],[[29,25],[29,24],[29,23],[29,22],[29,21],[29,20],[29,19],[28,19],[27,19],[26,19],[25,19],[24,19],[23,19],[22,19],[21,19],[20,19],[19,19],[18,19],[17,19],[17,18],[17,17],[17,16],[17,15],[16,15],[15,15],[14,15]]],"traffic":[[[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[6,8],[7,8],[8,8],[9,8],[10,8],[11,8],[12,8],[13,8],[14,8],[15,8],[15,9],[15,10],[15,11],[15,12],[15,13],[15,14],[15,15],[15,16],[15,17]],[[38,17],[38,18],[38,19],[38,20],[38,21],[38,22],[38,23],[38,24],[38,25],[38,26],[38,27],[38,28],[37,28],[36,28],[35,28],[34,28],[33,28],[32,28],[31,28],[30,28],[29,28],[28,28],[27,28],[26,28],[25,28],[24,28],[23,28],[22,28],[21,28],[20,28],[19,28],[18,28],[17,28],[16,28],[15,28],[14,28],[13,28],[12,28],[11,28],[10,28],[9,28],[8,28],[7,28],[6,28]],[[38,8],[37,8],[36,8],[35,8],[34,8],[33,8],[32,8]],[[32,17],[32,16],[32,15],[32,14],[32,13],[32,12],[32,11],[32,10],[32,9],[32,8],[33,8],[34,8],[35,8],[36,8],[37,8],[38,8]]]},"vehicle":{"wheelbase_m":0.9,"max_steer_deg":35,"accel":7.0,"brake":12.0,"reverse_accel":4.0,"drag":0.25,"max_v":11.0,"min_v":-4.0,"offroad_factor":0.55,"radius":0.38},"npc":{"ped_max_speed":1.1,"ped_max_force":6.0,"traffic_max_speed":3.5,"traffic_max_force":8.0,"police_max_speed":10.0,"police_max_force":30.0,"flee_panic_distance":3.0,"arrive_deceleration":2.0,"prediction_factor":1.0},"wanted_rules":{"heat":{"steal_car":15,"hit_vehicle":10,"hit_pedestrian":35,"hit_police":60,"run_red_light":5},"witness_multiplier":2,"star_thresholds":[20,60,120,200,320],"cooldown_s":[0,8,12,16,20,25],"decay_per_s":10,"paint_shop_min_unseen_s":3,"police_units":[0,1,2,3,5,7],"police_speed_factor":[0,0.85,0.95,1.05,1.15,1.25],"search_radius_tiles":[0,8,12,16,20,26],"max_heat":400},"missions":[{"id":"M1","title":"Muhbirle buluş","briefing":"Sarı halkaya git.","type":"goto","target":[11,18],"reward":150},{"id":"M2","title":"Paketi teslim et","briefing":"Paketi al ve 2 dakika içinde teslim et.","type":"deliver","pickup":[15,16],"target":[7,2],"time_limit_s":120,"reward":300,"requires":["M1"]},{"id":"M3","title":"Sokaktaki parayı topla","briefing":"Yoldaki 2 yeşil parayı topla.","type":"collect","count":2,"reward":200,"requires":["M2"]},{"id":"M4","title":"Polisten kurtul","briefing":"Aranma yıldızı al, sonra polisi atlat (ya da boyacıya git).","type":"escape","reward":400,"requires":["M3"]},{"id":"M5","title":"Son iş","briefing":"Son buluşma noktasına git.","type":"goto","target":[38,5],"reward":600,"requires":["M4"]}],"mission_order":["M1","M2","M3","M4","M5"],"economy":{"start_money":200,"cash_amount":50,"catalog":{"repair_kit":{"price":150,"sell":60,"max":3,"stored":true,"effect":"repair vehicle +50"},"snack":{"price":20,"sell":0,"max":5,"stored":true,"effect":"health +25"},"fuel_can":{"price":40,"sell":10,"max":2,"stored":true,"effect":"refuel"},"paint_job":{"price":500,"sell":0,"max":0,"stored":false,"effect":"clear wanted level (paint shop, see G007)"},"package":{"price":0,"sell":0,"max":1,"stored":true,"effect":"mission item"}}},"sounds":{"horn":[0.8,0.02,415,0.01,0.22,0.06,5,0.6,0,0,0,0,0,0,0,0,0,0.9,0.02,0,0],"crash":[0.8,0.1,90,0.005,0.08,0.45,4,2.2,-2,0,0,0,0,1.6,0,0.2,0,0.6,0.06,0,0],"siren":[0.5,0,700,0.05,1.1,0.1,0,1,4,0,0,0,0.35,0,0,0,0,1,0,0,0],"pickup":[1,0.05,1675,0,0.06,0.24,1,1.82,0,0,837,0.06,0,0,0,0,0,1,0,0,0],"cash":[1,0.05,1400,0.01,0.04,0.18,1,1.5,0,0,600,0.04,0.09,0,0,0,0,1,0,0,0],"mission_complete":[1,0.02,523,0.02,0.3,0.4,1,1.2,0,0,262,0.12,0.24,0,0,0,0.08,1,0.05,0,0],"wasted":[1,0.05,925,0.04,0.3,0.6,1,0.3,0,6.27,-184,0.09,0.17,0,0,0,0,1,0,0,0]},"loop":{"timestep_ms":16.6667},"save":{"format":"skillpack-city-save","version":1},"render":{"tile_px":32}}</script>
+<script>
+!function(t){var n=1e3/60,e=0,i=0,o=60,u=.9,r=1e3,f=0,s=0,a=0,c=0,m=!1,d=!1,l=!1,p="object"==typeof window?window:t,h=p.requestAnimationFrame||(b=Date.now(),function(t){return y=Date.now(),A=Math.max(0,n-(y-b)),b=y+A,setTimeout(function(){t(y+A)},A)}),w=p.cancelAnimationFrame||clearTimeout,p=function(){},F=p,M=p,g=p,x=p,S,b,y,A;function D(t){if(S=h(D),!(t<i+c)){for(e+=t-i,F(i=t,e),f+r<t&&(o=u*s*1e3/(t-f)+(1-u)*o,f=t,s=0),s++,a=0;n<=e;)if(M(n),e-=n,240<=++a){l=!0;break}g(e/n),x(o,l),l=!1}}t.MainLoop={getSimulationTimestep:function(){return n},setSimulationTimestep:function(t){return n=t,this},getFPS:function(){return o},getMaxAllowedFPS:function(){return 1e3/c},setMaxAllowedFPS:function(t){return 0===(t=void 0===t?1/0:t)?this.stop():c=1e3/t,this},resetFrameDelta:function(){var t=e;return e=0,t},setBegin:function(t){return F=t||F,this},setUpdate:function(t){return M=t||M,this},setDraw:function(t){return g=t||g,this},setEnd:function(t){return x=t||x,this},start:function(){return d||(d=!0,S=h(function(t){g(1),m=!0,f=i=t,s=0,S=h(D)})),this},stop:function(){return d=m=!1,w(S),this},isRunning:function(){return m}},"function"==typeof define&&define.amd?define(t.MainLoop):"object"==typeof module&&null!==module&&"object"==typeof module.exports&&(module.exports=t.MainLoop)}(this);
+//# sourceMappingURL=mainloop.min.js.map
+</script>
+<script>
+window.__makeSfx=function(){try{
+'use strict';
+let // ZzFXMicro - Zuper Zmall Zound Zynth - v1.4.0 by Frank Force
+zzfxV=.3,               // volume
+zzfxX=new AudioContext, // audio context
+zzfx=                   // play sound
+(p=1,k=.05,b=220,e=0,r=0,t=.1,q=0,D=1,u=0,y=0,v=0,z=0,l=0,E=0,A=0,F=0,c=0,w=1,m=0,B=0
+,N=0)=>{let M=Math,d=2*M.PI,R=44100,G=u*=500*d/R/R,C=b*=(1-k+2*k*M.random(k=[]))*d/R,
+g=0,H=0,a=0,n=1,I=0,J=0,f=0,h=N<0?-1:1,x=d*h*N*2/R,L=M.cos(x),Z=M.sin,K=Z(x)/4,O=1+K,
+X=-2*L/O,Y=(1-K)/O,P=(1+h*L)/2/O,Q=-(h+L)/O,S=P,T=0,U=0,V=0,W=0;e=R*e+9;m*=R;r*=R;t*=
+R;c*=R;y*=500*d/R**3;A*=d/R;v*=d/R;z*=R;l=R*l|0;p*=zzfxV;for(h=e+m+r+t+c|0;a<h;k[a++]
+=f*p)++J%(100*F|0)||(f=q?1<q?2<q?3<q?4<q?(g/d%1<D/2)*2-1:Z(g**3):M.max(M.min(M.tan(g)
+,1),-1):1-(2*g/d%2+2)%2:1-4*M.abs(M.round(g/d)-g/d):Z(g),f=(l?1-B+B*Z(d*a/l):1)*(4<q?
+f:(f<0?-1:1)*M.abs(f)**D)*(a<e?a/e:a<e+m?1-(a-e)/m*(1-w):a<e+m+r?w:a<h-c?(h-a-c)/t*w:
+0),f=c?f/2+(c>a?0:(a<h-c?1:(h-a)/c)*k[a-c|0]/2/p):f,N?f=W=S*T+Q*(T=U)+P*(U=f)-Y*V-X*(
+V=W):0),x=(b+=u+=y)*M.cos(A*H++),g+=x+x*E*(a*a*d%2-1),n&&++n>z&&(b+=v,C+=v,n=0),!l||++I%l
+||(b=C,u=G,n=n||1);X=zzfxX,p=X.createBuffer(1,h,R);p.getChannelData(0).set(k);b=X.
+createBufferSource();b.buffer=p;b.connect(X.destination);b.start()}
+
+;return function(name){var s=window.__GAME__.config.sounds[name];if(s)zzfx.apply(null,s);};}catch(e){return function(){};}};
+</script>
+<script>
+/* Skillpack city game runtime. Original work, MIT License, Copyright (c) 2026 Skillpack contributors.
+   Formulas mirror the skill packs: G003 bicycle model, G004 circle-vs-box push-out, G006 seek/arrive/flee/pursuit,
+   G007 wanted rules, G008 missions, G009 integer money, G010 save envelope. The model built this file once; it runs alone. */
+(function(root){
+'use strict';
+var doc=root.document;
+var C=JSON.parse(doc.getElementById('game-config').textContent);
+var W=C.map.width,H=C.map.height,T=C.map.tiles,R=C.wanted_rules,V=C.vehicle,N=C.npc;
+var DT=C.loop.timestep_ms/1000;
+// ---------- deterministic random (xorshift32, same as G002) ----------
+var rngState=(C.map.seed>>>0)||0x9E3779B9;
+function rnd(){var x=rngState;x^=x<<13;x>>>=0;x^=x>>>17;x^=x<<5;x>>>=0;rngState=x;return x;}
+// ---------- maths shared with the skills ----------
+function wrap(a){var m=2*Math.PI,r=(a+Math.PI)%m;if(r<0)r+=m;return r-Math.PI;}           // G003 angle_mod
+function carStep(s,acc,steerDeg){                                                          // G003 State.update
+  var L=V.wheelbase_m,ms=V.max_steer_deg*Math.PI/180,d=steerDeg*Math.PI/180;
+  d=Math.min(Math.max(d,-ms),ms);
+  var x=s.x+s.v*Math.cos(s.yaw)*DT,y=s.y+s.v*Math.sin(s.yaw)*DT;
+  var yaw=wrap(s.yaw+s.v/L*Math.tan(d)*DT),v=s.v+acc*DT;
+  return {x:x,y:y,yaw:yaw,v:v};
+}
+function circleBox(cx,cy,r,bx,by,bw,bh){                                                   // G004 circle vs box, returns push for the circle
+  var px=Math.max(bx,Math.min(cx,bx+bw)),py=Math.max(by,Math.min(cy,by+bh));
+  var dx=cx-px,dy=cy-py,d2=dx*dx+dy*dy;
+  var inside=cx>bx&&cx<bx+bw&&cy>by&&cy<by+bh;
+  if(!inside){if(d2>r*r)return null;var d=Math.sqrt(d2);if(d===0)return null;return [dx/d*(r-d),dy/d*(r-d)];}
+  var l=cx-bx,rt=bx+bw-cx,t=cy-by,b=by+bh-cy,m=Math.min(l,rt,t,b);
+  if(m===l)return [-(l+r),0];if(m===rt)return [rt+r,0];if(m===t)return [0,-(t+r)];return [0,b+r];
+}
+function len(x,y){return Math.sqrt(x*x+y*y);}
+function norm(x,y){var d=len(x,y)||1;return [x/d,y/d];}
+function seekF(a,tx,ty){var d=norm(tx-a.x,ty-a.y);return [d[0]*a.ms-a.vx,d[1]*a.ms-a.vy];}            // G006 SeekBehavior
+function arriveF(a,tx,ty,dec){var dx=tx-a.x,dy=ty-a.y,dist=len(dx,dy);if(dist>0){var sp=Math.min(dist/dec,a.ms);return [dx*sp/dist-a.vx,dy*sp/dist-a.vy];}return [-a.vx,-a.vy];}
+function fleeF(a,tx,ty,panic){var dx=a.x-tx,dy=a.y-ty;if(dx*dx+dy*dy>panic*panic)return [0,0];var d=norm(dx,dy);if(d[0]===0&&d[1]===0)d=[0,1];return [d[0]*a.ms-a.vx,d[1]*a.ms-a.vy];}
+function pursuitF(a,ex,ey,evx,evy,edx,edy,pf){                                                  // G006 PursuitBehavior
+  var dx=ex-a.x,dy=ey-a.y,ahead=dx*a.hx+dy*a.hy>0,facing=a.hx*edx+a.hy*edy<-0.95;
+  if(ahead&&facing)return seekF(a,ex,ey);
+  var t=len(dx,dy)/(a.ms+len(evx,evy))*pf;return seekF(a,ex+evx*t,ey+evy*t);
+}
+function integrate(a,f){                                                                        // G006 Vehicle.update
+  var m=len(f[0],f[1]);if(a.mf<=0)f=[0,0];else if(m>a.mf){f=norm(f[0],f[1]);f=[f[0]*a.mf,f[1]*a.mf];}
+  a.vx+=f[0]/a.mass*DT;a.vy+=f[1]/a.mass*DT;
+  if(a.vx*a.vx+a.vy*a.vy>a.ms*a.ms){var n=norm(a.vx,a.vy);a.vx=n[0]*a.ms;a.vy=n[1]*a.ms;}
+  var nx=a.x+a.vx*DT,ny=a.y+a.vy*DT;
+  if(a.vx*a.vx+a.vy*a.vy>1e-8){var h=norm(nx-a.x,ny-a.y);a.hx=h[0];a.hy=h[1];}
+  a.x=nx;a.y=ny;
+}
+function tile(x,y){x=Math.floor(x);y=Math.floor(y);if(x<0||y<0||x>=W||y>=H)return 'B';return T[y][x];}
+function pushOut(o,r){var hit=false;for(var yy=Math.floor(o.y)-1;yy<=Math.floor(o.y)+1;yy++)for(var xx=Math.floor(o.x)-1;xx<=Math.floor(o.x)+1;xx++){
+  if(tile(xx+.5,yy+.5)!=='B')continue;var p=circleBox(o.x,o.y,r,xx,yy,1,1);if(p){o.x+=p[0];o.y+=p[1];hit=true;}}return hit;}
+// ---------- game state ----------
+var P=C.map.points,S;
+function agent(x,y,ms,mf){return {x:x,y:y,vx:0,vy:0,hx:0,hy:1,ms:ms,mf:mf,mass:1};}
+function newState(){
+  var sp=P.spawn;
+  var s={time:0,player:{x:sp.x,y:sp.y,yaw:0,v:0,health:100},money:C.economy.start_money,inventory:{},
+    wanted:{stars:0,heat:0,unseen:0},missions:{},active:null,mctx:null,cashTaken:[],peds:[],traffic:[],police:[],
+    msg:'',msgT:0,over:null,overT:0,bustT:0,sirenT:0,lastCrash:-9,paused:false,log:[]};
+  C.routes.pedestrians.forEach(function(r,i){var a=agent(r[0][0]+.5,r[0][1]+.5,N.ped_max_speed,N.ped_max_force);a.route=r;a.wp=0;a.dir=1;a.down=0;a.id=i;s.peds.push(a);});
+  C.routes.traffic.forEach(function(r,i){var a=agent(r[0][0]+.5,r[0][1]+.5,N.traffic_max_speed,N.traffic_max_force);a.route=r;a.wp=0;a.dir=1;a.id=i;s.traffic.push(a);});
+  C.missions.forEach(function(m){s.missions[m.id]='locked';});
+  return s;
+}
+function say(t){S.msg=t;S.msgT=3;}
+function sound(name){if(root.__sfx)root.__sfx(name);}
+// ---------- wanted level (G007 rules) ----------
+function level(h){var n=0;R.star_thresholds.forEach(function(t){if(h>=t)n++;});return n;}
+function crime(type,witnessed){
+  var add=R.heat[type]*(witnessed?R.witness_multiplier:1);
+  S.wanted.heat=Math.min(R.max_heat,S.wanted.heat+add);S.wanted.stars=Math.max(S.wanted.stars,level(S.wanted.heat));
+  if(witnessed)S.wanted.unseen=0;S.log.push(type);
+}
+function wantedTick(dt,seen){
+  var w=S.wanted;if(seen){w.unseen=0;return;}
+  var before=w.unseen;w.unseen+=dt;var cd=R.cooldown_s[w.stars];
+  if(w.stars>0&&w.unseen>=cd){var over=before<cd?Math.min(dt,w.unseen-Math.max(cd,before)):dt;
+    w.heat=Math.max(0,w.heat-R.decay_per_s*over);var was=w.stars;w.stars=Math.min(w.stars,level(w.heat));if(w.stars<was)say(w.stars?'Bir yıldız düştü':'Polisten kurtuldun!');}
+}
+function witnessed(){var r=R.search_radius_tiles[Math.max(1,S.wanted.stars)];for(var i=0;i<S.police.length;i++){var c=S.police[i];if(len(c.x-S.player.x,c.y-S.player.y)<r)return true;}return false;}
+// ---------- missions (G008) ----------
+var BY={};C.missions.forEach(function(m){BY[m.id]=m;});
+function activate(){
+  for(var i=0;i<C.mission_order.length;i++){var id=C.mission_order[i],m=BY[id];
+    if((S.missions[id]==='locked'||S.missions[id]==='available')&&(m.requires||[]).every(function(r){return S.missions[r]==='done';})){
+      S.missions[id]='active';S.active=id;S.mctx={elapsed:0,picked:false,had:S.wanted.stars>0,count:0};say('Görev: '+(m.title||id));return;}}
+  S.active=null;S.mctx=null;
+}
+function near(t,r){return len(S.player.x-(t[0]+.5),S.player.y-(t[1]+.5))<=r;}
+function finish(id){var m=BY[id];S.missions[id]='done';S.money=Math.min(1e9,S.money+(m.reward||0));sound('mission_complete');say('Görev tamam! +$'+(m.reward||0));activate();if(!S.active)say('Bütün görevler bitti!');}
+function missionTick(dt,collect){
+  var id=S.active;if(!id)return;var m=BY[id],c=S.mctx,r=m.radius||1.5;c.elapsed+=dt;
+  if(m.time_limit_s&&c.elapsed>m.time_limit_s){c.elapsed=0;c.picked=false;c.count=0;say('Süre doldu, tekrar dene');return;}
+  if(S.wanted.stars>0)c.had=true;
+  if(m.type==='goto'&&near(m.target,r))finish(id);
+  else if(m.type==='deliver'){if(!c.picked&&near(m.pickup,r)){c.picked=true;say('Paketi aldın, teslim et');sound('pickup');}else if(c.picked&&near(m.target,r))finish(id);}
+  else if(m.type==='escape'&&c.had&&S.wanted.stars===0)finish(id);
+  else if(m.type==='collect'&&collect){c.count+=collect;if(c.count>=(m.count||1))finish(id);}
+}
+function missionTarget(){var id=S.active;if(!id)return null;var m=BY[id];if(m.type==='deliver')return S.mctx.picked?m.target:m.pickup;if(m.type==='goto')return m.target;return null;}
+// ---------- input ----------
+var keys={},pressed={};
+function key(k,down){if(down&&!keys[k])pressed[k]=true;keys[k]=down;}
+function on(a,b){for(var i=0;i<a.length;i++)if(keys[a[i]])return true;return false;}
+function hit(a){for(var i=0;i<a.length;i++)if(pressed[a[i]]){return true;}return false;}
+// ---------- one fixed physics step ----------
+function respawn(atPolice,fine){
+  var p=atPolice?P.police_station:P.spawn,a=atPolice?P.police_station.road_access:P.spawn.tile;
+  S.player={x:a[0]+.5,y:a[1]+.5,yaw:0,v:0,health:100};S.money=Math.max(0,S.money-fine);
+  S.wanted={stars:0,heat:0,unseen:0};S.police=[];S.bustT=0;
+}
+function updatePolice(){
+  var want=R.police_units[S.wanted.stars],f=R.police_speed_factor[S.wanted.stars];
+  while(S.police.length<want){var st=P.police_station.road_access,k=S.police.length;
+    var c=agent(st[0]+.5+(k%2)*.6,st[1]+.5+Math.floor(k/2)*.6,N.police_max_speed,N.police_max_force);S.police.push(c);}
+  if(S.police.length>want)S.police.length=want;
+  var p=S.player,evx=p.v*Math.cos(p.yaw),evy=p.v*Math.sin(p.yaw),edx=Math.cos(p.yaw),edy=Math.sin(p.yaw);
+  S.police.forEach(function(c){c.ms=N.police_max_speed*f;integrate(c,pursuitF(c,p.x,p.y,evx,evy,edx,edy,N.prediction_factor));
+    if(pushOut(c,0.4)){c.vx*=0.5;c.vy*=0.5;}});
+}
+function follow(a,arrive){
+  var w=a.route[a.wp],tx=w[0]+.5,ty=w[1]+.5;
+  if(len(tx-a.x,ty-a.y)<0.35){a.wp+=a.dir;if(a.wp>=a.route.length||a.wp<0){a.dir=-a.dir;a.wp+=2*a.dir;}if(a.wp<0)a.wp=0;if(a.wp>=a.route.length)a.wp=a.route.length-1;w=a.route[a.wp];tx=w[0]+.5;ty=w[1]+.5;}
+  return arrive?arriveF(a,tx,ty,N.arrive_deceleration):seekF(a,tx,ty);
+}
+function update(ms){
+  var dt=ms/1000;
+  if(hit(['KeyP']))S.paused=!S.paused;
+  if(hit(['KeyK']))saveGame();
+  if(hit(['KeyL']))loadGame();
+  if(S.paused){pressed={};return;}
+  S.time+=dt;if(S.msgT>0)S.msgT-=dt;
+  if(S.over){S.overT-=dt;if(S.overT<=0){respawn(S.over==='busted',S.over==='busted'?Math.floor(S.money/10):100);S.over=null;}pressed={};return;}
+  var p=S.player,up=on(['ArrowUp','KeyW']),down=on(['ArrowDown','KeyS']);
+  var steer=(on(['ArrowRight','KeyD'])?1:0)-(on(['ArrowLeft','KeyA'])?1:0);
+  var acc=up?V.accel:down?(p.v>0.2?-V.brake:-V.reverse_accel):0;
+  if(on(['Space']))acc=p.v>0?-V.brake*1.5:p.v<0?V.brake*1.5:0;
+  acc-=p.v*V.drag;
+  var n=carStep(p,acc,steer*V.max_steer_deg);
+  var tl=tile(n.x,n.y),vmax=tl==='R'?V.max_v:V.max_v*V.offroad_factor;
+  n.v=Math.min(Math.max(n.v,V.min_v),vmax);n.health=p.health;S.player=p=n;
+  if(pushOut(p,V.radius)){if(Math.abs(p.v)>2&&S.time-S.lastCrash>0.5){S.lastCrash=S.time;sound('crash');p.health-=Math.abs(p.v)*1.5;}p.v*=-0.3;}
+  if(hit(['KeyH']))sound('horn');
+  var seen=witnessed();
+  // pedestrians: arrive along their route, flee from a fast car, get knocked down
+  S.peds.forEach(function(a){
+    if(a.down>0){a.down-=dt;if(a.down<=0){var w=a.route[0];a.x=w[0]+.5;a.y=w[1]+.5;a.vx=a.vy=0;a.wp=0;}return;}
+    var f=(Math.abs(p.v)>3)?fleeF(a,p.x,p.y,N.flee_panic_distance):[0,0];
+    if(f[0]===0&&f[1]===0)f=follow(a,true);
+    integrate(a,f);pushOut(a,0.25);
+    if(len(a.x-p.x,a.y-p.y)<V.radius+0.25){if(Math.abs(p.v)>2){a.down=10;crime('hit_pedestrian',seen);sound('crash');say('Yayaya çarptın!');}else{var d=norm(a.x-p.x,a.y-p.y);a.x=p.x+d[0]*(V.radius+0.26);a.y=p.y+d[1]*(V.radius+0.26);}}
+  });
+  // traffic: seek along road routes; bumping them is a crime; F steals a stopped-next-to car
+  S.traffic.forEach(function(a){
+    integrate(a,follow(a,false));pushOut(a,0.35);
+    var d=len(a.x-p.x,a.y-p.y);
+    if(d<V.radius+0.4){var u=norm(p.x-a.x,p.y-a.y),o=V.radius+0.4-d;p.x+=u[0]*o;p.y+=u[1]*o;if(Math.abs(p.v)>2){crime('hit_vehicle',seen);sound('crash');}p.v*=0.5;}
+    if(d<1.4&&Math.abs(p.v)<0.5&&hit(['KeyF'])){S.player={x:a.x,y:a.y,yaw:Math.atan2(a.hy,a.hx),v:0,health:100};var w=a.route[0];a.x=w[0]+.5;a.y=w[1]+.5;a.vx=a.vy=0;a.wp=0;crime('steal_car',seen);say('Araba çaldın!');p=S.player;}
+  });
+  updatePolice();
+  S.police.forEach(function(c){var d=len(c.x-p.x,c.y-p.y);if(d<V.radius+0.4){var u=norm(p.x-c.x,p.y-c.y),o=V.radius+0.4-d;p.x+=u[0]*o;p.y+=u[1]*o;if(Math.abs(p.v)>3)crime('hit_police',true);}});
+  var close=S.police.some(function(c){return len(c.x-p.x,c.y-p.y)<1.2;});
+  S.bustT=(close&&Math.abs(p.v)<1)?S.bustT+dt:0;
+  wantedTick(dt,seen&&S.wanted.stars>0);
+  if(S.wanted.stars>0){S.sirenT-=dt;if(S.sirenT<=0){S.sirenT=2;sound('siren');}}
+  // cash pickups (count as 'collect' for missions)
+  var got=0;P.cash.forEach(function(c,i){if(S.cashTaken.indexOf(i)<0&&len(p.x-c.x,p.y-c.y)<0.8){S.cashTaken.push(i);S.money+=C.economy.cash_amount;got++;sound('cash');say('+$'+C.economy.cash_amount);}});
+  // paint shop: clears the wanted level when unseen; E buys a repair kit
+  var ps=P.paint_shop;
+  if(len(p.x-(ps.road_access[0]+.5),p.y-(ps.road_access[1]+.5))<1.2&&Math.abs(p.v)<1){
+    var price=C.economy.catalog.paint_job.price;
+    if(S.wanted.stars>0){if(S.wanted.unseen<R.paint_shop_min_unseen_s)say('Polis izliyor, boyama yok');else if(S.money>=price){S.money-=price;S.wanted={stars:0,heat:0,unseen:0};sound('cash');say('Boyandı, aranma bitti (-$'+price+')');}else if(S.msgT<=0)say('Boya için $'+price+' gerekli');}
+    if(hit(['KeyE'])){var k=C.economy.catalog.repair_kit;if(S.money>=k.price){S.money-=k.price;p.health=Math.min(100,p.health+50);say('Tamir edildi (-$'+k.price+')');}else say('Para yetmiyor');}
+  }
+  missionTick(dt,got);
+  if(p.health<=0){S.over='wasted';S.overT=3;sound('wasted');}
+  else if(S.bustT>2){S.over='busted';S.overT=3;sound('wasted');}
+  pressed={};
+}
+// ---------- save / load (G010 envelope: canonical JSON + FNV-1a 32) ----------
+function q(v){if(v===null||typeof v!=='object'){if(typeof v==='number'){return Math.floor(v*1000+0.5)/1000;}return v;}
+  if(Array.isArray(v))return v.map(q);var o={};Object.keys(v).sort().forEach(function(k){o[k]=q(v[k]);});return o;}
+function canonical(s){return JSON.stringify(q(s));}
+function fnv(str){var b=unescape(encodeURIComponent(str)),h=0x811c9dc5;for(var i=0;i<b.length;i++){h^=b.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0;}return ('0000000'+h.toString(16)).slice(-8);}
+function snapshot(){var p=S.player,inv={};Object.keys(S.inventory).forEach(function(k){if(S.inventory[k])inv[k]=S.inventory[k];});
+  return {seed:C.map.seed,time_s:S.time,player:{x:p.x,y:p.y,yaw:p.yaw,v:p.v,health:Math.max(0,Math.min(100,p.health))},money:S.money,inventory:inv,
+    wanted:{stars:S.wanted.stars,heat:S.wanted.heat,seconds_unseen:S.wanted.unseen},missions:S.missions,active_mission:S.active,cash_taken:S.cashTaken.slice()};}
+function envelope(){var c=canonical(snapshot());return JSON.stringify({format:C.save.format,version:C.save.version,checksum:'fnv1a32:'+fnv(c),state:JSON.parse(c)});}
+function restore(text){
+  var e;try{e=JSON.parse(text);}catch(x){return 'bozuk kayıt';}
+  if(!e||e.format!==C.save.format)return 'başka bir oyunun kaydı';if(e.version!==C.save.version)return 'desteklenmeyen kayıt sürümü';
+  if('fnv1a32:'+fnv(canonical(e.state))!==e.checksum)return 'kayıt değiştirilmiş ya da bozuk';
+  if(e.state.seed!==C.map.seed)return 'kayıt başka bir haritaya ait';
+  var s=e.state;S=newState();S.time=s.time_s;S.player={x:s.player.x,y:s.player.y,yaw:s.player.yaw,v:s.player.v,health:s.player.health};
+  S.money=s.money;S.inventory=s.inventory;S.wanted={stars:s.wanted.stars,heat:s.wanted.heat,unseen:s.wanted.seconds_unseen||0};
+  S.missions=s.missions;S.cashTaken=s.cash_taken||[];S.active=null;
+  if(s.active_mission&&S.missions[s.active_mission]==='active'){S.active=s.active_mission;S.mctx={elapsed:0,picked:false,had:S.wanted.stars>0,count:0};}else activate();
+  return null;
+}
+function saveGame(){try{root.localStorage.setItem('skillpack-city-save',envelope());say('Kaydedildi');}catch(x){say('Kayıt yapılamadı');}}
+function loadGame(){var t=null;try{t=root.localStorage.getItem('skillpack-city-save');}catch(x){}if(!t){say('Kayıt yok');return;}var err=restore(t);say(err?'Yüklenemedi: '+err:'Yüklendi');}
+// ---------- drawing ----------
+var cv=doc.getElementById('game'),g=cv&&cv.getContext?cv.getContext('2d'):null,TS=C.render.tile_px;
+var COL={R:'#3b3f45',S:'#b9b4a8',P:'#4f8f3a',B:'#8a6f5a'};
+var BID=[],BN=0;(function(){for(var y=0;y<H;y++){BID.push([]);for(var x=0;x<W;x++)BID[y].push(-1);}
+  for(var y0=0;y0<H;y0++)for(var x0=0;x0<W;x0++){if(T[y0][x0]!=='B'||BID[y0][x0]>=0)continue;var st=[[x0,y0]];BID[y0][x0]=BN;
+    while(st.length){var c=st.pop();[[1,0],[-1,0],[0,1],[0,-1]].forEach(function(d){var nx=c[0]+d[0],ny=c[1]+d[1];if(nx>=0&&ny>=0&&nx<W&&ny<H&&T[ny][nx]==='B'&&BID[ny][nx]<0){BID[ny][nx]=BN;st.push([nx,ny]);}});}BN++;}})();
+function bcol(x,y){var s=['#8a6f5a','#7b7f8c','#9a8466','#6f7d74','#8c6d6d','#a0705a'];return s[(BID[y][x]*7+3)%s.length];}
+function box(x,y,yaw,l,w,col){g.save();g.translate(x*TS,y*TS);g.rotate(yaw);g.fillStyle=col;g.fillRect(-l/2*TS,-w/2*TS,l*TS,w*TS);g.fillStyle='rgba(255,255,255,.55)';g.fillRect(l/4*TS,-w/2.6*TS,l/6*TS,w/1.3*TS);g.restore();}
+function dot(x,y,r,col){g.beginPath();g.arc(x*TS,y*TS,r*TS,0,7);g.fillStyle=col;g.fill();}
+function draw(){
+  if(!g)return;var cw=cv.width=cv.clientWidth||800,ch=cv.height=cv.clientHeight||600,p=S.player;
+  g.fillStyle='#1d2b1d';g.fillRect(0,0,cw,ch);g.save();
+  var ox=cw/2-p.x*TS,oy=ch/2-p.y*TS;g.translate(Math.round(ox),Math.round(oy));
+  var x0=Math.max(0,Math.floor(-ox/TS)),y0=Math.max(0,Math.floor(-oy/TS)),x1=Math.min(W,x0+Math.ceil(cw/TS)+2),y1=Math.min(H,y0+Math.ceil(ch/TS)+2);
+  for(var y=y0;y<y1;y++)for(var x=x0;x<x1;x++){var t=T[y][x];g.fillStyle=t==='B'?bcol(x,y):COL[t];g.fillRect(x*TS,y*TS,TS+1,TS+1);
+    if(t==='B'&&(x+1>=W||T[y][x+1]!=='B')){g.fillStyle='rgba(0,0,0,.25)';g.fillRect(x*TS+TS*.6,y*TS,TS*.4,TS);}
+    if(t==='R'&&(x+y)%2===0){g.fillStyle='rgba(255,255,255,.08)';g.fillRect(x*TS+TS*.45,y*TS+TS*.45,TS*.1,TS*.1);}}
+  var tg=missionTarget();if(tg){var pulse=.6+.25*Math.sin(S.time*5);dot(tg[0]+.5,tg[1]+.5,pulse,'rgba(255,215,0,.75)');}
+  var ps=P.paint_shop.road_access;dot(ps[0]+.5,ps[1]+.5,.45,'#2f7de1');var st=P.police_station.road_access;dot(st[0]+.5,st[1]+.5,.4,'#123a8c');
+  P.cash.forEach(function(c,i){if(S.cashTaken.indexOf(i)<0)dot(c.x,c.y,.22,'#2ecc40');});
+  S.peds.forEach(function(a){dot(a.x,a.y,.22,a.down>0?'#7a1f1f':'#f2d16b');});
+  S.traffic.forEach(function(a){box(a.x,a.y,Math.atan2(a.hy,a.hx),.95,.5,'#d9d9d9');});
+  S.police.forEach(function(c){box(c.x,c.y,Math.atan2(c.hy,c.hx),1,.52,(Math.floor(S.time*6)%2)?'#1f4fd1':'#d11f1f');});
+  box(p.x,p.y,p.yaw,1,.52,'#e8452c');g.restore();hud(cw,ch);
+}
+function hud(cw,ch){
+  var p=S.player;g.fillStyle='rgba(0,0,0,.55)';g.fillRect(8,8,250,74);g.fillStyle='#fff';g.font='bold 18px sans-serif';
+  g.fillText('$'+S.money,18,32);g.fillStyle='#f5c518';g.fillText('★★★★★'.slice(0,S.wanted.stars)+'☆☆☆☆☆'.slice(0,5-S.wanted.stars),110,32);
+  g.fillStyle='#555';g.fillRect(18,42,150,8);g.fillStyle='#3ad16b';g.fillRect(18,42,150*Math.max(0,p.health)/100,8);
+  g.fillStyle='#fff';g.font='13px sans-serif';var m=S.active?BY[S.active]:null;g.fillText(m?(m.title||m.id):'Görev yok',18,68);
+  var mm=Math.max(1,Math.floor(110/Math.max(W,H)));g.fillStyle='rgba(0,0,0,.5)';g.fillRect(cw-W*mm-14,8,W*mm+6,H*mm+6);
+  for(var y=0;y<H;y++)for(var x=0;x<W;x++){var t=T[y][x];if(t==='S')continue;g.fillStyle=t==='R'?'#777':t==='P'?'#3c7':'#a87';g.fillRect(cw-W*mm-11+x*mm,11+y*mm,mm,mm);}
+  g.fillStyle='#f33';g.fillRect(cw-W*mm-12+p.x*mm,10+p.y*mm,3,3);
+  if(S.msgT>0||S.over||S.paused){g.fillStyle='rgba(0,0,0,.6)';g.fillRect(cw/2-180,ch-70,360,40);g.fillStyle='#fff';g.font='bold 16px sans-serif';g.textAlign='center';
+    g.fillText(S.over==='wasted'?'HURDA OLDUN':S.over==='busted'?'TUTUKLANDIN':S.paused?'DURAKLATILDI':S.msg,cw/2,ch-44);g.textAlign='left';}
+}
+// ---------- start ----------
+S=newState();activate();
+function step(ms){update(ms===undefined?C.loop.timestep_ms:ms);}
+root.__GAME__={get state(){return S;},step:step,key:key,carStep:carStep,circleBox:circleBox,pursuitF:pursuitF,integrate:integrate,agent:agent,
+  envelope:envelope,restore:restore,canonical:canonical,fnv:fnv,config:C,reset:function(){S=newState();activate();}};
+if(root.addEventListener){
+  var map={};
+  root.addEventListener('keydown',function(e){if(!root.__sfx&&root.__makeSfx)root.__sfx=root.__makeSfx();key(e.code,true);var h=doc.getElementById('help');if(h)h.style.display='none';if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].indexOf(e.code)>=0)e.preventDefault();});
+  root.addEventListener('keyup',function(e){key(e.code,false);});
+  var pads=doc.querySelectorAll?doc.querySelectorAll('[data-key]'):[];
+  Array.prototype.forEach.call(pads,function(b){var k=b.getAttribute('data-key');
+    b.addEventListener('touchstart',function(e){e.preventDefault();if(!root.__sfx&&root.__makeSfx)root.__sfx=root.__makeSfx();key(k,true);var h=doc.getElementById('help');if(h)h.style.display='none';});
+    b.addEventListener('touchend',function(e){e.preventDefault();key(k,false);});});
+}
+if(root.MainLoop&&!root.__HEADLESS__){
+  root.MainLoop.setSimulationTimestep(C.loop.timestep_ms).setUpdate(update).setDraw(draw)
+    .setEnd(function(fps,panic){if(panic)root.MainLoop.resetFrameDelta();}).start();   // G001: discard backlog on panic
+}
+})(typeof window!=='undefined'?window:this);
+
+</script>
+</body>
+</html>

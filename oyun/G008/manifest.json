@@ -1,0 +1,274 @@
+{
+  "id": "G008",
+  "name": "Mission chain validation and mission state machine (goto, deliver, escape, collect)",
+  "description": "Checks a list of missions (unique ids, known prerequisites, no cycles, required fields) and gives the play order; replays position/tick/collect events through the mission state machine: one active mission at a time, reach-a-tile, pick-up-then-deliver, lose-the-police and collect-N missions, time limits with automatic retry, rewards and the money transactions to send to the economy.",
+  "version": "1.0.0",
+  "date": "2026-11-12",
+  "tier": "game",
+  "family": "game-2d-city",
+  "category": "game rules",
+  "license": "MIT",
+  "distribution": "public-ok",
+  "author": "Skillpack contributors",
+  "source_url": "local:original/G008",
+  "upstream_commit_or_version": "original-1.0.0",
+  "implementation_kind": "original-algorithm",
+  "status": "tested-awaiting-usta-approval",
+  "provenance": {
+    "upstream_repository": null,
+    "source_kind": "original",
+    "commit": "original-1.0.0",
+    "version": "1.0.0",
+    "license_spdx": "MIT",
+    "license_path": "LICENSE",
+    "license_sha256": "e5c37fd312001c3fa6540a36c04939b62f856dcd3d1b148b7e43fc8d65e8558a",
+    "copyright_lines_verbatim": [
+      "Copyright (c) 2026 Skillpack contributors"
+    ],
+    "license_check": "Original code written for this pack; MIT",
+    "evidence": [],
+    "primary_role": "original rule table and code",
+    "additional_licenses": [],
+    "mined_date": "2026-11-12",
+    "timezone": "Europe/Istanbul",
+    "reference_values": "tests/references.json cases were derived by hand (distances and sums are written in each origin)."
+  },
+  "region": {
+    "scope": "global",
+    "applies_to": "any locale; no country-specific rules",
+    "notes": "Game rules are illustrative defaults, not real-world rules."
+  },
+  "audit": {
+    "principle": "code decides, model explains, craftsman (usta) approves",
+    "code_decides": true,
+    "model_explains": true,
+    "usta_approval": {
+      "status": "pending",
+      "approved_by": null,
+      "role": "game designer (missions)",
+      "what_to_check": "that missions are in a sensible order, rewards fit the economy, and time limits are achievable on the generated map."
+    },
+    "external_audit": {
+      "status": "not-yet",
+      "notes": "Local tests only; no independent audit has been performed."
+    }
+  },
+  "inputs": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "operation",
+      "missions"
+    ],
+    "$defs": {
+      "tile": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "items": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000
+        }
+      }
+    },
+    "properties": {
+      "operation": {
+        "enum": [
+          "validate",
+          "simulate"
+        ]
+      },
+      "missions": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 50,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "type"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,32}$"
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 80
+            },
+            "briefing": {
+              "type": "string",
+              "maxLength": 240
+            },
+            "type": {
+              "enum": [
+                "goto",
+                "deliver",
+                "escape",
+                "collect"
+              ]
+            },
+            "target": {
+              "$ref": "#/$defs/tile"
+            },
+            "pickup": {
+              "$ref": "#/$defs/tile"
+            },
+            "radius": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 20
+            },
+            "time_limit_s": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 3600
+            },
+            "reward": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "requires": {
+              "type": "array",
+              "maxItems": 10,
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]{1,32}$"
+              }
+            }
+          }
+        }
+      },
+      "events": {
+        "type": "array",
+        "maxItems": 5000,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "position",
+                "tick",
+                "collect"
+              ]
+            },
+            "x": {
+              "type": "number",
+              "minimum": -100000.0,
+              "maximum": 100000.0
+            },
+            "y": {
+              "type": "number",
+              "minimum": -100000.0,
+              "maximum": 100000.0
+            },
+            "stars": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "dt": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 3600
+            }
+          }
+        }
+      }
+    }
+  },
+  "outputs": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ok",
+          "result"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "const": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "ok",
+          "error"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  },
+  "budget": {
+    "max_input_bytes": 65536,
+    "timeout_seconds": 10,
+    "enforcement": "Raw CLI byte limit and POSIX alarm; strict schema, finite values and nesting checks; MCP subprocess killed/reaped after the timeout. One active calculation. Not a hostile-code sandbox."
+  },
+  "tool": "tool/main.py",
+  "teaching_path": "TEACHING.md",
+  "dependencies": {
+    "python": ">=3.11",
+    "pip_requirements": "requirements.txt",
+    "runtime": "Python standard library plus jsonschema (schema check) only"
+  },
+  "data": {
+    "reads": "nothing",
+    "writes": "nothing",
+    "network": "none",
+    "telemetry": "none",
+    "logging": "none; input contents are never logged or echoed in errors"
+  },
+  "mcp": {
+    "transport": "stdio",
+    "command": "python3",
+    "server_path": "mcp/server.py",
+    "server_name": "gorev-sistemi",
+    "tool_name": "skillpack_g008",
+    "read_only": true,
+    "instructions": "One local deterministic tool. Explain its result and limits; the code decides, a human (usta) approves consequential use. No network access."
+  },
+  "limitations": "One active mission at a time, strictly in validated order. No branching choices, cut-scenes or failure by damage. Escape completes when stars return to 0 after being above 0 during the mission. Collect counts collect events of any item.",
+  "port_notes": "Original state machine by Skillpack contributors. Order = repeated choice of the first mission (input order) whose prerequisites are done (stable topological order). Time-limit failure resets the mission timer and progress and counts a failure.",
+  "flow_role": "Step 6 (görevler): build missions from the map landmarks (G002), validate the chain, check every target tile is reachable by car (G005 on the drive grid), and replay a scripted run; the validated list goes into the HTML (G012)."
+}

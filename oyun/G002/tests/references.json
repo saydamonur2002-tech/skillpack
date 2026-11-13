@@ -1,0 +1,169 @@
+[
+ {
+  "input": {
+   "operation": "generate",
+   "seed": 2026,
+   "width": 40,
+   "height": 30
+  },
+  "expected_subset": {
+   "width": 40,
+   "height": 30,
+   "road_cols": [
+    0,
+    6,
+    15,
+    23,
+    32,
+    38
+   ],
+   "road_rows": [
+    0,
+    8,
+    17,
+    28
+   ],
+   "counts": {
+    "R": 584,
+    "S": 328,
+    "B": 233,
+    "P": 55
+   },
+   "road_connected": true,
+   "points": {
+    "spawn": {
+     "kind": "spawn",
+     "tile": [
+      19,
+      17
+     ],
+     "x": 19.5,
+     "y": 17.5,
+     "road_access": [
+      19,
+      17
+     ]
+    }
+   }
+  },
+  "absolute_tolerance": 0,
+  "relative_tolerance": 0.0,
+  "origin": "40x30 default city; frozen golden output of this original generator (regression), structure checked by invariant tests"
+ },
+ {
+  "input": {
+   "operation": "generate",
+   "seed": 7,
+   "width": 24,
+   "height": 24,
+   "road_width": 1,
+   "block_min": 3,
+   "block_max": 5,
+   "park_ratio": 0.5,
+   "landmarks": 3,
+   "cash_pickups": 2
+  },
+  "expected_subset": {
+   "width": 24,
+   "height": 24,
+   "road_cols": [
+    0,
+    4,
+    9,
+    14,
+    18,
+    23
+   ],
+   "road_rows": [
+    0,
+    4,
+    9,
+    14,
+    23
+   ],
+   "counts": {
+    "R": 234,
+    "S": 254,
+    "B": 43,
+    "P": 45
+   },
+   "road_connected": true,
+   "points": {
+    "spawn": {
+     "kind": "spawn",
+     "tile": [
+      11,
+      9
+     ],
+     "x": 11.5,
+     "y": 9.5,
+     "road_access": [
+      11,
+      9
+     ]
+    }
+   }
+  },
+  "absolute_tolerance": 0,
+  "relative_tolerance": 0.0,
+  "origin": "small 1-lane town with many parks; frozen golden output of this original generator (regression), structure checked by invariant tests"
+ },
+ {
+  "input": {
+   "operation": "generate",
+   "seed": 123456789,
+   "width": 64,
+   "height": 48,
+   "block_min": 5,
+   "block_max": 9,
+   "park_ratio": 0.1
+  },
+  "expected_subset": {
+   "width": 64,
+   "height": 48,
+   "road_cols": [
+    0,
+    8,
+    16,
+    24,
+    32,
+    40,
+    49,
+    62
+   ],
+   "road_rows": [
+    0,
+    10,
+    19,
+    29,
+    39,
+    46
+   ],
+   "counts": {
+    "R": 1344,
+    "S": 844,
+    "B": 842,
+    "P": 42
+   },
+   "road_connected": true,
+   "points": {
+    "spawn": {
+     "kind": "spawn",
+     "tile": [
+      32,
+      23
+     ],
+     "x": 32.5,
+     "y": 23.5,
+     "road_access": [
+      32,
+      23
+     ]
+    }
+   }
+  },
+  "absolute_tolerance": 0,
+  "relative_tolerance": 0.0,
+  "origin": "large 64x48 city; frozen golden output of this original generator (regression), structure checked by invariant tests"
+ }
+]

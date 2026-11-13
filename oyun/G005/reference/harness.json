@@ -1,0 +1,4 @@
+{
+  "runner": "python",
+  "script": "upstream_harness.py"
+}
